@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class anchorScript : MonoBehaviour
+public class Anchor : MonoBehaviour
 {
     private Rigidbody2D _rb;
 

@@ -1,24 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HorizontalMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed;
     private Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
+    private float directionX;
+    
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
+    
+    private void OnMove(InputValue value)
     {
-        //Get input (-1 or 1 for A or D)
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        directionX = value.Get<float>();
+    }
 
-        // Set the velocity of the Rigidbody2D based on the input and move speed
-        rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+    private void FixedUpdate()
+    {
+        float horizontalAxisValue = directionX;
+        rb.velocity = new Vector2(horizontalAxisValue * moveSpeed, rb.velocity.y);
     }
 }

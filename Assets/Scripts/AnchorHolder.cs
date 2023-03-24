@@ -6,6 +6,7 @@ public class AnchorHolder : MonoBehaviour
 {
     public bool HoldingAnchor => m_Anchor != null;
     public float GrabRadius = 1;
+    public Vector2 HoldPosition = new Vector2(0, 0.5f);
 
     private Anchor m_Anchor;
 
@@ -44,7 +45,7 @@ public class AnchorHolder : MonoBehaviour
         }
 
         m_Anchor.transform.SetParent(transform);
-        m_Anchor.transform.localPosition = Vector3.zero;
+        m_Anchor.transform.localPosition = HoldPosition;
         m_Anchor.Simulated = false;
     }
 

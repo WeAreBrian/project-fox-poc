@@ -31,6 +31,7 @@ public class AnchorHolder : MonoBehaviour
         var anchorLayerMask = LayerMask.GetMask("Anchor");
         var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
 
+        Debug.Log(collider);
         if (collider == null)
         {
             return;
@@ -43,9 +44,8 @@ public class AnchorHolder : MonoBehaviour
             return;
         }
 
-        m_Anchor.transform.SetParent(transform);
-        m_Anchor.transform.localPosition = HoldPosition;
-        m_Anchor.Simulated = false;
+        Debug.Log("Grabbing Anchor");
+        m_Anchor.PickUp(transform, HoldPosition);
 
         m_HoldStartTime = Time.time;
     }
@@ -57,10 +57,7 @@ public class AnchorHolder : MonoBehaviour
             return null;
         }
 
-        // Set parent of anchor to world and keep its world position
-        m_Anchor.transform.SetParent(null, true);
-        m_Anchor.Simulated = true;
-        m_Anchor.Unstick();
+        m_Anchor.Drop();
 
         var anchor = m_Anchor;
 

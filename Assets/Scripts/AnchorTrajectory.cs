@@ -36,12 +36,11 @@ public class AnchorTrajectory : MonoBehaviour
     /// <param name="path">Output of points along trajectory</param>
     private void SimulateTrajectory(Vector2 velocity, float timeStep, Vector2[] path)
     {
-        var position = Vector2.zero;
+        path[0] = Vector2.zero;
 
-        for (var i = 0; i < path.Length; i++)
+        for (var i = 1; i < path.Length; i++)
         {
-            position += velocity * timeStep;
-            path[i] = position;
+            path[i] = path[i - 1] + velocity * timeStep;
             velocity += Physics2D.gravity * timeStep;
         }
     }

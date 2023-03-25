@@ -57,13 +57,13 @@ public class Anchor : MonoBehaviour
         }
 
         //set contraints based on state
-        if (next == AnchorState.Free)
+        if (next == AnchorState.Lodged)
         {
-            m_Rigidbody.constraints = RigidbodyConstraints2D.None;
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else
         {
-            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            m_Rigidbody.constraints = RigidbodyConstraints2D.None;
         }
 
         //Reset rotation when anchor is picked up

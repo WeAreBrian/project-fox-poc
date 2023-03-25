@@ -13,11 +13,6 @@ public class Anchor : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-    }
-
     public void Unstick()
     {
         m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;

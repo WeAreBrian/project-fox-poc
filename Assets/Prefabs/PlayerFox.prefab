@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 474916487}
   - component: {fileID: 1208819179330828543}
   - component: {fileID: 8127432424583510208}
+  - component: {fileID: 1866713526479858622}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -247,7 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ab3354648954851aa2118b29a80bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  AirMoveSpeed: 3.5
+  GroundMoveSpeed: 5
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,3 +278,15 @@ MonoBehaviour:
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &1866713526479858622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e33bd83524d4bff458a535ddcc9346f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

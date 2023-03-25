@@ -21,6 +21,11 @@ public class AnchorTrajectory : MonoBehaviour
         m_Path = new Vector2[Points];
     }
 
+    private void OnDisable()
+    {
+        m_LineRenderer.positionCount = 0;
+    }
+
     private void FixedUpdate()
     {
         SimulateTrajectory(Velocity, TimeStep, m_Path);

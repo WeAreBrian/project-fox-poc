@@ -16,6 +16,7 @@ public class AnchorThrower : MonoBehaviour
     [Range(0, 2)]
     public float ThrowHoldTime = 0.2f;
 
+    public bool WindingUp => m_Trajectory.gameObject.activeSelf;
     public float HoldTime => Time.time - m_WindUpStartTime;
     public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate(HoldTime / WindUpTime));
     public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;

@@ -13,8 +13,11 @@ public class AnchorThrower : MonoBehaviour
     [Range(0, 2)]
     public float WindUpTime = 0.5f;
     public AnimationCurve WindUpCurve;
+    [Range(0, 2)]
+    public float ThrowHoldTime = 0.2f;
 
-    public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate((Time.time - m_WindUpStartTime) / WindUpTime));
+    public float HoldTime => Time.time - m_WindUpStartTime;
+    public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate(HoldTime / WindUpTime));
     public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
 
     [SerializeField]
@@ -27,31 +30,29 @@ public class AnchorThrower : MonoBehaviour
         var playerInput = GetComponent<PlayerInput>();
         var anchorInteractAction = playerInput.actions["AnchorInteract"];
 
-        anchorInteractAction.started += OnAnchorInteractStarted;
-        anchorInteractAction.performed += OnAnchorInteractPerformed;
+        anchorInteractAction.started += _ => OnAnchorInteractStarted();
+        anchorInteractAction.canceled += _ => OnAnchorInteractCanceled();
 
         m_Trajectory.gameObject.SetActive(false);
     }
 
-    private void OnAnchorInteractStarted(InputAction.CallbackContext context)
+    private void OnAnchorInteractStarted()
     {
-        if (!(context.interaction is SlowTapInteraction))
-        {
-            return;
-        }
-
         m_WindUpStartTime = Time.time;
         m_Trajectory.gameObject.SetActive(true);
     }
 
-    private void OnAnchorInteractPerformed(InputAction.CallbackContext context)
+    private void OnAnchorInteractCanceled()
     {
-        if (!(context.interaction is SlowTapInteraction))
+        if (HoldTime > ThrowHoldTime)
         {
-            return;
+            ThrowAnchor(ThrowVelocity);
+        }
+        else
+        {
+            DropAnchor();
         }
 
-        Throw(ThrowVelocity);
         m_Trajectory.gameObject.SetActive(false);
     }
 
@@ -60,7 +61,11 @@ public class AnchorThrower : MonoBehaviour
         m_ThrowDirection = value.Get<Vector2>();
     }
 
-    private void Throw(Vector2 velocity)
+    private void ThrowAnchor(Vector2 velocity)
+    {
+    }
+
+    private void DropAnchor()
     {
     }
 

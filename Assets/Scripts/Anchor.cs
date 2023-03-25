@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class Anchor : MonoBehaviour
 {
-    public bool Simulated { set => _rb.simulated = value; }
+    public bool Simulated { set => m_Rigidbody.simulated = value; }
 
-    private Rigidbody2D _rb;
+    private Rigidbody2D m_Rigidbody;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        m_Rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    public void Unstick()
+    {
+        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    public void Throw(Vector2 velocity)
+    {
+        m_Rigidbody.velocity = velocity;
     }
 }

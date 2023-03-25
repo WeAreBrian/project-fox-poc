@@ -8,11 +8,13 @@ using UnityEngine.InputSystem.Interactions;
 
 public class AnchorThrower : MonoBehaviour
 {
-    public float MinThrowSpeed = 5;
-    public float MaxThrowSpeed = 8;
+    public float MinThrowSpeed = 8;
+    public float MaxThrowSpeed = 15;
+    [Range(0, 2)]
     public float WindUpTime = 0.5f;
+    public AnimationCurve WindUpCurve;
 
-    public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, (Time.time - m_WindUpStartTime) / WindUpTime);
+    public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate((Time.time - m_WindUpStartTime) / WindUpTime));
     public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
 
     [SerializeField]
@@ -60,7 +62,6 @@ public class AnchorThrower : MonoBehaviour
 
     private void Throw(Vector2 velocity)
     {
-
     }
 
     private void Update()

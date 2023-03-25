@@ -58,7 +58,14 @@ public class AnchorThrower : MonoBehaviour
 
     private void OnAim(InputValue value)
     {
-        m_ThrowDirection = value.Get<Vector2>();
+        var inputDirection = value.Get<Vector2>();
+
+        if (Mathf.Approximately(inputDirection.sqrMagnitude, 0))
+        {
+            return;
+        }
+
+        m_ThrowDirection = inputDirection;
     }
 
     private void ThrowAnchor(Vector2 velocity)

@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "AnchorInteract",
-                    "type": "Button",
-                    "id": "97993725-e9f8-4cb5-a9bc-d22a8db5a86d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Tug",
                     "type": "Button",
                     "id": "36fcbab4-8074-4863-942f-b3acacee5002",
@@ -54,6 +45,15 @@
                     "name": "WorldInteract",
                     "type": "Button",
                     "id": "dc0afaa5-860d-4507-a148-8a500c31c1e4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AnchorInteract",
+                    "type": "Button",
+                    "id": "97993725-e9f8-4cb5-a9bc-d22a8db5a86d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -215,28 +215,6 @@
                 },
                 {
                     "name": "",
-                    "id": "b00b7e80-8b07-4eff-87f3-1b6144d10fb2",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "AnchorInteract",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6c829ecd-9560-4c80-a51a-63d9a2a047f4",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "AnchorInteract",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ea404203-a2e5-4bf5-b13f-4340c611cab9",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
@@ -295,9 +273,31 @@
                     "id": "4e224f30-26ac-4622-9e66-af937b581995",
                     "path": "<Mouse>/position",
                     "interactions": "",
-                    "processors": "MouseDirection",
+                    "processors": "MouseDirectionFromPlayer",
                     "groups": "Keyboard&Mouse",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b00b7e80-8b07-4eff-87f3-1b6144d10fb2",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "AnchorInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c829ecd-9560-4c80-a51a-63d9a2a047f4",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AnchorInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Anchor : MonoBehaviour
 {
+    public bool Simulated { set => _rb.simulated = value; }
+
     private Rigidbody2D _rb;
 
     // Start is called before the first frame update
@@ -22,6 +24,4 @@ public class Anchor : MonoBehaviour
     {
         _rb.constraints = RigidbodyConstraints2D.FreezePosition;
     }
-
-
 }

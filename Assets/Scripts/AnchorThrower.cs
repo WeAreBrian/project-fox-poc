@@ -15,6 +15,8 @@ public class AnchorThrower : MonoBehaviour
     public AnimationCurve WindUpCurve;
     [Range(0, 2)]
     public float ThrowHoldTime = 0.2f;
+    public float ThrowCooldown = 0.2f;
+    public Vector2 DropVelocity = new Vector2(0, 1.5f);
 
     public bool WindingUp => m_Trajectory.gameObject.activeSelf;
     public float HoldTime => Time.time - m_WindUpStartTime;
@@ -23,11 +25,14 @@ public class AnchorThrower : MonoBehaviour
 
     [SerializeField]
     private AnchorTrajectory m_Trajectory;
+    private AnchorHolder m_Holder;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
 
     private void Awake()
     {
+        m_Holder = GetComponent<AnchorHolder>();
+
         var playerInput = GetComponent<PlayerInput>();
         var anchorInteractAction = playerInput.actions["AnchorInteract"];
 
@@ -39,12 +44,22 @@ public class AnchorThrower : MonoBehaviour
 
     private void OnAnchorInteractStarted()
     {
+        if (!m_Holder.HoldingAnchor || m_Holder.HoldTime < ThrowCooldown)
+        {
+            return;
+        }
+
         m_WindUpStartTime = Time.time;
         m_Trajectory.gameObject.SetActive(true);
     }
 
     private void OnAnchorInteractCanceled()
     {
+        if (!WindingUp)
+        {
+            return;
+        }
+
         if (HoldTime > ThrowHoldTime)
         {
             ThrowAnchor(ThrowVelocity);
@@ -71,10 +86,14 @@ public class AnchorThrower : MonoBehaviour
 
     private void ThrowAnchor(Vector2 velocity)
     {
+        var anchor = m_Holder.DropAnchor();
+        anchor.Throw(velocity);
     }
 
     private void DropAnchor()
     {
+        var anchor = m_Holder.DropAnchor();
+        anchor.Throw(DropVelocity);
     }
 
     private void Update()

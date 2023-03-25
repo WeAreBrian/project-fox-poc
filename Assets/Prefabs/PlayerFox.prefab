@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1208819179330828543}
   - component: {fileID: 8127432424583510208}
   - component: {fileID: 1866713526479858622}
+  - component: {fileID: 8191183188405619863}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -138,32 +139,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8191183188405619863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107137074636933804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb9f870adee737640b9d79df2537f7dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrabRadius: 1
---- !u!114 &474916487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107137074636933804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23ab3354648954851aa2118b29a80bf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
 --- !u!114 &-6278604282814379728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +332,23 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   ThrowHoldTime: 0.2
+  ThrowCooldown: 0.2
+  DropVelocity: {x: 0, y: 3}
   m_Trajectory: {fileID: 7530742050925470887}
+--- !u!114 &8191183188405619863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9f870adee737640b9d79df2537f7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrabRadius: 1
+  HoldPosition: {x: 0, y: 0.5}
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

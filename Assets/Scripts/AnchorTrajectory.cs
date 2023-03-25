@@ -54,8 +54,8 @@ public class AnchorTrajectory : MonoBehaviour
     {
         for (var pathIndex = 0; pathIndex < path.Length - 1; pathIndex++)
         {
-            var point = path[pathIndex];
-            var nextPoint = path[pathIndex + 1];
+            var point = (Vector2)transform.TransformPoint(path[pathIndex]);
+            var nextPoint = (Vector2)transform.TransformPoint(path[pathIndex + 1]);
 
             var direction = (nextPoint - point).normalized;
             var distance = Vector2.Distance(point, nextPoint);

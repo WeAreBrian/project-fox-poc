@@ -273,7 +273,7 @@
                     "id": "4e224f30-26ac-4622-9e66-af937b581995",
                     "path": "<Mouse>/position",
                     "interactions": "",
-                    "processors": "MouseDirection",
+                    "processors": "MouseDirectionFromPlayer",
                     "groups": "Keyboard&Mouse",
                     "action": "Aim",
                     "isComposite": false,

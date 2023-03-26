@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnchorHolder : MonoBehaviour
@@ -8,6 +9,7 @@ public class AnchorHolder : MonoBehaviour
     public float GrabRadius = 1;
     public Vector2 HoldPosition = new Vector2(0, 0.5f);
 
+    public Anchor Anchor => m_Anchor;
     public float HoldTime => Time.time - m_HoldStartTime;
 
     private Anchor m_Anchor;
@@ -43,9 +45,18 @@ public class AnchorHolder : MonoBehaviour
             return;
         }
 
-        m_Anchor.transform.SetParent(transform);
-        m_Anchor.transform.localPosition = HoldPosition;
-        m_Anchor.Simulated = false;
+        var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+
+        if (targetJoint == null)
+        {
+            targetJoint = m_Anchor.AddComponent<TargetJoint2D>();
+            targetJoint.autoConfigureTarget = false;
+        }
+
+        targetJoint.enabled = true;
+
+        var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
+        rigidBody.gravityScale = 0;
 
         m_HoldStartTime = Time.time;
     }
@@ -57,9 +68,12 @@ public class AnchorHolder : MonoBehaviour
             return null;
         }
 
-        // Set parent of anchor to world and keep its world position
-        m_Anchor.transform.SetParent(null, true);
-        m_Anchor.Simulated = true;
+        var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+        targetJoint.enabled = false;
+
+        var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
+        rigidBody.gravityScale = 1;
+
         m_Anchor.Unstick();
 
         var anchor = m_Anchor;
@@ -67,5 +81,14 @@ public class AnchorHolder : MonoBehaviour
         m_Anchor = null;
 
         return anchor;
+    }
+
+    private void FixedUpdate()
+    {
+        if (m_Anchor != null)
+        {
+            var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+            targetJoint.target = (Vector2)transform.position + HoldPosition;
+        }
     }
 }

@@ -33,6 +33,7 @@ public class AnchorHolder : MonoBehaviour
         var anchorLayerMask = LayerMask.GetMask("Anchor");
         var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
 
+        Debug.Log(collider);
         if (collider == null)
         {
             return;
@@ -61,6 +62,9 @@ public class AnchorHolder : MonoBehaviour
         collider.enabled = false;
 
         m_Anchor.Unstick();
+        
+        //Debug.Log("Grabbing Anchor");
+        //m_Anchor.PickUp(transform, HoldPosition);
 
         m_HoldStartTime = Time.time;
     }
@@ -81,7 +85,7 @@ public class AnchorHolder : MonoBehaviour
         var collider = m_Anchor.GetComponent<Collider2D>();
         collider.enabled = true;
 
-        m_Anchor.Unstick();
+        m_Anchor.Drop();
 
         var anchor = m_Anchor;
 

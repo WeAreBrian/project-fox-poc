@@ -38,7 +38,6 @@ public class AnchorThrower : MonoBehaviour
 
         anchorInteractAction.started += OnAnchorInteractStarted;
         anchorInteractAction.canceled += OnAnchorInteractCanceled;
-
     }
 
     private void OnAnchorInteractStarted(InputAction.CallbackContext context)
@@ -54,7 +53,6 @@ public class AnchorThrower : MonoBehaviour
 
     private void OnAnchorInteractCanceled(InputAction.CallbackContext context)
     {
-        Debug.Log(m_Trajectory.gameObject);
         if (!WindingUp)
         {
             return;
@@ -100,7 +98,6 @@ public class AnchorThrower : MonoBehaviour
     {
         m_Trajectory.Velocity = ThrowVelocity;
     }
-
 
     private void FixedUpdate()
     {

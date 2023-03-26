@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum AnchorState
-{
-    Free,
-    Grounded,
-    Lodged,
-    Held
-}
-
 public class Anchor : MonoBehaviour
 {
     public Rigidbody2D Rigidbody => m_Rigidbody;
@@ -19,7 +11,7 @@ public class Anchor : MonoBehaviour
     private GameObject m_ObjectLastLodgedIn;
     private Rigidbody2D m_Rigidbody;
 
-    private void Start()
+    private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -42,32 +34,25 @@ public class Anchor : MonoBehaviour
         }
         else
         {
-            Debug.Log("updating state to grounded");
             UpdateState(AnchorState.Grounded);
         }
-        
-        m_Rigidbody.bodyType = RigidbodyType2D.Static;
     }
 
-    public void PickUp(Transform parent, Vector2 positionOffset)
+    public void PickUp()
     {
-        Debug.Log("Picking up");
-        transform.SetParent(parent);
-        transform.localPosition = positionOffset;
         UpdateState(AnchorState.Held);
     }
 
     private void UpdateState(AnchorState next)
     {
-
-        //Reset lodge object so that it can be lodged in again
+        // Reset lodge object so that it can be lodged in again
         if (next == AnchorState.Grounded || next == AnchorState.Held)
         {
             m_ObjectLastLodgedIn = null;
         }
 
-        //set contraints based on state
-        if (next == AnchorState.Free)
+        // Set body type based on state
+        if (next == AnchorState.Free || next == AnchorState.Held)
         {
             m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
         }
@@ -76,24 +61,11 @@ public class Anchor : MonoBehaviour
             m_Rigidbody.bodyType = RigidbodyType2D.Static;
         }
 
-        //Reset rotation when anchor is picked up
-        if (next == AnchorState.Held)
-        {
-            Simulated = false;
-            m_Rigidbody.rotation = 0;
-        }
-        else
-        {
-            Simulated = true;
-        }
-
         m_State = next;
     }
 
     public void Drop()
     {
-        // Set parent of anchor to world and keep its world position
-        transform.SetParent(null, true);
         UpdateState(AnchorState.Free);
     }
 

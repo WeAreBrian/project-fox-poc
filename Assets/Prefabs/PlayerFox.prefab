@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8127432424583510208}
   - component: {fileID: 1866713526479858622}
   - component: {fileID: 8191183188405619863}
-  - component: {fileID: 3247044795058694746}
+  - component: {fileID: 931327241759853775}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
---- !u!114 &3247044795058694746
+--- !u!114 &931327241759853775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

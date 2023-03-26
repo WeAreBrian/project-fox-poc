@@ -8,7 +8,7 @@ public class Chain : MonoBehaviour
     public Vector2 LinkSize = new Vector2(0.3f, 0.9f);
     public float LinkMass = 0.1f;
     public Sprite LinkSprite;
-    public float MaxDistanceTolerance = 0.7f;
+    public float MaxDistanceTolerance = 1;
     public Vector2 AnchorAnchorPoint = new Vector2(0, 0.425f);
     public Vector2 PlayerAnchorPoint = Vector2.zero;
     public bool UseMaxLength;
@@ -19,6 +19,7 @@ public class Chain : MonoBehaviour
     /// </summary>
     public float LinkAnchorDistance => LinkSize.y - LinkSize.x;
     public float LinkAnchorOffset => LinkAnchorDistance / 2;
+    public Rigidbody2D[] Links => m_Links;
 
     private Rigidbody2D[] m_Links;
 
@@ -29,10 +30,17 @@ public class Chain : MonoBehaviour
 
         CreateChain(anchor, player);
 
+        var maxDistance = (UseMaxLength ? MaxLength : Vector2.Distance(anchor.transform.position, player.transform.position)) + MaxDistanceTolerance;
         var distanceJoint = player.AddComponent<DistanceJoint2D>();
+        distanceJoint.autoConfigureDistance = false;
+        distanceJoint.autoConfigureConnectedAnchor = false;
         distanceJoint.maxDistanceOnly = true;
         distanceJoint.connectedBody = anchor;
-        distanceJoint.distance = (UseMaxLength ? MaxLength : Vector2.Distance(anchor.transform.position, player.transform.position)) + MaxDistanceTolerance;
+        distanceJoint.distance = maxDistance;
+
+        // Add chain to ChainMovement
+        var chainMovement = player.GetComponent<ChainMovement>();
+        chainMovement.Chain = this;
     }
 
     private void CreateChain(Rigidbody2D anchor, Rigidbody2D player)

@@ -36,7 +36,6 @@ public class Anchor : MonoBehaviour
             Debug.Log("updating state to grounded");
             UpdateState(AnchorState.Grounded);
         }
-        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     public void PickUp(Transform parent, Vector2 positionOffset)
@@ -90,11 +89,6 @@ public class Anchor : MonoBehaviour
     public void Dislodge()
     {
         UpdateState(AnchorState.Free);
-    }
-
-    public void Lodge()
-    {
-        UpdateState(AnchorState.Lodged);
     }
 
     public void Throw(Vector2 velocity)

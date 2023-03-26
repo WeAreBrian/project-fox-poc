@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 
 public class AnchorThrower : MonoBehaviour
 {
@@ -28,7 +26,7 @@ public class AnchorThrower : MonoBehaviour
     private AnchorHolder m_Holder;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
-
+    
     private void Awake()
     {
         m_Trajectory = GetComponentInChildren<AnchorTrajectory>();
@@ -40,7 +38,6 @@ public class AnchorThrower : MonoBehaviour
 
         anchorInteractAction.started += OnAnchorInteractStarted;
         anchorInteractAction.canceled += OnAnchorInteractCanceled;
-
     }
 
     private void OnAnchorInteractStarted(InputAction.CallbackContext context)
@@ -56,7 +53,6 @@ public class AnchorThrower : MonoBehaviour
 
     private void OnAnchorInteractCanceled(InputAction.CallbackContext context)
     {
-        Debug.Log(m_Trajectory.gameObject);
         if (!WindingUp)
         {
             return;
@@ -103,9 +99,25 @@ public class AnchorThrower : MonoBehaviour
         m_Trajectory.Velocity = ThrowVelocity;
     }
 
+    private void FixedUpdate()
+    {
+        if (WindingUp)
+        {
+            OrientAnchor();
+        }
+    }
+
+    private void OrientAnchor(float strength = 4, float damping = 1)
+    {
+        var anchor = m_Holder.Anchor.Rigidbody;
+        var angle = Vector2.SignedAngle(-anchor.transform.up, m_ThrowDirection);
+
+        anchor.AddTorque(-anchor.angularVelocity * damping);
+        anchor.AddTorque(angle * strength);
+    }
+
     private void OnDestroy()
     {
-
         var playerInput = GetComponent<PlayerInput>();
         var anchorInteractAction = playerInput.actions["AnchorInteract"];
         anchorInteractAction.started -= OnAnchorInteractStarted;

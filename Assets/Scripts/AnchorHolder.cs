@@ -60,6 +60,8 @@ public class AnchorHolder : MonoBehaviour
 
         collider.enabled = false;
 
+        m_Anchor.Unstick();
+
         m_HoldStartTime = Time.time;
     }
 

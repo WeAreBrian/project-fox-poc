@@ -58,6 +58,8 @@ public class AnchorHolder : MonoBehaviour
         var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
         rigidBody.gravityScale = 0;
 
+        collider.enabled = false;
+
         m_HoldStartTime = Time.time;
     }
 
@@ -73,6 +75,9 @@ public class AnchorHolder : MonoBehaviour
 
         var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
         rigidBody.gravityScale = 1;
+
+        var collider = m_Anchor.GetComponent<Collider2D>();
+        collider.enabled = true;
 
         m_Anchor.Unstick();
 

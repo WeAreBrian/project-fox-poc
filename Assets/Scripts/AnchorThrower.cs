@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 
 public class AnchorThrower : MonoBehaviour
 {
@@ -28,7 +26,6 @@ public class AnchorThrower : MonoBehaviour
     private AnchorHolder m_Holder;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
-    private PidController m_TorqueController = new PidController();
     
     private void Awake()
     {
@@ -41,9 +38,6 @@ public class AnchorThrower : MonoBehaviour
         anchorInteractAction.canceled += _ => OnAnchorInteractCanceled();
 
         m_Trajectory.gameObject.SetActive(false);
-
-        m_TorqueController.Proportional = 8;
-        m_TorqueController.Derivative = 3;
     }
 
     private void OnAnchorInteractStarted()
@@ -55,7 +49,6 @@ public class AnchorThrower : MonoBehaviour
 
         m_WindUpStartTime = Time.time;
         m_Trajectory.gameObject.SetActive(true);
-        m_TorqueController.Reset();
     }
 
     private void OnAnchorInteractCanceled()
@@ -114,15 +107,12 @@ public class AnchorThrower : MonoBehaviour
         }
     }
 
-    private void OrientAnchor()
+    private void OrientAnchor(float strength = 4, float damping = 1)
     {
-        var currentDirection = -m_Holder.Anchor.transform.up;
-        var error = Mathf.Deg2Rad * Vector2.SignedAngle(currentDirection, m_ThrowDirection);
+        var anchor = m_Holder.Anchor.Rigidbody;
+        var angle = Vector2.SignedAngle(-anchor.transform.up, m_ThrowDirection);
 
-        m_TorqueController.Current = error;
-        m_TorqueController.Target = 0;
-        var torque = m_TorqueController.Update(Time.fixedDeltaTime);
-
-        m_Holder.Anchor.Rigidbody.AddTorque(-torque);
+        anchor.AddTorque(-anchor.angularVelocity * damping);
+        anchor.AddTorque(angle * strength);
     }
 }

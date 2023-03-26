@@ -38,6 +38,11 @@ public class HorizontalMovement : MonoBehaviour
         var horizontalAxisValue = directionX;
         rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
 
+        //if (!Mathf.Approximately(horizontalAxisValue, 0))
+        //{
+        //    rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
+        //}
+
         //if (m_Grounded.OnGround)
         //{
         //    rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);

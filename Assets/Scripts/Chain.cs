@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Chain : MonoBehaviour
 {
-    public Vector2 LinkSize = new Vector2(0.3f, 0.7f);
+    public Vector2 LinkSize = new Vector2(0.3f, 0.9f);
     public float LinkMass = 0.1f;
     public Sprite LinkSprite;
     public float MaxDistanceTolerance = 1.5f;
     public Vector2 AnchorAnchorPoint = new Vector2(0, 0.425f);
     public Vector2 PlayerAnchorPoint = Vector2.zero;
     public bool UseMaxLength;
-    public float MaxLength;
+    public float MaxLength = 20;
 
     /// <summary>
     /// The distance between two HingeJoint2D anchors on the same link.
@@ -92,8 +92,8 @@ public class Chain : MonoBehaviour
 
         var spriteRenderer = link.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = LinkSprite;
-        spriteRenderer.drawMode = SpriteDrawMode.Sliced;
-        spriteRenderer.size = LinkSize;
+        //spriteRenderer.drawMode = SpriteDrawMode.Sliced;
+        //spriteRenderer.size = LinkSize;
 
         var rigidBody = link.AddComponent<Rigidbody2D>();
         rigidBody.mass = LinkMass;

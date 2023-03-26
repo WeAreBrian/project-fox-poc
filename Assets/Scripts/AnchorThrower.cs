@@ -29,18 +29,19 @@ public class AnchorThrower : MonoBehaviour
     
     private void Awake()
     {
-        m_Holder = GetComponent<AnchorHolder>();
+        m_Trajectory = GetComponentInChildren<AnchorTrajectory>();
+        m_Trajectory.gameObject.SetActive(false);
 
+        m_Holder = GetComponent<AnchorHolder>();
         var playerInput = GetComponent<PlayerInput>();
         var anchorInteractAction = playerInput.actions["AnchorInteract"];
 
-        anchorInteractAction.started += _ => OnAnchorInteractStarted();
-        anchorInteractAction.canceled += _ => OnAnchorInteractCanceled();
+        anchorInteractAction.started += OnAnchorInteractStarted;
+        anchorInteractAction.canceled += OnAnchorInteractCanceled;
 
-        m_Trajectory.gameObject.SetActive(false);
     }
 
-    private void OnAnchorInteractStarted()
+    private void OnAnchorInteractStarted(InputAction.CallbackContext context)
     {
         if (!m_Holder.HoldingAnchor || m_Holder.HoldTime < ThrowCooldown)
         {
@@ -51,8 +52,9 @@ public class AnchorThrower : MonoBehaviour
         m_Trajectory.gameObject.SetActive(true);
     }
 
-    private void OnAnchorInteractCanceled()
+    private void OnAnchorInteractCanceled(InputAction.CallbackContext context)
     {
+        Debug.Log(m_Trajectory.gameObject);
         if (!WindingUp)
         {
             return;
@@ -99,6 +101,7 @@ public class AnchorThrower : MonoBehaviour
         m_Trajectory.Velocity = ThrowVelocity;
     }
 
+
     private void FixedUpdate()
     {
         if (WindingUp)
@@ -114,5 +117,13 @@ public class AnchorThrower : MonoBehaviour
 
         anchor.AddTorque(-anchor.angularVelocity * damping);
         anchor.AddTorque(angle * strength);
+    }
+
+    private void OnDestroy()
+    {
+        var playerInput = GetComponent<PlayerInput>();
+        var anchorInteractAction = playerInput.actions["AnchorInteract"];
+        anchorInteractAction.started -= OnAnchorInteractStarted;
+        anchorInteractAction.canceled -= OnAnchorInteractCanceled;
     }
 }

@@ -1253,12 +1253,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 107137074708933676}
   m_PrefabAsset: {fileID: 0}
---- !u!50 &1130451189 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 474916486, guid: fea7d46b09dd64780ba611993068e295,
-    type: 3}
-  m_PrefabInstance: {fileID: 107137074708933676}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1144030208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,31 +1631,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1579239678 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5066340218285788536, guid: 615c7383d4c6eb2449b4198e5fd553b1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1893097110}
-  m_PrefabAsset: {fileID: 0}
---- !u!232 &1579239684
-DistanceJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1579239678}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 1130451189}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 0
-  m_Distance: 1
-  m_MaxDistanceOnly: 1
 --- !u!1001 &1893097110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1677,12 +1646,12 @@ PrefabInstance:
     - target: {fileID: 5066340218285788532, guid: 615c7383d4c6eb2449b4198e5fd553b1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.57
+      value: -1.86
       objectReference: {fileID: 0}
     - target: {fileID: 5066340218285788532, guid: 615c7383d4c6eb2449b4198e5fd553b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.77
+      value: 10.92
       objectReference: {fileID: 0}
     - target: {fileID: 5066340218285788532, guid: 615c7383d4c6eb2449b4198e5fd553b1,
         type: 3}
@@ -1727,11 +1696,6 @@ PrefabInstance:
     - target: {fileID: 5066340218285788536, guid: 615c7383d4c6eb2449b4198e5fd553b1,
         type: 3}
       propertyPath: m_Name
-      value: Anchor
-      objectReference: {fileID: 0}
-    - target: {fileID: 5066340218285788536, guid: 615c7383d4c6eb2449b4198e5fd553b1,
-        type: 3}
-      propertyPath: m_TagString
       value: Anchor
       objectReference: {fileID: 0}
     m_RemovedComponents: []

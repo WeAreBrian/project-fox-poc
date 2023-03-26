@@ -20,12 +20,14 @@ public class Switch : MonoBehaviour
         m_Renderer = GetComponent<SpriteRenderer>();
         m_Renderer.sprite = m_UntoggledSprite;
         m_Togglable = true;
+        m_ConnectedObject.GetComponent<IToggle>().DisableSelfToggle();
     }
 
     private void Toggle()
     {
         if (!m_PlayerInRange) return;
         if (!m_Togglable) return;
+
         var toggle = m_ConnectedObject.GetComponent<IToggle>();
         m_Togglable = false;
         StartCoroutine(ResetState(toggle.GetResetTime()));

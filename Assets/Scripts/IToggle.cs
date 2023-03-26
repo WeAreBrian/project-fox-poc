@@ -6,4 +6,6 @@ public interface IToggle
     public float GetResetTime();
 
     public void Toggle();
+
+    public void DisableSelfToggle();
 }

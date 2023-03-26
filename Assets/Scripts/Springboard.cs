@@ -9,7 +9,7 @@ public enum SpringboardState
     Resetting
 }
 
-public class Springboard : MonoBehaviour
+public class Springboard : MonoBehaviour, IToggle
 {
     private SpringboardState m_State;
     [SerializeField]
@@ -21,6 +21,7 @@ public class Springboard : MonoBehaviour
     [SerializeField]
     private float m_ResetTime;
     private Vector3 m_restingPosition;
+    private bool m_SelfToggle = true;
     private Rigidbody2D m_Rb;
 
     private void Start()
@@ -52,8 +53,20 @@ public class Springboard : MonoBehaviour
         }
     }
 
+    public float GetResetTime()
+    {
+        return m_ResetTime;
+    }
+
+    public void DisableSelfToggle()
+    {
+        m_SelfToggle = false;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!m_SelfToggle) return;
+
         if (m_State == SpringboardState.Resetting) return;
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain")) return;
@@ -66,7 +79,11 @@ public class Springboard : MonoBehaviour
                 return;
             }
         }
+        Toggle();
+    }
 
+    public void Toggle()
+    {
         m_State = SpringboardState.Triggered;
         m_Rb.AddForce(m_SpringForce * Vector2.up, ForceMode2D.Impulse);
     }

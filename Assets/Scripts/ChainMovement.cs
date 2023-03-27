@@ -23,9 +23,15 @@ public class ChainMovement : MonoBehaviour
     private Rigidbody2D m_Rigidbody;
     private float m_DismountDirection;
     private List<Collider2D> m_MountableLinks = new List<Collider2D>();
+    private Grounded m_Grounded;
 
     public void Mount()
     {
+        if (m_Grounded.OnGround)
+        {
+            return;
+        }
+
         if (Mounted)
         {
             return;
@@ -66,7 +72,10 @@ public class ChainMovement : MonoBehaviour
         Destroy(m_Attachment);
         m_Attachment = null;
 
-        m_Rigidbody.velocity = Quaternion.Euler(0, 0, DismountMaxAngle * -m_DismountDirection) * Vector2.up * DismountVelocity;
+        if (!m_Grounded.OnGround)
+        {
+            m_Rigidbody.velocity = Quaternion.Euler(0, 0, DismountMaxAngle * -m_DismountDirection) * Vector2.up * DismountVelocity;
+        }
     }
 
     public void Climb(float direction)
@@ -102,8 +111,19 @@ public class ChainMovement : MonoBehaviour
             return;
         }
 
-        var velocity = -m_Attachment.connectedBody.transform.up * m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
-        m_Rigidbody.MovePosition(transform.position + velocity);
+        if (m_Grounded.OnGround)
+        {
+            Dismount();
+            return;
+        }
+
+        if (!Mathf.Approximately(m_ClimbDirection, 0))
+        {
+            var velocity = -m_Attachment.connectedBody.transform.up * m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
+            m_Rigidbody.MovePosition(transform.position + velocity);
+        }
+        //var force = -m_Attachment.connectedBody.transform.up * m_ClimbDirection * 80;
+        //m_Rigidbody.AddForce(force);
 
         m_Attachment.connectedAnchor -= new Vector2(0, m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime);
 
@@ -149,6 +169,7 @@ public class ChainMovement : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        m_Grounded = GetComponent<Grounded>();
     }
 
     private void OnDrawGizmos()

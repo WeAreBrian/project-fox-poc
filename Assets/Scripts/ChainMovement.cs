@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,10 @@ using UnityEngine.InputSystem;
 public class ChainMovement : MonoBehaviour
 {
     public float ClimbSpeed = 4.5f;
+    public float MountRadius = 1;
     public float DismountVelocity = 5;
     public float DismountMaxAngle = 60;
+    public bool MountFurthestLink = true;
     [HideInInspector]
     public Chain Chain;
 
@@ -19,6 +22,7 @@ public class ChainMovement : MonoBehaviour
     private DistanceJoint2D m_Attachment;
     private Rigidbody2D m_Rigidbody;
     private float m_DismountDirection;
+    private List<Collider2D> m_MountableLinks = new List<Collider2D>();
 
     public void Mount()
     {
@@ -29,7 +33,14 @@ public class ChainMovement : MonoBehaviour
 
         Debug.Log($"Mounted to chain");
 
-        m_CurrentLinkIndex = Chain.Links.Length - 1;
+        if (MountFurthestLink)
+        {
+            m_CurrentLinkIndex = GetFurthestMountableLinkIndex();
+        }
+        else
+        {
+            m_CurrentLinkIndex = Chain.Links.Length - 1;
+        }
 
         var link = Chain.Links[m_CurrentLinkIndex];
 
@@ -119,6 +130,20 @@ public class ChainMovement : MonoBehaviour
             m_Attachment.connectedBody = prevLink;
             m_Attachment.connectedAnchor = new Vector2(0, Chain.LinkAnchorOffset);
         }
+    } 
+
+    private int GetFurthestMountableLinkIndex()
+    {
+        var linkFilter = new ContactFilter2D();
+        linkFilter.layerMask = LayerMask.GetMask("Chain");
+
+        var linksCount = Physics2D.OverlapCircle(transform.position, MountRadius, linkFilter, m_MountableLinks);
+
+        return m_MountableLinks.Take(linksCount)
+            .Select(x => Array.FindIndex(Chain.Links, y => y == x.GetComponent<Rigidbody2D>()))
+            .Where(x => x != -1)
+            .DefaultIfEmpty(Chain.Links.Length - 1)
+            .Min();
     }
 
     private void Awake()
@@ -128,16 +153,28 @@ public class ChainMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!Mounted)
+        if (!Application.isPlaying)
         {
             return;
         }
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(m_Attachment.connectedBody.transform.TransformPoint(m_Attachment.connectedAnchor), 0.15f);
+        if (!Mounted)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(transform.position, MountRadius);
 
-        var slideForce = new Ray(transform.position, -m_Attachment.connectedBody.transform.up * m_ClimbDirection);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(slideForce);
+            var linkIndex = GetFurthestMountableLinkIndex();
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(Chain.Links[linkIndex].transform.position, 0.15f);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(m_Attachment.connectedBody.transform.TransformPoint(m_Attachment.connectedAnchor), 0.15f);
+
+            var slideForce = new Ray(transform.position, -m_Attachment.connectedBody.transform.up * m_ClimbDirection);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(slideForce);
+        }
     }
 }

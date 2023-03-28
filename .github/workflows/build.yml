@@ -52,9 +52,9 @@ jobs:
             Library-
             
       - name: Build into WebGL
-        uses: game-ci/unity-builder@v2
+        uses: game-ci/unity-builder@v2.2.0
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
         with:
           targetPlatform: WebGL
 

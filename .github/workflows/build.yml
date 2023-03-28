@@ -6,13 +6,16 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
 jobs:
   checksLicense:
     name: Check for Unity license ✔️
     runs-on: ubuntu-latest
     steps:
       - name: Fail - No license
-        if: ${{ !startsWith(secrets.UNITY_LICENSE, '<') }}
+        if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
         run: exit 1
 
   buildWebGL:

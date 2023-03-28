@@ -1,8 +1,7 @@
 # This file will be deleted after the first run
 name: 🔑 Acquire activation file
 
-on:
-	workflow_dispatch: {}
+on: workflow_dispatch
 
 jobs:
 	activation:

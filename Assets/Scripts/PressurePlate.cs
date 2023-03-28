@@ -8,7 +8,7 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour
 {
 
-    [SerializeField] private bool m_Active; //whether the pressure plate is active or not
+    private bool m_Active; //whether the pressure plate is active or not
     [SerializeField] private float m_ActivationMass; //the mass needed to activate pressure plate
 
     // Start is called before the first frame update
@@ -42,6 +42,7 @@ public class PressurePlate : MonoBehaviour
         // then activate the pressure plate
         if (rb.mass >= m_ActivationMass)
         {
+            Debug.Log("Pressure plate activated");
             m_Active = true;
         }
     }
@@ -63,6 +64,7 @@ public class PressurePlate : MonoBehaviour
 
         if (rb.mass >= m_ActivationMass)
         {
+            Debug.Log("Pressure plate deactivated");
             m_Active = false;
         }
     }

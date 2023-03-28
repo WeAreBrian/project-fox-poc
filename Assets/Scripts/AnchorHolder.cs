@@ -15,6 +15,14 @@ public class AnchorHolder : MonoBehaviour
   private Anchor m_Anchor;
   private float m_HoldStartTime;
 
+  [SerializeField]
+  private VerticalMovement m_WeightedJump;
+
+  private void Awake()
+  {
+    m_WeightedJump = GetComponent<VerticalMovement>();
+  }
+
   private void OnAnchorInteract()
   {
     if (!HoldingAnchor)
@@ -26,6 +34,7 @@ public class AnchorHolder : MonoBehaviour
   private void GrabAnchor()
   {
     if (HoldingAnchor) return;
+    m_WeightedJump.JumpForce = 2;
 
     var anchorLayerMask = LayerMask.GetMask("Anchor");
     var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
@@ -65,6 +74,7 @@ public class AnchorHolder : MonoBehaviour
   public Anchor DropAnchor()
   {
     if (!HoldingAnchor) return null;
+    m_WeightedJump.JumpForce = 5;
 
     var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
     targetJoint.enabled = false;

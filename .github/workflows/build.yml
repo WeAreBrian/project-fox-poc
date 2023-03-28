@@ -4,6 +4,8 @@ on: workflow_dispatch
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}
@@ -67,9 +69,9 @@ jobs:
           name: build-WebGL
           path: build/WebGL
 
-  deployWebGL:
+  uploadWebGL:
     needs: buildWebGL
-    name: Deploy WebGL 🚢
+    name: Upload WebGL to GitHub Pages 🚢
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -88,26 +90,26 @@ jobs:
           folder: build/WebGL
 
   notifyDiscord:
-    needs: deployWebGL
-    name: 📢 Notify on Discord
+    needs: uploadWebGL
+    name: Notify on Discord 📢
     if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Get Workflow Conclusion
         uses: technote-space/workflow-conclusion-action@v2
 
-      - name: Notify Success
-        if: env.WORKFLOW_CONCLUSION == 'success'
-        uses: nobrayner/discord-webhook@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          discord-webhook: ${{ secrets.WEBHOOK_URL }}
-          username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
-          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
-          title: "✅ Deployment status: SUCCESS!"
-          description: "🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)."
-          include-details: "false"
-          color-success: "#2eb886"
+      # - name: Notify Success
+      #   if: env.WORKFLOW_CONCLUSION == 'success'
+      #   uses: nobrayner/discord-webhook@v1
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     discord-webhook: ${{ secrets.WEBHOOK_URL }}
+      #     username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
+      #     avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
+      #     title: "✅ Deployment status: SUCCESS!"
+      #     description: "🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)."
+      #     include-details: "false"
+      #     color-success: "#2eb886"
 
       - name: Notify Failure
         if: env.WORKFLOW_CONCLUSION == 'failure'

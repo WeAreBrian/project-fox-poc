@@ -1,3 +1,4 @@
+# This file will be deleted after the first run
 name: 🔑 Acquire activation file
 
 on:
@@ -8,10 +9,12 @@ jobs:
 		name: Request manual activation file 🔑
 		runs-on: ubuntu-latest
 		steps:
+				# This file is needed so that GitHub pipelines can mess with Unity stuffs
 			- name: Request manual activation file
 				id: getManualLicenseFile
 				uses: game-ci/unity-request-activation-file@v2
 
+				# Expose file as artifact for download to put in environment variable for pipelines
 			- name: Expose as artifact
 				uses: actions/upload-artifact@v2
 				with:

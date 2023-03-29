@@ -101,4 +101,39 @@ public class PressurePlate : MonoBehaviour
 		
 		m_InCooldown = false;
 	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.CompareTag("Player"))
+		{
+			return;
+		}
+
+		Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+		if (rb == null)
+		{
+			Debug.Log("no rigid body existing");
+			return;
+		}
+
+		if (rb.bodyType == RigidbodyType2D.Static)
+		{
+			Debug.Log("Rb is static");
+			return;
+		}
+
+		if (rb.mass >= m_ActivationMass)
+		{
+			Debug.Log("Pressure plate deactivated");
+			m_Active = false;
+			m_Sprite.color = Color.red;
+			m_InCooldown = true;
+			StartCoroutine(CooldownCoroutine());
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		
+	}
 }

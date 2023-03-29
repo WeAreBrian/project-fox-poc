@@ -65,9 +65,7 @@ public class PressurePlate : MonoBehaviour
 		// then activate the pressure plate
 		if (rb.mass >= m_ActivationMass)
 		{
-			Debug.Log("Pressure plate activated");
-			m_Active = true;
-			m_Sprite.color = Color.green;
+			Activate();
 		}
 	}
 
@@ -88,11 +86,23 @@ public class PressurePlate : MonoBehaviour
 
 		if (rb.mass >= m_ActivationMass)
 		{
-			Debug.Log("Pressure plate deactivated");
-			m_Active = false;
-			m_Sprite.color = Color.red;
-			m_InCooldown = true;
-			StartCoroutine(CooldownCoroutine());
+			Deactivate();
 		}
+	}
+
+	private void Activate()
+	{
+		Debug.Log("Pressure plate activated");
+		m_Active = true;
+		m_Sprite.color = Color.green;
+	}
+
+	private void Deactivate()
+	{
+		Debug.Log("Pressure plate deactivated");
+		m_Active = false;
+		m_Sprite.color = Color.red;
+		m_InCooldown = true;
+		StartCoroutine(CooldownCoroutine());
 	}
 }

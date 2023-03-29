@@ -10,11 +10,16 @@ public class PressurePlate : MonoBehaviour
 
 	private bool m_Active; //whether the pressure plate is active or not
 	[SerializeField] private float m_ActivationMass; //the mass needed to activate pressure plate
+	[SerializeField] private float m_ActivationCooldown; // a wait time in between activations 
+	[SerializeField] private GameObject[] m_AttachedObject; //the object(s) it will activate
+	private SpriteRenderer m_Sprite;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		m_Active = false;
+		m_Sprite = GetComponent<SpriteRenderer>();
+		m_Sprite.color = Color.green;
 	}
 
 	// Update is called once per frame
@@ -45,6 +50,7 @@ public class PressurePlate : MonoBehaviour
 		{
 			Debug.Log("Pressure plate activated");
 			m_Active = true;
+			m_Sprite.color = Color.green;
 		}
 	}
 
@@ -74,6 +80,7 @@ public class PressurePlate : MonoBehaviour
 		{
 			Debug.Log("Pressure plate deactivated");
 			m_Active = false;
+			m_Sprite.color = Color.red;
 		}
 	}
 }

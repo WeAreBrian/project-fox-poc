@@ -64,12 +64,11 @@ public class PressurePlate : MonoBehaviour
 			return;
 		}
 
-		if(rb.bodyType == RigidbodyType2D.Static)
+		if (rb.bodyType == RigidbodyType2D.Static)
 		{
-			Debug.Log("Rb is static, returning");
+			Debug.Log("Rb is static");
 			return;
 		}
-
 
 		if (rb.mass >= m_ActivationMass)
 		{

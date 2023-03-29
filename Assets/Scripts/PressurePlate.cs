@@ -23,6 +23,7 @@ public class PressurePlate : MonoBehaviour
 		m_Active = false;
 		m_Sprite = GetComponent<SpriteRenderer>();
 		m_Sprite.color = Color.red;
+		m_InCooldown = false;
 	}
 
 	// Update is called once per frame
@@ -31,7 +32,15 @@ public class PressurePlate : MonoBehaviour
 
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	IEnumerator CooldownCoroutine()
+	{
+
+		yield return new WaitForSeconds(m_ActivationCooldown);
+		
+		m_InCooldown = false;
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (m_InCooldown)
 		{
@@ -62,78 +71,28 @@ public class PressurePlate : MonoBehaviour
 		}
 	}
 
-	// Same logic as OnCollisionEnter2D
-
-	private void OnCollisionExit2D(Collision2D collision)
-	{
-		if (collision.gameObject.CompareTag("Player"))
-		{
-			return;
-		}
-
-		Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-		if (rb == null)
-		{
-			Debug.Log("no rigid body existing");
-			return;
-		}
-
-		if (rb.bodyType == RigidbodyType2D.Static)
-		{
-			Debug.Log("Rb is static");
-			return;
-		}
-
-		if (rb.mass >= m_ActivationMass)
-		{
-			Debug.Log("Pressure plate deactivated");
-			m_Active = false;
-			m_Sprite.color = Color.red;
-			m_InCooldown = true;
-			StartCoroutine(CooldownCoroutine());
-		}
-	}
-
-	IEnumerator CooldownCoroutine()
-	{
-
-		yield return new WaitForSeconds(m_ActivationCooldown);
-		
-		m_InCooldown = false;
-	}
-
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.gameObject.CompareTag("Player"))
-		{
-			return;
-		}
-
-		Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-		if (rb == null)
-		{
-			Debug.Log("no rigid body existing");
-			return;
-		}
-
-		if (rb.bodyType == RigidbodyType2D.Static)
-		{
-			Debug.Log("Rb is static");
-			return;
-		}
-
-		if (rb.mass >= m_ActivationMass)
-		{
-			Debug.Log("Pressure plate deactivated");
-			m_Active = false;
-			m_Sprite.color = Color.red;
-			m_InCooldown = true;
-			StartCoroutine(CooldownCoroutine());
-		}
-	}
-
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		
+		if (collision.gameObject.CompareTag("Player"))
+		{
+			return;
+		}
+
+		Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+		if (rb == null)
+		{
+			Debug.Log("no rigid body existing");
+			return;
+		}
+
+
+		if (rb.mass >= m_ActivationMass)
+		{
+			Debug.Log("Pressure plate deactivated");
+			m_Active = false;
+			m_Sprite.color = Color.red;
+			m_InCooldown = true;
+			StartCoroutine(CooldownCoroutine());
+		}
 	}
 }

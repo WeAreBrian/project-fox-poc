@@ -11,15 +11,18 @@ public class PressurePlate : MonoBehaviour
 	private bool m_Active; //whether the pressure plate is active or not
 	[SerializeField] private float m_ActivationMass; //the mass needed to activate pressure plate
 	[SerializeField] private float m_ActivationCooldown; // a wait time in between activations 
+	private bool m_InCooldown;
+
 	[SerializeField] private GameObject[] m_AttachedObject; //the object(s) it will activate
 	private SpriteRenderer m_Sprite;
+
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		m_Active = false;
 		m_Sprite = GetComponent<SpriteRenderer>();
-		m_Sprite.color = Color.green;
+		m_Sprite.color = Color.red;
 	}
 
 	// Update is called once per frame
@@ -30,6 +33,11 @@ public class PressurePlate : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
+		if (m_InCooldown)
+		{
+			return;
+		}
+
 		// No foxes can activate this pressure plate
 
 		if (collision.gameObject.CompareTag("Player"))
@@ -81,6 +89,16 @@ public class PressurePlate : MonoBehaviour
 			Debug.Log("Pressure plate deactivated");
 			m_Active = false;
 			m_Sprite.color = Color.red;
+			m_InCooldown = true;
+			StartCoroutine(CooldownCoroutine());
 		}
+	}
+
+	IEnumerator CooldownCoroutine()
+	{
+
+		yield return new WaitForSeconds(m_ActivationCooldown);
+		
+		m_InCooldown = false;
 	}
 }

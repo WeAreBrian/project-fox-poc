@@ -8,64 +8,73 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour
 {
 
-    private bool m_Active; //whether the pressure plate is active or not
-    [SerializeField] private float m_ActivationMass; //the mass needed to activate pressure plate
+	private bool m_Active; //whether the pressure plate is active or not
+	[SerializeField] private float m_ActivationMass; //the mass needed to activate pressure plate
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        m_Active = false;
-    }
+	// Start is called before the first frame update
+	void Start()
+	{
+		m_Active = false;
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	// Update is called once per frame
+	void Update()
+	{
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // No foxes can activate this pressure plate
+	}
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            return;
-        }
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		// No foxes can activate this pressure plate
 
-        // check if object has a RigidBody
-        Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-        if (rb == null) { 
-            return; 
-        }
+		if (collision.gameObject.CompareTag("Player"))
+		{
+			return;
+		}
 
-        // and if it's mass is equal or higher than activation mass,
-        // then activate the pressure plate
-        if (rb.mass >= m_ActivationMass)
-        {
-            Debug.Log("Pressure plate activated");
-            m_Active = true;
-        }
-    }
+		// check if object has a RigidBody
+		Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+		if (rb == null)
+		{
+			return;
+		}
 
-    // Same logic as OnCollisionEnter2D
+		// and if it's mass is equal or higher than activation mass,
+		// then activate the pressure plate
+		if (rb.mass >= m_ActivationMass)
+		{
+			Debug.Log("Pressure plate activated");
+			m_Active = true;
+		}
+	}
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            return;
-        }
+	// Same logic as OnCollisionEnter2D
 
-        Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            return;
-        }
+	private void OnCollisionExit2D(Collision2D collision)
+	{
+		if (collision.gameObject.CompareTag("Player"))
+		{
+			return;
+		}
 
-        if (rb.mass >= m_ActivationMass)
-        {
-            Debug.Log("Pressure plate deactivated");
-            m_Active = false;
-        }
-    }
+		Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+		if (rb == null)
+		{
+			Debug.Log("no rigid body existing");
+			return;
+		}
+
+		if(rb.bodyType == RigidbodyType2D.Static)
+		{
+			Debug.Log("Rb is static, returning");
+			return;
+		}
+
+
+		if (rb.mass >= m_ActivationMass)
+		{
+			Debug.Log("Pressure plate deactivated");
+			m_Active = false;
+		}
+	}
 }

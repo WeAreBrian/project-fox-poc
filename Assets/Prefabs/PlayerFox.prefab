@@ -19,8 +19,7 @@ GameObject:
   - component: {fileID: 8127432424583510208}
   - component: {fileID: 1866713526479858622}
   - component: {fileID: 8191183188405619863}
-  - component: {fileID: 3247044795058694746}
-  - component: {fileID: 5162001169640572069}
+  - component: {fileID: 931327241759853775}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -106,12 +105,12 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 10
+  m_LinearDrag: 0.2
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -278,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b5f04e89a04cf488e8450db8ba4ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpForce: 5
+  JumpForce: 8
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,7 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
---- !u!114 &3247044795058694746
+--- !u!114 &931327241759853775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,18 +360,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85b4049c3a3a45141a3d67709131a73f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5162001169640572069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107137074636933804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b1f0de18691bb46a908295d61052e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6063310992840300421
@@ -401,7 +388,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6063310992840300421}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

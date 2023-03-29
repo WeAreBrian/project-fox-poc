@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 1866713526479858622}
   - component: {fileID: 8191183188405619863}
   - component: {fileID: 931327241759853775}
+  - component: {fileID: 3023190908246841861}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -360,6 +361,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85b4049c3a3a45141a3d67709131a73f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3023190908246841861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b1f0de18691bb46a908295d61052e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6063310992840300421

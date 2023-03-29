@@ -64,12 +64,7 @@ public class Anchor : MonoBehaviour
         //Reset rotation when anchor is picked up
         if (next == AnchorState.Held)
         {
-            Simulated = false;
             m_Rigidbody.rotation = 0;
-        }
-        else
-        {
-            Simulated = true;
         }
         // Set body type based on state
         if (next == AnchorState.Free || next == AnchorState.Held)

@@ -51,6 +51,21 @@ public class Anchor : MonoBehaviour
             m_ObjectLastLodgedIn = null;
         }
 
+        //set contraints based on state
+        if (next == AnchorState.Lodged)
+        {
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        else
+        {
+            m_Rigidbody.constraints = RigidbodyConstraints2D.None;
+        }
+
+        //Reset rotation when anchor is picked up
+        if (next == AnchorState.Held)
+        {
+            m_Rigidbody.rotation = 0;
+        }
         // Set body type based on state
         if (next == AnchorState.Free || next == AnchorState.Held)
         {
@@ -72,11 +87,6 @@ public class Anchor : MonoBehaviour
     public void Dislodge()
     {
         UpdateState(AnchorState.Free);
-    }
-
-    public void Lodge()
-    {
-        UpdateState(AnchorState.Lodged);
     }
 
     public void Throw(Vector2 velocity)

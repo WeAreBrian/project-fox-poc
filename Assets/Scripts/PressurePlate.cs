@@ -40,6 +40,9 @@ public class PressurePlate : MonoBehaviour
 		m_InCooldown = false;
 	}
 
+	// using triggers doesn't count if several objects are touching the pressure plate
+	// TODO: change to a list of collided game objects, and check if the list is empty before deactivating
+
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (m_InCooldown)

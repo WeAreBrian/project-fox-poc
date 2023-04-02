@@ -1,10 +1,10 @@
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy GitHub Pages 🚀
 
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["build-webgl"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,17 +24,19 @@ concurrency:
 jobs:
   # Build job
   build:
-    name: Compile WebGL build on GitHub Pages 🔧
+    name: Compile build 🔧
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: build-webgl
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./
+          source: .
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
@@ -42,7 +44,7 @@ jobs:
   # Deployment job
   deploy:
     needs: build
-    name: Compile WebGL build on GitHub Pages 🚀
+    name: Deploy build 🚀
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

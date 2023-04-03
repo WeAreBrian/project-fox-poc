@@ -1099,6 +1099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1043157394}
   - component: {fileID: 1043157395}
+  - component: {fileID: 1043157396}
   m_Layer: 0
   m_Name: Chain
   m_TagString: Untagged
@@ -1136,11 +1137,25 @@ MonoBehaviour:
   LinkSize: {x: 0.3, y: 0.9}
   LinkMass: 0.1
   LinkSprite: {fileID: 21300000, guid: 28b474116d6945b4ab9f63ec471d1c80, type: 3}
-  MaxDistanceTolerance: 1
-  AnchorAnchorPoint: {x: 0, y: 0.425}
-  PlayerAnchorPoint: {x: 0, y: 0}
-  UseMaxLength: 0
+  From: {fileID: 1474477472}
+  To: {fileID: 1130451181}
   MaxLength: 20
+  MountPriority: 0
+--- !u!114 &1043157396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043157393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449bc707131384f409599dcd46d218ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxDistanceTolerance: 1
+  FromAnchorPoint: {x: 0, y: 0.425}
+  ToAnchorPoint: {x: 0, y: 0}
 --- !u!1 &1065919515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,6 +1646,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1474477472 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5066340218285788532, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1893097110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1893097110
 PrefabInstance:
   m_ObjectHideFlags: 0

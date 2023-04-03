@@ -125,7 +125,7 @@ public class ChainMovement : MonoBehaviour
 		springJoint.frequency = AttachmentSpringFrequency;
 		springJoint.dampingRatio = 1;
 
-		m_Attachments = new AnchoredJoint2D[2] { distanceJoint, springJoint };
+		m_Attachments = new AnchoredJoint2D[] { distanceJoint, springJoint };
 	}
 
 	private void FixedUpdate()

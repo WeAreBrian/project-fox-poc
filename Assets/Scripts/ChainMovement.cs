@@ -12,10 +12,8 @@ public class ChainMovement : MonoBehaviour
 	public float MountedLinkDistanceLimit = 1;
 	public float DismountImpulse = 60;
 	public float DismountMaxAngle = 60;
-	public float AttachmentDistance = 0.5f;
-	public float AttachmentSpringFrequency = 16;
 
-	public bool Mounted => m_Attachments != null;
+	public bool Mounted => m_Attachment != null;
 	public Vector2 MountedLinkAnchor => new Vector2(0, Mathf.Repeat(m_MountDistance, m_Chain.LinkAnchorDistance) - m_Chain.LinkAnchorOffset);
 	public int MountedLinkIndex => Mathf.FloorToInt(m_MountDistance / m_Chain.LinkAnchorDistance);
 	public Rigidbody2D MountedLinkBody => m_Chain.Links[MountedLinkIndex];
@@ -24,7 +22,7 @@ public class ChainMovement : MonoBehaviour
 
 	private Chain m_Chain;
 	private float m_MountDistance;
-	private AnchoredJoint2D[] m_Attachments;
+	private TargetJoint2D m_Attachment;
 	private Rigidbody2D m_RigidBody;
 	private float m_DismountDirection;
 	private List<Collider2D> m_MountableLinks = new List<Collider2D>();
@@ -53,7 +51,8 @@ public class ChainMovement : MonoBehaviour
 		m_Chain = furthestLink.Chain;
 		m_MountDistance = m_Chain.LinkAnchorDistance * (furthestLink.LinkIndex + 0.5f);
 
-		CreateAttachments();
+		m_Attachment = gameObject.AddComponent<TargetJoint2D>();
+		m_Attachment.target = MountedLinkAnchorWorldPosition;
 	}
 
 	public void Dismount()
@@ -63,12 +62,8 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
-		foreach (var attachment in m_Attachments)
-		{
-			Destroy(attachment);
-		}
-
-		m_Attachments = null;
+		Destroy(m_Attachment);
+		m_Attachment = null;
 
 		if (!m_Grounded.OnGround)
 		{
@@ -103,31 +98,6 @@ public class ChainMovement : MonoBehaviour
 		Climb(direction);
 	}
 
-	private void CreateAttachments()
-	{
-		var distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
-		distanceJoint.connectedBody = MountedLinkBody;
-		distanceJoint.autoConfigureConnectedAnchor = false;
-		distanceJoint.connectedAnchor = MountedLinkAnchor;
-		distanceJoint.anchor = Vector2.zero;
-		distanceJoint.autoConfigureDistance = false;
-		distanceJoint.distance = AttachmentDistance;
-		distanceJoint.maxDistanceOnly = true;
-
-		// The spring joint is used to pull the player up the chain
-		var springJoint = gameObject.AddComponent<SpringJoint2D>();
-		springJoint.connectedBody = MountedLinkBody;
-		springJoint.autoConfigureConnectedAnchor = false;
-		springJoint.connectedAnchor = MountedLinkAnchor;
-		springJoint.anchor = Vector2.zero;
-		springJoint.autoConfigureDistance = false;
-		springJoint.distance = AttachmentDistance;
-		springJoint.frequency = AttachmentSpringFrequency;
-		springJoint.dampingRatio = 1;
-
-		m_Attachments = new AnchoredJoint2D[] { distanceJoint, springJoint };
-	}
-
 	private void FixedUpdate()
 	{
 		if (!Mounted)
@@ -150,16 +120,7 @@ public class ChainMovement : MonoBehaviour
 			m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.Length - 0.001f);
 		}
 
-		UpdateAttachments();
-	}
-
-	private void UpdateAttachments()
-	{
-		foreach (var attachment in m_Attachments)
-		{
-			attachment.connectedAnchor = MountedLinkAnchor;
-			attachment.connectedBody = MountedLinkBody;
-		}
+		m_Attachment.target = MountedLinkAnchorWorldPosition;
 	}
 
 	private IEnumerable<MountableLink> GetFurthestMountableLinks()

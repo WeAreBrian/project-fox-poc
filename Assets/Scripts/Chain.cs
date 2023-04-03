@@ -27,11 +27,6 @@ public class Chain : MonoBehaviour
 
 	private Rigidbody2D[] m_Links;
 
-	public int IndexOf(Rigidbody2D link)
-	{
-		return Array.FindIndex(m_Links, x => x == link);
-	}
-
 	private void Start()
 	{
 		CreateChain(From.position, To.position);

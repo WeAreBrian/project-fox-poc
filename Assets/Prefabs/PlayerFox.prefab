@@ -376,8 +376,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClimbSpeed: 4.5
-  DismountVelocity: 5
-  Chain: {fileID: 0}
+  MountRadius: 1
+  DismountImpulse: 60
+  DismountMaxAngle: 60
+  AttachmentDistance: 0.5
+  AttachmentSpringFrequency: 20
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

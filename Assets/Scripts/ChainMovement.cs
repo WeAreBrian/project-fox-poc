@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,15 +9,19 @@ public class ChainMovement : MonoBehaviour
 {
 	public float ClimbSpeed = 4.5f;
 	public float MountRadius = 1;
-	public float DismountVelocity = 5;
+	public float DismountImpulse = 60;
 	public float DismountMaxAngle = 60;
-	public bool MountFurthestLink = true;
+	public float AttachmentDistance = 0.5f;
+	public float AttachmentSpringFrequency = 16;
 
-	public bool Mounted => m_Attachment != null;
+	public bool Mounted => m_Attachments != null;
+	public Vector2 MountedLinkAnchor => new Vector2(0, Mathf.Repeat(m_MountDistance, m_Chain.LinkAnchorDistance) - m_Chain.LinkAnchorOffset);
+	public int MountedLinkIndex => Mathf.FloorToInt(m_MountDistance / m_Chain.LinkAnchorDistance);
+	public Rigidbody2D MountedLinkBody => m_Chain.Links[MountedLinkIndex];
 
 	private Chain m_Chain;
-	private int m_CurrentLinkIndex;
-	private DistanceJoint2D m_Attachment;
+	private float m_MountDistance;
+	private AnchoredJoint2D[] m_Attachments;
 	private Rigidbody2D m_RigidBody;
 	private float m_DismountDirection;
 	private List<Collider2D> m_MountableLinks = new List<Collider2D>();
@@ -44,20 +47,32 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
-		(m_Chain, m_CurrentLinkIndex) = furthestLink;
+		m_Chain = furthestLink.Chain;
 
-		var link = m_Chain.Links[m_CurrentLinkIndex];
+		var link = m_Chain.Links[furthestLink.LinkIndex];
 
-		m_Attachment = gameObject.AddComponent<DistanceJoint2D>();
-		m_Attachment.connectedBody = link;
-		m_Attachment.autoConfigureConnectedAnchor = false;
-		m_Attachment.connectedAnchor = Vector2.zero;
-		m_Attachment.anchor = Vector2.zero;
-		m_Attachment.autoConfigureDistance = false;
-		//m_Attachment.dampingRatio = 1;
-		//m_Attachment.frequency = 50;
-		//m_Attachment.maxDistanceOnly = true;
-		m_Attachment.distance = 0.5f;
+		m_MountDistance = m_Chain.LinkAnchorDistance * (furthestLink.LinkIndex + 0.5f);
+
+		var distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
+		distanceJoint.connectedBody = link;
+		distanceJoint.autoConfigureConnectedAnchor = false;
+		distanceJoint.connectedAnchor = Vector2.zero;
+		distanceJoint.anchor = Vector2.zero;
+		distanceJoint.autoConfigureDistance = false;
+		distanceJoint.distance = AttachmentDistance;
+		distanceJoint.maxDistanceOnly = true;
+
+		var springJoint = gameObject.AddComponent<SpringJoint2D>();
+		springJoint.connectedBody = link;
+		springJoint.autoConfigureConnectedAnchor = false;
+		springJoint.connectedAnchor = Vector2.zero;
+		springJoint.anchor = Vector2.zero;
+		springJoint.autoConfigureDistance = false;
+		springJoint.distance = AttachmentDistance;
+		springJoint.frequency = AttachmentSpringFrequency;
+		springJoint.dampingRatio = 1;
+
+		m_Attachments = new AnchoredJoint2D[2] { distanceJoint, springJoint };
 	}
 
 	public void Dismount()
@@ -67,12 +82,16 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
-		Destroy(m_Attachment);
-		m_Attachment = null;
+		foreach (var attachment in m_Attachments)
+		{
+			Destroy(attachment);
+		}
+
+		m_Attachments = null;
 
 		if (!m_Grounded.OnGround)
 		{
-			m_RigidBody.velocity = Quaternion.Euler(0, 0, DismountMaxAngle * -m_DismountDirection) * Vector2.up * DismountVelocity;
+			m_RigidBody.AddForce(Quaternion.Euler(0, 0, DismountMaxAngle * -m_DismountDirection) * Vector2.up * DismountImpulse, ForceMode2D.Impulse);
 		}
 	}
 
@@ -114,42 +133,14 @@ public class ChainMovement : MonoBehaviour
 			Dismount();
 			return;
 		}
+		
+		m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
+		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.Length);
 
-		//if (!Mathf.Approximately(m_ClimbDirection, 0))
-		//{
-		//    var velocity = -m_Attachment.connectedBody.transform.up * m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
-		//    m_Rigidbody.MovePosition(transform.position + velocity);
-		//}
-		//var force = -m_Attachment.connectedBody.transform.up * m_ClimbDirection * 80;
-		//m_Rigidbody.AddForce(force);
-
-		//var anchorWorldPosition = m_Attachment.attachedRigidbody.transform.TransformPoint(m_Attachment.connectedAnchor);
-		//var distance = Vector2.Distance(transform.position, anchorWorldPosition);
-
-		m_Attachment.connectedAnchor -= new Vector2(0, m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime);
-
-		HandleLinkTransitions();
-
-		var anchorOffset = m_Attachment.connectedAnchor.y;
-		anchorOffset = Mathf.Clamp(anchorOffset, -m_Chain.LinkAnchorOffset, m_Chain.LinkAnchorOffset);
-		m_Attachment.connectedAnchor = new Vector2(0, anchorOffset);
-	}
-
-	private void HandleLinkTransitions()
-	{
-		if (m_Attachment.connectedAnchor.y > m_Chain.LinkAnchorOffset && m_CurrentLinkIndex < m_Chain.Links.Length - 1)
+		foreach (var attachment in m_Attachments)
 		{
-			var nextLink = m_Chain.Links[++m_CurrentLinkIndex];
-
-			m_Attachment.connectedBody = nextLink;
-			m_Attachment.connectedAnchor = new Vector2(0, -m_Chain.LinkAnchorOffset);
-		}
-		else if (m_Attachment.connectedAnchor.y < -m_Chain.LinkAnchorOffset && m_CurrentLinkIndex > 1)
-		{
-			var prevLink = m_Chain.Links[--m_CurrentLinkIndex];
-
-			m_Attachment.connectedBody = prevLink;
-			m_Attachment.connectedAnchor = new Vector2(0, m_Chain.LinkAnchorOffset);
+			attachment.connectedAnchor = MountedLinkAnchor;
+			attachment.connectedBody = MountedLinkBody;
 		}
 	}
 
@@ -194,10 +185,12 @@ public class ChainMovement : MonoBehaviour
 
 		if (Mounted)
 		{
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireSphere(m_Attachment.connectedBody.transform.TransformPoint(m_Attachment.connectedAnchor), 0.15f);
+			var attachment = m_Attachments.First();
 
-			var climbDirection = new Ray(transform.position, -m_Attachment.connectedBody.transform.up * m_ClimbDirection);
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireSphere(attachment.connectedBody.transform.TransformPoint(attachment.connectedAnchor), 0.15f);
+
+			var climbDirection = new Ray(transform.position, -attachment.connectedBody.transform.up * m_ClimbDirection);
 			Gizmos.color = Color.blue;
 			Gizmos.DrawRay(climbDirection);
 		}

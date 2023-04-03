@@ -25,6 +25,15 @@
                 },
                 {
                     "name": "Climb",
+                    "type": "Value",
+                    "id": "6287a747-3e33-4da0-8e1f-3d01284bd6e3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Mount",
                     "type": "Button",
                     "id": "4ac6f40d-02ec-4d09-8fd6-8ee628690147",
                     "expectedControlType": "Button",
@@ -93,7 +102,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Arrows",
+                    "name": "Keyboard",
                     "id": "acaf8676-6b9f-4768-89fe-a4098ad1610c",
                     "path": "1DAxis",
                     "interactions": "",
@@ -176,7 +185,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Climb",
+                    "action": "Mount",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -187,7 +196,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Climb",
+                    "action": "Mount",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -198,7 +207,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Climb",
+                    "action": "Mount",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -209,7 +218,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Climb",
+                    "action": "Mount",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -300,6 +309,83 @@
                     "action": "AnchorInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "742bc181-8759-44bb-a277-c3e52fd877b4",
+                    "path": "<Gamepad>/dpad/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "738c1f73-942f-438d-94d0-c5886fd430cf",
+                    "path": "<Gamepad>/leftStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "68c26dae-6bfc-4333-8ea5-1f59cb21201b",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "acca8434-cc4d-49e0-864b-cf150ec03799",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "e85d3601-1c5f-416d-b123-0aa5556847cb",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "041a6344-4d4d-46cf-af05-bd6dc7b98724",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "aa96cfd6-9276-468d-9679-a166884182c2",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

@@ -9,6 +9,7 @@ public class ChainMovement : MonoBehaviour
 {
 	public float ClimbSpeed = 4.5f;
 	public float MountRadius = 1;
+	public float MountedLinkDistanceLimit = 1;
 	public float DismountImpulse = 60;
 	public float DismountMaxAngle = 60;
 	public float AttachmentDistance = 0.5f;
@@ -48,31 +49,9 @@ public class ChainMovement : MonoBehaviour
 		}
 
 		m_Chain = furthestLink.Chain;
-
-		var link = m_Chain.Links[furthestLink.LinkIndex];
-
 		m_MountDistance = m_Chain.LinkAnchorDistance * (furthestLink.LinkIndex + 0.5f);
 
-		var distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
-		distanceJoint.connectedBody = link;
-		distanceJoint.autoConfigureConnectedAnchor = false;
-		distanceJoint.connectedAnchor = Vector2.zero;
-		distanceJoint.anchor = Vector2.zero;
-		distanceJoint.autoConfigureDistance = false;
-		distanceJoint.distance = AttachmentDistance;
-		distanceJoint.maxDistanceOnly = true;
-
-		var springJoint = gameObject.AddComponent<SpringJoint2D>();
-		springJoint.connectedBody = link;
-		springJoint.autoConfigureConnectedAnchor = false;
-		springJoint.connectedAnchor = Vector2.zero;
-		springJoint.anchor = Vector2.zero;
-		springJoint.autoConfigureDistance = false;
-		springJoint.distance = AttachmentDistance;
-		springJoint.frequency = AttachmentSpringFrequency;
-		springJoint.dampingRatio = 1;
-
-		m_Attachments = new AnchoredJoint2D[2] { distanceJoint, springJoint };
+		CreateAttachments();
 	}
 
 	public void Dismount()
@@ -91,7 +70,8 @@ public class ChainMovement : MonoBehaviour
 
 		if (!m_Grounded.OnGround)
 		{
-			m_RigidBody.AddForce(Quaternion.Euler(0, 0, DismountMaxAngle * -m_DismountDirection) * Vector2.up * DismountImpulse, ForceMode2D.Impulse);
+			var dismountDirection = Quaternion.Euler(0, 0, DismountMaxAngle * -m_DismountDirection) * Vector2.up;
+			m_RigidBody.AddForce(dismountDirection * DismountImpulse, ForceMode2D.Impulse);
 		}
 	}
 
@@ -121,6 +101,31 @@ public class ChainMovement : MonoBehaviour
 		Climb(direction);
 	}
 
+	private void CreateAttachments()
+	{
+		var distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
+		distanceJoint.connectedBody = MountedLinkBody;
+		distanceJoint.autoConfigureConnectedAnchor = false;
+		distanceJoint.connectedAnchor = MountedLinkAnchor;
+		distanceJoint.anchor = Vector2.zero;
+		distanceJoint.autoConfigureDistance = false;
+		distanceJoint.distance = AttachmentDistance;
+		distanceJoint.maxDistanceOnly = true;
+
+		// The spring joint is used to pull the player up the chain
+		var springJoint = gameObject.AddComponent<SpringJoint2D>();
+		springJoint.connectedBody = MountedLinkBody;
+		springJoint.autoConfigureConnectedAnchor = false;
+		springJoint.connectedAnchor = MountedLinkAnchor;
+		springJoint.anchor = Vector2.zero;
+		springJoint.autoConfigureDistance = false;
+		springJoint.distance = AttachmentDistance;
+		springJoint.frequency = AttachmentSpringFrequency;
+		springJoint.dampingRatio = 1;
+
+		m_Attachments = new AnchoredJoint2D[2] { distanceJoint, springJoint };
+	}
+
 	private void FixedUpdate()
 	{
 		if (!Mounted)
@@ -133,10 +138,15 @@ public class ChainMovement : MonoBehaviour
 			Dismount();
 			return;
 		}
-		
-		m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
-		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.Length);
 
+		m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
+		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.Length - 0.001f);
+
+		UpdateAttachments();
+	}
+
+	private void UpdateAttachments()
+	{
 		foreach (var attachment in m_Attachments)
 		{
 			attachment.connectedAnchor = MountedLinkAnchor;
@@ -153,8 +163,8 @@ public class ChainMovement : MonoBehaviour
 
 		// Group links by their chain and return the chains with their furthest link index
 		return m_MountableLinks.Take(linksCount)
-			.Where(x => x.GetComponentInParent<Chain>() != null)
 			.Select(x => new MountableLink { Chain = x.GetComponentInParent<Chain>(), LinkIndex = x.transform.GetSiblingIndex() })
+			.Where(x => x.Chain != null)
 			.GroupBy(x => x.Chain)
 			.Select(x => new MountableLink { Chain = x.Key, LinkIndex = x.Min(y => y.LinkIndex) });
 	}
@@ -185,14 +195,15 @@ public class ChainMovement : MonoBehaviour
 
 		if (Mounted)
 		{
-			var attachment = m_Attachments.First();
-
 			Gizmos.color = Color.red;
-			Gizmos.DrawWireSphere(attachment.connectedBody.transform.TransformPoint(attachment.connectedAnchor), 0.15f);
+			Gizmos.DrawWireSphere(MountedLinkBody.transform.TransformPoint(MountedLinkAnchor), 0.15f);
 
-			var climbDirection = new Ray(transform.position, -attachment.connectedBody.transform.up * m_ClimbDirection);
+			var climbDirection = new Ray(transform.position, -MountedLinkBody.transform.up * m_ClimbDirection);
 			Gizmos.color = Color.blue;
 			Gizmos.DrawRay(climbDirection);
+
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawWireSphere(transform.position, MountedLinkDistanceLimit);
 		}
 		else
 		{

@@ -19,6 +19,8 @@ public class ChainMovement : MonoBehaviour
 	public Vector2 MountedLinkAnchor => new Vector2(0, Mathf.Repeat(m_MountDistance, m_Chain.LinkAnchorDistance) - m_Chain.LinkAnchorOffset);
 	public int MountedLinkIndex => Mathf.FloorToInt(m_MountDistance / m_Chain.LinkAnchorDistance);
 	public Rigidbody2D MountedLinkBody => m_Chain.Links[MountedLinkIndex];
+	public Vector2 MountedLinkAnchorWorldPosition => MountedLinkBody.transform.TransformPoint(MountedLinkAnchor);
+	public Vector2 ClimbDirection => -MountedLinkBody.transform.up * m_ClimbDirection;
 
 	private Chain m_Chain;
 	private float m_MountDistance;
@@ -139,8 +141,14 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
-		m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
-		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.Length - 0.001f);
+		var playerToMountedLink = MountedLinkAnchorWorldPosition - (Vector2)transform.position;
+		var climbingTowardsPlayer = Vector2.Dot(playerToMountedLink.normalized, ClimbDirection) < 0;
+		
+		if (playerToMountedLink.magnitude < MountedLinkDistanceLimit || climbingTowardsPlayer)
+		{
+			m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
+			m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.Length - 0.001f);
+		}
 
 		UpdateAttachments();
 	}
@@ -196,9 +204,9 @@ public class ChainMovement : MonoBehaviour
 		if (Mounted)
 		{
 			Gizmos.color = Color.red;
-			Gizmos.DrawWireSphere(MountedLinkBody.transform.TransformPoint(MountedLinkAnchor), 0.15f);
+			Gizmos.DrawWireSphere(MountedLinkAnchorWorldPosition, 0.15f);
 
-			var climbDirection = new Ray(transform.position, -MountedLinkBody.transform.up * m_ClimbDirection);
+			var climbDirection = new Ray(transform.position, ClimbDirection);
 			Gizmos.color = Color.blue;
 			Gizmos.DrawRay(climbDirection);
 

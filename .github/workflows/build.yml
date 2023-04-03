@@ -1,0 +1,137 @@
+name: Build 🔧
+
+on: workflow_dispatch
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+  checksLicense:
+    name: Check for Unity license ✔️
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail - No license
+        if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
+        run: exit 1
+
+  buildWebGL:
+    needs: checksLicense
+    name: Build WebGL 🌐
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v2
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+          
+      - name: Restore Library cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-build-WebGL
+          restore-keys: |
+            Library-build-
+            Library-
+            
+      - name: Build into WebGL
+        uses: game-ci/unity-builder@v2.2.0
+        env:
+          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
+        with:
+          targetPlatform: WebGL
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-WebGL
+          path: build/WebGL
+
+  uploadWebGL:
+    needs: buildWebGL
+    name: Upload WebGL to GitHub Pages 🚢
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Download Build
+        uses: actions/download-artifact@v2
+        with:
+          name: build-WebGL
+          path: build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: build-webgl
+          folder: build/WebGL
+
+  notifyDiscord:
+    needs: uploadWebGL
+    name: Notify on Discord 📢
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Workflow Conclusion
+        uses: technote-space/workflow-conclusion-action@v2
+
+      # - name: Notify Success
+      #   if: env.WORKFLOW_CONCLUSION == 'success'
+      #   uses: nobrayner/discord-webhook@v1
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     discord-webhook: ${{ secrets.WEBHOOK_URL }}
+      #     username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
+      #     avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
+      #     title: "✅ Deployment status: SUCCESS!"
+      #     description: "🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)."
+      #     include-details: "false"
+      #     color-success: "#2eb886"
+
+      - name: Notify Failure
+        if: env.WORKFLOW_CONCLUSION == 'failure'
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
+          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894760486439125042/explosion.png"
+          title: "❌ Deployment status: FAILED . . ."
+          include-details: "true"
+          color-failure: "#a30200"
+
+      # - name: Notify Cancelled
+      #   if: env.WORKFLOW_CONCLUSION == 'cancelled'
+      #   uses: nobrayner/discord-webhook@v1
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     discord-webhook: ${{ secrets.WEBHOOK_URL }}
+      #     username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
+      #     avatar-url: "https://media.discordapp.net/attachments/821500555696013343/925737666685837353/Blank-Nut-Button.png"
+      #     title: "⚠️ Deployment status: CANCELLED . . ."
+      #     description: "Click the link above to view details on GitHub."
+      #     include-details: "false"
+      #     color-cancelled: "#ffd513"

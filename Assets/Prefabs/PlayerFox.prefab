@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 8191183188405619863}
   - component: {fileID: 931327241759853775}
   - component: {fileID: 3023190908246841861}
+  - component: {fileID: 5692500432873669146}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -351,6 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
+  m_WeightedJump: {fileID: 1208819179330828543}
 --- !u!114 &931327241759853775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +377,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b1f0de18691bb46a908295d61052e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5692500432873669146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc083f0425cc36e4e989aebb2c68bc3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ClimbSpeed: 4.5
+  MountRadius: 1
+  MountedLinkDistanceLimit: 1
+  DismountImpulse: 60
+  DismountMaxAngle: 60
+  AttachmentDistance: 0.5
+  AttachmentSpringFrequency: 20
+  AttachmentSpringDampingRatio: 0.5
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

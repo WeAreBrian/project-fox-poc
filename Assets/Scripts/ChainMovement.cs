@@ -13,7 +13,8 @@ public class ChainMovement : MonoBehaviour
 	public float DismountImpulse = 60;
 	public float DismountMaxAngle = 60;
 	public float AttachmentDistance = 0.5f;
-	public float AttachmentSpringFrequency = 16;
+	public float AttachmentSpringFrequency = 20;
+	public float AttachmentSpringDampingRatio = 0.5f;
 
 	public bool Mounted => m_Attachments != null;
 	public Vector2 MountedLinkAnchor => new Vector2(0, Mathf.Repeat(m_MountDistance, m_Chain.LinkAnchorDistance) - m_Chain.LinkAnchorOffset);
@@ -123,7 +124,7 @@ public class ChainMovement : MonoBehaviour
 		springJoint.autoConfigureDistance = false;
 		springJoint.distance = AttachmentDistance;
 		springJoint.frequency = AttachmentSpringFrequency;
-		springJoint.dampingRatio = 1;
+		springJoint.dampingRatio = AttachmentSpringDampingRatio;
 
 		m_Attachments = new AnchoredJoint2D[] { distanceJoint, springJoint };
 	}

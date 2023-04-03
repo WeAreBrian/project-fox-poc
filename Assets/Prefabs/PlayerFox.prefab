@@ -377,10 +377,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClimbSpeed: 4.5
   MountRadius: 1
+  MountedLinkDistanceLimit: 1
   DismountImpulse: 60
   DismountMaxAngle: 60
-  AttachmentDistance: 0.5
+  AttachmentDistance: 0.25
   AttachmentSpringFrequency: 20
+  AttachmentSpringDampingRatio: 0.5
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,6 +28,7 @@ public class PressurePlate : MonoBehaviour
 		m_InCooldown = false;
 		m_CollidedObjects = new List<Rigidbody2D>();
 		//objects attached to pressure plate will only be activated through pressure plate
+		// also attached objects need IToggle interface
 		for (int i = 0; i < m_AttachedObjects.Length; i++)
 		{
 			IToggle toggle = m_AttachedObjects[i].GetComponent<IToggle>();
@@ -49,8 +50,11 @@ public class PressurePlate : MonoBehaviour
 		m_InCooldown = false;
 	}
 
-	// There is a bug when you activate, deactivate, then activate again in quick succession
-	// it's a problem with the cooldown
+	// There is a bug when you set the cooldown
+	// When it activates and deactivates quickly it may not de/activate correctly
+	// An idea to fix is to use fixed update to check for objects at every frame
+
+	// Also when you do not set the cooldown and activate the springboard a lot, it will bounce up to the sky
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{

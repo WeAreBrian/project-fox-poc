@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class AnchorHolder : MonoBehaviour
 {
+	public delegate void Trigger();
+	public static event Trigger pickup;
+
 	public bool HoldingAnchor => m_Anchor != null;
 	public float GrabRadius = 1;
 	public Vector2 HoldPosition = new Vector2(0, 0.5f);
@@ -34,7 +37,7 @@ public class AnchorHolder : MonoBehaviour
 	private void GrabAnchor()
 	{
 		if (HoldingAnchor) return;
-		m_WeightedJump.JumpForce = 2;
+		
 
 		var anchorLayerMask = LayerMask.GetMask("Anchor");
 		var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
@@ -66,8 +69,9 @@ public class AnchorHolder : MonoBehaviour
 
 		collider.enabled = false;
 
+		pickup?.Invoke();
 		m_Anchor.PickUp();
-
+		m_WeightedJump.JumpForce = 2;
 		m_HoldStartTime = Time.time;
 	}
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum SpringboardState
 {
@@ -17,12 +18,16 @@ public class Springboard : MonoBehaviour, IToggle
     [SerializeField]
     private float m_SpringResetSpeed;
     [SerializeField]
+    private LayerMask m_IgnoreLayers;
+    [SerializeField]
     private float m_SpringForce;
     [SerializeField]
     private float m_ResetTime;
     private Vector3 m_restingPosition;
     private bool m_SelfToggle = true;
     private Rigidbody2D m_Rb;
+    [SerializeField]
+    private Anchor m_FreeOnToggle;
 
     private void Start()
     {
@@ -65,12 +70,19 @@ public class Springboard : MonoBehaviour, IToggle
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Anchor anchorScript = collision.gameObject.GetComponent<Anchor>();
+        if (anchorScript != null)
+        {
+            m_FreeOnToggle = anchorScript;
+        }
+
         if (!m_SelfToggle) return;
 
         if (m_State == SpringboardState.Resetting) return;
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain")) return;
-        
+        //Thank you Ideka on UnityAnswers
+        if (m_IgnoreLayers == (m_IgnoreLayers | (1 << collision.gameObject.layer))) return;
+
         foreach(ContactPoint2D hitpos in collision.contacts)
         {
             if (hitpos.point.y < GetComponent<Collider2D>().bounds.max.y)
@@ -79,12 +91,18 @@ public class Springboard : MonoBehaviour, IToggle
                 return;
             }
         }
+        
         Toggle();
     }
 
     public void Toggle()
     {
+        m_FreeOnToggle?.FreeForDuration(1f);
+        m_FreeOnToggle = null;
+
         m_State = SpringboardState.Triggered;
         m_Rb.AddForce(m_SpringForce * Vector2.up, ForceMode2D.Impulse);
+
+        
     }
 }

@@ -147,5 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpringDistance: 1
   m_SpringResetSpeed: 0.01
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 769
   m_SpringForce: 2000
   m_ResetTime: 1

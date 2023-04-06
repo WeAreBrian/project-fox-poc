@@ -9,6 +9,6 @@ public class WorldInteract : MonoBehaviour
 
     private void OnWorldInteract()
     {
-        Activated.Invoke();
+        Activated?.Invoke();
     }
 }

@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9900593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 107137074636933804, guid: fea7d46b09dd64780ba611993068e295,
+    type: 3}
+  m_PrefabInstance: {fileID: 107137074708933676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &27773777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1207,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 107137074708933676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1130451195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9900593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f67e4699c4bc7e43be889597a9a85f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1144030208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,6 +1837,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1130451194, guid: fea7d46b09dd64780ba611993068e295, type: 3}
+      propertyPath: m_Size.x
+      value: 2.6866667
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130451194, guid: fea7d46b09dd64780ba611993068e295, type: 3}
+      propertyPath: m_Size.y
+      value: 1.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130451194, guid: fea7d46b09dd64780ba611993068e295, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 107137074636933800, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_RootOrder

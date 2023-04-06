@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8127432424583510208}
   - component: {fileID: 1866713526479858622}
   - component: {fileID: 8191183188405619863}
+  - component: {fileID: 6745542584575392125}
   - component: {fileID: 931327241759853775}
   - component: {fileID: 3023190908246841861}
   - component: {fileID: 5692500432873669146}
@@ -294,7 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
 --- !u!114 &1866713526479858622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +354,20 @@ MonoBehaviour:
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   m_WeightedJump: {fileID: 1208819179330828543}
+--- !u!114 &6745542584575392125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b437cfd50d5e4419987f5bcf19a16a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StallTime: 3
+  m_RevertVelocity: 1
 --- !u!114 &931327241759853775
 MonoBehaviour:
   m_ObjectHideFlags: 0

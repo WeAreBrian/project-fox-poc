@@ -6,11 +6,12 @@ public class LevelSelector : MonoBehaviour
 {
 	[SerializeField]
 	private TMP_Text m_buttonText;
+
+	[SerializeField]
 	private int m_levelIndex;
 
 	public void Initialize(int levelIndex, string buttonText)
     {
-		Debug.Log(buttonText);
 		m_levelIndex = levelIndex;
 		m_buttonText.text = buttonText;
 	}

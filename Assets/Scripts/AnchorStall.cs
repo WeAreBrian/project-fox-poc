@@ -15,7 +15,7 @@ public class AnchorStall : MonoBehaviour
 	[SerializeField]
 	private float m_StallTime = 1f;
 	[SerializeField]
-	private bool m_RevertVelocity = true;	//Set this in inspector to false if you want it to fall after ending stall.
+	private bool m_RevertVelocity = true;   //Set this in inspector to false if you want it to fall after ending stall.
 
 	private void Awake()
 	{

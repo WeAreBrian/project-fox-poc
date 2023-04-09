@@ -79,15 +79,21 @@ public class AnimatorStateMachine : MonoBehaviour
         
 	}
 
+    //logic for setting isGrounded
     private void FixedUpdate()
     {
         // from https://stackoverflow.com/questions/51845174/unity-how-do-i-get-my-jump-animation-cycle-to-work																		  
-
+        // get y velocity and round it
         float velY = Mathf.Round((m_RigidBody.velocity.y * 100) / 100);
-
+        
+        //update velocityY in Animator
 		m_Animator.SetFloat("velocityY", velY);
+
+        //isGrounded is set using the Grounded component
         m_Animator.SetBool("isGrounded", m_Grounded.OnGround);
 
+        // Only set isGrounded to true if y velocity is 0, and fox is touching the ground
+        // prevents isGrounded from being pre-emptively set to true after jumping.
         if(m_Animator.GetBool("isGrounded") && velY == 0)
         {
             m_Animator.SetBool("isJumping", false);

@@ -63,6 +63,10 @@ public class AnimatorStateMachine : MonoBehaviour
 
     }
 
+
+    // TODO: only should activate animation if near anchor
+    // TODO: animation should not trigger if already holding anchor
+    // TODO: Make a bunch of sub state machines - holding anchor grounded/in air, not holding anchor 
     void OnAnchorInteract(InputValue value)
     {
         m_Animator.SetFloat("isPickingUp", value.Get<float>());

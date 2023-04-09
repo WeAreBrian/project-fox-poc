@@ -9,23 +9,24 @@ public class AnimatorStateMachine : MonoBehaviour
     private Animator m_Animator;
     private Grounded m_Grounded;
     [SerializeField] bool m_debugInfo;
+    private Rigidbody2D m_RigidBody;
 
     // Start is called before the first frame update
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         m_Grounded = GetComponent<Grounded>();
-		
+		m_RigidBody = GetComponent<Rigidbody2D>();
 	}
 
-    // moving left or right, this doesn't change the rotation of the fox
+    // moving left or right, this doesn't change the rotation of the fox object
     // if input value is not 0, then initiate running animation, otherwise the fox is still
     void OnMove(InputValue value)
     {
         if (m_debugInfo) { Debug.Log("Move Input: " + value.Get<float>().ToString()); }
         
-        // Run animation does not activate during jumping
-		if (m_Animator.GetBool("isJumping") == true)
+        // Run animation does not activate during air time
+		if (m_Animator.GetBool("OnGround"))
 		{
 			return;
 		}
@@ -43,6 +44,7 @@ public class AnimatorStateMachine : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        m_Animator.SetBool("isJumping", true);
 
     }
 
@@ -75,10 +77,21 @@ public class AnimatorStateMachine : MonoBehaviour
     void Update()
     {
         
-    }
+	}
 
     private void FixedUpdate()
     {
+        // from https://stackoverflow.com/questions/51845174/unity-how-do-i-get-my-jump-animation-cycle-to-work																		  
+
+        float velY = Mathf.Round((m_RigidBody.velocity.y * 100) / 100);
+
+		m_Animator.SetFloat("velocityY", velY);
         m_Animator.SetBool("isGrounded", m_Grounded.OnGround);
+
+        if(m_Animator.GetBool("isGrounded") && velY == 0)
+        {
+            m_Animator.SetBool("isJumping", false);
+        }
 	}
+
 }

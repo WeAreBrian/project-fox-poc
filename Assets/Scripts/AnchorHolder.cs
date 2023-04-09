@@ -5,97 +5,105 @@ using UnityEngine;
 
 public class AnchorHolder : MonoBehaviour
 {
-    public bool HoldingAnchor => m_Anchor != null;
-    public float GrabRadius = 1;
-    public Vector2 HoldPosition = new Vector2(0, 0.5f);
+	public delegate void Trigger();
+	public static event Trigger pickup;
 
-    public Anchor Anchor => m_Anchor;
-    public float HoldTime => Time.time - m_HoldStartTime;
+	public bool HoldingAnchor => m_Anchor != null;
+	public float GrabRadius = 1;
+	public Vector2 HoldPosition = new Vector2(0, 0.5f);
 
-    private Anchor m_Anchor;
-    private float m_HoldStartTime;
+	public Anchor Anchor => m_Anchor;
+	public float HoldTime => Time.time - m_HoldStartTime;
 
-    private void OnAnchorInteract()
-    {
-        if (!HoldingAnchor)
-        {
-            GrabAnchor();
-        }
-    }
+	private Anchor m_Anchor;
+	private float m_HoldStartTime;
 
-    private void GrabAnchor()
-    {
-        if (HoldingAnchor)
-        {
-            return;
-        }
+	[SerializeField]
+	private VerticalMovement m_WeightedJump;
 
-        var anchorLayerMask = LayerMask.GetMask("Anchor");
-        var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
+	private void Awake()
+	{
+		m_WeightedJump = GetComponent<VerticalMovement>();
+	}
 
-        if (collider == null)
-        {
-            return;
-        }
+	private void OnAnchorInteract()
+	{
+		if (!HoldingAnchor)
+		{
+			GrabAnchor();
+		}
+	}
 
-        m_Anchor = collider.GetComponent<Anchor>();
+	private void GrabAnchor()
+	{
+		if (HoldingAnchor) return;
+		
 
-        if (m_Anchor == null)
-        {
-            return;
-        }
+		var anchorLayerMask = LayerMask.GetMask("Anchor");
+		var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
 
-        var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+		if (collider == null)
+		{
+			return;
+		}
 
-        if (targetJoint == null)
-        {
-            targetJoint = m_Anchor.AddComponent<TargetJoint2D>();
-            targetJoint.autoConfigureTarget = false;
-        }
+		m_Anchor = collider.GetComponent<Anchor>();
 
-        targetJoint.enabled = true;
+		if (m_Anchor == null)
+		{
+			return;
+		}
 
-        var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
-        rigidBody.gravityScale = 0;
+		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
 
-        collider.enabled = false;
-        
-        m_Anchor.PickUp();
+		if (targetJoint == null)
+		{
+			targetJoint = m_Anchor.AddComponent<TargetJoint2D>();
+			targetJoint.autoConfigureTarget = false;
+		}
 
-        m_HoldStartTime = Time.time;
-    }
+		targetJoint.enabled = true;
 
-    public Anchor DropAnchor()
-    {
-        if (!HoldingAnchor)
-        {
-            return null;
-        }
+		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
+		rigidBody.gravityScale = 0;
 
-        var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
-        targetJoint.enabled = false;
+		collider.enabled = false;
 
-        var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
-        rigidBody.gravityScale = 1;
+		pickup?.Invoke();
+		m_Anchor.PickUp();
+		m_WeightedJump.JumpForce = 2;
+		m_HoldStartTime = Time.time;
+	}
 
-        var collider = m_Anchor.GetComponent<Collider2D>();
-        collider.enabled = true;
+	public Anchor DropAnchor()
+	{
+		if (!HoldingAnchor) return null;
+		m_WeightedJump.JumpForce = 8;
 
-        m_Anchor.Drop();
+		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+		targetJoint.enabled = false;
 
-        var anchor = m_Anchor;
+		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
+		rigidBody.gravityScale = 1;
 
-        m_Anchor = null;
+		var collider = m_Anchor.GetComponent<Collider2D>();
+		collider.enabled = true;
 
-        return anchor;
-    }
+		m_Anchor.Drop();
 
-    private void FixedUpdate()
-    {
-        if (m_Anchor != null)
-        {
-            var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
-            targetJoint.target = (Vector2)transform.position + HoldPosition;
-        }
-    }
+		var anchor = m_Anchor;
+
+		m_Anchor = null;
+
+		return anchor;
+	}
+
+	private void FixedUpdate()
+	{
+		if (m_Anchor != null)
+		{
+			var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+			targetJoint.target = (Vector2)transform.position + HoldPosition;
+		}
+	}
 }

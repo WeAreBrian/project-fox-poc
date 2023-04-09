@@ -2,6 +2,11 @@ name: Build 🔧
 
 on: workflow_dispatch
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
@@ -52,9 +57,9 @@ jobs:
             Library-
             
       - name: Build into WebGL
-        uses: game-ci/unity-builder@v2
+        uses: game-ci/unity-builder@v2.2.0
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
         with:
           targetPlatform: WebGL
 
@@ -64,9 +69,9 @@ jobs:
           name: build-WebGL
           path: build/WebGL
 
-  deployWebGL:
+  uploadWebGL:
     needs: buildWebGL
-    name: Deploy WebGL 🚢
+    name: Upload WebGL to GitHub Pages 🚢
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -84,9 +89,44 @@ jobs:
           branch: build-webgl
           folder: build/WebGL
 
+  build:
+    needs: uploadWebGL
+    name: Prepare GH Pages for deployment 🔧
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: build-webgl
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: .
+          destination: ./_site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+
+  deploy:
+    needs: build
+    name: Deploy build 🚀
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+
   notifyDiscord:
-    needs: deployWebGL
-    name: 📢 Notify on Discord
+    needs: deploy
+    name: Notify on Discord 📢
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -102,7 +142,7 @@ jobs:
           username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
           avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
           title: "✅ Deployment status: SUCCESS!"
-          description: "🌐 [Visit the site](https://shirokatake.github.io/ytdl-frontend/)."
+          description: "🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)."
           include-details: "false"
           color-success: "#2eb886"
 

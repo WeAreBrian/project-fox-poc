@@ -65,7 +65,7 @@ public class AnimatorStateMachine : MonoBehaviour
 
     void OnAnchorInteract(InputValue value)
     {
-
+        m_Animator.SetFloat("isPickingUp", value.Get<float>());
     }
 
     void OnAim(InputValue value)

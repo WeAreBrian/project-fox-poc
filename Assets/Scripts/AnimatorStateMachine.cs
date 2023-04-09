@@ -8,21 +8,37 @@ public class AnimatorStateMachine : MonoBehaviour
 
     private Animator m_Animator;
     private Grounded m_Grounded;
+    [SerializeField] bool m_debugInfo;
 
     // Start is called before the first frame update
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         m_Grounded = GetComponent<Grounded>();
-		m_Animator.SetBool("isIdle", true);
 		
 	}
 
-
+    // moving left or right, this doesn't change the rotation of the fox
+    // if input value is not 0, then initiate running animation, otherwise the fox is still
     void OnMove(InputValue value)
     {
+        if (m_debugInfo) { Debug.Log("Move Input: " + value.Get<float>().ToString()); }
+        
+        // Run animation does not activate during jumping
+		if (m_Animator.GetBool("isJumping") == true)
+		{
+			return;
+		}
+
+        // No input from movement, set isRunning to false
+		if (value.Get<float>() == 0f)
+        {
+            m_Animator.SetBool("isRunning", false);
+            return;
+        }
+
+        // Change animation to running
         m_Animator.SetBool("isRunning", true);
-        Debug.Log(value);
     }
 
     void OnJump(InputValue value)

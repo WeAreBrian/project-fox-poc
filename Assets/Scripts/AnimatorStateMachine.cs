@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AnimatorStateMachine : MonoBehaviour
 {
@@ -13,40 +14,43 @@ public class AnimatorStateMachine : MonoBehaviour
     {
         m_Animator = GetComponent<Animator>();
         m_Grounded = GetComponent<Grounded>();
+		m_Animator.SetBool("isIdle", true);
+		
+	}
+
+
+    void OnMove(InputValue value)
+    {
+        m_Animator.SetBool("isRunning", true);
+        Debug.Log(value);
     }
 
-
-    void onMove()
+    void OnJump(InputValue value)
     {
 
     }
 
-    void onJump()
+    void OnClimb(InputValue value)
     {
 
     }
 
-    void onClimb()
+    void OnMount(InputValue value)
     {
 
     }
 
-    void onMount()
+    void OnTug(InputValue value)
     {
 
     }
 
-    void onTug()
+    void OnAnchorInteract(InputValue value)
     {
 
     }
 
-    void onAnchorInteract()
-    {
-
-    }
-
-    void onAim()
+    void OnAim(InputValue value)
     {
 
     }
@@ -56,4 +60,9 @@ public class AnimatorStateMachine : MonoBehaviour
     {
         
     }
+
+    private void FixedUpdate()
+    {
+        m_Animator.SetBool("isGrounded", m_Grounded.OnGround);
+	}
 }

@@ -20,6 +20,7 @@ public class AnchorHolder : MonoBehaviour
 
 	[SerializeField]
 	private VerticalMovement m_WeightedJump;
+	public float m_JumpMultiplier;
 
 	private void Awake()
 	{
@@ -71,14 +72,14 @@ public class AnchorHolder : MonoBehaviour
 
 		pickup?.Invoke();
 		m_Anchor.PickUp();
-		m_WeightedJump.JumpForce = 2;
+		m_WeightedJump.JumpCoefficient = m_JumpMultiplier;
 		m_HoldStartTime = Time.time;
 	}
 
 	public Anchor DropAnchor()
 	{
 		if (!HoldingAnchor) return null;
-		m_WeightedJump.JumpForce = 8;
+		m_WeightedJump.JumpCoefficient = 1;
 
 		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
 		targetJoint.enabled = false;

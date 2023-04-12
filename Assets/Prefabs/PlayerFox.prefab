@@ -267,35 +267,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AirMoveSpeed: 3.5
-<<<<<<< Updated upstream
-=======
   MaxVelocityInputThreshold: 10
   CoefficientCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: -0.0014648438
-      inSlope: 3.2756915
-      outSlope: 3.2756915
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.019128725
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -0.07635334
-      outSlope: -0.07635334
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.03417808
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
->>>>>>> Stashed changes
   GroundMoveSpeed: 5
+  directionX: 0
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpForce: 8
-  JumpCoefficient: 1
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +362,6 @@ MonoBehaviour:
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   m_WeightedJump: {fileID: 1208819179330828543}
-  m_JumpMultiplier: 0.25
 --- !u!114 &6745542584575392125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,10 +374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b437cfd50d5e4419987f5bcf19a16a52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StallTime: 2
-  m_RevertVelocity: 0
-  m_Cooldown: 5
-  m_CooldownTimer: 0
+  m_StallTime: 3
+  m_RevertVelocity: 1
 --- !u!114 &931327241759853775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,11 +412,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc083f0425cc36e4e989aebb2c68bc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClimbSpeed: 3
-  MountRadius: 0.5
+  ClimbSpeed: 4.5
+  MountRadius: 1
   MountedLinkDistanceLimit: 1
-  DismountImpulse: 10
-  DismountMaxAngle: 45
+  DismountImpulse: 60
+  DismountMaxAngle: 60
   AttachmentDistance: 0.5
   AttachmentSpringFrequency: 20
   AttachmentSpringDampingRatio: 0.5

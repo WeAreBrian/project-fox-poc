@@ -10,6 +10,7 @@ public class HorizontalMovement : MonoBehaviour
     [Tooltip("Speed of the player when in the air")]
     public float AirMoveSpeed = 3f;
     public float MaxVelocityInputThreshold;
+    public AnimationCurve CoefficientCurve;
     public float GroundMoveSpeed = 5;
     private Rigidbody2D rb;
     [SerializeField]
@@ -61,7 +62,6 @@ public class HorizontalMovement : MonoBehaviour
         {
             coefficient = 1;
         }
-        Debug.Log(coefficient);
-        return coefficient;
+        return CoefficientCurve.Evaluate(coefficient);
     }
 }

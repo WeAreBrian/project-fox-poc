@@ -200,6 +200,16 @@ PrefabInstance:
       propertyPath: MinThrowSpeed
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 8191183188405619863, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: GrabRadius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191183188405619863, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_JumpMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea7d46b09dd64780ba611993068e295, type: 3}
 --- !u!4 &161723101 stripped

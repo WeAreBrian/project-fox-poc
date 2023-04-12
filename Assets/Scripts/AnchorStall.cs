@@ -15,7 +15,11 @@ public class AnchorStall : MonoBehaviour
 	[SerializeField]
 	private float m_StallTime = 1f;
 	[SerializeField]
-	private bool m_RevertVelocity = true;	//Set this in inspector to false if you want it to fall after ending stall.
+	private bool m_RevertVelocity = true;   //Set this in inspector to false if you want it to fall after ending stall.
+	[SerializeField]
+	private float m_Cooldown;
+	[SerializeField]
+	private float m_CooldownTimer;
 
 	private void Awake()
 	{
@@ -27,13 +31,19 @@ public class AnchorStall : MonoBehaviour
 	}
 
 
+	private void Update()
+	{
+		m_CooldownTimer -= Time.deltaTime;
+	}
+
 	private void OnAnchorInteract()
 	{
 		//if fox is not holding the anchor and its not already being stalled.
-		if (!m_AnchorHolder.HoldingAnchor & !isStalled)
+		if (!m_AnchorHolder.HoldingAnchor && !isStalled && m_CooldownTimer < 0)
 		{
 			//Save values
 			isStalled = true;
+			m_CooldownTimer = m_Cooldown;
 			if (m_RevertVelocity)
 			{
 				m_Velocity = m_AnchorRigidbody.velocity;

@@ -8,12 +8,15 @@ public class HorizontalMovement : MonoBehaviour
     public float MoveSpeed => m_Grounded.OnGround ? GroundMoveSpeed : AirMoveSpeed;
 
     [Tooltip("Speed of the player when in the air")]
-    public float AirMoveSpeed = 3.5f;
+    public float AirMoveSpeed = 3f;
+    public float MaxVelocityInputThreshold;
     public float GroundMoveSpeed = 5;
     private Rigidbody2D rb;
+    [SerializeField]
     private float directionX;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
+    
     
     private void Start()
     {
@@ -36,25 +39,29 @@ public class HorizontalMovement : MonoBehaviour
         }
 
         var horizontalAxisValue = directionX;
-        //rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
-
-        //if (!Mathf.Approximately(horizontalAxisValue, 0))
-        //{
-        //    rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
-        //}
 
         if (m_Grounded.OnGround)
         {
             rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
-
-            //if (!Mathf.Approximately(horizontalAxisValue, 0))
-            //{
-            //    rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
-            //}
         }
         else
         {
-            rb.AddForce(new Vector2(directionX * 100.0f, 0));
+            rb.AddForce(new Vector2(directionX * AirMoveSpeed * 40 * GetAirCoefficient() , 0));
         }
+    }
+
+    private float GetAirCoefficient()
+    {
+        var coefficient = 0f;
+        if ((directionX > 0 && rb.velocity.x > 0) || (directionX < 0 && rb.velocity.x < 0))
+        {
+            coefficient = (MaxVelocityInputThreshold-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, MaxVelocityInputThreshold))/MaxVelocityInputThreshold;
+        }
+        else
+        {
+            coefficient = 1;
+        }
+        Debug.Log(coefficient);
+        return coefficient;
     }
 }

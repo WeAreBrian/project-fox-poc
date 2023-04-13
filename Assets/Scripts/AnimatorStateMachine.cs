@@ -72,7 +72,7 @@ public class AnimatorStateMachine : MonoBehaviour
     // TODO: Make a bunch of sub state machines - holding anchor grounded/in air, not holding anchor 
     private void OnAnchorInteract(InputValue value)
     {
-        m_Animator.SetBool("isPickingUp", true);
+        //m_Animator.SetBool("isPickingUp", true);
     }
 
 

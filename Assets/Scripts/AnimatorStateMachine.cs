@@ -10,13 +10,15 @@ public class AnimatorStateMachine : MonoBehaviour
     private Grounded m_Grounded;
     [SerializeField] bool m_debugInfo;
     private Rigidbody2D m_RigidBody;
+    private GameObject m_Sprite;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Animator = GetComponent<Animator>();
+        m_Animator = GetComponentInChildren<Animator>();
         m_Grounded = GetComponent<Grounded>();
 		m_RigidBody = GetComponent<Rigidbody2D>();
+        m_Sprite = GameObject.Find("Sprite");
 	}
 
     // moving left or right, this doesn't change the rotation of the fox object
@@ -26,14 +28,14 @@ public class AnimatorStateMachine : MonoBehaviour
 		// going left, flip fox rotation to face left
 		if (value.Get<float>() == -1f)
 		{
-			gameObject.transform.localScale = new Vector2(-1, transform.localScale.y);
+			m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
 		}
 
 		// going right, flip fox rotation to face right
 		if (value.Get<float>() == 1f)
         {
-            gameObject.transform.localScale = new Vector2(1, transform.localScale.y);
-        }
+			m_Sprite.transform.localScale = new Vector2(1, transform.localScale.y);
+		}
 
         if (m_debugInfo) { Debug.Log("Move Input: " + value.Get<float>().ToString()); }
         

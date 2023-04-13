@@ -60,20 +60,7 @@ public class AnimatorStateMachine : MonoBehaviour
 
     }
 
-    void OnClimb(InputValue value)
-    {
 
-    }
-
-    void OnMount(InputValue value)
-    {
-
-    }
-
-    void OnTug(InputValue value)
-    {
-
-    }
 
 
     // TODO: only should activate animation if near anchor
@@ -84,13 +71,24 @@ public class AnimatorStateMachine : MonoBehaviour
         m_Animator.SetFloat("isPickingUp", value.Get<float>());
     }
 
-    void OnAim(InputValue value)
-    {
 
-    }
+	void OnClimb(InputValue value)
+	{
 
-    // Update is called once per frame
-    void Update()
+	}
+
+	void OnMount(InputValue value)
+	{
+
+	}
+
+	void OnTug(InputValue value)
+	{
+
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         
 	}

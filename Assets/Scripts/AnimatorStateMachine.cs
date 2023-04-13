@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+// This isn't a state machine, it uses the controls to set some values in the animator
 public class AnimatorStateMachine : MonoBehaviour
 {
 
@@ -68,9 +70,9 @@ public class AnimatorStateMachine : MonoBehaviour
     // TODO: only should activate animation if near anchor
     // TODO: animation should not trigger if already holding anchor
     // TODO: Make a bunch of sub state machines - holding anchor grounded/in air, not holding anchor 
-    void OnAnchorInteract(InputValue value)
+    private void OnAnchorInteract(InputValue value)
     {
-        m_Animator.SetFloat("isPickingUp", value.Get<float>());
+        m_Animator.SetBool("isPickingUp", true);
     }
 
 

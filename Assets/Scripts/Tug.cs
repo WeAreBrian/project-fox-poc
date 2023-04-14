@@ -41,31 +41,65 @@ public class Tug : MonoBehaviour
 
         if (anchorHolder.HoldingAnchor) return;
 
+        if (anchor.State == AnchorState.Free)
+        {
+            if (!grounded.OnGround)
+            {
+                ApplyForceToFox(0.6f);
+                ApplyForceToAnchor(0.4f);
+
+                StartCoroutine(DisableGravity(m_rb, m_NoGravityDuration));
+                StartCoroutine(DisableGravity(anchor.Rigidbody, m_NoGravityDuration));
+            }
+            else
+            {
+                ApplyForceToAnchor(0.6f);
+                StartCoroutine(DisableGravity(anchor.Rigidbody, m_NoGravityDuration));
+
+            }
+        }
+        else if (anchor.State == AnchorState.Lodged)
+        {
+            Debug.Log("Lodged Time");
+            anchor.FreeForDuration(0.2f);
+            ApplyForceToAnchor(0.6f);
+            StartCoroutine(DisableGravity(anchor.Rigidbody, m_NoGravityDuration));
+
+
+        }
+        else
+        {
+            ApplyForceToFox(1f);
+            StartCoroutine(DisableGravity(m_rb, m_NoGravityDuration));
+
+        }
+
         m_OnCooldown = true;
-        anchor.Dislodge();
-        StartCoroutine(DisableGravity(m_NoGravityDuration));
-        ApplyForce();
         StartCoroutine(ResetAbility(m_Cooldown));
-        
+        StartCoroutine(AutoAnchorGrab(AutoAttemptAnchorGrabDuration));
+
     }
 
-    private void ApplyForce()
+    private void ApplyForceToAnchor(float forceCoefficient)
     {
-        //tighten the chain
-        //calculate the direction of the next link
-        //add force
+        Debug.Log("pulling anchor");
+        var direction = ((Vector3)chain.Tug(anchor.gameObject) - anchor.transform.position).normalized;
+        anchor.Rigidbody.velocity = direction * m_TugForce * forceCoefficient;
+    }
+    private void ApplyForceToFox(float forceCoefficient)
+    {
+        Debug.Log("pulling fox");
         if (grounded.OnGround) transform.position = new Vector2(transform.position.x, transform.position.y + 0.2f);
 
-        StartCoroutine(AutoAnchorGrab(AutoAttemptAnchorGrabDuration));
-        var direction = ((Vector3)chain.Tug() - transform.position).normalized;
-        m_rb.velocity = direction*m_TugForce;
+        var direction = ((Vector3)chain.Tug(gameObject) - transform.position).normalized;
+        m_rb.velocity = direction * m_TugForce * forceCoefficient;
     }
 
-    private IEnumerator DisableGravity(float duration)
+    private IEnumerator DisableGravity(Rigidbody2D body, float duration)
     {
-        m_rb.gravityScale = 0;
+        body.gravityScale = 0;
         yield return new WaitForSeconds(duration);
-        m_rb.gravityScale = 1;
+        body.gravityScale = 1;
 
     }
 

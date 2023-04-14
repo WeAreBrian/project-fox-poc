@@ -39,9 +39,6 @@ public class AnchorHolder : MonoBehaviour
 	{
 		if (HoldingAnchor) return false;
 
-
-		Debug.Log("attempting grab");
-
 		var anchorLayerMask = LayerMask.GetMask("Anchor");
 		var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
 

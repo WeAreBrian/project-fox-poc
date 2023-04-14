@@ -68,7 +68,7 @@ public class Chain : MonoBehaviour
 
 		LinksCreated?.Invoke();
 	}
-	public Vector2 Tug()
+	public Vector2 Tug(GameObject targetObject)
 	{
 		var distance = Vector2.Distance(To.position, From.position);
 		var index = Mathf.Clamp(Mathf.RoundToInt(distance / LinkAnchorDistance-2), 0, Links.Length-1);
@@ -80,8 +80,18 @@ public class Chain : MonoBehaviour
 		{
 			Links[i].velocity = Vector2.zero;
 		}
-
-		return pathTo.Last();
+		if (targetObject.CompareTag("Player"))
+		{
+			return pathTo.Last();
+		}
+		else
+		{
+			if (pathTo.Count < 2)
+			{
+				return To.position;
+			}
+			return pathTo[1];
+		}
 	}
 
 	private Rigidbody2D CreateLink()

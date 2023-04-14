@@ -50,8 +50,11 @@ MonoBehaviour:
   LinkSprite: {fileID: 21300000, guid: 28b474116d6945b4ab9f63ec471d1c80, type: 3}
   From: {fileID: 0}
   To: {fileID: 0}
-  MaxLength: 20
+  MaxLength: 6
   MountPriority: 0
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 640
 --- !u!114 &5182417009805866102
 MonoBehaviour:
   m_ObjectHideFlags: 0

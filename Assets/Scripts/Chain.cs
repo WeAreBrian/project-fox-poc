@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class Chain : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class Chain : MonoBehaviour
 	[Tooltip("The priority of this chain when mounting. Higher priority chains will be mounted first.")]
 	public int MountPriority;
 
+
+	public LayerMask ignoreMask;
+	private List<Vector2> pathTo = new List<Vector2>();
+
 	/// <summary>
 	/// The distance between two HingeJoint2D anchors on the same link.
 	/// </summary>
@@ -24,12 +29,15 @@ public class Chain : MonoBehaviour
 	public float LinkAnchorOffset => LinkAnchorDistance / 2;
 	public Rigidbody2D[] Links => m_Links;
 	public float Length => m_Links.Length * LinkAnchorDistance;
-
 	private Rigidbody2D[] m_Links;
 
 	private void Start()
 	{
 		CreateChain(From.position, To.position);
+	}
+	private void FixedUpdate()
+	{
+		pathTo = RayToNextPendulumPoint(From.transform.position, new List<Vector2>() { From.transform.position });
 	}
 
 	private void CreateChain(Vector2 fromPoint, Vector2 toPoint)
@@ -60,6 +68,21 @@ public class Chain : MonoBehaviour
 
 		LinksCreated?.Invoke();
 	}
+	public Vector2 Tug()
+	{
+		var distance = Vector2.Distance(To.position, From.position);
+		var index = Mathf.Clamp(Mathf.RoundToInt(distance / LinkAnchorDistance-2), 0, Links.Length-1);
+		var link = Links[index];
+		link.position = To.position;
+
+		//This is mainly for visuals, still needs a lot of testing...
+		for (int i = 0; i < Links.Length; i++)
+		{
+			Links[i].velocity = Vector2.zero;
+		}
+
+		return pathTo.Last();
+	}
 
 	private Rigidbody2D CreateLink()
 	{
@@ -85,5 +108,48 @@ public class Chain : MonoBehaviour
 		hingeJoint.autoConfigureConnectedAnchor = false;
 		hingeJoint.connectedAnchor = new Vector2(0, LinkAnchorOffset);
 		hingeJoint.anchor = new Vector2(0, -LinkAnchorOffset);
+	}
+
+	private void OnDrawGizmos()
+	{
+		for (int i = 0; i <pathTo.Count - 1; i++)
+		{
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine(pathTo[i],pathTo[i + 1]);
+		}
+		Gizmos.DrawLine(pathTo.Last(), To.position);
+	}
+
+	private List<Vector2> RayToNextPendulumPoint(Vector2 startingPoint, List<Vector2> path)
+	{
+		var dir = (To.position - (Vector3)startingPoint).normalized;
+		startingPoint = (Vector3)startingPoint + (dir * 0.01f);
+		RaycastHit2D hit = Physics2D.Raycast(startingPoint, dir, 50, ~(ignoreMask));
+		if (hit.collider != null)
+		{
+			Vector2 closestCorner;
+			if (!hit.collider.CompareTag("Player"))
+			{
+
+				closestCorner = GetCorner(hit, path);
+				Debug.Log("going Deeper");
+				path.Add(closestCorner);
+				RayToNextPendulumPoint(closestCorner, path);
+			}
+		}
+		return path;
+	}
+
+	private Vector2 GetCorner(RaycastHit2D hit, List<Vector2> path)
+	{
+		List<Vector2> corners = new List<Vector2>()
+		{
+			new Vector2(hit.collider.bounds.min.x, hit.collider.bounds.max.y),
+			new Vector2(hit.collider.bounds.max.x, hit.collider.bounds.max.y),
+			new Vector2(hit.collider.bounds.min.x, hit.collider.bounds.min.y),
+			new Vector2(hit.collider.bounds.max.x, hit.collider.bounds.min.y)
+		};
+
+		return corners.Except(path).OrderBy(x => Vector2.Distance(hit.point, x)).First();
 	}
 }

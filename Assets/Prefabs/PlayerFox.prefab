@@ -317,8 +317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33bd83524d4bff458a535ddcc9346f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinThrowSpeed: 8
-  MaxThrowSpeed: 15
+  MinThrowSpeed: 12
+  MaxThrowSpeed: 12
   WindUpTime: 0.5
   WindUpCurve:
     serializedVersion: 2
@@ -363,7 +363,7 @@ MonoBehaviour:
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   m_WeightedJump: {fileID: 1208819179330828543}
-  m_JumpMultiplier: 0
+  m_JumpMultiplier: 0.5
 --- !u!114 &6745542584575392125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +395,9 @@ MonoBehaviour:
   m_NoGravityDuration: 0.3
   m_TugForce: 11
   m_Cooldown: 5
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 640
 --- !u!114 &3023190908246841861
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Tug : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Tug : MonoBehaviour
     public float m_Cooldown;
     private Rigidbody2D m_rb;
     private Anchor anchor;
+    private Chain chain;
+    private ChainMovement chainMovement;
+    private Grounded grounded;
 
     private bool m_OnCooldown;
 
@@ -16,6 +20,9 @@ public class Tug : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody2D>();
         anchor = FindObjectOfType<Anchor>();
+        chain = FindObjectOfType<Chain>();
+        chainMovement = GetComponent<ChainMovement>();
+        grounded = GetComponent<Grounded>();
     }
 
     private void OnTug()
@@ -34,9 +41,10 @@ public class Tug : MonoBehaviour
         //tighten the chain
         //calculate the direction of the next link
         //add force
-        if (GetComponent<Grounded>().OnGround) transform.position = new Vector2(transform.position.x, transform.position.y + 0.2f);
-        Vector2 direction = (anchor.transform.position - transform.position).normalized;
-        Debug.Log(direction);
+        if (grounded.OnGround) transform.position = new Vector2(transform.position.x, transform.position.y + 0.2f);
+
+
+        var direction = ((Vector3)chain.Tug() - transform.position).normalized;
         m_rb.velocity = direction*m_TugForce;
     }
 

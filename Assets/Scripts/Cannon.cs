@@ -71,11 +71,11 @@ public class Cannon : MonoBehaviour
 		}
 	}
 
-	private void OnTriggerEnter2D(Collider2D other)
+	private void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (other.CompareTag("Anchor"))
+		if (collider.CompareTag("Anchor"))
 		{
-			Load(other.GetComponent<Rigidbody2D>());
+			Load(collider.GetComponent<Rigidbody2D>());
 		}
 	}
 

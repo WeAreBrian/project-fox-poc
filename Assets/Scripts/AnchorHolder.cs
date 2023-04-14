@@ -22,9 +22,12 @@ public class AnchorHolder : MonoBehaviour
 	private VerticalMovement m_WeightedJump;
 	public float m_JumpMultiplier;
 
+	private Animator m_animator;
+
 	private void Awake()
 	{
 		m_WeightedJump = GetComponent<VerticalMovement>();
+		m_animator = GetComponentInChildren<Animator>();
 	}
 
 	private void OnAnchorInteract()
@@ -74,6 +77,8 @@ public class AnchorHolder : MonoBehaviour
 		m_Anchor.PickUp();
 		m_WeightedJump.JumpCoefficient = m_JumpMultiplier;
 		m_HoldStartTime = Time.time;
+
+		m_animator.SetBool("isPickingUp", true);
 	}
 
 	public Anchor DropAnchor()

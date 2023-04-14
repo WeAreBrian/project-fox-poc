@@ -49,6 +49,11 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
+		if (GameObject.Find("Anchor").GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
+		{
+			return;
+		}
+
 		var furthestLink = GetFurthestMountableLink();
 
 		if (furthestLink == null)

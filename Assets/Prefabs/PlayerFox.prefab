@@ -267,7 +267,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AirMoveSpeed: 3.5
+  MaxVelocityInputThreshold: 10
+  CoefficientCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   GroundMoveSpeed: 5
+  directionX: 0
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpForce: 8
+  JumpCoefficient: 1
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +363,7 @@ MonoBehaviour:
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   m_WeightedJump: {fileID: 1208819179330828543}
+  m_JumpMultiplier: 0
 --- !u!114 &6745542584575392125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,8 +376,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b437cfd50d5e4419987f5bcf19a16a52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StallTime: 1
+  m_StallTime: 2
   m_RevertVelocity: 1
+  m_Cooldown: 5
+  m_CooldownTimer: 0
 --- !u!114 &931327241759853775
 MonoBehaviour:
   m_ObjectHideFlags: 0

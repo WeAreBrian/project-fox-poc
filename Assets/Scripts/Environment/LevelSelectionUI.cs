@@ -1,5 +1,5 @@
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelectionUI : MonoBehaviour
 {
@@ -8,15 +8,15 @@ public class LevelSelectionUI : MonoBehaviour
 
     private void Awake()
     {
-        for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
         {
-			EditorBuildSettingsScene scene = EditorBuildSettings.scenes[i];
-			if (scene.enabled && !scene.path.Contains("LevelSelection"))
+		    string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            if (!scenePath.Contains("LevelSelection"))
             {
-				LevelSelector levelSelector = Instantiate(m_levelSelectorPrefab, gameObject.transform);
-				//levelSelector.Initialize(i, i.ToString());    Uncomment this code when it comes to actual build so only level number is displayed
-                levelSelector.Initialize(i, System.IO.Path.GetFileNameWithoutExtension(scene.path));
+                LevelSelector levelSelector = Instantiate(m_levelSelectorPrefab, gameObject.transform);
+                //levelSelector.Initialize(i, i.ToString());    Uncomment this code when it comes to actual build so only level number is displayed
+                levelSelector.Initialize(i, System.IO.Path.GetFileNameWithoutExtension(scenePath));
             }
         }
-	}
+    }
 }

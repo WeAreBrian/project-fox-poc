@@ -395,9 +395,7 @@ MonoBehaviour:
   m_NoGravityDuration: 0.3
   m_TugForce: 11
   m_Cooldown: 5
-  ignoreMask:
-    serializedVersion: 2
-    m_Bits: 640
+  AutoAttemptAnchorGrabDuration: 1
 --- !u!114 &3023190908246841861
 MonoBehaviour:
   m_ObjectHideFlags: 0

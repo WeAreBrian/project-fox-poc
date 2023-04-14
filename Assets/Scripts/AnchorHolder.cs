@@ -35,24 +35,26 @@ public class AnchorHolder : MonoBehaviour
 		}
 	}
 
-	private void GrabAnchor()
+	public bool GrabAnchor()
 	{
-		if (HoldingAnchor) return;
-		
+		if (HoldingAnchor) return false;
+
+
+		Debug.Log("attempting grab");
 
 		var anchorLayerMask = LayerMask.GetMask("Anchor");
 		var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
 
 		if (collider == null)
 		{
-			return;
+			return false;
 		}
 
 		m_Anchor = collider.GetComponent<Anchor>();
 
 		if (m_Anchor == null)
 		{
-			return;
+			return false;
 		}
 
 		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
@@ -67,6 +69,7 @@ public class AnchorHolder : MonoBehaviour
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0;
+		rigidBody.position = transform.position + (Vector3)HoldPosition;
 
 		collider.enabled = false;
 
@@ -74,6 +77,8 @@ public class AnchorHolder : MonoBehaviour
 		m_Anchor.PickUp();
 		m_WeightedJump.JumpCoefficient = m_JumpMultiplier;
 		m_HoldStartTime = Time.time;
+
+		return true;
 	}
 
 	public Anchor DropAnchor()

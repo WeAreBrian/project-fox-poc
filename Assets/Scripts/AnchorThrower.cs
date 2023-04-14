@@ -16,9 +16,7 @@ public class AnchorThrower : MonoBehaviour
     public float ThrowCooldown = 0.2f;
     public Vector2 DropVelocity = new Vector2(0, 1.5f);
 
-	private Animator m_animator;
-
-	public bool WindingUp => m_Trajectory.gameObject.activeSelf;
+    public bool WindingUp => m_Trajectory.gameObject.activeSelf;
     public float HoldTime => Time.time - m_WindUpStartTime;
     public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate(HoldTime / WindUpTime));
     public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
@@ -40,9 +38,7 @@ public class AnchorThrower : MonoBehaviour
 
         anchorInteractAction.started += OnAnchorInteractStarted;
         anchorInteractAction.canceled += OnAnchorInteractCanceled;
-
-		m_animator = GetComponentInChildren<Animator>();
-	}
+    }
 
     private void OnAnchorInteractStarted(InputAction.CallbackContext context)
     {
@@ -72,8 +68,6 @@ public class AnchorThrower : MonoBehaviour
         }
 
         m_Trajectory.gameObject.SetActive(false);
-
-        
     }
 
     private void OnAim(InputValue value)
@@ -92,8 +86,6 @@ public class AnchorThrower : MonoBehaviour
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(velocity);
-
-        m_animator.SetBool("isThrowing", true);
     }
 
     private void DropAnchor()
@@ -111,8 +103,7 @@ public class AnchorThrower : MonoBehaviour
     {
         if (WindingUp)
         {
-			m_animator.SetBool("isAiming", true);
-			OrientAnchor();
+            OrientAnchor();
         }
     }
 

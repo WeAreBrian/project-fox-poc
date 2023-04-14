@@ -11,7 +11,7 @@
                     "id": "a7adc457-d811-4720-8aca-e9d4fc83aa0a",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "initialStateCheck": true
                 },
                 {
@@ -301,7 +301,7 @@
                     "name": "",
                     "id": "b00b7e80-8b07-4eff-87f3-1b6144d10fb2",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "AnchorInteract",
@@ -312,7 +312,7 @@
                     "name": "",
                     "id": "6c829ecd-9560-4c80-a51a-63d9a2a047f4",
                     "path": "<Gamepad>/buttonWest",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "AnchorInteract",

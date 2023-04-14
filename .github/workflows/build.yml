@@ -90,6 +90,7 @@ jobs:
           folder: build/WebGL
 
   build:
+    needs: uploadWebGL
     name: Prepare GH Pages for deployment 🔧
     runs-on: ubuntu-latest
     steps:

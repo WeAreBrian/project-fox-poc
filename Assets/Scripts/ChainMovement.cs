@@ -32,6 +32,11 @@ public class ChainMovement : MonoBehaviour
 	private Grounded m_Grounded;
 	private float m_ClimbDirection;
 
+	public void Start()
+	{
+		AnchorHolder.pickup += Dismount;
+	}
+
 	public void Mount()
 	{
 		if (m_Grounded.OnGround)
@@ -63,7 +68,7 @@ public class ChainMovement : MonoBehaviour
 		{
 			return;
 		}
-
+		Debug.Log("dismounting");
 		foreach (var attachment in m_Attachments)
 		{
 			Destroy(attachment);

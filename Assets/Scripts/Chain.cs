@@ -68,6 +68,15 @@ public class Chain : MonoBehaviour
 
 		LinksCreated?.Invoke();
 	}
+
+	public void UpdateChainLinksMass(float mass)
+	{
+		foreach (Rigidbody2D link in Links)
+		{
+			link.mass = mass;
+		}
+	}
+
 	public Vector2 Tug(GameObject targetObject)
 	{
 		var distance = Vector2.Distance(To.position, From.position);
@@ -119,7 +128,6 @@ public class Chain : MonoBehaviour
 		hingeJoint.connectedAnchor = new Vector2(0, LinkAnchorOffset);
 		hingeJoint.anchor = new Vector2(0, -LinkAnchorOffset);
 	}
-
 	private void OnDrawGizmos()
 	{
 		for (int i = 0; i <pathTo.Count - 1; i++)
@@ -128,6 +136,15 @@ public class Chain : MonoBehaviour
 			Gizmos.DrawLine(pathTo[i],pathTo[i + 1]);
 		}
 		Gizmos.DrawLine(pathTo.Last(), To.position);
+
+		foreach (Rigidbody2D link in Links)
+		{
+			if (link.bodyType == RigidbodyType2D.Static)
+			{
+				Gizmos.color = Color.blue;
+				Gizmos.DrawSphere(link.position, 0.2f);
+			}
+		}
 	}
 
 	private List<Vector2> RayToNextPendulumPoint(Vector2 startingPoint, List<Vector2> path)
@@ -161,5 +178,23 @@ public class Chain : MonoBehaviour
 		};
 
 		return corners.Except(path).OrderBy(x => Vector2.Distance(hit.point, x)).First();
+	}
+
+	public void Stiffen()
+	{
+		Release();
+		for (int i = 1; i < pathTo.Count; i++)
+		{
+			var link = Links.OrderBy(x => Vector2.Distance(pathTo[i], x.position)).First();
+			link.bodyType = RigidbodyType2D.Static;
+		}
+	}
+
+	public void Release()
+	{
+		foreach (Rigidbody2D link in Links)
+		{
+			link.bodyType = RigidbodyType2D.Dynamic;
+		}
 	}
 }

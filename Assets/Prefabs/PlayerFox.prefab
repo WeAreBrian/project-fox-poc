@@ -270,7 +270,25 @@ MonoBehaviour:
   MaxVelocityInputThreshold: 10
   CoefficientCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.0014648438
+      inSlope: 3.2756915
+      outSlope: 3.2756915
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.019128725
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.07635334
+      outSlope: -0.07635334
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03417808
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -423,7 +441,7 @@ MonoBehaviour:
   ClimbSpeed: 4.5
   MountRadius: 1
   MountedLinkDistanceLimit: 1
-  DismountImpulse: 60
+  DismountImpulse: 15
   DismountMaxAngle: 60
   AttachmentDistance: 0.5
   AttachmentSpringFrequency: 20

@@ -130,50 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[0].time
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[0].value
-      value: -0.0014648438
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[0].inSlope
-      value: 3.2756915
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[1].inSlope
-      value: -0.07635334
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[0].outSlope
-      value: 3.2756915
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[1].inWeight
-      value: 0.03417808
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[1].outSlope
-      value: -0.07635334
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: CoefficientCurve.m_Curve.Array.data[0].outWeight
-      value: 0.019128725
-      objectReference: {fileID: 0}
     - target: {fileID: 107137074636933800, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_RootOrder

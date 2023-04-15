@@ -159,7 +159,6 @@ public class Chain : MonoBehaviour
 			{
 
 				closestCorner = GetCorner(hit, path);
-				Debug.Log("going Deeper");
 				path.Add(closestCorner);
 				RayToNextPendulumPoint(closestCorner, path);
 			}

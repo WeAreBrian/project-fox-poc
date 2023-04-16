@@ -20,6 +20,7 @@ public class AnchorHolder : MonoBehaviour
 
 	[SerializeField]
 	private VerticalMovement m_WeightedJump;
+	public float m_JumpMultiplier;
 
 	private Animator m_animator;
 
@@ -37,24 +38,23 @@ public class AnchorHolder : MonoBehaviour
 		}
 	}
 
-	private void GrabAnchor()
+	public bool GrabAnchor()
 	{
-		if (HoldingAnchor) return;
-		
+		if (HoldingAnchor) return false;
 
 		var anchorLayerMask = LayerMask.GetMask("Anchor");
 		var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
 
 		if (collider == null)
 		{
-			return;
+			return false;
 		}
 
 		m_Anchor = collider.GetComponent<Anchor>();
 
 		if (m_Anchor == null)
 		{
-			return;
+			return false;
 		}
 
 		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
@@ -69,21 +69,24 @@ public class AnchorHolder : MonoBehaviour
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0;
+		rigidBody.position = transform.position + (Vector3)HoldPosition;
 
 		collider.enabled = false;
 
 		pickup?.Invoke();
 		m_Anchor.PickUp();
-		m_WeightedJump.JumpForce = 2;
+		m_WeightedJump.JumpCoefficient = m_JumpMultiplier;
 		m_HoldStartTime = Time.time;
 
+		
 		m_animator.SetBool("isPickingUp", true);
+		return true;
 	}
 
 	public Anchor DropAnchor()
 	{
 		if (!HoldingAnchor) return null;
-		m_WeightedJump.JumpForce = 8;
+		m_WeightedJump.JumpCoefficient = 1;
 
 		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
 		targetJoint.enabled = false;

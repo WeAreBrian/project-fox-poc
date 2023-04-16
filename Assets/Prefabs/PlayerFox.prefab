@@ -168,7 +168,7 @@ Rigidbody2D:
   m_LinearDrag: 0.2
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 929c753567057f24ab1c8c30d1f412ce, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -326,7 +326,25 @@ MonoBehaviour:
   MaxVelocityInputThreshold: 10
   CoefficientCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.0014648438
+      inSlope: 3.2756915
+      outSlope: 3.2756915
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.019128725
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.07635334
+      outSlope: -0.07635334
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03417808
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -345,6 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpForce: 8
+  JumpCoefficient: 1
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,8 +391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33bd83524d4bff458a535ddcc9346f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinThrowSpeed: 8
-  MaxThrowSpeed: 15
+  MinThrowSpeed: 12
+  MaxThrowSpeed: 12
   WindUpTime: 0.5
   WindUpCurve:
     serializedVersion: 2
@@ -418,6 +437,7 @@ MonoBehaviour:
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   m_WeightedJump: {fileID: 1208819179330828543}
+  m_JumpMultiplier: 0.5
 --- !u!114 &6745542584575392125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,8 +450,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b437cfd50d5e4419987f5bcf19a16a52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StallTime: 3
+  m_StallTime: 2
   m_RevertVelocity: 1
+  m_Cooldown: 5
+  m_CooldownTimer: 0
 --- !u!114 &931327241759853775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +466,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b4049c3a3a45141a3d67709131a73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_NoGravityDuration: 0.3
+  m_TugForce: 10
+  m_Cooldown: 3
+  AutoAttemptAnchorGrabDuration: 1
 --- !u!114 &3023190908246841861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +497,7 @@ MonoBehaviour:
   ClimbSpeed: 4.5
   MountRadius: 1
   MountedLinkDistanceLimit: 1
-  DismountImpulse: 60
+  DismountImpulse: 15
   DismountMaxAngle: 60
   AttachmentDistance: 0.5
   AttachmentSpringFrequency: 20

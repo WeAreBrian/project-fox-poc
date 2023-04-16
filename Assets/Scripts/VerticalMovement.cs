@@ -6,6 +6,8 @@ public class VerticalMovement : MonoBehaviour
 {
     public float JumpForce;
 
+    public float JumpCoefficient = 1;
+
     private Rigidbody2D m_RigidBody;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
@@ -21,7 +23,7 @@ public class VerticalMovement : MonoBehaviour
     {
         if (m_Grounded.OnGround && !m_Thrower.WindingUp)
         {
-            m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce);
+            m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce*JumpCoefficient);
         }
     }
 }

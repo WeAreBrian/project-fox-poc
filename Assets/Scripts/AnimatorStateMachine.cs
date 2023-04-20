@@ -66,8 +66,6 @@ public class AnimatorStateMachine : MonoBehaviour
 
     }
 
-    // TODO: animation should not trigger if already holding anchor
-    // TODO: Make a bunch of sub state machines - holding anchor grounded/in air, not holding anchor 
     private void OnAnchorInteract(InputValue value)
     {
         //m_Animator.SetBool("isPickingUp", true);

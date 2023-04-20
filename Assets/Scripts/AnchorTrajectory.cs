@@ -87,7 +87,14 @@ public class AnchorTrajectory : MonoBehaviour
         var trimmedPathLength = Mathf.CeilToInt(pathOffset);
         var lineLength = trimmedPathLength + 1;
 
+        if (trimmedPathLength == 0)
+        {
+			m_LineRenderer.positionCount = 0;
+			return;
+        }
+
         m_LineRenderer.positionCount = lineLength;
+
         for (var i = 0; i < trimmedPathLength; i++)
         {
             m_LineRenderer.SetPosition(i, path[i]);

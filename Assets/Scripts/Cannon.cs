@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour
+public class Cannon : MonoBehaviour, IInsertable
 {
 	[Tooltip("Align the cannon to hit a target position. Can be left blank.")]
     public Transform Target;
@@ -85,6 +85,16 @@ public class Cannon : MonoBehaviour
 		{
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine(m_Barrel.transform.position, Target.position);
+		}
+	}
+
+	public void Insert(GameObject go)
+	{
+		var rigidbody = go.GetComponent<Rigidbody2D>();
+
+		if (rigidbody != null)
+		{
+			Load(rigidbody);
 		}
 	}
 }

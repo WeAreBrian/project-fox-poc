@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,7 @@ public class AnchorThrower : MonoBehaviour
     public float ThrowHoldTime = 0.2f;
     public float ThrowCooldown = 0.2f;
     public Vector2 DropVelocity = new Vector2(0, 1.5f);
+    public Vector2 InsertableCheckSize = new Vector2(3, 3);
 
     public bool WindingUp => m_Trajectory.gameObject.activeSelf;
     public float HoldTime => Time.time - m_WindUpStartTime;
@@ -91,8 +93,22 @@ public class AnchorThrower : MonoBehaviour
     private void DropAnchor()
     {
         var anchor = m_Holder.DropAnchor();
-        anchor.Throw(DropVelocity);
-    }
+
+        // Check for IInsertables
+        var colliders = Physics2D.OverlapBoxAll(transform.position, InsertableCheckSize, 0);
+        var insertable = colliders.Select(x => x.GetComponent<IInsertable>())
+            .Where(x => x != null)
+            .FirstOrDefault();
+
+        if (insertable != null)
+        {
+            insertable.Insert(anchor.gameObject);
+        }
+        else
+        {
+			anchor.Throw(DropVelocity);
+		}
+	}
 
     private void Update()
     {

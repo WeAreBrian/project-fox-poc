@@ -77,6 +77,23 @@ public class AnimatorStateMachine : MonoBehaviour
         
 	}
 
+    private void changeAimDirection()
+    {
+		// in fox aim state, if mouse is towards left, face left, otherwise face right.
+		// this only applies to screen coordinates
+		if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxAim"))
+		{
+			if (Mouse.current.position.x.value < Screen.width / 2)
+			{
+				m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
+			}
+			else
+			{
+				m_Sprite.transform.localScale = new Vector2(1, transform.localScale.y);
+			}
+		}
+	}
+
     //logic for setting isGrounded
     private void FixedUpdate()
     {
@@ -97,19 +114,7 @@ public class AnimatorStateMachine : MonoBehaviour
             m_Animator.SetBool("isJumping", false);
         }
 
-		// in fox aim state, if mouse is towards left, face left, otherwise face right.
-        // this only applies to screen coordinates
-		if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxAim"))
-        {
-			if (Mouse.current.position.x.value < Screen.width / 2)
-			{
-				m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
-			}
-            else
-            {
-				m_Sprite.transform.localScale = new Vector2(1, transform.localScale.y);
-			}
-		}
+        changeAimDirection();
 	}
 
 }

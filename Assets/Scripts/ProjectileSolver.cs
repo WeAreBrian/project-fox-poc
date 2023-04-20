@@ -37,7 +37,7 @@ public static class ProjectileSolver
 		}
 
 		var root = Mathf.Sqrt(discriminant);
-		var timeToTarget = Mathf.Max((-b + root) / (2f * a), (-b - root) / (2f * a));
+		var timeToTarget = Mathf.Max((-b + root) / (2 * a), (-b - root) / (2 * a));
 		var verticalSpeed = -gravity * timeToTarget;
 
 		// Calculate the firing angle

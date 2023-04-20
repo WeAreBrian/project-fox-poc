@@ -66,32 +66,12 @@ public class AnimatorStateMachine : MonoBehaviour
 
     }
 
-
-
-
-    // TODO: only should activate animation if near anchor
     // TODO: animation should not trigger if already holding anchor
     // TODO: Make a bunch of sub state machines - holding anchor grounded/in air, not holding anchor 
     private void OnAnchorInteract(InputValue value)
     {
         //m_Animator.SetBool("isPickingUp", true);
     }
-
-
-	void OnClimb(InputValue value)
-	{
-
-	}
-
-	void OnMount(InputValue value)
-	{
-
-	}
-
-	void OnTug(InputValue value)
-	{
-
-	}
 
 	// Update is called once per frame
 	void Update()
@@ -119,9 +99,10 @@ public class AnimatorStateMachine : MonoBehaviour
             m_Animator.SetBool("isJumping", false);
         }
 
-        if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxAim"))
+		// in fox aim state, if mouse is towards left, face left, otherwise face right.
+        // this only applies to screen coordinates
+		if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxAim"))
         {
-			//if mouse is towards left, face left
 			if (Mouse.current.position.x.value < Screen.width / 2)
 			{
 				m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);

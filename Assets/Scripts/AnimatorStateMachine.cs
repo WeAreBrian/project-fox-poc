@@ -14,15 +14,17 @@ public class AnimatorStateMachine : MonoBehaviour
     private Rigidbody2D m_RigidBody;
     private GameObject m_Sprite;
 
-    private bool m_flipped;
 
-    // Start is called before the first frame update
-    void Start()
+	private Camera m_cam;
+
+	// Start is called before the first frame update
+	void Start()
     {
         m_Animator = GetComponentInChildren<Animator>();
         m_Grounded = GetComponent<Grounded>();
 		m_RigidBody = GetComponent<Rigidbody2D>();
         m_Sprite = GameObject.Find("Sprite");
+        m_cam = Camera.main;
 	}
 
     // moving left or right, this doesn't change the rotation of the fox object
@@ -77,13 +79,15 @@ public class AnimatorStateMachine : MonoBehaviour
         
 	}
 
-    private void changeAimDirection()
+	// in fox aim state, if mouse is towards left of fox, face left, otherwise face right.
+	// uses the main camera to determine mouse world position
+	private void changeAimDirection()
     {
-		// in fox aim state, if mouse is towards left, face left, otherwise face right.
-		// this only applies to screen coordinates
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
 		if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxAim"))
 		{
-			if (Mouse.current.position.x.value < Screen.width / 2)
+			if (mouseWorldPos.x < gameObject.transform.position.x)
 			{
 				m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
 			}

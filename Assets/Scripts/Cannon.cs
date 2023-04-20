@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour, IInsertable
+public class Cannon : MonoBehaviour, IInsertable, IMovable
 {
 	[Tooltip("Align the cannon to hit a target position. Can be left blank.")]
     public Transform Target;
@@ -90,11 +90,11 @@ public class Cannon : MonoBehaviour, IInsertable
 
 	public void Insert(GameObject go)
 	{
-		var rigidbody = go.GetComponent<Rigidbody2D>();
+		var rigidBody = go.GetComponent<Rigidbody2D>();
 
-		if (rigidbody != null)
+		if (rigidBody != null)
 		{
-			Load(rigidbody);
+			Load(rigidBody);
 		}
 	}
 }

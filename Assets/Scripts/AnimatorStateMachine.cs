@@ -14,6 +14,8 @@ public class AnimatorStateMachine : MonoBehaviour
     private Rigidbody2D m_RigidBody;
     private GameObject m_Sprite;
 
+    private bool m_flipped;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -116,6 +118,19 @@ public class AnimatorStateMachine : MonoBehaviour
         {
             m_Animator.SetBool("isJumping", false);
         }
+
+        if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxAim"))
+        {
+			//if mouse is towards left, face left
+			if (Mouse.current.position.x.value < Screen.width / 2)
+			{
+				m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
+			}
+            else
+            {
+				m_Sprite.transform.localScale = new Vector2(1, transform.localScale.y);
+			}
+		}
 	}
 
 }

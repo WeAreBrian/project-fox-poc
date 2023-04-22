@@ -383,6 +383,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d945cad67548094eb10149ea1ae47b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CornerAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  CornerRemoved:
+    m_PersistentCalls:
+      m_Calls: []
   Collision:
     serializedVersion: 2
     m_Bits: 256
@@ -1105,14 +1111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a3128ac331b794faedfee271f5e643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Length: 14
+  Length: 14.5
   LinkSize: {x: 0.3, y: 0.9}
   LinkSprite: {fileID: 21300000, guid: 28b474116d6945b4ab9f63ec471d1c80, type: 3}
   LinkMass: 1
   Anchor: {fileID: 2134205878}
   Player: {fileID: 1852206378}
-  TargetJointFrequency: 8
-  TargetJointDampingRatio: 1
 --- !u!1 &1331097288
 GameObject:
   m_ObjectHideFlags: 0

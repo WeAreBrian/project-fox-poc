@@ -11,39 +11,42 @@ public class PhysicsChain : MonoBehaviour
 	public float LinkMass = 1;
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
-	public float TargetJointFrequency = 15;
-	public float TargetJointDampingRatio = 1;
+	//public float TargetJointFrequency = 15;
+	//public float TargetJointDampingRatio = 1;
 
 	public float LinkAnchorDistance => LinkSize.y - LinkSize.x;
 	public float LinkAnchorOffset => LinkAnchorDistance / 2;
 
 	private Rigidbody2D[] m_Links;
-	private TargetJoint2D m_AnchorTargetJoint;
-	private TargetJoint2D m_PlayerTargetJoint;
+	//private TargetJoint2D m_AnchorTargetJoint;
+	//private TargetJoint2D m_PlayerTargetJoint;
 
 	private void Start()
 	{
 		CreateChain();
 
-		m_AnchorTargetJoint = m_Links.First().gameObject.AddComponent<TargetJoint2D>();
-		m_AnchorTargetJoint.anchor = Vector2.zero;
-		m_AnchorTargetJoint.autoConfigureTarget = false;
-		m_AnchorTargetJoint.target = Anchor.position;
-		m_AnchorTargetJoint.frequency = TargetJointFrequency;
-		m_AnchorTargetJoint.dampingRatio = TargetJointDampingRatio;
+		//m_AnchorTargetJoint = m_Links.First().gameObject.AddComponent<TargetJoint2D>();
+		//m_AnchorTargetJoint.anchor = Vector2.zero;
+		//m_AnchorTargetJoint.autoConfigureTarget = false;
+		//m_AnchorTargetJoint.target = Anchor.position;
+		//m_AnchorTargetJoint.frequency = TargetJointFrequency;
+		//m_AnchorTargetJoint.dampingRatio = TargetJointDampingRatio;
 
-		m_PlayerTargetJoint = m_Links.Last().gameObject.AddComponent<TargetJoint2D>();
-		m_PlayerTargetJoint.anchor = Vector2.zero;
-		m_PlayerTargetJoint.autoConfigureTarget = false;
-		m_PlayerTargetJoint.target = Player.position;
-		m_PlayerTargetJoint.frequency = TargetJointFrequency;
-		m_PlayerTargetJoint.dampingRatio = TargetJointDampingRatio;
+		//m_PlayerTargetJoint = m_Links.Last().gameObject.AddComponent<TargetJoint2D>();
+		//m_PlayerTargetJoint.anchor = Vector2.zero;
+		//m_PlayerTargetJoint.autoConfigureTarget = false;
+		//m_PlayerTargetJoint.target = Player.position;
+		//m_PlayerTargetJoint.frequency = TargetJointFrequency;
+		//m_PlayerTargetJoint.dampingRatio = TargetJointDampingRatio;
 	}
 
 	private void FixedUpdate()
 	{
-		m_AnchorTargetJoint.target = Anchor.position;
-		m_PlayerTargetJoint.target = Player.position;
+		//m_AnchorTargetJoint.target = Anchor.position;
+		//m_PlayerTargetJoint.target = Player.position;
+
+		m_Links.First().MovePosition(Anchor.position);
+		m_Links.Last().MovePosition(Player.position);
 	}
 
 	private void CreateChain()

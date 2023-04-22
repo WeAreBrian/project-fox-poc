@@ -3,15 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class IdealChain : MonoBehaviour
 {
+	public UnityEvent<Vector2> CornerAdded;
+	public UnityEvent<Vector2> CornerRemoved;
 	public LayerMask Collision;
 	public float Width = 0.15f;
 	public float MaxLength = 15;
 	public float MaxTensionForce = 1000;
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
+
+	public bool HasPendulumPoints => m_Corners.Count > 0;
+	public Vector2 AnchorPendulumPoint => m_Corners.First().Position;
+	public Vector2 PlayerPendulumPoint => m_Corners.Last().Position;
+	public float Length => GetLength();
 
 	private const int k_SweepSteps = 16;
 	private const float k_MinCornerDistance = 0.001f;
@@ -23,49 +31,6 @@ public class IdealChain : MonoBehaviour
 	private DistanceJoint2D m_AnchorDistanceJoint;
 	private DistanceJoint2D m_PlayerDistanceJoint;
 	private DistanceJoint2D m_MaxDistanceJoint;
-
-	public float GetLength()
-	{
-		if (m_Corners.Count == 0)
-		{
-			return Vector2.Distance(Anchor.position, Player.position);
-		}
-
-		var length = 0.0f;
-
-		length += Vector2.Distance(Anchor.position, m_Corners.First().Position);
-		length += Vector2.Distance(Player.position, m_Corners.Last().Position);
-
-		for (var i = 0; i < m_Corners.Count - 1; i++)
-		{
-			var corner = m_Corners[i];
-			var nextCorner = m_Corners[i + 1];
-
-			length += Vector2.Distance(corner.Position, nextCorner.Position);
-		}
-
-		return length;
-	}
-
-	public float GetSegmentLength()
-	{
-		if (m_Corners.Count == 0)
-		{
-			return 0;
-		}
-
-		var length = 0.0f;
-
-		for (var i = 0; i < m_Corners.Count - 1; i++)
-		{
-			var corner = m_Corners[i];
-			var nextCorner = m_Corners[i + 1];
-
-			length += Vector2.Distance(corner.Position, nextCorner.Position);
-		}
-
-		return length;
-	}
 
 	private void Awake()
 	{
@@ -80,8 +45,8 @@ public class IdealChain : MonoBehaviour
 		m_PreviousAnchorPosition = Anchor.position;
 		m_PreviousPlayerPosition = Player.position;
 
-		m_AnchorDistanceJoint = CreateDistanceJoint(Anchor);
-		m_PlayerDistanceJoint = CreateDistanceJoint(Player);
+		m_AnchorDistanceJoint = CreatePendulum(Anchor);
+		m_PlayerDistanceJoint = CreatePendulum(Player);
 
 		m_MaxDistanceJoint = Player.gameObject.AddComponent<DistanceJoint2D>();
 		m_MaxDistanceJoint.autoConfigureConnectedAnchor = false;
@@ -133,7 +98,7 @@ public class IdealChain : MonoBehaviour
 
 		return true;
 	}
-	
+
 	private bool CanRemoveCorner(ChainCorner corner, Vector2 previousPosition, Vector2 nextPosition)
 	{
 		var previousEdgeDirection = (corner.Position - previousPosition).normalized;
@@ -153,23 +118,27 @@ public class IdealChain : MonoBehaviour
 
 	private void UpdateCorners()
 	{
-		if (NewCorner(m_Corners.Count > 0 ? m_Corners.Last().Position : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
+		if (NewCorner(m_Corners.Count > 0 ? PlayerPendulumPoint : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
 		{
+			CornerAdded?.Invoke(endCorner.Position);
 			m_Corners.Add(endCorner);
 		}
 
-		if (NewCorner(m_Corners.Count > 0 ? m_Corners.First().Position : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
+		if (NewCorner(m_Corners.Count > 0 ? AnchorPendulumPoint : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
 		{
+			CornerAdded?.Invoke(startCorner.Position);
 			m_Corners.Insert(0, startCorner);
 		}
 
 		if (m_Corners.Count != 0 && CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? m_Corners[m_Corners.Count - 2].Position : Anchor.position, Player.position))
 		{
+			CornerRemoved?.Invoke(m_Corners.Last().Position);
 			m_Corners.RemoveAt(m_Corners.Count - 1);
 		}
 
 		if (m_Corners.Count != 0 && CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? m_Corners[1].Position : Player.position, Anchor.position))
 		{
+			CornerRemoved?.Invoke(m_Corners.First().Position);
 			m_Corners.RemoveAt(0);
 		}
 	}
@@ -178,32 +147,31 @@ public class IdealChain : MonoBehaviour
 	{
 		m_MaxDistanceJoint.distance = MaxLength;
 
-		if (m_Corners.Count == 0)
+		m_PlayerDistanceJoint.enabled = HasPendulumPoints;
+		m_AnchorDistanceJoint.enabled = HasPendulumPoints;
+
+		if (!HasPendulumPoints)
 		{
-			m_PlayerDistanceJoint.enabled = false;
-			m_AnchorDistanceJoint.enabled = false;
 			return;
 		}
 
-		m_PlayerDistanceJoint.enabled = true;
-		m_PlayerDistanceJoint.transform.position = m_Corners.Last().Position;
-		m_PlayerDistanceJoint.distance = Mathf.Max(0, MaxLength - (Vector2.Distance(Anchor.position, m_Corners.First().Position) + GetSegmentLength()));
+		m_PlayerDistanceJoint.transform.position = PlayerPendulumPoint;
+		m_PlayerDistanceJoint.distance = Mathf.Max(0, MaxLength - (Length - Vector2.Distance(Player.position, PlayerPendulumPoint)));
 
-		m_AnchorDistanceJoint.enabled = true;
-		m_AnchorDistanceJoint.transform.position = m_Corners.First().Position;
-		m_AnchorDistanceJoint.distance = Mathf.Max(0, MaxLength - (Vector2.Distance(Player.position, m_Corners.Last().Position) + GetSegmentLength()));
+		m_AnchorDistanceJoint.transform.position = AnchorPendulumPoint;
+		m_AnchorDistanceJoint.distance = Mathf.Max(0, MaxLength - (Length - Vector2.Distance(Anchor.position, AnchorPendulumPoint)));
 	}
 
-	private DistanceJoint2D CreateDistanceJoint(Rigidbody2D connectedBody)
+	private DistanceJoint2D CreatePendulum(Rigidbody2D connectedBody)
 	{
-		var corner = new GameObject($"{connectedBody.name}DistanceJoint", typeof(Rigidbody2D), typeof(DistanceJoint2D));
-		corner.transform.parent = transform;
-		corner.transform.position = Vector2.zero;
+		var pendulum = new GameObject($"{connectedBody.name}DistanceJoint", typeof(Rigidbody2D), typeof(DistanceJoint2D));
+		pendulum.transform.parent = transform;
+		pendulum.transform.position = Vector2.zero;
 
-		var rigidBody = corner.GetComponent<Rigidbody2D>();
+		var rigidBody = pendulum.GetComponent<Rigidbody2D>();
 		rigidBody.bodyType = RigidbodyType2D.Static;
 
-		var distanceJoint = corner.GetComponent<DistanceJoint2D>();
+		var distanceJoint = pendulum.GetComponent<DistanceJoint2D>();
 		distanceJoint.autoConfigureConnectedAnchor = false;
 		distanceJoint.autoConfigureDistance = false;
 		distanceJoint.maxDistanceOnly = true;
@@ -218,20 +186,25 @@ public class IdealChain : MonoBehaviour
 
 	private void ApplyTensionForces()
 	{
-		if (m_Corners.Count == 0)
+		if (!HasPendulumPoints)
 		{
 			return;
 		}
 
 		var forceOnAnchor = Mathf.Min(MaxTensionForce, m_PlayerDistanceJoint.reactionForce.magnitude);
-		Anchor.AddForce((m_Corners.First().Position - Anchor.position).normalized * forceOnAnchor);
+		Anchor.AddForce((AnchorPendulumPoint - Anchor.position).normalized * forceOnAnchor);
 
 		var forceOnPlayer = Mathf.Min(MaxTensionForce, m_AnchorDistanceJoint.reactionForce.magnitude);
-		Player.AddForce((m_Corners.Last().Position - Player.position).normalized * forceOnPlayer);
+		Player.AddForce((PlayerPendulumPoint - Player.position).normalized * forceOnPlayer);
 	}
 
 	private void UpdateLineRenderer()
 	{
+		if (m_LineRenderer == null)
+		{
+			return;
+		}
+
 		m_LineRenderer.positionCount = m_Corners.Count + 2;
 		m_LineRenderer.SetPosition(0, Anchor.position);
 
@@ -257,6 +230,37 @@ public class IdealChain : MonoBehaviour
 		}
 
 		return new RaycastHit2D();
+	}
+
+	private float GetLength()
+	{
+		if (!HasPendulumPoints)
+		{
+			return Vector2.Distance(Anchor.position, Player.position);
+		}
+
+		return GetSegmentLength() + Vector2.Distance(Anchor.position, AnchorPendulumPoint) +
+			Vector2.Distance(Player.position, PlayerPendulumPoint);
+	}
+
+	private float GetSegmentLength()
+	{
+		if (!HasPendulumPoints)
+		{
+			return 0;
+		}
+
+		var length = 0.0f;
+
+		for (var i = 0; i < m_Corners.Count - 1; i++)
+		{
+			var corner = m_Corners[i];
+			var nextCorner = m_Corners[i + 1];
+
+			length += Vector2.Distance(corner.Position, nextCorner.Position);
+		}
+
+		return length;
 	}
 
 	private void OnDrawGizmosSelected()

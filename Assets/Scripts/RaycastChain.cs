@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RaycastChain : MonoBehaviour
@@ -20,6 +19,29 @@ public class RaycastChain : MonoBehaviour
 	private List<ChainCorner> m_Corners = new List<ChainCorner>();
 	private Vector2 m_PreviousAnchorPosition;
 	private Vector2 m_PreviousPlayerPosition;
+
+	public float GetLength()
+	{
+		if (m_Corners.Count == 0)
+		{
+			return Vector2.Distance(Anchor.position, Player.position);
+		}
+
+		var length = 0.0f;
+
+		length += Vector2.Distance(Anchor.position, m_Corners.First().Position);
+		length += Vector2.Distance(Player.position, m_Corners.Last().Position);
+
+		for (var i = 0; i < m_Corners.Count - 1; i++)
+		{
+			var corner = m_Corners[i];
+			var nextCorner = m_Corners[i + 1];
+
+			length += Vector2.Distance(corner.Position, nextCorner.Position);
+		}
+
+		return length;
+	}
 
 	private void Awake()
 	{

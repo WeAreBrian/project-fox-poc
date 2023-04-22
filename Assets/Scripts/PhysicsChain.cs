@@ -23,7 +23,7 @@ public class PhysicsChain : MonoBehaviour
 
 	private void Start()
 	{
-		CreateChain();
+		CreateCompactChain();
 
 		//m_AnchorTargetJoint = m_Links.First().gameObject.AddComponent<TargetJoint2D>();
 		//m_AnchorTargetJoint.anchor = Vector2.zero;
@@ -47,6 +47,38 @@ public class PhysicsChain : MonoBehaviour
 
 		m_Links.First().MovePosition(Anchor.position);
 		m_Links.Last().MovePosition(Player.position);
+	}
+
+	private void CreateCompactChain()
+	{
+		var chainDirection = (Player.position - Anchor.position).normalized;
+		var links = Mathf.CeilToInt(Length / LinkAnchorDistance);
+		var linksBetween = Mathf.CeilToInt(Vector2.Distance(Anchor.position, Player.position) / LinkAnchorDistance);
+
+		m_Links = new Rigidbody2D[links];
+
+		var position = Anchor.position;
+
+		for (var i = 0; i < links; i++)
+		{
+			var direction = i / linksBetween % 2 == 0 ? chainDirection : -chainDirection;
+
+			var link = CreateLink();
+
+			link.name = $"Link{i}";
+			link.transform.parent = transform;
+			link.transform.rotation = Quaternion.FromToRotation(Vector2.up, direction);
+			link.transform.position = position;
+
+			position += direction * LinkAnchorDistance;
+
+			m_Links[i] = link;
+		}
+
+		for (var i = 1; i < m_Links.Length; i++)
+		{
+			ConnectLink(m_Links[i], m_Links[i - 1]);
+		}
 	}
 
 	private void CreateChain()

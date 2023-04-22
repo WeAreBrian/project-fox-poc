@@ -7,12 +7,6 @@ using UnityEngine;
 
 public class RaycastChain : MonoBehaviour
 {
-	public struct Corner
-	{
-		public Vector2 Position;
-		public Vector2 Normal;
-	};
-
 	public float Thickness = 0.1f;
 	public float MaxLength = 15;
 	public LayerMask CollisionMask;
@@ -22,15 +16,8 @@ public class RaycastChain : MonoBehaviour
 	private const int k_SweepSteps = 16;
 	private const float k_MinCornerDistance = 0.001f;
 
-	private static readonly Dictionary<Type, Func<Collider2D, Vector2, Corner>> s_GetCorners = new Dictionary<Type, Func<Collider2D, Vector2, Corner>>
-	{
-		{ typeof(BoxCollider2D), (collider, point) => GetCorner((BoxCollider2D)collider, point) },
-		{ typeof(CircleCollider2D), (collider, point) => GetCorner((CircleCollider2D)collider, point) },
-		{ typeof(PolygonCollider2D), (collider, point) => GetCorner((PolygonCollider2D)collider, point) },
-	};
-
 	private LineRenderer m_LineRenderer;
-	private List<Corner> m_Corners = new List<Corner>();
+	private List<ChainCorner> m_Corners = new List<ChainCorner>();
 	private Vector2 m_PreviousAnchorPosition;
 	private Vector2 m_PreviousPlayerPosition;
 
@@ -59,9 +46,9 @@ public class RaycastChain : MonoBehaviour
 		m_PreviousPlayerPosition = Player.position;
 	}
 
-	private bool NewCorner(Vector2 from, Vector2 to, Vector2 previousTo, out Corner corner)
+	private bool NewCorner(Vector2 from, Vector2 to, Vector2 previousTo, out ChainCorner corner)
 	{
-		corner = new Corner();
+		corner = new ChainCorner();
 
 		if (Physics2D.OverlapPoint(to, CollisionMask) != null)
 		{
@@ -75,9 +62,11 @@ public class RaycastChain : MonoBehaviour
 			return false;
 		}
 
-		corner = GetCorner(hit.collider, hit.point);
+		var colliderCorner = ColliderCorners.GetCorner(hit.collider, hit.point);
+		corner.Position = colliderCorner.Position + colliderCorner.Normal * Thickness / 2;
+		corner.Normal = colliderCorner.Normal;
 
-		if (Vector2.Distance(GetPosition(corner), from) < k_MinCornerDistance)
+		if (Vector2.Distance(corner.Position, from) < k_MinCornerDistance)
 		{
 			return false;
 		}
@@ -85,9 +74,9 @@ public class RaycastChain : MonoBehaviour
 		return true;
 	}
 	
-	private bool CanRemoveCorner(Corner corner, Vector2 previousPosition, Vector2 nextPosition)
+	private bool CanRemoveCorner(ChainCorner corner, Vector2 previousPosition, Vector2 nextPosition)
 	{
-		var previousEdgeDirection = (GetPosition(corner) - previousPosition).normalized;
+		var previousEdgeDirection = (corner.Position - previousPosition).normalized;
 		var previousEdgeNormal = Vector2.Perpendicular(previousEdgeDirection);
 
 		var clockwiseCorner = Vector2.Dot(previousEdgeNormal, corner.Normal) < 0;
@@ -97,19 +86,19 @@ public class RaycastChain : MonoBehaviour
 			previousEdgeNormal *= -1;
 		}
 
-		var directionToNext = (nextPosition - GetPosition(corner)).normalized;
+		var directionToNext = (nextPosition - corner.Position).normalized;
 
 		return Vector2.Dot(previousEdgeNormal, directionToNext) > 0;
 	}
 
 	private void UpdateCorners()
 	{
-		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.Last()) : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
+		if (NewCorner(m_Corners.Count > 0 ? m_Corners.Last().Position : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
 		{
 			m_Corners.Add(endCorner);
 		}
 
-		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.First()) : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
+		if (NewCorner(m_Corners.Count > 0 ? m_Corners.First().Position : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
 		{
 			m_Corners.Insert(0, startCorner);
 		}
@@ -119,7 +108,7 @@ public class RaycastChain : MonoBehaviour
 			return;
 		}
 
-		if (CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? GetPosition(m_Corners[m_Corners.Count - 2]) : Anchor.position, Player.position))
+		if (CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? m_Corners[m_Corners.Count - 2].Position : Anchor.position, Player.position))
 		{
 			m_Corners.RemoveAt(m_Corners.Count - 1);
 		}
@@ -129,12 +118,11 @@ public class RaycastChain : MonoBehaviour
 			return;
 		}
 
-		if (CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? GetPosition(m_Corners[1]) : Player.position, Anchor.position))
+		if (CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? m_Corners[1].Position : Player.position, Anchor.position))
 		{
 			m_Corners.RemoveAt(0);
 		}
 	}
-
 
 	private void UpdateDistanceJoints()
 	{
@@ -146,11 +134,6 @@ public class RaycastChain : MonoBehaviour
 
 	}
 
-	private Vector2 GetPosition(Corner corner)
-	{
-		return corner.Position + corner.Normal * Thickness / 2;
-	}
-
 	private void UpdateLineRenderer()
 	{
 		m_LineRenderer.positionCount = m_Corners.Count + 2;
@@ -158,7 +141,7 @@ public class RaycastChain : MonoBehaviour
 
 		for (var i = 0; i < m_Corners.Count; i++)
 		{
-			m_LineRenderer.SetPosition(i + 1, GetPosition(m_Corners[i]));
+			m_LineRenderer.SetPosition(i + 1, m_Corners[i].Position);
 		}
 
 		m_LineRenderer.SetPosition(m_Corners.Count + 1, Player.position);
@@ -178,44 +161,5 @@ public class RaycastChain : MonoBehaviour
 		}
 
 		return new RaycastHit2D();
-	}
-
-	private static Corner GetCorner(Collider2D collider, Vector2 point)
-	{
-		if (s_GetCorners.TryGetValue(collider.GetType(), out var corners))
-		{
-			return corners(collider, point);
-		}
-		else
-		{
-			throw new ArgumentException($"{collider.GetType().Name} for chain is not supported yet.");
-		}
-	}
-
-	private static Corner GetCorner(CircleCollider2D collider, Vector2 point)
-	{
-		return new Corner
-		{
-			Position = point,
-			Normal = (point - (Vector2)collider.transform.TransformPoint(collider.offset)).normalized
-		};
-	}
-
-	private static Corner GetCorner(BoxCollider2D collider, Vector2 point)
-	{
-		var corners = new Vector2[]
-		{
-			(Vector2)collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(-0.5f, -0.5f)),
-			(Vector2)collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(-0.5f, 0.5f)),
-			(Vector2)collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(0.5f, 0.5f)),
-			(Vector2)collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(0.5f, -0.5f))
-		}.Select(x => new Corner { Position = x, Normal = (x - (Vector2)collider.transform.TransformPoint(collider.offset)).normalized });
-
-		return corners.OrderBy(x => Vector2.Distance(point, x.Position)).First();
-	}
-
-	private static Corner GetCorner(PolygonCollider2D collider, Vector2 point)
-	{
-		return new Corner();
 	}
 }

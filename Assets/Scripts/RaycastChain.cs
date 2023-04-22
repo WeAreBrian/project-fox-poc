@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class RaycastChain : MonoBehaviour
@@ -17,14 +16,11 @@ public class RaycastChain : MonoBehaviour
 	public float Thickness = 0.1f;
 	public float MaxLength = 15;
 	public LayerMask CollisionMask;
-	public Transform From;
-	public Transform To;
-
-	public Vector2 FromPosition => new Vector2(From.position.x, From.position.y);
-	public Vector2 ToPosition => new Vector2(To.position.x, To.position.y);
+	public Rigidbody2D Anchor;
+	public Rigidbody2D Player;
 
 	private const int k_RaycastSteps = 16;
-	private const float k_MinCornerDistance = 0.05f;
+	private const float k_MinCornerDistance = 0.001f;
 
 	private static readonly Dictionary<Type, Func<Collider2D, Vector2, Corner>> s_GetCorners = new Dictionary<Type, Func<Collider2D, Vector2, Corner>>
 	{
@@ -35,8 +31,8 @@ public class RaycastChain : MonoBehaviour
 
 	private LineRenderer m_LineRenderer;
 	private List<Corner> m_Corners = new List<Corner>();
-	private Vector2 m_PreviousFromPosition;
-	private Vector2 m_PreviousToPosition;
+	private Vector2 m_PreviousAnchorPosition;
+	private Vector2 m_PreviousPlayerPosition;
 
 	private void Awake()
 	{
@@ -48,38 +44,43 @@ public class RaycastChain : MonoBehaviour
 		m_LineRenderer.startWidth = Thickness;
 		m_LineRenderer.endWidth = Thickness;
 
-		m_PreviousFromPosition = FromPosition;
-		m_PreviousToPosition = ToPosition;
+		m_PreviousAnchorPosition = Anchor.position;
+		m_PreviousPlayerPosition = Player.position;
 	}
 
 	private void FixedUpdate()
 	{
 		UpdateLine();
 
-		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.Last()) : FromPosition, ToPosition, m_PreviousToPosition, out var endCorner))
+		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.Last()) : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
 		{
 			m_Corners.Add(endCorner);
 		}
 
-		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.First()) : ToPosition, FromPosition, m_PreviousFromPosition, out var startCorner))
+		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.First()) : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
 		{
 			m_Corners.Insert(0, startCorner);
 		}
 
-		m_PreviousFromPosition = FromPosition;
-		m_PreviousToPosition = ToPosition;
+		m_PreviousAnchorPosition = Anchor.position;
+		m_PreviousPlayerPosition = Player.position;
 
 		if (m_Corners.Count == 0)
 		{
 			return;
 		}
 
-		if (CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? GetPosition(m_Corners[m_Corners.Count - 2]) : FromPosition, ToPosition))
+		if (CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? GetPosition(m_Corners[m_Corners.Count - 2]) : Anchor.position, Player.position))
 		{
 			m_Corners.RemoveAt(m_Corners.Count - 1);
 		}
 
-		if (CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? GetPosition(m_Corners[1]) : ToPosition, FromPosition))
+		if (m_Corners.Count == 0)
+		{
+			return;
+		}
+
+		if (CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? GetPosition(m_Corners[1]) : Player.position, Anchor.position))
 		{
 			m_Corners.RemoveAt(0);
 		}
@@ -89,12 +90,12 @@ public class RaycastChain : MonoBehaviour
 	{
 		corner = new Corner();
 
-		if (Physics2D.OverlapPoint(to) != null)
+		if (Physics2D.OverlapPoint(to, CollisionMask) != null)
 		{
 			return false;
 		}
 
-		var hit = RaycastLine(from, to, previousTo);
+		var hit = LineCastSweep(from, to, previousTo);
 
 		if (!hit)
 		{
@@ -136,22 +137,22 @@ public class RaycastChain : MonoBehaviour
 	private void UpdateLine()
 	{
 		m_LineRenderer.positionCount = m_Corners.Count + 2;
-		m_LineRenderer.SetPosition(0, From.position);
+		m_LineRenderer.SetPosition(0, Anchor.position);
 
 		for (var i = 0; i < m_Corners.Count; i++)
 		{
 			m_LineRenderer.SetPosition(i + 1, GetPosition(m_Corners[i]));
 		}
 
-		m_LineRenderer.SetPosition(m_Corners.Count + 1, To.position);
+		m_LineRenderer.SetPosition(m_Corners.Count + 1, Player.position);
 	}
 
-	private RaycastHit2D RaycastLine(Vector2 from, Vector2 to, Vector2 previousTo)
+	private RaycastHit2D LineCastSweep(Vector2 origin, Vector2 from, Vector2 to)
 	{
 		for (var i = 0; i <= k_RaycastSteps; i++)
 		{
-			var lerpTo = Vector2.Lerp(previousTo, to, i / (float)k_RaycastSteps);
-			var hit = Physics2D.Raycast(from, (lerpTo - from).normalized, Vector2.Distance(from, lerpTo), CollisionMask);
+			var end = Vector2.Lerp(to, from, i / (float)k_RaycastSteps);
+			var hit = Physics2D.Linecast(origin, end, CollisionMask);
 
 			if (hit)
 			{

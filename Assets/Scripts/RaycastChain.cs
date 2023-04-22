@@ -19,7 +19,7 @@ public class RaycastChain : MonoBehaviour
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
 
-	private const int k_RaycastSteps = 16;
+	private const int k_SweepSteps = 16;
 	private const float k_MinCornerDistance = 0.001f;
 
 	private static readonly Dictionary<Type, Func<Collider2D, Vector2, Corner>> s_GetCorners = new Dictionary<Type, Func<Collider2D, Vector2, Corner>>
@@ -50,40 +50,13 @@ public class RaycastChain : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		UpdateLine();
-
-		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.Last()) : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
-		{
-			m_Corners.Add(endCorner);
-		}
-
-		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.First()) : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
-		{
-			m_Corners.Insert(0, startCorner);
-		}
+		UpdateCorners();
+		UpdateDistanceJoints();
+		UpdateLineRenderer();
+		ApplyTensionForces();
 
 		m_PreviousAnchorPosition = Anchor.position;
 		m_PreviousPlayerPosition = Player.position;
-
-		if (m_Corners.Count == 0)
-		{
-			return;
-		}
-
-		if (CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? GetPosition(m_Corners[m_Corners.Count - 2]) : Anchor.position, Player.position))
-		{
-			m_Corners.RemoveAt(m_Corners.Count - 1);
-		}
-
-		if (m_Corners.Count == 0)
-		{
-			return;
-		}
-
-		if (CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? GetPosition(m_Corners[1]) : Player.position, Anchor.position))
-		{
-			m_Corners.RemoveAt(0);
-		}
 	}
 
 	private bool NewCorner(Vector2 from, Vector2 to, Vector2 previousTo, out Corner corner)
@@ -129,12 +102,56 @@ public class RaycastChain : MonoBehaviour
 		return Vector2.Dot(previousEdgeNormal, directionToNext) > 0;
 	}
 
+	private void UpdateCorners()
+	{
+		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.Last()) : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
+		{
+			m_Corners.Add(endCorner);
+		}
+
+		if (NewCorner(m_Corners.Count > 0 ? GetPosition(m_Corners.First()) : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
+		{
+			m_Corners.Insert(0, startCorner);
+		}
+
+		if (m_Corners.Count == 0)
+		{
+			return;
+		}
+
+		if (CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? GetPosition(m_Corners[m_Corners.Count - 2]) : Anchor.position, Player.position))
+		{
+			m_Corners.RemoveAt(m_Corners.Count - 1);
+		}
+
+		if (m_Corners.Count == 0)
+		{
+			return;
+		}
+
+		if (CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? GetPosition(m_Corners[1]) : Player.position, Anchor.position))
+		{
+			m_Corners.RemoveAt(0);
+		}
+	}
+
+
+	private void UpdateDistanceJoints()
+	{
+
+	}
+
+	private void ApplyTensionForces()
+	{
+
+	}
+
 	private Vector2 GetPosition(Corner corner)
 	{
 		return corner.Position + corner.Normal * Thickness / 2;
 	}
 
-	private void UpdateLine()
+	private void UpdateLineRenderer()
 	{
 		m_LineRenderer.positionCount = m_Corners.Count + 2;
 		m_LineRenderer.SetPosition(0, Anchor.position);
@@ -149,9 +166,9 @@ public class RaycastChain : MonoBehaviour
 
 	private RaycastHit2D LineCastSweep(Vector2 origin, Vector2 from, Vector2 to)
 	{
-		for (var i = 0; i <= k_RaycastSteps; i++)
+		for (var i = 0; i < k_SweepSteps; i++)
 		{
-			var end = Vector2.Lerp(to, from, i / (float)k_RaycastSteps);
+			var end = Vector2.Lerp(to, from, (i + 1) / (float)k_SweepSteps);
 			var hit = Physics2D.Linecast(origin, end, CollisionMask);
 
 			if (hit)

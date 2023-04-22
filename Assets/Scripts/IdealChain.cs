@@ -69,16 +69,16 @@ public class IdealChain : MonoBehaviour
 		m_PreviousPlayerPosition = Player.position;
 	}
 
-	private bool NewCorner(Vector2 from, Vector2 to, Vector2 previousTo, out ChainCorner corner)
+	private bool SweepCorner(Vector2 origin, Vector2 from, Vector2 to, out ChainCorner corner)
 	{
 		corner = new ChainCorner();
 
-		if (Physics2D.OverlapPoint(to, Collision) != null)
+		if (Physics2D.OverlapPoint(from, Collision) != null)
 		{
 			return false;
 		}
 
-		var hit = LineCastSweep(from, to, previousTo);
+		var hit = LineCastSweep(origin, from, to);
 
 		if (!hit)
 		{
@@ -91,7 +91,7 @@ public class IdealChain : MonoBehaviour
 		corner.Normal = colliderCorner.Normal;
 		corner.Collider = hit.collider;
 
-		if (Vector2.Distance(corner.Position, from) < k_MinCornerDistance)
+		if (Vector2.Distance(corner.Position, origin) < k_MinCornerDistance)
 		{
 			return false;
 		}
@@ -118,25 +118,25 @@ public class IdealChain : MonoBehaviour
 
 	private void UpdateCorners()
 	{
-		if (NewCorner(m_Corners.Count > 0 ? PlayerPendulumPoint : Anchor.position, Player.position, m_PreviousPlayerPosition, out var endCorner))
+		if (SweepCorner(HasPendulumPoints ? PlayerPendulumPoint : Anchor.position, Player.position, m_PreviousPlayerPosition, out var playerCorner))
 		{
-			CornerAdded?.Invoke(endCorner.Position);
-			m_Corners.Add(endCorner);
+			CornerAdded?.Invoke(playerCorner.Position);
+			m_Corners.Add(playerCorner);
 		}
 
-		if (NewCorner(m_Corners.Count > 0 ? AnchorPendulumPoint : Player.position, Anchor.position, m_PreviousAnchorPosition, out var startCorner))
+		if (SweepCorner(HasPendulumPoints ? AnchorPendulumPoint : Player.position, Anchor.position, m_PreviousAnchorPosition, out var anchorCorner))
 		{
-			CornerAdded?.Invoke(startCorner.Position);
-			m_Corners.Insert(0, startCorner);
+			CornerAdded?.Invoke(anchorCorner.Position);
+			m_Corners.Insert(0, anchorCorner);
 		}
 
-		if (m_Corners.Count != 0 && CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? m_Corners[m_Corners.Count - 2].Position : Anchor.position, Player.position))
+		if (HasPendulumPoints && CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? m_Corners[m_Corners.Count - 2].Position : Anchor.position, Player.position))
 		{
 			CornerRemoved?.Invoke(m_Corners.Last().Position);
 			m_Corners.RemoveAt(m_Corners.Count - 1);
 		}
 
-		if (m_Corners.Count != 0 && CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? m_Corners[1].Position : Player.position, Anchor.position))
+		if (HasPendulumPoints && CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? m_Corners[1].Position : Player.position, Anchor.position))
 		{
 			CornerRemoved?.Invoke(m_Corners.First().Position);
 			m_Corners.RemoveAt(0);
@@ -164,7 +164,7 @@ public class IdealChain : MonoBehaviour
 
 	private DistanceJoint2D CreatePendulum(Rigidbody2D connectedBody)
 	{
-		var pendulum = new GameObject($"{connectedBody.name}DistanceJoint", typeof(Rigidbody2D), typeof(DistanceJoint2D));
+		var pendulum = new GameObject($"{connectedBody.name}Pendulum", typeof(Rigidbody2D), typeof(DistanceJoint2D));
 		pendulum.transform.parent = transform;
 		pendulum.transform.position = Vector2.zero;
 
@@ -187,6 +187,11 @@ public class IdealChain : MonoBehaviour
 	private void ApplyTensionForces()
 	{
 		if (!HasPendulumPoints)
+		{
+			return;
+		}
+
+		if (Anchor.bodyType != RigidbodyType2D.Dynamic)
 		{
 			return;
 		}

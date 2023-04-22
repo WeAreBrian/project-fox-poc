@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class IdealChain : MonoBehaviour
 {
-	public float Thickness = 0.1f;
+	public LayerMask CollisionMask;
+	public float Width = 0.15f;
 	public float MaxLength = 15;
 	public float MaxTensionForce = 1000;
-	public LayerMask CollisionMask;
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
 
@@ -22,6 +22,7 @@ public class IdealChain : MonoBehaviour
 	private Vector2 m_PreviousPlayerPosition;
 	private DistanceJoint2D m_AnchorDistanceJoint;
 	private DistanceJoint2D m_PlayerDistanceJoint;
+	private DistanceJoint2D m_MaxDistanceJoint;
 
 	public float GetLength()
 	{
@@ -73,8 +74,8 @@ public class IdealChain : MonoBehaviour
 
 	private void Start()
 	{
-		m_LineRenderer.startWidth = Thickness;
-		m_LineRenderer.endWidth = Thickness;
+		m_LineRenderer.startWidth = Width;
+		m_LineRenderer.endWidth = Width;
 
 		m_PreviousAnchorPosition = Anchor.position;
 		m_PreviousPlayerPosition = Player.position;
@@ -82,14 +83,14 @@ public class IdealChain : MonoBehaviour
 		m_AnchorDistanceJoint = CreateDistanceJoint(Anchor);
 		m_PlayerDistanceJoint = CreateDistanceJoint(Player);
 
-		var distanceJoint = Player.gameObject.AddComponent<DistanceJoint2D>();
-		distanceJoint.autoConfigureConnectedAnchor = false;
-		distanceJoint.autoConfigureDistance = false;
-		distanceJoint.maxDistanceOnly = true;
-		distanceJoint.anchor = Vector2.zero;
-		distanceJoint.connectedAnchor = Vector2.zero;
-		distanceJoint.connectedBody = Anchor;
-		distanceJoint.distance = MaxLength;
+		m_MaxDistanceJoint = Player.gameObject.AddComponent<DistanceJoint2D>();
+		m_MaxDistanceJoint.autoConfigureConnectedAnchor = false;
+		m_MaxDistanceJoint.autoConfigureDistance = false;
+		m_MaxDistanceJoint.maxDistanceOnly = true;
+		m_MaxDistanceJoint.anchor = Vector2.zero;
+		m_MaxDistanceJoint.connectedAnchor = Vector2.zero;
+		m_MaxDistanceJoint.connectedBody = Anchor;
+		m_MaxDistanceJoint.distance = MaxLength;
 	}
 
 	private void FixedUpdate()
@@ -121,7 +122,7 @@ public class IdealChain : MonoBehaviour
 
 		var colliderCorner = ColliderCorners.GetCorner(hit.collider, hit.point);
 
-		corner.Position = colliderCorner.Position + colliderCorner.Normal * Thickness / 2;
+		corner.Position = colliderCorner.Position + colliderCorner.Normal * Width / 2;
 		corner.Normal = colliderCorner.Normal;
 		corner.Collider = hit.collider;
 
@@ -175,6 +176,8 @@ public class IdealChain : MonoBehaviour
 
 	private void UpdateDistanceJoints()
 	{
+		m_MaxDistanceJoint.distance = MaxLength;
+
 		if (m_Corners.Count == 0)
 		{
 			m_PlayerDistanceJoint.enabled = false;
@@ -258,12 +261,23 @@ public class IdealChain : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
-		Gizmos.color = Color.blue;
-
-		foreach (var corner in m_Corners)
+		for (int i = 0; i < m_Corners.Count; i++)
 		{
-			Gizmos.DrawWireSphere(corner.Position, 0.1f);
+			var corner = m_Corners[i];
+
+			Gizmos.color = Color.blue;
+			Gizmos.DrawWireSphere(corner.Position, Width / 2);
+
+			Gizmos.color = Color.red;
 			Gizmos.DrawRay(corner.Position, corner.Normal);
+
+			if (i < m_Corners.Count - 1)
+			{
+				var nextCorner = m_Corners[i + 1];
+
+				Gizmos.color = Color.cyan;
+				Gizmos.DrawLine(corner.Position, nextCorner.Position);
+			}
 		}
 	}
 }

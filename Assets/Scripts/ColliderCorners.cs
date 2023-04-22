@@ -43,7 +43,7 @@ public static class ColliderCorners
 			collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(-0.5f, -0.5f)),
 			collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(-0.5f, 0.5f)),
 			collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(0.5f, 0.5f)),
-			collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(0.5f, -0.5f))
+			collider.transform.TransformPoint(collider.offset + collider.size * new Vector2(0.5f, -0.5f)),
 		}.Select(x => new ColliderCorner { Position = x, Normal = (x - (Vector2)collider.transform.TransformPoint(collider.offset)).normalized });
 
 		return corners.OrderBy(x => Vector2.Distance(point, x.Position)).First();
@@ -51,16 +51,16 @@ public static class ColliderCorners
 
 	private static ColliderCorner GetCorner(PolygonCollider2D collider, Vector2 point)
 	{
-		var closestPoint = collider.points.Select((point, index) => (collider.transform.TransformPoint(point), index))
+		var closestPoint = collider.points.Select((point, index) => (collider.transform.TransformPoint(collider.offset + point), index))
 			.OrderBy(x => Vector2.Distance(point, x.Item1)).First();
 
         var nextPointIndex = (closestPoint.index + 1) % collider.points.Length;
-		var nextPoint = collider.transform.TransformPoint(collider.points[nextPointIndex]);
+		var nextPoint = collider.transform.TransformPoint(collider.offset + collider.points[nextPointIndex]);
 
 		var previousPointIndex = closestPoint.index > 0 ? closestPoint.index - 1 : collider.points.Length - 1;
-		var previousPoint = collider.transform.TransformPoint(collider.points[previousPointIndex]);
+		var previousPoint = collider.transform.TransformPoint(collider.offset + collider.points[previousPointIndex]);
 
-		var direction = (nextPoint - previousPoint).normalized;
+		var direction = (previousPoint - nextPoint).normalized;
 		var normal = Vector2.Perpendicular(direction);
 
 		return new ColliderCorner { Position = closestPoint.Item1, Normal = normal };

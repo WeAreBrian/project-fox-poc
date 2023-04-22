@@ -15,13 +15,15 @@ public static class ColliderCorners
 
 	public static ColliderCorner GetCorner(Collider2D collider, Vector2 point)
 	{
-		if (s_GetCorners.TryGetValue(collider.GetType(), out var getCorner))
+		var colliderType = collider.GetType();
+
+		if (s_GetCorners.TryGetValue(colliderType, out var getCorner))
 		{
 			return getCorner(collider, point);
 		}
 		else
 		{
-			throw new ArgumentException($"{collider.GetType().Name} for chain is not supported yet.");
+			throw new ArgumentException($"{colliderType.Name} for chain is not supported yet.");
 		}
 	}
 
@@ -49,6 +51,18 @@ public static class ColliderCorners
 
 	private static ColliderCorner GetCorner(PolygonCollider2D collider, Vector2 point)
 	{
-		return new ColliderCorner();
+		var closestPoint = collider.points.Select((point, index) => (collider.transform.TransformPoint(point), index))
+			.OrderBy(x => Vector2.Distance(point, x.Item1)).First();
+
+        var nextPointIndex = (closestPoint.index + 1) % collider.points.Length;
+		var nextPoint = collider.transform.TransformPoint(collider.points[nextPointIndex]);
+
+		var previousPointIndex = closestPoint.index > 0 ? closestPoint.index - 1 : collider.points.Length - 1;
+		var previousPoint = collider.transform.TransformPoint(collider.points[previousPointIndex]);
+
+		var direction = (nextPoint - previousPoint).normalized;
+		var normal = Vector2.Perpendicular(direction);
+
+		return new ColliderCorner { Position = closestPoint.Item1, Normal = normal };
 	}
 }

@@ -6,4 +6,5 @@ public class ChainCorner
 {
     public Vector2 Position;
     public Vector2 Normal;
+    public Collider2D Collider;
 }

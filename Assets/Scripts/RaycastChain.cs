@@ -19,6 +19,8 @@ public class RaycastChain : MonoBehaviour
 	private List<ChainCorner> m_Corners = new List<ChainCorner>();
 	private Vector2 m_PreviousAnchorPosition;
 	private Vector2 m_PreviousPlayerPosition;
+	private DistanceJoint2D m_AnchorDistanceJoint;
+	private DistanceJoint2D m_PlayerDistanceJoint;
 
 	public float GetLength()
 	{
@@ -43,6 +45,26 @@ public class RaycastChain : MonoBehaviour
 		return length;
 	}
 
+	public float GetSegmentLength()
+	{
+		if (m_Corners.Count == 0)
+		{
+			return 0;
+		}
+
+		var length = 0.0f;
+
+		for (var i = 0; i < m_Corners.Count - 1; i++)
+		{
+			var corner = m_Corners[i];
+			var nextCorner = m_Corners[i + 1];
+
+			length += Vector2.Distance(corner.Position, nextCorner.Position);
+		}
+
+		return length;
+	}
+
 	private void Awake()
 	{
 		m_LineRenderer = GetComponent<LineRenderer>();
@@ -55,14 +77,17 @@ public class RaycastChain : MonoBehaviour
 
 		m_PreviousAnchorPosition = Anchor.position;
 		m_PreviousPlayerPosition = Player.position;
+
+		m_AnchorDistanceJoint = CreateDistanceJoint(Anchor);
+		m_PlayerDistanceJoint = CreateDistanceJoint(Player);
 	}
 
 	private void FixedUpdate()
 	{
 		UpdateCorners();
 		UpdateDistanceJoints();
-		UpdateLineRenderer();
 		ApplyTensionForces();
+		UpdateLineRenderer();
 
 		m_PreviousAnchorPosition = Anchor.position;
 		m_PreviousPlayerPosition = Player.position;
@@ -85,8 +110,10 @@ public class RaycastChain : MonoBehaviour
 		}
 
 		var colliderCorner = ColliderCorners.GetCorner(hit.collider, hit.point);
+
 		corner.Position = colliderCorner.Position + colliderCorner.Normal * Thickness / 2;
 		corner.Normal = colliderCorner.Normal;
+		corner.Collider = hit.collider;
 
 		if (Vector2.Distance(corner.Position, from) < k_MinCornerDistance)
 		{
@@ -125,22 +152,12 @@ public class RaycastChain : MonoBehaviour
 			m_Corners.Insert(0, startCorner);
 		}
 
-		if (m_Corners.Count == 0)
-		{
-			return;
-		}
-
-		if (CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? m_Corners[m_Corners.Count - 2].Position : Anchor.position, Player.position))
+		if (m_Corners.Count != 0 && CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? m_Corners[m_Corners.Count - 2].Position : Anchor.position, Player.position))
 		{
 			m_Corners.RemoveAt(m_Corners.Count - 1);
 		}
 
-		if (m_Corners.Count == 0)
-		{
-			return;
-		}
-
-		if (CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? m_Corners[1].Position : Player.position, Anchor.position))
+		if (m_Corners.Count != 0 && CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? m_Corners[1].Position : Player.position, Anchor.position))
 		{
 			m_Corners.RemoveAt(0);
 		}
@@ -148,12 +165,56 @@ public class RaycastChain : MonoBehaviour
 
 	private void UpdateDistanceJoints()
 	{
+		if (m_Corners.Count == 0)
+		{
+			m_PlayerDistanceJoint.enabled = false;
+			m_AnchorDistanceJoint.enabled = false;
+			return;
+		}
 
+		m_PlayerDistanceJoint.enabled = true;
+		m_PlayerDistanceJoint.transform.position = m_Corners.Last().Position;
+		m_PlayerDistanceJoint.distance = Mathf.Max(0, MaxLength - (Vector2.Distance(Anchor.position, m_Corners.First().Position) + GetSegmentLength()));
+
+		m_AnchorDistanceJoint.enabled = true;
+		m_AnchorDistanceJoint.transform.position = m_Corners.First().Position;
+		m_AnchorDistanceJoint.distance = Mathf.Max(0, MaxLength - (Vector2.Distance(Player.position, m_Corners.Last().Position) + GetSegmentLength()));
+	}
+
+	private DistanceJoint2D CreateDistanceJoint(Rigidbody2D connectedBody)
+	{
+		var corner = new GameObject($"{connectedBody.name}DistanceJoint", typeof(Rigidbody2D), typeof(DistanceJoint2D));
+		corner.transform.parent = transform;
+		corner.transform.position = Vector2.zero;
+
+		var rigidBody = corner.GetComponent<Rigidbody2D>();
+		rigidBody.bodyType = RigidbodyType2D.Static;
+
+		var distanceJoint = corner.GetComponent<DistanceJoint2D>();
+		distanceJoint.autoConfigureConnectedAnchor = false;
+		distanceJoint.autoConfigureDistance = false;
+		distanceJoint.maxDistanceOnly = true;
+		distanceJoint.anchor = Vector2.zero;
+		distanceJoint.connectedAnchor = Vector2.zero;
+		distanceJoint.connectedBody = connectedBody;
+		distanceJoint.distance = MaxLength;
+		distanceJoint.enabled = false;
+
+		return distanceJoint;
 	}
 
 	private void ApplyTensionForces()
 	{
+		if (m_Corners.Count == 0)
+		{
+			return;
+		}
 
+		var forceOnAnchor = m_PlayerDistanceJoint.reactionForce.magnitude;
+		Anchor.AddForce((m_Corners.First().Position - Anchor.position).normalized * forceOnAnchor);
+
+		var forceOnPlayer = m_AnchorDistanceJoint.reactionForce.magnitude;
+		Player.AddForce((m_Corners.Last().Position - Player.position).normalized * forceOnPlayer);
 	}
 
 	private void UpdateLineRenderer()
@@ -183,5 +244,16 @@ public class RaycastChain : MonoBehaviour
 		}
 
 		return new RaycastHit2D();
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.blue;
+
+		foreach (var corner in m_Corners)
+		{
+			Gizmos.DrawWireSphere(corner.Position, 0.1f);
+			Gizmos.DrawRay(corner.Position, corner.Normal);
+		}
 	}
 }

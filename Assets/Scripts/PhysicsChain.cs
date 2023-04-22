@@ -11,7 +11,7 @@ public class PhysicsChain : MonoBehaviour
 	public float LinkMass = 1;
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
-	public float TargetJointFrequency = 8;
+	public float TargetJointFrequency = 15;
 	public float TargetJointDampingRatio = 1;
 
 	public float LinkAnchorDistance => LinkSize.y - LinkSize.x;

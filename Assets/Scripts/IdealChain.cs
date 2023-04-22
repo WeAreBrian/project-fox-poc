@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class IdealChain : MonoBehaviour
 {
-	public LayerMask CollisionMask;
+	public LayerMask Collision;
 	public float Width = 0.15f;
 	public float MaxLength = 15;
 	public float MaxTensionForce = 1000;
@@ -108,7 +108,7 @@ public class IdealChain : MonoBehaviour
 	{
 		corner = new ChainCorner();
 
-		if (Physics2D.OverlapPoint(to, CollisionMask) != null)
+		if (Physics2D.OverlapPoint(to, Collision) != null)
 		{
 			return false;
 		}
@@ -248,7 +248,7 @@ public class IdealChain : MonoBehaviour
 		for (var i = 0; i < k_SweepSteps; i++)
 		{
 			var end = Vector2.Lerp(to, from, (i + 1) / (float)k_SweepSteps);
-			var hit = Physics2D.Linecast(origin, end, CollisionMask);
+			var hit = Physics2D.Linecast(origin, end, Collision);
 
 			if (hit)
 			{

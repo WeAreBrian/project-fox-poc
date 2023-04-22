@@ -17,9 +17,14 @@ public class IdealChain : MonoBehaviour
 	public Rigidbody2D Player;
 
 	public bool HasPendulumPoints => m_Corners.Count > 0;
-	public Vector2 AnchorPendulumPoint => m_Corners.First().Position;
-	public Vector2 PlayerPendulumPoint => m_Corners.Last().Position;
+	public Vector2 AnchorPendulumPoint => HasPendulumPoints ? m_Corners.First().Position : Player.position;
+	public Vector2 PlayerPendulumPoint => HasPendulumPoints ? m_Corners.Last().Position : Anchor.position;
+	public Rigidbody2D AnchorPendulum => HasPendulumPoints ? m_AnchorDistanceJoint.attachedRigidbody : Player;
+	public Rigidbody2D PlayerPendulum => HasPendulumPoints ? m_PlayerDistanceJoint.attachedRigidbody : Anchor;
+	public float AnchorTension => m_AnchorDistanceJoint.reactionForce.magnitude;
+	public float PlayerTension => m_PlayerDistanceJoint.reactionForce.magnitude;
 	public float Length => GetLength();
+	public IEnumerable<ChainCorner> Corners => m_Corners;
 
 	private const int k_SweepSteps = 16;
 	private const float k_MinCornerDistance = 0.001f;
@@ -31,6 +36,47 @@ public class IdealChain : MonoBehaviour
 	private DistanceJoint2D m_AnchorDistanceJoint;
 	private DistanceJoint2D m_PlayerDistanceJoint;
 	private DistanceJoint2D m_MaxDistanceJoint;
+
+	//public void GetPendulumPoint(float distance, out Vector2 point, out Vector2 pendulum)
+	//{
+	//	if (!HasPendulumPoints)
+	//	{
+	//		distance = Mathf.Clamp(distance, 0, Vector2.Distance(Anchor.position, Player.position));
+	//		point = (Player.position - Anchor.position).normalized * distance;
+	//		pendulum = Anchor.position;
+
+	//		return;
+	//	}
+
+	//	if (distance < Vector2.Distance(Anchor.position, AnchorPendulumPoint))
+	//	{
+	//		point = (AnchorPendulumPoint - Anchor.position).normalized * distance;
+	//		pendulum = Anchor.position;
+
+	//		return;
+	//	}
+
+	//	for (var i = 0; i < m_Corners.Count - 1; i++)
+	//	{
+	//		var corner = m_Corners[i];
+	//		var nextCorner = m_Corners[i + 1];
+
+	//		var sideLength = Vector2.Distance(corner.Position, nextCorner.Position);
+
+	//		if (distance < sideLength)
+	//		{
+	//			point = Vector2.Lerp(corner.Position, nextCorner.Position, distance / sideLength);
+	//			pendulum = corner.Position;
+
+	//			return;
+	//		}
+
+	//		distance -= sideLength;
+	//	}
+
+	//	point = Player.position;
+	//	pendulum = PlayerPendulumPoint;
+	//}
 
 	private void Awake()
 	{
@@ -270,6 +316,16 @@ public class IdealChain : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
+		//var distance = Mathf.Repeat(Time.time, Length);
+
+		//GetPendulumPoint(distance, out var point, out var pendulum);
+
+		//Gizmos.color = Color.red;
+		//Gizmos.DrawWireSphere(point, Width / 2);
+
+		//Gizmos.color = Color.green;
+		//Gizmos.DrawWireSphere(pendulum, Width / 2);
+
 		for (int i = 0; i < m_Corners.Count; i++)
 		{
 			var corner = m_Corners[i];

@@ -21,6 +21,11 @@ public class PhysicsChain : MonoBehaviour
 	//private TargetJoint2D m_AnchorTargetJoint;
 	//private TargetJoint2D m_PlayerTargetJoint;
 
+	public Rigidbody2D GetLink(int index)
+	{
+		return m_Links[Mathf.Clamp(index, 0, m_Links.Length - 1)];
+	}
+
 	private void Start()
 	{
 		CreateCompactChain();

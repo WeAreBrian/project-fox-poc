@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RaycastChain : MonoBehaviour
+public class IdealChain : MonoBehaviour
 {
 	public float Thickness = 0.1f;
 	public float MaxLength = 15;
+	public float MaxTensionForce = 1000;
 	public LayerMask CollisionMask;
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
@@ -80,6 +81,15 @@ public class RaycastChain : MonoBehaviour
 
 		m_AnchorDistanceJoint = CreateDistanceJoint(Anchor);
 		m_PlayerDistanceJoint = CreateDistanceJoint(Player);
+
+		var distanceJoint = Player.gameObject.AddComponent<DistanceJoint2D>();
+		distanceJoint.autoConfigureConnectedAnchor = false;
+		distanceJoint.autoConfigureDistance = false;
+		distanceJoint.maxDistanceOnly = true;
+		distanceJoint.anchor = Vector2.zero;
+		distanceJoint.connectedAnchor = Vector2.zero;
+		distanceJoint.connectedBody = Anchor;
+		distanceJoint.distance = MaxLength;
 	}
 
 	private void FixedUpdate()
@@ -210,10 +220,10 @@ public class RaycastChain : MonoBehaviour
 			return;
 		}
 
-		var forceOnAnchor = m_PlayerDistanceJoint.reactionForce.magnitude;
+		var forceOnAnchor = Mathf.Min(MaxTensionForce, m_PlayerDistanceJoint.reactionForce.magnitude);
 		Anchor.AddForce((m_Corners.First().Position - Anchor.position).normalized * forceOnAnchor);
 
-		var forceOnPlayer = m_AnchorDistanceJoint.reactionForce.magnitude;
+		var forceOnPlayer = Mathf.Min(MaxTensionForce, m_AnchorDistanceJoint.reactionForce.magnitude);
 		Player.AddForce((m_Corners.Last().Position - Player.position).normalized * forceOnPlayer);
 	}
 

@@ -21,6 +21,8 @@ public class IdealChain : MonoBehaviour
 	public Vector2 PlayerPendulumPoint => HasPendulumPoints ? m_Corners.Last().Position : Anchor.position;
 	public Rigidbody2D AnchorPendulum => HasPendulumPoints ? m_AnchorDistanceJoint.attachedRigidbody : Player;
 	public Rigidbody2D PlayerPendulum => HasPendulumPoints ? m_PlayerDistanceJoint.attachedRigidbody : Anchor;
+	public Vector2 AnchorToPendulum => (AnchorPendulumPoint - Anchor.position).normalized;
+	public Vector2 PlayerToPendulum => (PlayerPendulumPoint - Player.position).normalized;
 	public float AnchorTension => m_AnchorDistanceJoint.reactionForce.magnitude;
 	public float PlayerTension => m_PlayerDistanceJoint.reactionForce.magnitude;
 	public float Length => GetLength();

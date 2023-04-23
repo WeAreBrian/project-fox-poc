@@ -97,7 +97,7 @@ public class Springboard : MonoBehaviour, IToggle
 
     public void Toggle()
     {
-        m_FreeOnToggle?.FreeForDuration(1f);
+        //m_FreeOnToggle?.FreeForDuration(1f);
         m_FreeOnToggle = null;
 
         m_State = SpringboardState.Triggered;

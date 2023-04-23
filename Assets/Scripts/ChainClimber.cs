@@ -13,7 +13,8 @@ public class ChainClimber : MonoBehaviour
 	public int LinkIndex => Mathf.FloorToInt(m_Chain.Length / m_PhysicsChain.LinkAnchorDistance);
 	public Rigidbody2D Link => m_PhysicsChain.GetLink(LinkIndex);
 	public bool Mounted => m_DistanceJoint != null;
-	public bool CanMount => m_Chain.PlayerTension > 0 || Vector2.Angle(Vector2.down, (m_Chain.Player.position - m_Chain.PlayerPendulum.position).normalized) < MountMaxAngle;
+	public bool CanMount => m_Chain.PlayerTension > 0 ||
+		Vector2.Angle(Vector2.down, (m_Chain.Player.position - m_Chain.PlayerPendulum.position).normalized) < MountMaxAngle;
 
 	private Grounded m_Grounded;
 	private IdealChain m_Chain;
@@ -85,6 +86,23 @@ public class ChainClimber : MonoBehaviour
 		m_PhysicsChain = FindObjectOfType<PhysicsChain>();
 	}
 
+	//private void Start()
+	//{
+	//	m_Chain.CornerAdded.AddListener(_ => UpdateDistanceJoint());
+	//	m_Chain.CornerRemoved.AddListener(_ => UpdateDistanceJoint());
+	//}
+
+	private void UpdateDistanceJoint()
+	{
+		if (!Mounted)
+		{
+			return;
+		}
+
+		m_DistanceJoint.distance = m_MountDistance - (m_Chain.Length - Vector2.Distance(transform.position, m_Chain.PlayerPendulumPoint));
+		m_DistanceJoint.connectedBody = m_Chain.PlayerPendulum;
+	}
+
 	private void FixedUpdate()
 	{
 		if (!Mounted)
@@ -101,8 +119,7 @@ public class ChainClimber : MonoBehaviour
 		m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
 		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.MaxLength);
 
-		m_DistanceJoint.distance = m_MountDistance - (m_Chain.Length - Vector2.Distance(transform.position, m_Chain.PlayerPendulumPoint));
-		m_DistanceJoint.connectedBody = m_Chain.PlayerPendulum;
+		UpdateDistanceJoint();
 
 		Link.MovePosition(transform.position);
 	}

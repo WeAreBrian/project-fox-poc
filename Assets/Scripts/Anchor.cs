@@ -103,11 +103,11 @@ public class Anchor : MonoBehaviour
         m_Rigidbody.velocity = velocity;
     }
 
-    public void Dislodge(Vector2 impulse)
+    public void Dislodge(Vector2 velocity)
     {
         UpdateState(AnchorState.Free);
 
-        m_Rigidbody.velocity = impulse;
+        m_Rigidbody.velocity = velocity;
 
 		//m_Rigidbody.AddForce(impulse, ForceMode2D.Impulse);
 	}

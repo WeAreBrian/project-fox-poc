@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class ChainTugger : MonoBehaviour
 {
 	public float Cooldown = 1.5f;
-	public float TugForce = 600;
+	public float PlayerJumpOffset = 0.25f;
+	public float PlayerTugSpeed = 10;
 	public float AnchorDislodgeTravelTime = 0.85f;
+	public float AnchorFreeTravelTime = 0.85f;
 
 	private IdealChain m_Chain;
 	private Timer m_Cooldown;
@@ -37,22 +40,27 @@ public class ChainTugger : MonoBehaviour
 			case AnchorState.Held:
 				return;
 			case AnchorState.Grounded:
-				m_Chain.Player.AddForce(m_Chain.PlayerToPendulum * TugForce);
+				transform.position += new Vector3(0, PlayerJumpOffset);
+				m_Chain.Player.velocity = m_Chain.PlayerToPendulum * PlayerTugSpeed;
 				break;
 			case AnchorState.Lodged:
-				var dislodgeVelocity = CalculateInitialVelocity(m_Chain.Anchor.position, m_Chain.AnchorPendulumPoint, AnchorDislodgeTravelTime);
-				m_Anchor.Dislodge(dislodgeVelocity);
-				LeanTween.delayedCall(AnchorDislodgeTravelTime, () => m_Holder.GrabAnchor());
+				DislodgeAnchor();
 				break;
 			case AnchorState.Free:
-				if (m_Grounded.OnGround)
+				if (!m_Grounded.OnGround)
 				{
-					m_Chain.Anchor.AddForce(m_Chain.AnchorToPendulum * TugForce, ForceMode2D.Impulse);
+					var midpoint = (m_Chain.Anchor.position + m_Chain.Player.position) / 2;
+					var travelTime = AnchorFreeTravelTime / 2;
+
+					m_Chain.Anchor.velocity = CalculateInitialVelocity(m_Chain.Anchor.position, midpoint, travelTime);
+					m_Chain.Player.velocity = CalculateInitialVelocity(m_Chain.Player.position, midpoint, travelTime);
+
+					LeanTween.delayedCall(travelTime, () => m_Holder.GrabAnchor());
 				}
 				else
 				{
-					m_Chain.Player.AddForce(m_Chain.PlayerToPendulum * TugForce, ForceMode2D.Impulse);
-					m_Chain.Anchor.AddForce(m_Chain.AnchorToPendulum * TugForce, ForceMode2D.Impulse);
+					m_Chain.Anchor.velocity = CalculateInitialVelocity(m_Chain.Anchor.position, m_Chain.Player.position, AnchorFreeTravelTime);
+					LeanTween.delayedCall(AnchorFreeTravelTime, () => m_Holder.GrabAnchor());
 				}
 				break;
 		}
@@ -63,6 +71,15 @@ public class ChainTugger : MonoBehaviour
 	private void Update()
 	{
 		m_Cooldown.Tick();
+	}
+
+	private void DislodgeAnchor()
+	{
+		var velocity = CalculateInitialVelocity(m_Chain.Anchor.position, m_Chain.AnchorPendulumPoint, AnchorDislodgeTravelTime);
+
+		m_Anchor.Dislodge(velocity);
+
+		LeanTween.delayedCall(AnchorDislodgeTravelTime, () => m_Holder.GrabAnchor());
 	}
 
 	private static Vector2 CalculateInitialVelocity(Vector2 currentPosition, Vector2 targetPosition, float time)

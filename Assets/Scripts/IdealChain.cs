@@ -16,9 +16,9 @@ public class IdealChain : MonoBehaviour
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
 
-	public bool HasPendulumPoints => m_Corners.Count > 0;
-	public Vector2 AnchorPendulumPoint => HasPendulumPoints ? m_Corners.First().Position : Player.position;
-	public Vector2 PlayerPendulumPoint => HasPendulumPoints ? m_Corners.Last().Position : Anchor.position;
+	public bool HasPendulumPoints => m_Points.Count > 0;
+	public Vector2 AnchorPendulumPoint => HasPendulumPoints ? m_Points.First().Position : Player.position;
+	public Vector2 PlayerPendulumPoint => HasPendulumPoints ? m_Points.Last().Position : Anchor.position;
 	public Rigidbody2D AnchorPendulum => HasPendulumPoints ? m_AnchorDistanceJoint.attachedRigidbody : Player;
 	public Rigidbody2D PlayerPendulum => HasPendulumPoints ? m_PlayerDistanceJoint.attachedRigidbody : Anchor;
 	public Vector2 AnchorToPendulum => (AnchorPendulumPoint - Anchor.position).normalized;
@@ -26,13 +26,12 @@ public class IdealChain : MonoBehaviour
 	public float AnchorTension => m_AnchorDistanceJoint.reactionForce.magnitude;
 	public float PlayerTension => m_PlayerDistanceJoint.reactionForce.magnitude;
 	public float Length => GetLength();
-	public IEnumerable<ChainCorner> Corners => m_Corners;
 
 	private const int k_SweepSteps = 16;
 	private const float k_MinCornerDistance = 0.001f;
 
 	private LineRenderer m_LineRenderer;
-	private List<ChainCorner> m_Corners = new List<ChainCorner>();
+	private List<ChainPoint> m_Points = new List<ChainPoint>();
 	private Vector2 m_PreviousAnchorPosition;
 	private Vector2 m_PreviousPlayerPosition;
 	private DistanceJoint2D m_AnchorDistanceJoint;
@@ -108,7 +107,7 @@ public class IdealChain : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		UpdateCorners();
+		UpdatePoints();
 		UpdateDistanceJoints();
 		ApplyTensionForces();
 		UpdateLineRenderer();
@@ -117,9 +116,9 @@ public class IdealChain : MonoBehaviour
 		m_PreviousPlayerPosition = Player.position;
 	}
 
-	private bool SweepCorner(Vector2 origin, Vector2 from, Vector2 to, out ChainCorner corner)
+	private bool SweepCorner(Vector2 origin, Vector2 from, Vector2 to, out ChainPoint corner)
 	{
-		corner = new ChainCorner();
+		corner = new ChainPoint();
 
 		if (Physics2D.OverlapPoint(from, Collision) != null)
 		{
@@ -135,9 +134,10 @@ public class IdealChain : MonoBehaviour
 
 		var colliderCorner = ColliderCorners.GetCorner(hit.collider, hit.point);
 
-		corner.Position = colliderCorner.Position + colliderCorner.Normal * Width / 2;
+		corner.Offset = (Vector2)hit.transform.InverseTransformPoint(colliderCorner.Position + colliderCorner.Normal * Width / 2);
 		corner.Normal = colliderCorner.Normal;
 		corner.Collider = hit.collider;
+		corner.Rigidbody = hit.rigidbody;
 
 		if (Vector2.Distance(corner.Position, origin) < k_MinCornerDistance)
 		{
@@ -147,7 +147,7 @@ public class IdealChain : MonoBehaviour
 		return true;
 	}
 
-	private bool CanRemoveCorner(ChainCorner corner, Vector2 previousPosition, Vector2 nextPosition)
+	private bool CanRemoveCorner(ChainPoint corner, Vector2 previousPosition, Vector2 nextPosition)
 	{
 		var previousEdgeDirection = (corner.Position - previousPosition).normalized;
 		var previousEdgeNormal = Vector2.Perpendicular(previousEdgeDirection);
@@ -164,31 +164,36 @@ public class IdealChain : MonoBehaviour
 		return Vector2.Dot(previousEdgeNormal, directionToNext) > 0;
 	}
 
-	private void UpdateCorners()
+	private void UpdatePoints()
 	{
 		if (SweepCorner(HasPendulumPoints ? PlayerPendulumPoint : Anchor.position, Player.position, m_PreviousPlayerPosition, out var playerCorner))
 		{
 			CornerAdded?.Invoke(playerCorner.Position);
-			m_Corners.Add(playerCorner);
+			m_Points.Add(playerCorner);
 		}
 
 		if (SweepCorner(HasPendulumPoints ? AnchorPendulumPoint : Player.position, Anchor.position, m_PreviousAnchorPosition, out var anchorCorner))
 		{
 			CornerAdded?.Invoke(anchorCorner.Position);
-			m_Corners.Insert(0, anchorCorner);
+			m_Points.Insert(0, anchorCorner);
 		}
 
-		if (HasPendulumPoints && CanRemoveCorner(m_Corners.Last(), m_Corners.Count > 1 ? m_Corners[m_Corners.Count - 2].Position : Anchor.position, Player.position))
+		if (HasPendulumPoints && CanRemoveCorner(m_Points.Last(), m_Points.Count > 1 ? m_Points[m_Points.Count - 2].Position : Anchor.position, Player.position))
 		{
-			CornerRemoved?.Invoke(m_Corners.Last().Position);
-			m_Corners.RemoveAt(m_Corners.Count - 1);
+			CornerRemoved?.Invoke(m_Points.Last().Position);
+			m_Points.RemoveAt(m_Points.Count - 1);
 		}
 
-		if (HasPendulumPoints && CanRemoveCorner(m_Corners.First(), m_Corners.Count > 1 ? m_Corners[1].Position : Player.position, Anchor.position))
+		if (HasPendulumPoints && CanRemoveCorner(m_Points.First(), m_Points.Count > 1 ? m_Points[1].Position : Player.position, Anchor.position))
 		{
-			CornerRemoved?.Invoke(m_Corners.First().Position);
-			m_Corners.RemoveAt(0);
+			CornerRemoved?.Invoke(m_Points.First().Position);
+			m_Points.RemoveAt(0);
 		}
+
+		//foreach (var point in m_Corners)
+		//{
+		//	point.OldPosition = point.Position;
+		//}
 	}
 
 	private void UpdateDistanceJoints()
@@ -258,15 +263,15 @@ public class IdealChain : MonoBehaviour
 			return;
 		}
 
-		m_LineRenderer.positionCount = m_Corners.Count + 2;
+		m_LineRenderer.positionCount = m_Points.Count + 2;
 		m_LineRenderer.SetPosition(0, Anchor.position);
 
-		for (var i = 0; i < m_Corners.Count; i++)
+		for (var i = 0; i < m_Points.Count; i++)
 		{
-			m_LineRenderer.SetPosition(i + 1, m_Corners[i].Position);
+			m_LineRenderer.SetPosition(i + 1, m_Points[i].Position);
 		}
 
-		m_LineRenderer.SetPosition(m_Corners.Count + 1, Player.position);
+		m_LineRenderer.SetPosition(m_Points.Count + 1, Player.position);
 	}
 
 	private RaycastHit2D LineCastSweep(Vector2 origin, Vector2 from, Vector2 to)
@@ -305,10 +310,10 @@ public class IdealChain : MonoBehaviour
 
 		var length = 0.0f;
 
-		for (var i = 0; i < m_Corners.Count - 1; i++)
+		for (var i = 0; i < m_Points.Count - 1; i++)
 		{
-			var corner = m_Corners[i];
-			var nextCorner = m_Corners[i + 1];
+			var corner = m_Points[i];
+			var nextCorner = m_Points[i + 1];
 
 			length += Vector2.Distance(corner.Position, nextCorner.Position);
 		}
@@ -328,9 +333,9 @@ public class IdealChain : MonoBehaviour
 		//Gizmos.color = Color.green;
 		//Gizmos.DrawWireSphere(pendulum, Width / 2);
 
-		for (int i = 0; i < m_Corners.Count; i++)
+		for (int i = 0; i < m_Points.Count; i++)
 		{
-			var corner = m_Corners[i];
+			var corner = m_Points[i];
 
 			Gizmos.color = Color.blue;
 			Gizmos.DrawWireSphere(corner.Position, Width / 2);
@@ -338,9 +343,9 @@ public class IdealChain : MonoBehaviour
 			Gizmos.color = Color.red;
 			Gizmos.DrawRay(corner.Position, corner.Normal);
 
-			if (i < m_Corners.Count - 1)
+			if (i < m_Points.Count - 1)
 			{
-				var nextCorner = m_Corners[i + 1];
+				var nextCorner = m_Points[i + 1];
 
 				Gizmos.color = Color.cyan;
 				Gizmos.DrawLine(corner.Position, nextCorner.Position);

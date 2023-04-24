@@ -86,12 +86,6 @@ public class ChainClimber : MonoBehaviour
 		m_PhysicsChain = FindObjectOfType<PhysicsChain>();
 	}
 
-	//private void Start()
-	//{
-	//	m_Chain.CornerAdded.AddListener(_ => UpdateDistanceJoint());
-	//	m_Chain.CornerRemoved.AddListener(_ => UpdateDistanceJoint());
-	//}
-
 	private void UpdateDistanceJoint()
 	{
 		if (!Mounted)

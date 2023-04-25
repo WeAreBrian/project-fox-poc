@@ -28,7 +28,7 @@ public class IdealChain : MonoBehaviour
 	public float Length => GetLength();
 
 	private const int k_SweepSteps = 16;
-	private const float k_MinCornerDistance = 0.001f;
+	private const float k_MinPointDistance = 0.01f;
 
 	private LineRenderer m_LineRenderer;
 	private List<ChainPoint> m_Points;
@@ -95,7 +95,7 @@ public class IdealChain : MonoBehaviour
 
 		point = new ChainPoint(hit.collider, offset, corner);
 
-		if (Vector2.Distance(point.Position, origin) < k_MinCornerDistance)
+		if (Vector2.Distance(point.Position, origin) < k_MinPointDistance)
 		{
 			return false;
 		}
@@ -139,10 +139,8 @@ public class IdealChain : MonoBehaviour
 
 			if (Sweep(point.Position, nextPoint.OldPosition, nextPoint.Position, out var newPoint))
 			{
-				m_Points.Insert(i + 1, newPoint);
+				m_Points.Insert(++i, newPoint);
 				PointAdded?.Invoke(newPoint);
-
-				return;
 			}
 		}
 	}
@@ -157,10 +155,8 @@ public class IdealChain : MonoBehaviour
 
 			if (IsRemovable(point, previousPoint, nextPoint))
 			{
-				m_Points.RemoveAt(i);
+				m_Points.RemoveAt(i--);
 				PointRemoved?.Invoke(point);
-
-				return;
 			}
 		}
 	}
@@ -282,14 +278,14 @@ public class IdealChain : MonoBehaviour
 		{
 			var point = m_Points[i];
 
-			Gizmos.color = Color.blue;
+			Gizmos.color = Color.cyan;
 			Gizmos.DrawWireSphere(point.Position, Width / 2);
 
-			Gizmos.color = Color.red;
+			Gizmos.color = Color.yellow;
 			Gizmos.DrawRay(point.Position, point.Normal);
 		}
 
-		Gizmos.color = Color.cyan;
+		Gizmos.color = Color.blue;
 
 		for (var i = 0; i < m_Points.Count - 1; i++)
 		{
@@ -299,7 +295,7 @@ public class IdealChain : MonoBehaviour
 			Gizmos.DrawLine(point.Position, nextPoint.Position);
 		}
 
-		Gizmos.color = Color.yellow;
+		Gizmos.color = Color.red;
 
 		for (var i = 1; i < m_Points.Count; i++)
 		{

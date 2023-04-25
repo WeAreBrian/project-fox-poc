@@ -6,7 +6,8 @@ using UnityEngine.UIElements;
 
 public class ChainClimber : MonoBehaviour
 {
-	public float ClimbSpeed = 4.5f;
+	public float MaxClimbSpeed = 4.5f;
+	public float ClimbSpeedDamping = 0.1f;
 	public float MountMaxAngle = 15;
 
 	public Vector2 LinkAnchor => new Vector2(0, Mathf.Repeat(m_Chain.Length, m_PhysicsChain.LinkAnchorDistance) - m_PhysicsChain.LinkAnchorOffset);
@@ -19,7 +20,9 @@ public class ChainClimber : MonoBehaviour
 	private Grounded m_Grounded;
 	private IdealChain m_Chain;
 	private PhysicsChain m_PhysicsChain;
-	private float m_ClimbDirection;
+	private float m_ClimbInput;
+	private float m_ClimbSpeed;
+	private float m_ClimbAcceleration;
 	private float m_MountDistance;
 	private DistanceJoint2D m_DistanceJoint;
 
@@ -59,7 +62,7 @@ public class ChainClimber : MonoBehaviour
 
 	public void Climb(float direction)
 	{
-		m_ClimbDirection = direction;
+		m_ClimbInput = direction;
 	}
 
 	private void OnJump()
@@ -110,12 +113,17 @@ public class ChainClimber : MonoBehaviour
 			return;
 		}
 
-		m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
+		m_MountDistance -= m_ClimbSpeed * Time.fixedDeltaTime;
 		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.MaxLength);
 
 		UpdateDistanceJoint();
 
 		Link.MovePosition(transform.position);
+	}
+
+	private void Update()
+	{
+		m_ClimbSpeed = Mathf.SmoothDamp(m_ClimbSpeed, m_ClimbInput * MaxClimbSpeed, ref m_ClimbAcceleration, ClimbSpeedDamping);
 	}
 
 	private void OnDrawGizmosSelected()

@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class ChainClimber : MonoBehaviour
 {
+	public float MaxMountAngle = 20;
 	public float MaxClimbSpeed = 4.5f;
 	public float ClimbSpeedDamping = 0.1f;
-	public float MountMaxAngle = 15;
 
 	public Vector2 LinkAnchor => new Vector2(0, Mathf.Repeat(m_Chain.Length, m_PhysicsChain.LinkAnchorDistance) - m_PhysicsChain.LinkAnchorOffset);
 	public int LinkIndex => Mathf.FloorToInt(m_Chain.Length / m_PhysicsChain.LinkAnchorDistance);
 	public Rigidbody2D Link => m_PhysicsChain.GetLink(LinkIndex);
-	public bool Mounted => m_DistanceJoint != null;
-	public bool CanMount => m_Chain.PlayerTension > 0 ||
-		Vector2.Angle(Vector2.down, (m_Chain.Player.position - m_Chain.PlayerPendulum.position).normalized) < MountMaxAngle;
+	public bool Mounted => m_PendulumDistanceJoint != null;
+	public bool CanMount => m_Chain.PlayerTension > 0 || Vector2.Angle(Vector2.up, m_Chain.PlayerToPendulum) < MaxMountAngle;
 
 	private Grounded m_Grounded;
 	private IdealChain m_Chain;
@@ -24,7 +24,9 @@ public class ChainClimber : MonoBehaviour
 	private float m_ClimbSpeed;
 	private float m_ClimbAcceleration;
 	private float m_MountDistance;
-	private DistanceJoint2D m_DistanceJoint;
+	private DistanceJoint2D m_PendulumDistanceJoint;
+	private TargetJoint2D m_LinkTargetJoint;
+	private Rigidbody2D m_OldLink;
 
 	public void Mount()
 	{
@@ -38,15 +40,17 @@ public class ChainClimber : MonoBehaviour
 			return;
 		}
 
-		m_DistanceJoint = gameObject.AddComponent<DistanceJoint2D>();
-		m_DistanceJoint.autoConfigureConnectedAnchor = false;
-		m_DistanceJoint.autoConfigureDistance = false;
-		m_DistanceJoint.anchor = Vector2.zero;
-		m_DistanceJoint.connectedAnchor = Vector2.zero;
-		m_DistanceJoint.connectedBody = m_Chain.PlayerPendulum;
-		m_DistanceJoint.distance = Vector2.Distance(transform.position, m_Chain.PlayerPendulum.position);
+		m_PendulumDistanceJoint = gameObject.AddComponent<DistanceJoint2D>();
+		m_PendulumDistanceJoint.autoConfigureConnectedAnchor = false;
+		m_PendulumDistanceJoint.autoConfigureDistance = false;
+		m_PendulumDistanceJoint.anchor = Vector2.zero;
+		m_PendulumDistanceJoint.connectedAnchor = Vector2.zero;
+		m_PendulumDistanceJoint.connectedBody = m_Chain.PlayerPendulum;
+		m_PendulumDistanceJoint.distance = Vector2.Distance(transform.position, m_Chain.PlayerPendulum.position);
 
 		m_MountDistance = m_Chain.Length;
+
+		CreateLinkTargetJoint();
 	}
 
 	public void Dismount()
@@ -56,8 +60,11 @@ public class ChainClimber : MonoBehaviour
 			return;
 		}
 
-		Destroy(m_DistanceJoint);
-		m_DistanceJoint = null;
+		Destroy(m_PendulumDistanceJoint);
+		m_PendulumDistanceJoint = null;
+
+		Destroy(m_LinkTargetJoint);
+		m_LinkTargetJoint = null;
 	}
 
 	public void Climb(float direction)
@@ -96,8 +103,20 @@ public class ChainClimber : MonoBehaviour
 			return;
 		}
 
-		m_DistanceJoint.distance = m_MountDistance - (m_Chain.Length - Vector2.Distance(transform.position, m_Chain.PlayerPendulumPoint));
-		m_DistanceJoint.connectedBody = m_Chain.PlayerPendulum;
+		m_PendulumDistanceJoint.distance = m_MountDistance - (m_Chain.Length - Vector2.Distance(transform.position, m_Chain.PlayerPendulumPoint));
+		m_PendulumDistanceJoint.connectedBody = m_Chain.PlayerPendulum;
+	}
+
+	private void CreateLinkTargetJoint()
+	{
+		m_OldLink = Link;
+
+		m_LinkTargetJoint = Link.AddComponent<TargetJoint2D>();
+		m_LinkTargetJoint.autoConfigureTarget = false;
+		m_LinkTargetJoint.target = transform.position;
+		m_LinkTargetJoint.anchor = LinkAnchor;
+		m_LinkTargetJoint.frequency = 15;
+		m_LinkTargetJoint.dampingRatio = 1;
 	}
 
 	private void FixedUpdate()
@@ -118,7 +137,16 @@ public class ChainClimber : MonoBehaviour
 
 		UpdateDistanceJoint();
 
-		Link.MovePosition(transform.position);
+		m_LinkTargetJoint.target = transform.position;
+		m_LinkTargetJoint.anchor = LinkAnchor;
+
+		if (Link != m_OldLink)
+		{
+			Destroy(m_LinkTargetJoint);
+			CreateLinkTargetJoint();
+		}
+
+		m_OldLink = Link;
 	}
 
 	private void Update()

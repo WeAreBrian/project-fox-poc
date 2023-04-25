@@ -14,7 +14,7 @@ public class Anchor : MonoBehaviour
 
     private AnchorState m_State;
     private Rigidbody2D m_Rigidbody;
-    //private Timer m_FreeTimer;
+    private Timer m_FreeTimer;
 
     private void Awake()
     {
@@ -22,13 +22,13 @@ public class Anchor : MonoBehaviour
 
         m_Rigidbody.useFullKinematicContacts = true;
 
-        //m_FreeTimer = new Timer();
-	}
+        m_FreeTimer = new Timer();
+    }
 
-    //private void Update()
-    //{
-    //    m_FreeTimer.Tick();
-    //}
+    private void Update()
+    {
+        m_FreeTimer.Tick();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -61,12 +61,12 @@ public class Anchor : MonoBehaviour
     {
         Debug.Log("Setting state to " + next);
 
-        //if (!m_FreeTimer.Paused)
-        //{
-        //    m_State = AnchorState.Free;
-        //    m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
-        //    return;
-        //}
+        if (!m_FreeTimer.Paused)
+        {
+            m_State = AnchorState.Free;
+            m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            return;
+        }
 
         //Reset rotation when anchor is picked up
         if (next == AnchorState.Held)
@@ -108,13 +108,11 @@ public class Anchor : MonoBehaviour
         UpdateState(AnchorState.Free);
 
         m_Rigidbody.velocity = velocity;
-
-		//m_Rigidbody.AddForce(impulse, ForceMode2D.Impulse);
 	}
 
-    //public void FreeForDuration(float seconds)
-    //{
-    //    m_FreeTimer.Start(seconds);
-    //    UpdateState(AnchorState.Free);
-    //}
+    public void FreeForDuration(float seconds)
+    {
+        m_FreeTimer.Start(seconds);
+        UpdateState(AnchorState.Free);
+    }
 }

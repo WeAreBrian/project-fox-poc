@@ -46,7 +46,6 @@ public class VerticalMovement : MonoBehaviour
 	private void OnJump()
 	{
 		m_desiredJump = true;
-		DoJump();
 	}
 
 	private void DoJump()

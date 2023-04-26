@@ -9,12 +9,19 @@ public class VerticalMovement : MonoBehaviour
 	[SerializeField]
 	private float m_coyoteTime;
 
+	[SerializeField]
+	private bool m_debug;
+
 	private Rigidbody2D m_RigidBody;
 	private Grounded m_Grounded;
 	private float m_coyoteTimeCounter;
 	private AnchorThrower m_Thrower;
 	private bool m_desiredJump;
 	private bool m_isJumping;
+
+	[SerializeField]
+	private float m_jumpDownForce;
+	private bool m_onJumpRelease;
 
 	private void Awake()
 	{
@@ -42,11 +49,25 @@ public class VerticalMovement : MonoBehaviour
 			DoJump();
 		}
 		CheckJumpState();
+
+		if(m_isJumping && m_RigidBody.velocity.y > 0f && m_onJumpRelease)
+		{
+			m_RigidBody.AddForce(Vector2.down * m_jumpDownForce);
+		}
 	}
 
-	private void OnJump()
+	private void OnJump(InputValue value)
 	{
-		m_desiredJump = true;
+		if (value.Get<float>() == 1)
+		{
+			m_desiredJump = true;
+		}
+			
+		if(value.Get<float>() == 0)
+		{
+			if (m_debug) { Debug.Log("OnJumpDown activated"); }
+			m_onJumpRelease = true;
+		}
 	}
 
 	private void DoJump()
@@ -72,6 +93,8 @@ public class VerticalMovement : MonoBehaviour
 		if (m_RigidBody.velocity.y < -0.01f && m_Grounded.OnGround)
 		{
 			m_isJumping = false;
+			m_onJumpRelease = false;
+			
 		}
 	}
 }

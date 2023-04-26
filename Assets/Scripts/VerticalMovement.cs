@@ -50,6 +50,7 @@ public class VerticalMovement : MonoBehaviour
 		}
 		CheckJumpState();
 
+		// If fox is jumping up and player releases jump key, make the jump shorter
 		if(m_isJumping && m_RigidBody.velocity.y > 0f && m_onJumpRelease)
 		{
 			m_RigidBody.AddForce(Vector2.down * m_jumpDownForce);
@@ -58,11 +59,14 @@ public class VerticalMovement : MonoBehaviour
 
 	private void OnJump(InputValue value)
 	{
+		// Jump key pressed
 		if (value.Get<float>() == 1)
 		{
 			m_desiredJump = true;
 		}
-			
+		
+
+		// Jump key released
 		if(value.Get<float>() == 0)
 		{
 			if (m_debug) { Debug.Log("OnJumpDown activated"); }

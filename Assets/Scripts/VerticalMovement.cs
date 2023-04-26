@@ -6,18 +6,21 @@ public class VerticalMovement : MonoBehaviour
 	public float JumpForce;
 	public float JumpCoefficient = 1;
 
-	[SerializeField]
-	private float m_coyoteTime;
+	[SerializeField] private float m_coyoteTime;
+	[SerializeField] private float m_jumpBuffer;
 
 	[SerializeField]
 	private bool m_debug;
 
 	private Rigidbody2D m_RigidBody;
 	private Grounded m_Grounded;
-	private float m_coyoteTimeCounter;
 	private AnchorThrower m_Thrower;
+
 	private bool m_desiredJump;
 	private bool m_isJumping;
+
+	private float m_coyoteTimeCounter;
+	private float m_jumpBufferCounter;
 
 	[SerializeField]
 	private float m_jumpDownForce;
@@ -28,10 +31,25 @@ public class VerticalMovement : MonoBehaviour
 		m_RigidBody = GetComponent<Rigidbody2D>();
 		m_Grounded = GetComponent<Grounded>();
 		m_Thrower = GetComponent<AnchorThrower>();
+		
 	}
 
 	private void Update()
 	{
+		// If the player wants to jump, but isn't allowed to jump yet (ie. is mid-air, etc.),
+		// we'll be nice and hold onto that request for a little more time to process it later
+		if (m_desiredJump)
+		{
+			m_jumpBufferCounter += Time.deltaTime;
+
+			if (m_jumpBufferCounter > m_jumpBuffer)
+			{
+				//If time exceeds the limit, we'll drop that jump request
+				m_desiredJump = false;
+				m_jumpBufferCounter = 0;
+			}
+		}
+
 		if (!m_isJumping && !m_Grounded.OnGround)
 		{
 			m_coyoteTimeCounter += Time.deltaTime;
@@ -46,6 +64,7 @@ public class VerticalMovement : MonoBehaviour
 	{
 		if (m_desiredJump)
 		{
+			
 			DoJump();
 		}
 		CheckJumpState();
@@ -76,9 +95,12 @@ public class VerticalMovement : MonoBehaviour
 
 	private void DoJump()
 	{
+		if (m_debug) { Debug.Log("DoJump activated"); }
 		// Fox can't jump when aiming the anchor
 		if (m_Thrower.WindingUp)
 			return;
+
+
 
 		// Fox can only jump when grounded or when there's still coyote time
 		if (m_Grounded.OnGround || (m_coyoteTimeCounter > 0.03f && m_coyoteTimeCounter < m_coyoteTime))

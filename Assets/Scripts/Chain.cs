@@ -18,7 +18,7 @@ public class Chain : MonoBehaviour
 	[Tooltip("The priority of this chain when mounting. Higher priority chains will be mounted first.")]
 	public int MountPriority;
 
-	public int numberOfLinks = 10;
+	public int NumberOfLinks = 10;
 
 
 	public LayerMask ignoreMask;
@@ -48,7 +48,7 @@ public class Chain : MonoBehaviour
 		var rotation = Quaternion.FromToRotation(Vector2.up, direction);
 		var distance = Mathf.Min(Vector2.Distance(fromPoint, toPoint), MaxLength);
 		// var links = Mathf.CeilToInt(distance / LinkAnchorDistance);
-		var links = numberOfLinks + 1;
+		var links = NumberOfLinks + 1;
 
 		m_Links = new Rigidbody2D[links];
 

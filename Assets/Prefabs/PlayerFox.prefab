@@ -124,10 +124,10 @@ GameObject:
   - component: {fileID: 1866713526479858622}
   - component: {fileID: 8191183188405619863}
   - component: {fileID: 6745542584575392125}
-  - component: {fileID: 931327241759853775}
   - component: {fileID: 3023190908246841861}
-  - component: {fileID: 5692500432873669146}
   - component: {fileID: 1130451209}
+  - component: {fileID: 6171634025277714744}
+  - component: {fileID: 4507141940674983407}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -455,22 +455,6 @@ MonoBehaviour:
   m_RevertVelocity: 1
   m_Cooldown: 5
   m_CooldownTimer: 0
---- !u!114 &931327241759853775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107137074636933804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b4049c3a3a45141a3d67709131a73f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NoGravityDuration: 0.3
-  m_TugForce: 10
-  m_Cooldown: 3
-  AutoAttemptAnchorGrabDuration: 1
 --- !u!114 &3023190908246841861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,26 +467,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b1f0de18691bb46a908295d61052e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5692500432873669146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107137074636933804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc083f0425cc36e4e989aebb2c68bc3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ClimbSpeed: 4.5
-  MountRadius: 1
-  MountedLinkDistanceLimit: 1
-  DismountImpulse: 15
-  DismountMaxAngle: 60
-  AttachmentDistance: 0.5
-  AttachmentSpringFrequency: 20
-  AttachmentSpringDampingRatio: 0.5
 --- !u!114 &1130451209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +480,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_debugInfo: 0
+--- !u!114 &6171634025277714744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a229682e1b37a748b77ca652571bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxClimbSpeed: 4.5
+  ClimbSpeedDamping: 0.1
+  MountMaxAngle: 15
+--- !u!114 &4507141940674983407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b877a944f01944a9ce48f3437632a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cooldown: 1.5
+  PlayerJumpOffset: 0.25
+  PlayerTugSpeed: 10
+  AnchorDislodgeTravelTime: 0.85
+  AnchorFreeTravelTime: 0.85
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AnchorStall : MonoBehaviour
 {
-	private AnchorState m_State;
 	private Vector2 m_Velocity;
 	private float m_AngularVelocity;
 	private Rigidbody2D m_AnchorRigidbody;

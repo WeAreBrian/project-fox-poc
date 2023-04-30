@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ab3354648954851aa2118b29a80bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AirMoveSpeed: 3.5
+  AirMoveSpeed: 5
   MaxVelocityInputThreshold: 10
   CoefficientCurve:
     serializedVersion: 2
@@ -348,7 +348,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  GroundMoveSpeed: 5
+  GroundMoveSpeed: 6.5
   directionX: 0
 --- !u!114 &1208819179330828543
 MonoBehaviour:

@@ -365,6 +365,7 @@ MonoBehaviour:
   JumpForce: 8
   JumpCoefficient: 1
   m_coyoteTime: 1
+  m_jumpBuffer: 0.5
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,9 +493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a229682e1b37a748b77ca652571bb71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxMountAngle: 20
   MaxClimbSpeed: 4.5
   ClimbSpeedDamping: 0.1
-  MountMaxAngle: 15
 --- !u!114 &4507141940674983407
 MonoBehaviour:
   m_ObjectHideFlags: 0

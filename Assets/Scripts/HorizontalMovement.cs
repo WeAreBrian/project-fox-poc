@@ -13,7 +13,6 @@ public class HorizontalMovement : MonoBehaviour
     public AnimationCurve CoefficientCurve;
     public float GroundMoveSpeed = 5;
     private Rigidbody2D rb;
-    [SerializeField]
     private float directionX;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;

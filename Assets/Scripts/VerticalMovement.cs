@@ -3,6 +3,8 @@ using UnityEngine;
 public class VerticalMovement : MonoBehaviour
 {
 	public float JumpForce;
+
+	[HideInInspector]
 	public float JumpCoefficient = 1;
 
 	[SerializeField] private float m_coyoteTime;

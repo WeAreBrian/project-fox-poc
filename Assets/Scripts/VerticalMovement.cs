@@ -7,8 +7,10 @@ public class VerticalMovement : MonoBehaviour
 	[HideInInspector]
 	public float JumpCoefficient = 1;
 
-	[SerializeField] private float m_coyoteTime;
-	[SerializeField] private float m_jumpBuffer;
+	[SerializeField]
+	private float m_coyoteTime;
+	[SerializeField]
+	private float m_jumpBuffer;
 
 	private Rigidbody2D m_RigidBody;
 	private Grounded m_Grounded;

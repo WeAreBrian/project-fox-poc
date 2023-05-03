@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PhysicsChain : MonoBehaviour
 {
-	public float Length = 15;
+	public float Length;
 	public Vector2 LinkSize = new Vector2(0.3f, 0.9f);
 	public GameObject Link;
 	public Rigidbody2D Anchor;

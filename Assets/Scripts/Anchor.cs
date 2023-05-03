@@ -16,6 +16,9 @@ public class Anchor : MonoBehaviour
     private Rigidbody2D m_Rigidbody;
     private Timer m_FreeTimer;
 
+    public AudioClip m_AnchorLand;
+    public AudioClip m_AnchorGrapple;
+
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -34,6 +37,7 @@ public class Anchor : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Grapplable"))
         {
+            AudioController.PlaySound(m_AnchorGrapple, 1, 1, MixerGroup.SFX);
             UpdateState(AnchorState.Lodged);
         }
         else
@@ -48,6 +52,7 @@ public class Anchor : MonoBehaviour
                     return;
                 }
             }
+            AudioController.PlaySound(m_AnchorLand, Mathf.Clamp(m_Rigidbody.velocity.magnitude/4, 0f, 3f), 1, MixerGroup.SFX);
             UpdateState(AnchorState.Grounded);
         }
     }

@@ -76,7 +76,7 @@ public class Link : MonoBehaviour
         
         if (absDifference < angularChangeThreshold) return;
 
-        if (chainMovement.Mounted && chainMovement.LinkIndex < index) return;
+        if (chainMovement.Mounted) return;
 
         PlaySound(chainClinkSound,(absDifference / angularChangeThreshold) * Random.Range(0.1f, 0.2f), 1.01f - Random.Range(0, 0.02f));
     }

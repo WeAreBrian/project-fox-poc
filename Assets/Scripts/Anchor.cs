@@ -18,6 +18,7 @@ public class Anchor : MonoBehaviour
 
     public AudioClip m_AnchorLand;
     public AudioClip m_AnchorGrapple;
+    public AudioClip m_AnchorHit;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class Anchor : MonoBehaviour
                 if (hitpos.point.x < objectBounds.min.x+0.1f || hitpos.point.x > objectBounds.max.x-0.1f || hitpos.point.y < objectBounds.min.y+0.1f)
                 {
                     Debug.Log("hit a side");
+                    AudioController.PlaySound(m_AnchorHit, 1, 1, MixerGroup.SFX);
                     UpdateState(AnchorState.Free);
                     return;
                 }

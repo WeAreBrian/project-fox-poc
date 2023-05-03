@@ -78,6 +78,8 @@ public class PhysicsChain : MonoBehaviour
 			position += direction * LinkAnchorDistance;
 
 			m_Links[i] = link;
+
+			link.GetComponent<Link>().index = i;
 		}
 
 		for (var i = 1; i < m_Links.Length; i++)

@@ -137,10 +137,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32a0dcafe9ad884a801ce430e1ae53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocityThreshold: 10
+  velocityThreshold: 7
   angularChangeThreshold: 250
-  chainClinkSound: {fileID: 8300000, guid: 743da71f4b5a17849937cd0782086d60, type: 3}
+  chainClinkSound: {fileID: 8300000, guid: 96152c2b794a0ed4d8ca2b6f3af3b9d0, type: 3}
   chainLandSound: {fileID: 8300000, guid: e6920ef165b821c44a63e4a10abe918a, type: 3}
+  chainSlideSound: {fileID: 8300000, guid: c334757072eaaa94f9ff4e64cedeb6df, type: 3}
   soundCooldown: 0
 --- !u!82 &855032697514044992
 AudioSource:

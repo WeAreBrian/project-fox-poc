@@ -79,7 +79,7 @@ public class HorizontalMovement : MonoBehaviour
         {
             var footIndex = Random.Range(0, 2);
             var offset = 0.05f - Random.Range(0, 0.1f);
-            AudioController.PlaySound(m_FootStepSounds[footIndex], 0.25f, 1 + offset, MixerGroup.SFX);
+            AudioController.PlaySound(m_FootStepSounds[footIndex], 0.5f, 1 + offset, MixerGroup.SFX);
 
             m_FootstepTimer = m_FootstepInterval;
         }

@@ -16,6 +16,15 @@ public class Anchor : MonoBehaviour
     private Rigidbody2D m_Rigidbody;
     private Timer m_FreeTimer;
 
+    private bool m_Shake;
+    [SerializeField]
+    private float m_ShakeFrequency;
+    [SerializeField]
+    private AnimationCurve m_ShakeAmplitude;
+    private float m_ShakeDuration;
+    private float m_ShakeAmplitudeTimer;
+    private Vector3 m_ShakePos;
+
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -28,6 +37,17 @@ public class Anchor : MonoBehaviour
     private void Update()
     {
         m_FreeTimer.Tick();
+
+        if (m_Shake)
+        {
+            m_ShakeAmplitudeTimer -= Time.deltaTime;
+            float x = transform.position.x * Mathf.Sin(Time.time * m_ShakeFrequency * m_ShakeAmplitude.Evaluate(1 - (m_ShakeAmplitudeTimer / m_ShakeDuration))) * 0.005f;
+            float y = transform.position.y * Mathf.Sin(Time.time * m_ShakeFrequency* m_ShakeAmplitude.Evaluate(1 - (m_ShakeAmplitudeTimer / m_ShakeDuration))) * 0.005f;
+            float z = transform.position.z;
+
+            // Then assign a new vector3
+            gameObject.transform.position = m_ShakePos + new Vector3(x, y, z);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -51,6 +71,23 @@ public class Anchor : MonoBehaviour
             UpdateState(AnchorState.Grounded);
         }
     }
+
+    public void ActivateShake(float duration)
+    {
+        StartCoroutine(Shake(duration));
+    }
+
+    private IEnumerator Shake(float duration)
+    {
+        m_Shake = true;
+        m_ShakePos = transform.position;
+        m_ShakeAmplitudeTimer = duration;
+        m_ShakeDuration = duration;
+        yield return new WaitForSeconds(duration);
+        m_Shake = false;
+        transform.position = m_ShakePos;
+    }
+
 
     public void PickUp()
     {

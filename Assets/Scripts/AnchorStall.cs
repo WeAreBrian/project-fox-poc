@@ -51,6 +51,7 @@ public class AnchorStall : MonoBehaviour
 			
 			//Stall
 			m_AnchorRigidbody.bodyType = RigidbodyType2D.Static;
+			m_AnchorScript.ActivateShake(m_StallTime);
 			StartCoroutine(WaitCoroutine(m_StallTime));
 		}
 

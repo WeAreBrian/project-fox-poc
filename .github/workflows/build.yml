@@ -25,7 +25,7 @@ jobs:
         if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
         run: exit 1
 
-  buildWebGL:
+  buildWebVersion:
     needs: checksLicense
     name: Build WebGL 🌐
     runs-on: ubuntu-latest
@@ -33,29 +33,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v2
-        id: lfs-cache
-        with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-      - name: Git LFS Pull
-        run: |
-          git lfs pull
-          git add .
-          git reset --hard
-          
       - name: Restore Library cache
         uses: actions/cache@v2
         with:
           path: Library
-          key: Library-build-WebGL
+          key: Library-WebGL
           restore-keys: |
-            Library-build-
+            Library-WebGL
             Library-
             
       - name: Build into WebGL
@@ -63,6 +47,7 @@ jobs:
         env:
           UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
         with:
+          unityVersion: 2021.3.21f1
           targetPlatform: WebGL
 
       - name: Upload Build
@@ -71,8 +56,45 @@ jobs:
           name: build-WebGL
           path: build/WebGL
 
+  buildDownloadableVersion:
+    needs: checksLicense
+    name: Build Windows and Mac 🖥️
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        targetPlatform:
+          - iOS
+          - Android
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+          
+      - name: Restore Library cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key:
+            Library-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.targetPlatform }}
+            Library-
+            
+      - name: Build into WebGL
+        uses: game-ci/unity-builder@v2.2.0
+        env:
+          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
+        with:
+          unityVersion: 2021.3.21f1
+          targetPlatform: ${{ matrix.targetPlatform }}
+      
+      - name: Upload ${{ matrix.targetPlatform }} Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-${{ matrix.targetPlatform }}-${{ github.sha }}
+          path: build/${{ matrix.targetPlatform }}
+
   uploadWebGL:
-    needs: buildWebGL
+    needs: buildWebVersion
     name: Upload WebGL to GitHub Pages 🚢
     runs-on: ubuntu-latest
     steps:

@@ -4,10 +4,14 @@ using UnityEngine.InputSystem;
 public class VerticalMovement : MonoBehaviour
 {
 	public float JumpForce;
+
+	[HideInInspector]
 	public float JumpCoefficient = 1;
 
-	[SerializeField] private float m_coyoteTime;
-	[SerializeField] private float m_jumpBuffer;
+	[SerializeField]
+	private float m_coyoteTime;
+	[SerializeField]
+	private float m_jumpBuffer;
 
 	[SerializeField]
 	private bool m_debug;

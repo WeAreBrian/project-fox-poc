@@ -154,48 +154,27 @@ jobs:
         uses: actions/deploy-pages@v2
 
   notifyWebSuccess:
-    needs: deploy
+    needs: [deploy, buildDownloadables]
     name: Notify Web Success 📢
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Web Success
-        if: ${{ needs.deploy.result }} == 'success'
-        uses: nobrayner/discord-webhook@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          discord-webhook: ${{ secrets.WEBHOOK_URL }}
-          username: "Web build 🔧"
-          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
-          title: "✅ Deployment status: SUCCESS!"
-          description: "🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)."
-          include-details: "false"
-          color-success: "#2eb886"
-
-  notifyDownloadableSuccess:
-    needs: buildDownloadables
-    name: Notify Downloadable Sucess 📢
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Downloadable Success
-        if: ${{ needs.buildDownloadables.result }} == 'success'
-        uses: nobrayner/discord-webhook@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          discord-webhook: ${{ secrets.WEBHOOK_URL }}
-          username: "Downloadable build #${{ github.run_number }} 🚀"
-          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/1104388119744233512/4a5001b7beea096457f480c8808572428b-09-roll-safe.rsquare.w700.webp"
-          title: "✅ Deployment status: SUCCESS!"
-          description: "🖥️ [Download Windows & Mac build](https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }})"
-          include-details: "false"
-          color-success: "#2eb886"
-
-  getWorkflowConclusion:
-    needs: [notifyWebSuccess, notifyDownloadableSuccess]
-    name: Notify Failure 📢
     runs-on: ubuntu-latest
     if: always()
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
+
+      - name: Notify Web Success
+        if: env.WORKFLOW_CONCLUSION == 'success'
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ github.workflow }} #${{ github.run_number }}"
+          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
+          title: "✅ Deployment status: SUCCESS!"
+          description: |
+            🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)
+            🖥️ [Download Windows & Mac build](https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }})
+          include-details: "false"
+          color-success: "#2eb886"
 
       - name: Notify Failure
         if: env.WORKFLOW_CONCLUSION == 'failure'

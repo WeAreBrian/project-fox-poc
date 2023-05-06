@@ -49,6 +49,11 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
+		if (GameObject.Find("Anchor").GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
+		{
+			return;
+		}
+
 		var furthestLink = GetFurthestMountableLink();
 
 		if (furthestLink == null)
@@ -56,7 +61,9 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
+
 		m_Chain = furthestLink.Chain;
+		m_Chain.UpdateChainLinksMass(1);
 		m_MountDistance = m_Chain.LinkAnchorDistance * (furthestLink.LinkIndex + 0.5f);
 
 		CreateAttachments();
@@ -68,7 +75,10 @@ public class ChainMovement : MonoBehaviour
 		{
 			return;
 		}
-		Debug.Log("dismounting");
+
+		m_Chain.Release();
+		m_Chain.UpdateChainLinksMass(0.05f);
+
 		foreach (var attachment in m_Attachments)
 		{
 			Destroy(attachment);
@@ -147,11 +157,22 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
+		
+
 		var playerToMountedLink = MountedLinkAnchorWorldPosition - (Vector2)transform.position;
 		var climbingTowardsPlayer = Vector2.Dot(playerToMountedLink.normalized, ClimbDirection) < 0;
 		
 		if (playerToMountedLink.magnitude < MountedLinkDistanceLimit || climbingTowardsPlayer)
 		{
+			if (m_ClimbDirection > 0)
+			{
+				m_Chain.Stiffen();
+			}
+			else
+			{
+				m_Chain.Release();
+			}
+
 			m_MountDistance -= m_ClimbDirection * ClimbSpeed * Time.fixedDeltaTime;
 			m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.Length - 0.001f);
 		}

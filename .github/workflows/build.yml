@@ -25,7 +25,7 @@ jobs:
         if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
         run: exit 1
 
-  buildWebVersion:
+  buildWebGL:
     needs: checksLicense
     name: Build WebGL 🌐
     runs-on: ubuntu-latest
@@ -56,15 +56,10 @@ jobs:
           name: build-WebGL
           path: build/WebGL
 
-  buildDownloadableVersion:
+  buildWindows:
     needs: checksLicense
     name: Build Windows and Mac 🖥️
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        targetPlatform:
-          - iOS
-          - Android
+    runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -74,27 +69,59 @@ jobs:
         with:
           path: Library
           key:
-            Library-${{ matrix.targetPlatform }}
+            Library-StandaloneWindows64
           restore-keys: |
-            Library-${{ matrix.targetPlatform }}
+            Library-StandaloneWindows64
             Library-
             
-      - name: Build into WebGL
+      - name: Build into Windows
         uses: game-ci/unity-builder@v2.2.0
         env:
           UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
         with:
           unityVersion: 2021.3.21f1
-          targetPlatform: ${{ matrix.targetPlatform }}
+          targetPlatform: StandaloneWindows64
       
-      - name: Upload ${{ matrix.targetPlatform }} Build
+      - name: Upload StandaloneWindows64 Build
         uses: actions/upload-artifact@v2
         with:
-          name: build-${{ matrix.targetPlatform }}-${{ github.sha }}
-          path: build/${{ matrix.targetPlatform }}
+          name: build-StandaloneWindows64-${{ github.sha }}
+          path: build/StandaloneWindows64
+
+  buildMac:
+    needs: checksLicense
+    name: Build Windows and Mac 🖥️
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+          
+      - name: Restore Library cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key:
+            Library-StandaloneOSX
+          restore-keys: |
+            Library-StandaloneOSX
+            Library-
+            
+      - name: Build into Mac
+        uses: game-ci/unity-builder@v2.2.0
+        env:
+          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
+        with:
+          unityVersion: 2021.3.21f1
+          targetPlatform: StandaloneOSX
+      
+      - name: Upload StandaloneOSX Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-StandaloneOSX-${{ github.sha }}
+          path: build/StandaloneOSX
 
   uploadWebGL:
-    needs: buildWebVersion
+    needs: buildWebGL
     name: Upload WebGL to GitHub Pages 🚢
     runs-on: ubuntu-latest
     steps:
@@ -169,7 +196,7 @@ jobs:
           color-success: "#2eb886"
 
   notifyDownloadableSuccess:
-    needs: buildDownloadableVersion
+    needs: [buildWindows, buildMac]
     name: Notify Downloadable Sucess 📢
     runs-on: ubuntu-latest
     steps:

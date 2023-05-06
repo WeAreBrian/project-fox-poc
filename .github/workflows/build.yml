@@ -113,7 +113,7 @@ jobs:
           branch: build-webgl
           folder: build/WebGL
 
-  build:
+  prepareWebGLForDeploy:
     needs: uploadWebGL
     name: Prepare GH Pages for deployment 🔧
     runs-on: ubuntu-latest
@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
 
   deploy:
-    needs: build
+    needs: prepareWebGLForDeploy
     name: Deploy build 🚀
     environment:
       name: github-pages
@@ -147,11 +147,9 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
 
-
-  notifyDiscord:
+  notifyWebSuccess:
     needs: deploy
     name: Notify on Discord 📢
-    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Get Workflow Conclusion
@@ -163,21 +161,45 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           discord-webhook: ${{ secrets.WEBHOOK_URL }}
-          username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
+          username: "${{ github.workflow }} #${{ github.run_number }}"
           avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
           title: "✅ Deployment status: SUCCESS!"
           description: "🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)."
           include-details: "false"
           color-success: "#2eb886"
 
+  notifyDownloadableSuccess:
+    needs: buildDownloadableVersion
+    name: Notify on Discord 📢
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Workflow Conclusion
+        uses: technote-space/workflow-conclusion-action@v2
+
+      - name: Notify Success
+        if: env.WORKFLOW_CONCLUSION == 'success'
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ github.workflow }} #${{ github.run_number }}"
+          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/1104388119744233512/4a5001b7beea096457f480c8808572428b-09-roll-safe.rsquare.w700.webp"
+          title: "✅ Deployment status: SUCCESS!"
+          description: "🖥️ [Download Windows & Mac build](https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }})"
+          include-details: "false"
+          color-success: "#2eb886"
+
+  notifyFailure:
+    needs: [buildDownloadableVersion, deploy]
+    if: always()
       - name: Notify Failure
         if: env.WORKFLOW_CONCLUSION == 'failure'
         uses: nobrayner/discord-webhook@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           discord-webhook: ${{ secrets.WEBHOOK_URL }}
-          username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
-          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894760486439125042/explosion.png"
+          username: "${{ github.workflow }} #${{ github.run_number }}"
+          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/1104388925256106045/this-is-fine_sq-0bd6d8072e991dc4708be3668cd480ae7df18a11-s800-c85.jpg"
           title: "❌ Deployment status: FAILED . . ."
           include-details: "true"
           color-failure: "#a30200"
@@ -188,7 +210,7 @@ jobs:
       #   with:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       #     discord-webhook: ${{ secrets.WEBHOOK_URL }}
-      #     username: "${{ github.repository }} - ${{ github.workflow }} #${{ github.run_number }}"
+      #     username: "${{ github.workflow }} #${{ github.run_number }}"
       #     avatar-url: "https://media.discordapp.net/attachments/821500555696013343/925737666685837353/Blank-Nut-Button.png"
       #     title: "⚠️ Deployment status: CANCELLED . . ."
       #     description: "Click the link above to view details on GitHub."

@@ -7,9 +7,13 @@ public class HorizontalMovement : MonoBehaviour
 
     [Tooltip("Speed of the player when in the air")]
     public float AirMoveSpeed = 3f;
-    public float MaxVelocityInputThreshold;
-    public AnimationCurve CoefficientCurve;
-    public float GroundMoveSpeed = 5;
+    [SerializeField]
+    private float MaxVelocityInputThreshold;
+    [SerializeField]
+    private AnimationCurve CoefficientCurve;
+    [SerializeField]
+    private float GroundMoveSpeed = 5;
+
     private Rigidbody2D rb;
     private float directionX;
     private Grounded m_Grounded;

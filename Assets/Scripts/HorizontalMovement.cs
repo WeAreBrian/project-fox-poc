@@ -3,16 +3,24 @@ using UnityEngine.InputSystem;
 
 public class HorizontalMovement : MonoBehaviour
 {
-    [Tooltip("Speed of the player when in the air")]
+    [Header("Ground movement")]
+    [Tooltip("Fox's speed on the ground")]
     [SerializeField]
-    private float m_GroundMoveSpeed = 5f;
+    private float m_GroundSpeed = 5f;
+
+    [Header("Air movement")]
+    [Tooltip("Fox's acceleration in the air (there's a discrepancy because ground movement doesn't have acceleration)")]
     [SerializeField]
     private float m_AirAcceleration = 3f;
+
+    [Tooltip("Fox's max speed to cap off the air acceleration")]
     [SerializeField]
     private float m_MaxAirSpeed;
+
+    [Tooltip("How much ")]
     [SerializeField]
     private AnimationCurve m_AirAccelerationCurve;
-    private float MoveSpeed => m_Grounded.OnGround ? m_GroundMoveSpeed : m_AirAcceleration;
+    private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirAcceleration;
 
     private Rigidbody2D rb;
     private float directionX;

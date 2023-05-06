@@ -8,7 +8,7 @@ public class Grounded : MonoBehaviour
 
     [SerializeField]
     private LayerMask m_GroundMask;
-    private const float k_EdgeOffset = 0.05f;
+    private const float k_EdgeOffset = 0.4f;
     private const float k_Height = 0.2f;
     private Collider2D m_Collider;
 

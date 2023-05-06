@@ -61,7 +61,7 @@ public class Tug : MonoBehaviour
         else if (anchor.State == AnchorState.Lodged)
         {
             Debug.Log("Lodged Time");
-            anchor.FreeForDuration(0.2f);
+            //anchor.FreeForDuration(0.2f);
             ApplyForceToAnchor(0.6f);
             StartCoroutine(DisableGravity(anchor.Rigidbody, m_NoGravityDuration));
 

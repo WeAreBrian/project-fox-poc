@@ -14,13 +14,17 @@ public class AnimatorStateMachine : MonoBehaviour
     private Rigidbody2D m_RigidBody;
     private GameObject m_Sprite;
 
-    // Start is called before the first frame update
-    void Start()
+
+	private Camera m_cam;
+
+	// Start is called before the first frame update
+	void Start()
     {
         m_Animator = GetComponentInChildren<Animator>();
         m_Grounded = GetComponent<Grounded>();
 		m_RigidBody = GetComponent<Rigidbody2D>();
         m_Sprite = GameObject.Find("Sprite");
+        m_cam = Camera.main;
 	}
 
     // moving left or right, this doesn't change the rotation of the fox object
@@ -42,7 +46,8 @@ public class AnimatorStateMachine : MonoBehaviour
         if (m_debugInfo) { Debug.Log("Move Input: " + value.Get<float>().ToString()); }
         
         // Run animation does not activate during air time
-		if (m_Animator.GetBool("OnGround"))
+		//if (m_Animator.GetBool("OnGround"))
+        if (m_Grounded.OnGround)
 		{
 			return;
 		}
@@ -64,37 +69,34 @@ public class AnimatorStateMachine : MonoBehaviour
 
     }
 
-
-
-
-    // TODO: only should activate animation if near anchor
-    // TODO: animation should not trigger if already holding anchor
-    // TODO: Make a bunch of sub state machines - holding anchor grounded/in air, not holding anchor 
     private void OnAnchorInteract(InputValue value)
     {
         //m_Animator.SetBool("isPickingUp", true);
     }
 
-
-	void OnClimb(InputValue value)
-	{
-
-	}
-
-	void OnMount(InputValue value)
-	{
-
-	}
-
-	void OnTug(InputValue value)
-	{
-
-	}
-
 	// Update is called once per frame
 	void Update()
     {
         
+	}
+
+	// in fox aim state, if mouse is towards left of fox, face left, otherwise face right.
+	// uses the main camera to determine mouse world position
+	private void changeAimDirection()
+    {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+		if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxAim"))
+		{
+			if (mouseWorldPos.x < gameObject.transform.position.x)
+			{
+				m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
+			}
+			else
+			{
+				m_Sprite.transform.localScale = new Vector2(1, transform.localScale.y);
+			}
+		}
 	}
 
     //logic for setting isGrounded
@@ -116,6 +118,8 @@ public class AnimatorStateMachine : MonoBehaviour
         {
             m_Animator.SetBool("isJumping", false);
         }
+
+        changeAimDirection();
 	}
 
 }

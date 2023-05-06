@@ -5,14 +5,14 @@ public class HorizontalMovement : MonoBehaviour
 {
     [Tooltip("Speed of the player when in the air")]
     [SerializeField]
-    private float GroundMoveSpeed = 5;
+    private float m_GroundMoveSpeed = 5f;
     [SerializeField]
-    private float AirMoveSpeed = 3f;
+    private float m_AirAcceleration = 3f;
     [SerializeField]
-    private float MaxVelocityInputThreshold;
+    private float m_MaxAirSpeed;
     [SerializeField]
-    private AnimationCurve CoefficientCurve;
-    public float MoveSpeed => m_Grounded.OnGround ? GroundMoveSpeed : AirMoveSpeed;
+    private AnimationCurve m_AirAccelerationCurve;
+    private float MoveSpeed => m_Grounded.OnGround ? m_GroundMoveSpeed : m_AirAcceleration;
 
     private Rigidbody2D rb;
     private float directionX;
@@ -47,7 +47,7 @@ public class HorizontalMovement : MonoBehaviour
         }
         else
         {
-            rb.AddForce(new Vector2(directionX * AirMoveSpeed * 40 * GetAirCoefficient() , 0));
+            rb.AddForce(new Vector2(directionX * m_AirAcceleration * 40 * GetAirCoefficient() , 0));
         }
     }
 
@@ -56,12 +56,12 @@ public class HorizontalMovement : MonoBehaviour
         var coefficient = 0f;
         if ((directionX > 0 && rb.velocity.x > 0) || (directionX < 0 && rb.velocity.x < 0))
         {
-            coefficient = (MaxVelocityInputThreshold-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, MaxVelocityInputThreshold))/MaxVelocityInputThreshold;
+            coefficient = (m_MaxAirSpeed-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, m_MaxAirSpeed))/m_MaxAirSpeed;
         }
         else
         {
             coefficient = 1;
         }
-        return CoefficientCurve.Evaluate(coefficient);
+        return m_AirAccelerationCurve.Evaluate(coefficient);
     }
 }

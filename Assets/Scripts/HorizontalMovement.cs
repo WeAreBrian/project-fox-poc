@@ -3,22 +3,21 @@ using UnityEngine.InputSystem;
 
 public class HorizontalMovement : MonoBehaviour
 {
-    public float MoveSpeed => m_Grounded.OnGround ? GroundMoveSpeed : AirMoveSpeed;
-
     [Tooltip("Speed of the player when in the air")]
-    public float AirMoveSpeed = 3f;
+    [SerializeField]
+    private float GroundMoveSpeed = 5;
+    [SerializeField]
+    private float AirMoveSpeed = 3f;
     [SerializeField]
     private float MaxVelocityInputThreshold;
     [SerializeField]
     private AnimationCurve CoefficientCurve;
-    [SerializeField]
-    private float GroundMoveSpeed = 5;
+    public float MoveSpeed => m_Grounded.OnGround ? GroundMoveSpeed : AirMoveSpeed;
 
     private Rigidbody2D rb;
     private float directionX;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
-    
     
     private void Start()
     {

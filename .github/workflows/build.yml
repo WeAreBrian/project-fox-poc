@@ -32,6 +32,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          lfs: true
 
       - name: Restore Library cache
         uses: actions/cache@v2
@@ -56,73 +59,45 @@ jobs:
           name: build-WebGL
           path: build/WebGL
 
-  buildWindows:
+  buildDownloadables:
     needs: checksLicense
-    name: Build Windows 🖥️
-    runs-on: windows-latest
+    name: Build ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneOSX
+          - StandaloneWindows64
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-          
-      - name: Restore Library cache
-        uses: actions/cache@v2
         with:
-          path: Library
-          key:
-            Library-StandaloneWindows64
-          restore-keys: |
-            Library-StandaloneWindows64
-            Library-
-            
-      - name: Build into Windows
-        uses: game-ci/unity-builder@v2.2.0
-        env:
-          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          unityVersion: 2021.3.21f1
-          targetPlatform: StandaloneWindows64
-      
-      - name: Upload StandaloneWindows64 Build
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-StandaloneWindows64-${{ github.sha }}
-          path: build/StandaloneWindows64
+          fetch-depth: 0
+          lfs: true
 
-  buildMac:
-    needs: checksLicense
-    name: Build Mac 🍎
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-          
       - name: Restore Library cache
         uses: actions/cache@v2
         with:
           path: Library
-          key:
-            Library-StandaloneOSX
-          restore-keys: |
-            Library-StandaloneOSX
-            Library-
-            
-      - name: Build into Mac
-        uses: game-ci/unity-builder@v2.2.0
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+
+      - name: Build
+        uses: game-ci/unity-builder@v2
         env:
-          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           unityVersion: 2021.3.21f1
-          targetPlatform: StandaloneOSX
-      
-      - name: Upload StandaloneOSX Build
+          targetPlatform: ${{ matrix.targetPlatform }}
+          
+      - name: Upload Build
         uses: actions/upload-artifact@v2
         with:
-          name: build-StandaloneOSX-${{ github.sha }}
-          path: build/StandaloneOSX
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
 
   uploadWebGL:
     needs: buildWebGL
@@ -183,16 +158,13 @@ jobs:
     name: Notify Web Success 📢
     runs-on: ubuntu-latest
     steps:
-      - name: Get Workflow Conclusion
-        uses: technote-space/workflow-conclusion-action@v2
-
-      - name: Notify Success
-        if: env.WORKFLOW_CONCLUSION == 'success'
+      - name: Notify Web Success
+        if: ${{ needs.deploy.result }} == 'success'
         uses: nobrayner/discord-webhook@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           discord-webhook: ${{ secrets.WEBHOOK_URL }}
-          username: "${{ github.workflow }} #${{ github.run_number }}"
+          username: "Web build 🔧"
           avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
           title: "✅ Deployment status: SUCCESS!"
           description: "🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)."
@@ -200,32 +172,31 @@ jobs:
           color-success: "#2eb886"
 
   notifyDownloadableSuccess:
-    needs: [buildWindows, buildMac]
+    needs: buildDownloadables
     name: Notify Downloadable Sucess 📢
     runs-on: ubuntu-latest
     steps:
-      - name: Get Workflow Conclusion
-        uses: technote-space/workflow-conclusion-action@v2
-
-      - name: Notify Success
-        if: env.WORKFLOW_CONCLUSION == 'success'
+      - name: Notify Downloadable Success
+        if: ${{ needs.buildDownloadables.result }} == 'success'
         uses: nobrayner/discord-webhook@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           discord-webhook: ${{ secrets.WEBHOOK_URL }}
-          username: "${{ github.workflow }} #${{ github.run_number }}"
+          username: "Downloadable build #${{ github.run_number }} 🚀"
           avatar-url: "https://media.discordapp.net/attachments/857447804977152000/1104388119744233512/4a5001b7beea096457f480c8808572428b-09-roll-safe.rsquare.w700.webp"
           title: "✅ Deployment status: SUCCESS!"
           description: "🖥️ [Download Windows & Mac build](https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }})"
           include-details: "false"
           color-success: "#2eb886"
 
-  notifyFailure:
-    name: Notify Failure 📢
+  getWorkflowConclusion:
     needs: [notifyWebSuccess, notifyDownloadableSuccess]
+    name: Notify Failure 📢
     runs-on: ubuntu-latest
     if: always()
     steps:
+      - uses: technote-space/workflow-conclusion-action@v3
+
       - name: Notify Failure
         if: env.WORKFLOW_CONCLUSION == 'failure'
         uses: nobrayner/discord-webhook@v1

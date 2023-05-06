@@ -218,7 +218,7 @@ jobs:
 
   notifyFailure:
     name: Notify Failure 📢
-    needs: [buildDownloadableVersion, deploy]
+    needs: [notifyWebSuccess, notifyDownloadableSuccess]
     runs-on: ubuntu-latest
     if: always()
     steps:

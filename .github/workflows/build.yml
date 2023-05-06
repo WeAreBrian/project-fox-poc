@@ -149,7 +149,7 @@ jobs:
 
   notifyWebSuccess:
     needs: deploy
-    name: Notify on Discord 📢
+    name: Notify Web Success 📢
     runs-on: ubuntu-latest
     steps:
       - name: Get Workflow Conclusion
@@ -170,7 +170,7 @@ jobs:
 
   notifyDownloadableSuccess:
     needs: buildDownloadableVersion
-    name: Notify on Discord 📢
+    name: Notify Downloadable Sucess 📢
     runs-on: ubuntu-latest
     steps:
       - name: Get Workflow Conclusion
@@ -190,8 +190,11 @@ jobs:
           color-success: "#2eb886"
 
   notifyFailure:
+    name: Notify Failure 📢
     needs: [buildDownloadableVersion, deploy]
+    runs-on: ubuntu-latest
     if: always()
+    steps:
       - name: Notify Failure
         if: env.WORKFLOW_CONCLUSION == 'failure'
         uses: nobrayner/discord-webhook@v1

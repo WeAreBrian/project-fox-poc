@@ -3,10 +3,10 @@ name: Build 🔧
 on:
   workflow_dispatch:
   push:
-  branches:
-    - main
-  paths-ignore:
-    - ".github/**"
+    branches:
+      - main
+    paths-ignore:
+      - ".github/**"
 
 permissions:
   contents: write

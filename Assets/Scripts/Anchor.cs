@@ -1,35 +1,33 @@
  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using static UnityEngine.CullingGroup;
 
 public class Anchor : MonoBehaviour
 {
+    public UnityEvent<AnchorState> StateChanged;
+
     public Rigidbody2D Rigidbody => m_Rigidbody;
-    
     public AnchorState State => m_State;
-    [SerializeField]
+
     private AnchorState m_State;
     private Rigidbody2D m_Rigidbody;
-
-    private float m_FreeTime;
+    private Timer m_FreeTimer;
 
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
+
+        m_Rigidbody.useFullKinematicContacts = true;
+
+        m_FreeTimer = new Timer();
     }
 
-    //private void Update()
-    //{
-    //    if (Keyboard.current.fKey.wasPressedThisFrame)
-    //    {
-    //        m_Rigidbody.bodyType = m_Rigidbody.bodyType
-    //            == RigidbodyType2D.Static ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static;
-    //    }
-    //}
     private void Update()
     {
-        m_FreeTime -= Time.deltaTime;
+        m_FreeTimer.Tick();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -62,9 +60,9 @@ public class Anchor : MonoBehaviour
     private void UpdateState(AnchorState next)
     {
         Debug.Log("Setting state to " + next);
-        if (m_FreeTime > 0)
+
+        if (!m_FreeTimer.Paused)
         {
-            Debug.Log("Setting free");
             m_State = AnchorState.Free;
             m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
             return;
@@ -75,6 +73,7 @@ public class Anchor : MonoBehaviour
         {
             m_Rigidbody.rotation = 0;
         }
+
         // Set body type based on state
         if (next == AnchorState.Free || next == AnchorState.Held)
         {
@@ -82,10 +81,16 @@ public class Anchor : MonoBehaviour
         }
         else
         {
-            m_Rigidbody.bodyType = RigidbodyType2D.Static;
+            //m_Rigidbody.bodyType = RigidbodyType2D.Static;
+
+            m_Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            m_Rigidbody.velocity = Vector3.zero;
+            m_Rigidbody.angularVelocity = 0;
         }
 
-        m_State = next;
+        StateChanged?.Invoke(next);
+
+		m_State = next;
     }
 
     public void Drop()
@@ -98,9 +103,16 @@ public class Anchor : MonoBehaviour
         m_Rigidbody.velocity = velocity;
     }
 
+    public void Dislodge(Vector2 velocity)
+    {
+        UpdateState(AnchorState.Free);
+
+        m_Rigidbody.velocity = velocity;
+	}
+
     public void FreeForDuration(float seconds)
     {
-        m_FreeTime = seconds;
+        m_FreeTimer.Start(seconds);
         UpdateState(AnchorState.Free);
     }
 }

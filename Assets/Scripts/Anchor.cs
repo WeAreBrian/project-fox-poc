@@ -16,6 +16,17 @@ public class Anchor : MonoBehaviour
     private Rigidbody2D m_Rigidbody;
     private Timer m_FreeTimer;
 
+    private bool m_Shake;
+    [SerializeField]
+    private float m_ShakeFrequency;
+    [SerializeField]
+    private AnimationCurve m_ShakeAmplitude;
+    private float m_ShakeDuration;
+    private float m_ShakeAmplitudeTimer;
+    private Vector3 m_ShakePos;
+    [SerializeField]
+    private GameObject m_TimerSprite;
+
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -23,11 +34,28 @@ public class Anchor : MonoBehaviour
         m_Rigidbody.useFullKinematicContacts = true;
 
         m_FreeTimer = new Timer();
+
+        m_TimerSprite.SetActive(false);
     }
 
     private void Update()
     {
         m_FreeTimer.Tick();
+
+        if (m_Shake)
+        {
+            var progress = (m_ShakeAmplitudeTimer / m_ShakeDuration);
+
+            m_ShakeAmplitudeTimer -= Time.deltaTime;
+            float x = transform.position.x * Mathf.Sin(Time.time * m_ShakeFrequency * m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
+            float y = transform.position.y * Mathf.Sin(Time.time * m_ShakeFrequency*1.2f* m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
+            float z = transform.position.z;
+
+            m_TimerSprite.transform.localScale = new Vector3(1.5f * progress, 1.5f * progress, 1.5f * progress);
+
+            // Then assign a new vector3
+            gameObject.transform.position = m_ShakePos + new Vector3(x, y, z);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -51,6 +79,25 @@ public class Anchor : MonoBehaviour
             UpdateState(AnchorState.Grounded);
         }
     }
+
+    public void ActivateShake(float duration)
+    {
+        StartCoroutine(Shake(duration));
+    }
+
+    private IEnumerator Shake(float duration)
+    {
+        m_Shake = true;
+        m_ShakePos = transform.position;
+        m_ShakeAmplitudeTimer = duration;
+        m_ShakeDuration = duration;
+        m_TimerSprite.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        m_Shake = false;
+        transform.position = m_ShakePos;
+        m_TimerSprite.SetActive(false);
+    }
+
 
     public void PickUp()
     {

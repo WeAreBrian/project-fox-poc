@@ -92,7 +92,7 @@ public class AnchorThrower : MonoBehaviour
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(velocity);
-
+        Debug.Log("Anchor thrown");
         m_animator.SetBool("isThrowing", true);
     }
 
@@ -100,6 +100,7 @@ public class AnchorThrower : MonoBehaviour
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(DropVelocity);
+        m_animator.SetBool("isDropping", true);
     }
 
     private void Update()

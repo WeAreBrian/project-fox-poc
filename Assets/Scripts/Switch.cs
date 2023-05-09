@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Switch : MonoBehaviour
+public class Switch : MonoBehaviour, IInteractable
 {
     private bool m_PlayerInRange;
     private bool m_Togglable;
@@ -14,7 +15,9 @@ public class Switch : MonoBehaviour
     private Sprite m_ToggledSprite;
     private SpriteRenderer m_Renderer;
 
-    private void Start()
+    public InputActionReference Input => null;
+
+	private void Start()
     {
         WorldInteract.Activated += Toggle;
         m_Renderer = GetComponent<SpriteRenderer>();
@@ -59,4 +62,8 @@ public class Switch : MonoBehaviour
         }
     }
 
+	public void Interact()
+	{
+        Debug.Log("Interacted with switch");
+	}
 }

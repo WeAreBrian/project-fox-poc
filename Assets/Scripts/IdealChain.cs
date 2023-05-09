@@ -77,7 +77,11 @@ public class IdealChain : MonoBehaviour
 	{
 		point = null;
 
-		if (Physics2D.OverlapPoint(from, Collision) != null)
+		Physics2D.queriesHitTriggers = false;
+		var overlapPoint = Physics2D.OverlapPoint(from, Collision);
+		Physics2D.queriesHitTriggers = true;
+
+		if (overlapPoint != null)
 		{
 			return false;
 		}
@@ -241,7 +245,10 @@ public class IdealChain : MonoBehaviour
 		for (var i = 0; i < k_SweepSteps; i++)
 		{
 			var end = Vector2.Lerp(to, from, (i + 1) / (float)k_SweepSteps);
+
+			Physics2D.queriesHitTriggers = false;
 			var hit = Physics2D.Linecast(origin, end, Collision);
+			Physics2D.queriesHitTriggers = true;
 
 			if (hit)
 			{

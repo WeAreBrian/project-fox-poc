@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class HorizontalMovement : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class HorizontalMovement : MonoBehaviour
     private float directionX;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
+    [SerializeField]
+    private float m_FootstepInterval;
+    private float m_FootstepTimer;
+    private bool m_IsLeftFoot;
+    [SerializeField]
+    private List<AudioClip> m_FootStepSounds;
     
     private void Start()
     {
@@ -48,10 +55,12 @@ public class HorizontalMovement : MonoBehaviour
         }
 
         var horizontalAxisValue = directionX;
+        if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
 
         if (m_Grounded.OnGround)
         {
             rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
+            PlayFootStepSound();
         }
         else
         {
@@ -71,5 +80,18 @@ public class HorizontalMovement : MonoBehaviour
             coefficient = 1;
         }
         return m_AirAccelerationCurve.Evaluate(coefficient);
+    }
+
+    private void PlayFootStepSound()
+    {
+        m_FootstepTimer -= Time.deltaTime * Mathf.Abs(directionX);
+        if (m_FootstepTimer <= 0)
+        {
+            var footIndex = Random.Range(0, 2);
+            var offset = 0.05f - Random.Range(0, 0.1f);
+            AudioController.PlaySound(m_FootStepSounds[footIndex], 0.5f, 1 + offset, MixerGroup.SFX);
+
+            m_FootstepTimer = m_FootstepInterval;
+        }
     }
 }

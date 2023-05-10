@@ -17,7 +17,6 @@ public class FloatingText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.SetParent(GameObject.Find("UI").transform);
         StartCoroutine(Finish(lifetime));
     }
 

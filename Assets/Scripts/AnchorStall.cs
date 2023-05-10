@@ -64,7 +64,7 @@ public class AnchorStall : MonoBehaviour
 			}
 			else
 			{
-				FloatingText f = Instantiate(floatingText).GetComponent<FloatingText>();
+				FloatingText f = Instantiate(floatingText).GetComponentInChildren<FloatingText>();
 				f.Set("Stall On Cooldown", transform.position + Vector3.up, Color.blue);
 				return;
 			}

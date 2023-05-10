@@ -34,7 +34,7 @@ public class ChainTugger : MonoBehaviour
 	{
 		if (!m_Cooldown.Paused)
 		{
-			FloatingText f = Instantiate(floatingText).GetComponent<FloatingText>();
+			FloatingText f = Instantiate(floatingText).GetComponentInChildren<FloatingText>();
 			f.Set("Tug On Cooldown", transform.position + Vector3.up, Color.green);
 			return;
 		}

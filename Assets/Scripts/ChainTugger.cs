@@ -16,6 +16,8 @@ public class ChainTugger : MonoBehaviour
 	private Anchor m_Anchor;
 	private Grounded m_Grounded;
 	private AnchorHolder m_Holder;
+	[SerializeField]
+	private GameObject floatingText;
 
 	[SerializeField]
 	private AudioClip m_PlayerTugSound;
@@ -37,6 +39,8 @@ public class ChainTugger : MonoBehaviour
 	{
 		if (!m_Cooldown.Paused)
 		{
+			FloatingText f = Instantiate(floatingText).GetComponentInChildren<FloatingText>();
+			f.Set("Tug On Cooldown", transform.position + Vector3.up, Color.green);
 			return;
 		}
 

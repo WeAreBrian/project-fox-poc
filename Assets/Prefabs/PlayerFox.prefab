@@ -464,6 +464,17 @@ MonoBehaviour:
   m_StallTime: 2
   m_RevertVelocity: 0
   m_Cooldown: 5
+  floatingText: {fileID: 8950826962864852270, guid: 8befd40b5792e0147bb596d46f7cd32c,
+    type: 3}
+  m_AnchorInteract:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   m_StallSound: {fileID: 8300000, guid: 7f5d49e1e5679ea4c8a80a98c57cef3f, type: 3}
   m_StallEndSound: {fileID: 8300000, guid: 4c53ced2d72763544a4fd588a6e48025, type: 3}
 --- !u!114 &3023190908246841861
@@ -525,6 +536,8 @@ MonoBehaviour:
   PlayerTugSpeed: 10
   AnchorDislodgeTravelTime: 0.85
   AnchorFreeTravelTime: 0.85
+  floatingText: {fileID: 8950826962864852270, guid: 8befd40b5792e0147bb596d46f7cd32c,
+    type: 3}
   m_PlayerTugSound: {fileID: 8300000, guid: 7e76af4e890a10648b79c226f01b0fe5, type: 3}
   m_FullTugSound: {fileID: 8300000, guid: 66165d4d1ae66b9448058b984c11538d, type: 3}
 --- !u!1 &6063310992840300421

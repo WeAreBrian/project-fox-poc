@@ -153,8 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5d379de92e92e48bd19588fae20d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 0}
-  inspectorMixer: {fileID: 24100000, guid: 0758d01fcd940c4408c893f9d6f86b6c, type: 2}
 --- !u!4 &17752509
 Transform:
   m_ObjectHideFlags: 0
@@ -1543,7 +1541,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Length: 14.5
   LinkSize: {x: 0.3, y: 0.9}
-  Link: {fileID: 824484886045038957, guid: d1832ef849add334fa3163964b156bba, type: 3}
+  LinkSprite: {fileID: 0}
+  LinkMass: 1
   Anchor: {fileID: 2134205878}
   Player: {fileID: 1852206378}
 --- !u!1 &1331097288
@@ -2170,6 +2169,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeAmplitude
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeFrequency
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeAmplitude.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeAmplitude.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeAmplitude.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeAmplitude.m_Curve.Array.data[1].inSlope
+      value: 3.3154387
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeAmplitude.m_Curve.Array.data[1].inWeight
+      value: 0.019178092
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066340218285788531, guid: 615c7383d4c6eb2449b4198e5fd553b1,
+        type: 3}
+      propertyPath: m_ShakeAmplitude.m_Curve.Array.data[1].outSlope
+      value: 3.3154387
+      objectReference: {fileID: 0}
     - target: {fileID: 5066340218285788532, guid: 615c7383d4c6eb2449b4198e5fd553b1,
         type: 3}
       propertyPath: m_RootOrder

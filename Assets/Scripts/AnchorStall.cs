@@ -1,23 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnchorStall : MonoBehaviour
 {
-	private Vector2 m_Velocity;
-	private float m_AngularVelocity;
-	private Rigidbody2D m_AnchorRigidbody;
-	private AnchorHolder m_AnchorHolder;
-	private Anchor m_AnchorScript;
-	private bool isStalled;
-
 	[SerializeField]
 	private float m_StallTime = 1f;
 	[SerializeField]
 	private bool m_RevertVelocity = true;   //Set this in inspector to false if you want it to fall after ending stall.
 	[SerializeField]
 	private float m_Cooldown;
-	[SerializeField]
+	
+	private Rigidbody2D m_AnchorRigidbody;
+	private Anchor m_AnchorScript;
+	private AnchorHolder m_AnchorHolder;
+	private Vector2 m_Velocity;
+	private float m_AngularVelocity;
+	private bool isStalled;
 	private float m_CooldownTimer;
 
 	[SerializeField]
@@ -56,6 +54,7 @@ public class AnchorStall : MonoBehaviour
 			
 			//Stall
 			m_AnchorRigidbody.bodyType = RigidbodyType2D.Static;
+			m_AnchorScript.ActivateShake(m_StallTime);
 			StartCoroutine(WaitCoroutine(m_StallTime));
 
 			AudioController.PlaySound(m_StallSound, 1, 1, MixerGroup.SFX);

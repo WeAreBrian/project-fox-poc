@@ -27,6 +27,13 @@ public class Anchor : MonoBehaviour
     [SerializeField]
     private GameObject m_TimerSprite;
 
+    [SerializeField]
+    private AudioClip m_AnchorLand;
+    [SerializeField]
+    private AudioClip m_AnchorLodge;
+    [SerializeField]
+    private AudioClip m_AnchorBump;
+
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -72,6 +79,7 @@ public class Anchor : MonoBehaviour
                 if (hitpos.point.x < objectBounds.min.x+0.1f || hitpos.point.x > objectBounds.max.x-0.1f || hitpos.point.y < objectBounds.min.y+0.1f)
                 {
                     Debug.Log("hit a side");
+                    AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
                     UpdateState(AnchorState.Free);
                     return;
                 }
@@ -108,6 +116,7 @@ public class Anchor : MonoBehaviour
     {
         Debug.Log("Setting state to " + next);
 
+
         if (!m_FreeTimer.Paused)
         {
             m_State = AnchorState.Free;
@@ -133,6 +142,15 @@ public class Anchor : MonoBehaviour
             m_Rigidbody.bodyType = RigidbodyType2D.Kinematic;
             m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.angularVelocity = 0;
+
+            if (next == AnchorState.Lodged)
+            {
+                AudioController.PlaySound(m_AnchorLodge, 1, 1, MixerGroup.SFX);
+            }
+            else
+            {
+                AudioController.PlaySound(m_AnchorLand, 1, 1, MixerGroup.SFX);
+            }
         }
 
         StateChanged?.Invoke(next);

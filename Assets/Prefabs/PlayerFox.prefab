@@ -322,9 +322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ab3354648954851aa2118b29a80bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GroundMoveSpeed: 5
+  m_GroundSpeed: 5
   m_AirAcceleration: 3
-  m_MaxAirSpeed: 0
+  m_MaxAirSpeed: 10
   m_AirAccelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -349,6 +349,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_FootstepInterval: 0.3
+  m_FootStepSounds:
+  - {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
+  - {fileID: 8300000, guid: 79187dec16a7ab84bbd87fb5b23a60f2, type: 3}
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +371,7 @@ MonoBehaviour:
   m_jumpBuffer: 0.1
   m_debug: 0
   m_jumpDownForce: 400
+  m_JumpSound: {fileID: 8300000, guid: b82db259cde0cbb42815ed64144cb701, type: 3}
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +387,7 @@ MonoBehaviour:
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 256
+  m_LandSound: {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
 --- !u!114 &1866713526479858622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +431,8 @@ MonoBehaviour:
   ThrowCooldown: 0.2
   DropVelocity: {x: 0, y: 3}
   m_Trajectory: {fileID: 7530742050925470887}
+  m_WindUpSound: {fileID: 8300000, guid: 22bd1c8a5686b7f43bb43ca0ae5b1bdc, type: 3}
+  m_WindUpSoundInterval: 0.3
 --- !u!114 &8191183188405619863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +464,8 @@ MonoBehaviour:
   m_StallTime: 2
   m_RevertVelocity: 0
   m_Cooldown: 5
+  m_StallSound: {fileID: 8300000, guid: 7f5d49e1e5679ea4c8a80a98c57cef3f, type: 3}
+  m_StallEndSound: {fileID: 8300000, guid: 4c53ced2d72763544a4fd588a6e48025, type: 3}
 --- !u!114 &3023190908246841861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +506,8 @@ MonoBehaviour:
   MaxMountAngle: 20
   MaxClimbSpeed: 4.5
   ClimbSpeedDamping: 0.1
+  m_ClimbSound: {fileID: 8300000, guid: f060a7b91a02a0f448f2ea15c9cc2661, type: 3}
+  m_ClimbSoundInterval: 0.4
 --- !u!114 &4507141940674983407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,6 +525,8 @@ MonoBehaviour:
   PlayerTugSpeed: 10
   AnchorDislodgeTravelTime: 0.85
   AnchorFreeTravelTime: 0.85
+  m_PlayerTugSound: {fileID: 8300000, guid: 7e76af4e890a10648b79c226f01b0fe5, type: 3}
+  m_FullTugSound: {fileID: 8300000, guid: 66165d4d1ae66b9448058b984c11538d, type: 3}
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,11 @@ public class AnchorStall : MonoBehaviour
 	private bool isStalled;
 	private float m_CooldownTimer;
 
+	[SerializeField]
+	private AudioClip m_StallSound;
+	[SerializeField]
+	private AudioClip m_StallEndSound;
+
 	private void Awake()
 	{
 		//Sets stuff from anchor
@@ -51,6 +56,8 @@ public class AnchorStall : MonoBehaviour
 			m_AnchorRigidbody.bodyType = RigidbodyType2D.Static;
 			m_AnchorScript.ActivateShake(m_StallTime);
 			StartCoroutine(WaitCoroutine(m_StallTime));
+
+			AudioController.PlaySound(m_StallSound, 1, 1, MixerGroup.SFX);
 		}
 
 		//Do this after stall timer
@@ -65,6 +72,11 @@ public class AnchorStall : MonoBehaviour
 				m_AnchorRigidbody.angularVelocity = m_AngularVelocity;
 			}
 			isStalled = false;
+
+			if (!m_AnchorHolder.HoldingAnchor)
+			{
+				AudioController.PlaySound(m_StallEndSound, 0.5f, 1, MixerGroup.SFX);
+			}
 		}
 	}
 }

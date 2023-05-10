@@ -322,9 +322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ab3354648954851aa2118b29a80bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GroundMoveSpeed: 5
+  m_GroundSpeed: 5
   m_AirAcceleration: 3
-  m_MaxAirSpeed: 0
+  m_MaxAirSpeed: 10
   m_AirAccelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -456,6 +456,17 @@ MonoBehaviour:
   m_StallTime: 2
   m_RevertVelocity: 0
   m_Cooldown: 5
+  floatingText: {fileID: 3428120911634057270, guid: 3ce3892567644e240b6312d501543507,
+    type: 3}
+  m_AnchorInteract:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &3023190908246841861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,6 +524,8 @@ MonoBehaviour:
   PlayerTugSpeed: 10
   AnchorDislodgeTravelTime: 0.85
   AnchorFreeTravelTime: 0.85
+  floatingText: {fileID: 3428120911634057270, guid: 3ce3892567644e240b6312d501543507,
+    type: 3}
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

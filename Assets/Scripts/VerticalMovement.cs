@@ -23,8 +23,9 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField]
     private bool m_Debug;
 
+    [Header("SFX")]
     [SerializeField]
-	private AudioClip m_JumpSound;
+    private AudioClip m_JumpSound;
 
     [HideInInspector]
     public float JumpCoefficient = 1;

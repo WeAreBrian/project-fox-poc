@@ -18,21 +18,24 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField]
     private float m_MaxSpeedInputThreshold = 5f;
 
-    [Tooltip("How Air Acceleration changes from \n 0 speed (100% Air Acceleration) to \n MaxSpeedInputThreshold (0% Air Acceleration)")]
+    [Tooltip("Rate at which Air Acceleration decreases from \n 0 speed (100% Air Acceleration) to \n MaxSpeedInputThreshold (0% Air Acceleration)")]
     [SerializeField]
     private AnimationCurve m_AirAccelerationCurve;
+
+    [Header("SFX")]
+    [SerializeField]
+    private List<AudioClip> m_FootStepSounds;
+
+    [SerializeField]
+    private float m_FootstepInterval;
     private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirAcceleration;
 
     private Rigidbody2D rb;
     private float directionX;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
-    [SerializeField]
-    private float m_FootstepInterval;
     private float m_FootstepTimer;
     private bool m_IsLeftFoot;
-    [SerializeField]
-    private List<AudioClip> m_FootStepSounds;
     
     private void Start()
     {

@@ -7,29 +7,37 @@ public class AnchorThrower : MonoBehaviour
     [SerializeField]
     private AnchorTrajectory m_Trajectory;
 
+    [Tooltip("Min throw velocity and distance")]
     [SerializeField]
     private float m_MinThrowSpeed = 12;
 
-	[SerializeField]
+    [Tooltip("Max throw velocity and distance")]
+    [SerializeField]
     private float m_MaxThrowSpeed = 12;
 
-	[SerializeField]
+    [Tooltip("Time for trajectory to wind up from min to max throw speed before throwing")]
+    [SerializeField]
     [Range(0, 2)]
     private float m_WindUpTime = 0.5f;
 
+    [Tooltip("Rate at which throw speed increases from Min Throw Speed to Max Throw Speed")]
 	[SerializeField]
     private AnimationCurve m_WindUpCurve;
 
+    [Tooltip("Time you can hold while aiming before throw triggers automatically (CURRENTLY BROKEN)")]
 	[SerializeField]
     [Range(0, 2)]
     private float m_ThrowHoldTime = 0.2f;
 
+    [Tooltip("After throwing, time in seconds before the Anchor can be thrown again")]
 	[SerializeField]
     private float m_ThrowCooldown = 0.2f;
 
+    [Tooltip("Anchor drop velocity after cancelling a hold (click and release). Does not affect velocity of a successful throw")]
 	[SerializeField]
     private Vector2 m_DropVelocity = new Vector2(0, 3f);
 
+    [Header("SFX")]
     [SerializeField]
     private AudioClip m_WindUpSound;
 

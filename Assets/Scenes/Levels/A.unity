@@ -1880,6 +1880,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerFox
       objectReference: {fileID: 0}
+    - target: {fileID: 1208819179330828543, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_CoyoteTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208819179330828543, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_JumpBuffer
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208819179330828543, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_JumpDownForce
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 6745542584575392125, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_AnchorInteract.m_Id

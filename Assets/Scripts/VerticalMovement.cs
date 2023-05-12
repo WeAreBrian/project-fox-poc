@@ -3,73 +3,74 @@ using UnityEngine.InputSystem;
 
 public class VerticalMovement : MonoBehaviour
 {
-	public float JumpForce;
-
-	[HideInInspector]
-	public float JumpCoefficient = 1;
+	[SerializeField]
+    private float JumpForce;
 
 	[SerializeField]
-	private float m_coyoteTime;
-	[SerializeField]
-	private float m_jumpBuffer;
+	private float m_CoyoteTime;
 
 	[SerializeField]
-	private bool m_debug;
-
-	private Rigidbody2D m_RigidBody;
-	private Grounded m_Grounded;
-	private AnchorThrower m_Thrower;
-
-	private bool m_desiredJump;
-	private bool m_isJumping;
-
-	private float m_coyoteTimeCounter;
-	private float m_jumpBufferCounter;
+	private float m_JumpBuffer;
 
 	[SerializeField]
-	private float m_jumpDownForce;
-	private bool m_onJumpRelease;
+	private float m_JumpDownForce;
+
+    [SerializeField]
+    private bool m_Debug;
 
 	[SerializeField]
 	private AudioClip m_JumpSound;
 
-	private void Awake()
+    [HideInInspector]
+    public float JumpCoefficient = 1;
+
+    private Rigidbody2D m_RigidBody;
+    private Grounded m_Grounded;
+    private AnchorThrower m_Thrower;
+
+    private bool m_DesiredJump;
+    private bool m_IsJumping;
+    private bool m_OnJumpRelease;
+
+    private float m_CoyoteTimeCounter;
+    private float m_JumpBufferCounter;
+
+    private void Awake()
 	{
 		m_RigidBody = GetComponent<Rigidbody2D>();
 		m_Grounded = GetComponent<Grounded>();
 		m_Thrower = GetComponent<AnchorThrower>();
-		
 	}
 
 	private void Update()
 	{
 		// If the player wants to jump, but isn't allowed to jump yet (ie. is mid-air, etc.),
 		// we'll be nice and hold onto that request for a little more time to process it later
-		if (m_desiredJump)
+		if (m_DesiredJump)
 		{
-			m_jumpBufferCounter += Time.deltaTime;
+			m_JumpBufferCounter += Time.deltaTime;
 
-			if (m_jumpBufferCounter > m_jumpBuffer)
+			if (m_JumpBufferCounter > m_JumpBuffer)
 			{
 				//If time exceeds the limit, we'll drop that jump request
-				m_desiredJump = false;
-				m_jumpBufferCounter = 0;
+				m_DesiredJump = false;
+				m_JumpBufferCounter = 0;
 			}
 		}
 
-		if (!m_isJumping && !m_Grounded.OnGround)
+		if (!m_IsJumping && !m_Grounded.OnGround)
 		{
-			m_coyoteTimeCounter += Time.deltaTime;
+			m_CoyoteTimeCounter += Time.deltaTime;
 		}
 		else
 		{
-			m_coyoteTimeCounter = 0;
+			m_CoyoteTimeCounter = 0;
 		}
 	}
 
 	private void FixedUpdate()
 	{
-		if (m_desiredJump)
+		if (m_DesiredJump)
 		{
 			
 			DoJump();
@@ -77,9 +78,9 @@ public class VerticalMovement : MonoBehaviour
 		CheckJumpState();
 
 		// If fox is jumping up and player releases jump key, make the jump shorter
-		if(m_isJumping && m_RigidBody.velocity.y > 0f && m_onJumpRelease)
+		if(m_IsJumping && m_RigidBody.velocity.y > 0f && m_OnJumpRelease)
 		{
-			m_RigidBody.AddForce(Vector2.down * m_jumpDownForce);
+			m_RigidBody.AddForce(Vector2.down * m_JumpDownForce);
 		}
 	}
 
@@ -88,21 +89,21 @@ public class VerticalMovement : MonoBehaviour
 		// Jump key pressed
 		if (value.Get<float>() == 1)
 		{
-			m_desiredJump = true;
+			m_DesiredJump = true;
 		}
 		
 
 		// Jump key released
 		if(value.Get<float>() == 0)
 		{
-			if (m_debug) { Debug.Log("OnJumpDown activated"); }
-			m_onJumpRelease = true;
+			if (m_Debug) { Debug.Log("OnJumpDown activated"); }
+			m_OnJumpRelease = true;
 		}
 	}
 
 	private void DoJump()
 	{
-		if (m_debug) { Debug.Log("DoJump activated"); }
+		if (m_Debug) { Debug.Log("DoJump activated"); }
 		// Fox can't jump when aiming the anchor
 		if (m_Thrower.WindingUp)
 			return;
@@ -110,11 +111,11 @@ public class VerticalMovement : MonoBehaviour
 
 
 		// Fox can only jump when grounded or when there's still coyote time
-		if (m_Grounded.OnGround || (m_coyoteTimeCounter > 0.03f && m_coyoteTimeCounter < m_coyoteTime))
+		if (m_Grounded.OnGround || (m_CoyoteTimeCounter > 0.03f && m_CoyoteTimeCounter < m_CoyoteTime))
 		{
-			m_desiredJump = false;
-			m_isJumping = true;
-			m_coyoteTimeCounter = 0;
+			m_DesiredJump = false;
+			m_IsJumping = true;
+			m_CoyoteTimeCounter = 0;
 
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
 
@@ -127,8 +128,8 @@ public class VerticalMovement : MonoBehaviour
 		// If fox is falling and touch the ground, it's no longer jumping
 		if (m_RigidBody.velocity.y < -0.01f && m_Grounded.OnGround)
 		{
-			m_isJumping = false;
-			m_onJumpRelease = false;
+			m_IsJumping = false;
+			m_OnJumpRelease = false;
 			
 		}
 	}

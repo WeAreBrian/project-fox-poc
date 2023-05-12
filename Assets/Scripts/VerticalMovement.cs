@@ -5,7 +5,7 @@ public class VerticalMovement : MonoBehaviour
 {
     [Tooltip("Force of a jump")]
 	[SerializeField]
-    private float JumpForce;
+    private float m_JumpForce;
 
     [Tooltip("Period of delay before dropping to the ground after walking off a ledge")]
 	[SerializeField]
@@ -122,7 +122,7 @@ public class VerticalMovement : MonoBehaviour
 			m_IsJumping = true;
 			m_CoyoteTimeCounter = 0;
 
-			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
+			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, m_JumpForce * JumpCoefficient);
 
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 		}

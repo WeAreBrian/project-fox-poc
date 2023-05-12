@@ -1,38 +1,50 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AnchorThrower : MonoBehaviour
 {
-    public float MinThrowSpeed = 8;
-    public float MaxThrowSpeed = 15;
-    [Range(0, 2)]
-    public float WindUpTime = 0.5f;
-    public AnimationCurve WindUpCurve;
-    [Range(0, 2)]
-    public float ThrowHoldTime = 0.2f;
-    public float ThrowCooldown = 0.2f;
-    public Vector2 DropVelocity = new Vector2(0, 1.5f);
-
-	private Animator m_animator;
-
-	public bool WindingUp => m_Trajectory.gameObject.activeSelf;
-    public float HoldTime => Time.time - m_WindUpStartTime;
-    public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate(HoldTime / WindUpTime));
-    public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
-
     [SerializeField]
     private AnchorTrajectory m_Trajectory;
-    private AnchorHolder m_Holder;
-    private Vector2 m_ThrowDirection;
-    private float m_WindUpStartTime;
+
+    [SerializeField]
+    private float m_MinThrowSpeed = 12;
+
+	[SerializeField]
+    private float m_MaxThrowSpeed = 12;
+
+	[SerializeField]
+    [Range(0, 2)]
+    private float m_WindUpTime = 0.5f;
+
+	[SerializeField]
+    private AnimationCurve m_WindUpCurve;
+
+	[SerializeField]
+    [Range(0, 2)]
+    private float m_ThrowHoldTime = 0.2f;
+
+	[SerializeField]
+    private float m_ThrowCooldown = 0.2f;
+
+	[SerializeField]
+    private Vector2 m_DropVelocity = new Vector2(0, 3f);
 
     [SerializeField]
     private AudioClip m_WindUpSound;
+
     [SerializeField]
     private float m_WindUpSoundInterval;
+
+	public bool WindingUp => m_Trajectory.gameObject.activeSelf;
+    public float HoldTime => Time.time - m_WindUpStartTime;
+    public float ThrowSpeed => Mathf.Lerp(m_MinThrowSpeed, m_MaxThrowSpeed, m_WindUpCurve.Evaluate(HoldTime / m_WindUpTime));
+    public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
+
+    private Animator m_animator;
+    private AnchorHolder m_Holder;
+    private Vector2 m_ThrowDirection;
+    private float m_WindUpStartTime;
     private float m_WindUpSoundTimer;
     
     private void Awake()
@@ -52,7 +64,7 @@ public class AnchorThrower : MonoBehaviour
 
     private void OnAnchorInteractStarted(InputAction.CallbackContext context)
     {
-        if (!m_Holder.HoldingAnchor || m_Holder.HoldTime < ThrowCooldown)
+        if (!m_Holder.HoldingAnchor || m_Holder.HoldTime < m_ThrowCooldown)
         {
             return;
         }
@@ -68,7 +80,7 @@ public class AnchorThrower : MonoBehaviour
             return;
         }
 
-        if (HoldTime > ThrowHoldTime)
+        if (HoldTime > m_ThrowHoldTime)
         {
             ThrowAnchor(ThrowVelocity);
         }
@@ -106,7 +118,7 @@ public class AnchorThrower : MonoBehaviour
     private void DropAnchor()
     {
         var anchor = m_Holder.DropAnchor();
-        anchor.Throw(DropVelocity);
+        anchor.Throw(m_DropVelocity);
     }
 
     private void Update()

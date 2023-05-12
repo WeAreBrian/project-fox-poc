@@ -30,6 +30,9 @@ public class VerticalMovement : MonoBehaviour
 	private float m_jumpDownForce;
 	private bool m_onJumpRelease;
 
+	[SerializeField]
+	private AudioClip m_JumpSound;
+
 	private void Awake()
 	{
 		m_RigidBody = GetComponent<Rigidbody2D>();
@@ -114,6 +117,8 @@ public class VerticalMovement : MonoBehaviour
 			m_coyoteTimeCounter = 0;
 
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
+
+			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 		}
 	}
 

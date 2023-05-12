@@ -26,8 +26,10 @@ public class Springboard : MonoBehaviour, IToggle
     private Vector3 m_restingPosition;
     private bool m_SelfToggle = true;
     private Rigidbody2D m_Rb;
-    [SerializeField]
     private Anchor m_FreeOnToggle;
+
+    [SerializeField]
+    private AudioClip m_ActivateSound;
 
     private void Start()
     {
@@ -103,6 +105,6 @@ public class Springboard : MonoBehaviour, IToggle
         m_State = SpringboardState.Triggered;
         m_Rb.AddForce(m_SpringForce * Vector2.up, ForceMode2D.Impulse);
 
-        
+        AudioController.PlaySound(m_ActivateSound, 1, 1, MixerGroup.SFX);
     }
 }

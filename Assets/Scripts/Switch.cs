@@ -14,6 +14,11 @@ public class Switch : MonoBehaviour
     private Sprite m_ToggledSprite;
     private SpriteRenderer m_Renderer;
 
+    [SerializeField]
+    private AudioClip m_ToggleOn;
+    [SerializeField]
+    private AudioClip m_ToggleOff;
+
     private void Start()
     {
         WorldInteract.Activated += Toggle;
@@ -30,6 +35,9 @@ public class Switch : MonoBehaviour
 
         var toggle = m_ConnectedObject.GetComponent<IToggle>();
         m_Togglable = false;
+
+        AudioController.PlaySound(m_ToggleOn, 1, 1, MixerGroup.SFX);
+
         StartCoroutine(ResetState(toggle.GetResetTime()));
         toggle.Toggle();
         m_Renderer.sprite = m_ToggledSprite;
@@ -40,6 +48,8 @@ public class Switch : MonoBehaviour
         yield return new WaitForSeconds(delay);
         m_Renderer.sprite = m_UntoggledSprite;
         m_Togglable = true;
+
+        AudioController.PlaySound(m_ToggleOff, 1, 1, MixerGroup.SFX);
         
     }
     private void OnTriggerEnter2D(Collider2D collision)

@@ -5,23 +5,23 @@ using System.Collections.Generic;
 public class HorizontalMovement : MonoBehaviour
 {
     [Header("Ground movement")]
-    [Tooltip("Fox's speed on the ground")]
+    [Tooltip("Movement speed on the ground")]
     [SerializeField]
     private float m_GroundSpeed = 5f;
 
     [Header("Air movement")]
-    [Tooltip("Fox's acceleration in the air (there's a discrepancy because ground movement doesn't have acceleration)")]
+    [Tooltip("Movement speed in the air")]
     [SerializeField]
-    private float m_AirAcceleration = 3f;
+    private float m_AirSpeed = 3f;
 
-    [Tooltip("Fox's max speed to cap off the air acceleration")]
+    [Tooltip("If the Fox is travelling faster than this speed (eg. being shot from a canon), holding down horizontal input won't make him go any faster")]
     [SerializeField]
-    private float m_MaxAirSpeed;
+    private float m_MaxSpeedInputThreshold;
 
-    [Tooltip("How much ")]
+    [Tooltip("How the fox reaches max speed")]
     [SerializeField]
-    private AnimationCurve m_AirAccelerationCurve;
-    private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirAcceleration;
+    private AnimationCurve m_AirSpeedCurve;
+    private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirSpeed;
 
     private Rigidbody2D rb;
     private float directionX;
@@ -64,7 +64,7 @@ public class HorizontalMovement : MonoBehaviour
         }
         else
         {
-            rb.AddForce(new Vector2(directionX * m_AirAcceleration * 40 * GetAirCoefficient() , 0));
+            rb.AddForce(new Vector2(directionX * m_AirSpeed * 40 * GetAirCoefficient() , 0));
         }
     }
 
@@ -73,13 +73,13 @@ public class HorizontalMovement : MonoBehaviour
         var coefficient = 0f;
         if ((directionX > 0 && rb.velocity.x > 0) || (directionX < 0 && rb.velocity.x < 0))
         {
-            coefficient = (m_MaxAirSpeed-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, m_MaxAirSpeed))/m_MaxAirSpeed;
+            coefficient = (m_MaxSpeedInputThreshold-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, m_MaxSpeedInputThreshold))/m_MaxSpeedInputThreshold;
         }
         else
         {
             coefficient = 1;
         }
-        return m_AirAccelerationCurve.Evaluate(coefficient);
+        return m_AirSpeedCurve.Evaluate(coefficient);
     }
 
     private void PlayFootStepSound()

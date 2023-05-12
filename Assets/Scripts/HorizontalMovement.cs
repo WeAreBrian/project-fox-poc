@@ -10,18 +10,18 @@ public class HorizontalMovement : MonoBehaviour
     private float m_GroundSpeed = 5f;
 
     [Header("Air movement")]
-    [Tooltip("Movement speed in the air")]
+    [Tooltip("The Fox gains this much speed every frame when moving in the air")]
     [SerializeField]
-    private float m_AirSpeed = 3f;
+    private float m_AirAcceleration = 3f;
 
-    [Tooltip("If the Fox is travelling faster than this speed (eg. being shot from a canon), holding down horizontal input won't make him go any faster")]
+    [Tooltip("If the Fox is travelling faster than this speed in the air (eg. being shot from a canon), holding down horizontal input won't make him go any faster")]
     [SerializeField]
-    private float m_MaxSpeedInputThreshold;
+    private float m_MaxSpeedInputThreshold = 5f;
 
-    [Tooltip("How the fox reaches max speed")]
+    [Tooltip("How Air Acceleration changes from \n 0 speed (100% Air Acceleration) to \n MaxSpeedInputThreshold (0% Air Acceleration)")]
     [SerializeField]
-    private AnimationCurve m_AirSpeedCurve;
-    private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirSpeed;
+    private AnimationCurve m_AirAccelerationCurve;
+    private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirAcceleration;
 
     private Rigidbody2D rb;
     private float directionX;
@@ -64,22 +64,33 @@ public class HorizontalMovement : MonoBehaviour
         }
         else
         {
-            rb.AddForce(new Vector2(directionX * m_AirSpeed * 40 * GetAirCoefficient() , 0));
+            rb.AddForce(new Vector2(directionX * m_AirAcceleration * 40 * GetAirSpeedCoefficient(), 0));
         }
     }
 
-    private float GetAirCoefficient()
+    private float GetAirSpeedCoefficient()
     {
-        var coefficient = 0f;
+        float coefficient;
+
         if ((directionX > 0 && rb.velocity.x > 0) || (directionX < 0 && rb.velocity.x < 0))
         {
-            coefficient = (m_MaxSpeedInputThreshold-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, m_MaxSpeedInputThreshold))/m_MaxSpeedInputThreshold;
+            // If we're holding down the same direction input as the direction we're travelling,
+            // Figure out how much of the air speed should be given to the fox based on how fast we're going
+            // If we're already travelling faster than the input threshold, give 0% of the air speed
+            float speed = Mathf.Abs(rb.velocity.x);
+            float clampedSpeed = Mathf.Clamp(speed, 0, m_MaxSpeedInputThreshold);
+            coefficient = clampedSpeed / m_MaxSpeedInputThreshold;
         }
         else
         {
-            coefficient = 1;
+            // If we're trying to change direction, give 100% of the air speed
+            // to allow the fox to start going the other way asap
+            coefficient = 0;
         }
-        return m_AirSpeedCurve.Evaluate(coefficient);
+
+        // Returning just the 'coefficient' value means the speed will change linearly
+        // Putting it on a curve will allow for a more nuance change if the designer so desires (ie. exponentially, etc.)
+        return m_AirAccelerationCurve.Evaluate(coefficient);
     }
 
     private void PlayFootStepSound()

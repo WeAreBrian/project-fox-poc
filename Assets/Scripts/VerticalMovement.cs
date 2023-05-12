@@ -3,22 +3,27 @@ using UnityEngine.InputSystem;
 
 public class VerticalMovement : MonoBehaviour
 {
+    [Tooltip("Force of a jump")]
 	[SerializeField]
     private float JumpForce;
 
+    [Tooltip("Period of delay before dropping to the ground after walking off a ledge")]
 	[SerializeField]
-	private float m_CoyoteTime;
+    private float m_CoyoteTime;
 
+    [Tooltip("Period that a jump input will register before landing")]
 	[SerializeField]
-	private float m_JumpBuffer;
+    private float m_JumpBuffer;
 
-	[SerializeField]
-	private float m_JumpDownForce;
+    [Tooltip("Period that a jump input will register before landing")]
+    [SerializeField]
+    private float m_JumpDownForce;
 
+    [Tooltip("Turn on logging for jumping")]
     [SerializeField]
     private bool m_Debug;
 
-	[SerializeField]
+    [SerializeField]
 	private AudioClip m_JumpSound;
 
     [HideInInspector]

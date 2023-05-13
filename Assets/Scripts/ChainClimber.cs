@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class ChainClimber : MonoBehaviour
 {
@@ -11,7 +10,12 @@ public class ChainClimber : MonoBehaviour
 	public float MaxClimbSpeed = 4.5f;
 	public float ClimbSpeedDamping = 0.1f;
 
-	public Vector2 LinkAnchor => new Vector2(0, Mathf.Repeat(m_Chain.Length, m_PhysicsChain.LinkAnchorDistance) - m_PhysicsChain.LinkAnchorOffset);
+    [SerializeField]
+    private AudioClip m_ClimbSound;
+    [SerializeField]
+    private float m_ClimbSoundInterval;
+
+    public Vector2 LinkAnchor => new Vector2(0, Mathf.Repeat(m_Chain.Length, m_PhysicsChain.LinkAnchorDistance) - m_PhysicsChain.LinkAnchorOffset);
 	public int LinkIndex => Mathf.FloorToInt(m_Chain.Length / m_PhysicsChain.LinkAnchorDistance);
 	public Rigidbody2D Link => m_PhysicsChain.GetLink(LinkIndex);
 	public bool Mounted => m_PendulumDistanceJoint != null;
@@ -28,10 +32,6 @@ public class ChainClimber : MonoBehaviour
 	private TargetJoint2D m_LinkTargetJoint;
 	private Rigidbody2D m_OldLink;
 
-	[SerializeField]
-	private AudioClip m_ClimbSound;
-	[SerializeField]
-	private float m_ClimbSoundInterval;
 	private float m_ClimbSoundTimer;
 
 	public void Mount()

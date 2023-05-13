@@ -15,12 +15,12 @@ public class AnchorThrower : MonoBehaviour
     [SerializeField]
     private float m_MaxThrowSpeed = 12;
 
-    [Tooltip("Time for trajectory to wind up from min to max throw speed before throwing")]
+    [Tooltip("Time for trajectory to wind up from Min to Max Throw Speed before throwing")]
     [SerializeField]
     [Range(0, 2)]
     private float m_WindUpTime = 0.5f;
 
-    [Tooltip("Rate at which throw speed increases from Min Throw Speed to Max Throw Speed")]
+    [Tooltip("Rate at which throw speed winds up from Min to Max Throw Speed")]
 	[SerializeField]
     private AnimationCurve m_WindUpCurve;
 

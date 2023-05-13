@@ -4,19 +4,29 @@ using UnityEngine.InputSystem;
 
 public class AnchorStall : MonoBehaviour
 {
+    [Tooltip("Duration of stall in seconds")]
 	[SerializeField]
-	private float m_StallTime = 1f;
-	[SerializeField]
-	private bool m_RevertVelocity = true;
-	[SerializeField]
-	private float m_Cooldown;
+    private float m_StallTime = 1f;
 
+    [Tooltip("After stalling, time in seconds before the Anchor can be stalled again")]
+	[SerializeField]
+    private float m_Cooldown;
+
+    [Tooltip("Whether the anchor maintains its direction of travel after stall or not.")]
+    [SerializeField]
+    private bool m_MaintainVelocity = true;
+
+    [Header("VFX")]
     [SerializeField]
     private GameObject floatingText;
+
     [SerializeField]
     private InputAction m_AnchorInteract;
+
+    [Header("SFX")]
     [SerializeField]
     private AudioClip m_StallSound;
+
     [SerializeField]
     private AudioClip m_StallEndSound;
 
@@ -55,7 +65,7 @@ public class AnchorStall : MonoBehaviour
 				//Save values
 				isStalled = true;
 				m_CooldownTimer = m_Cooldown;
-				if (m_RevertVelocity)
+				if (m_MaintainVelocity)
 				{
 					m_Velocity = m_AnchorRigidbody.velocity;
 					m_AngularVelocity = m_AnchorRigidbody.angularVelocity;
@@ -86,7 +96,7 @@ public class AnchorStall : MonoBehaviour
 			yield return new WaitForSeconds(waitTime);
 			//un-stall after waiting
 			m_AnchorRigidbody.bodyType = RigidbodyType2D.Dynamic;
-			if (m_RevertVelocity)
+			if (m_MaintainVelocity)
 			{
 				m_AnchorRigidbody.velocity = m_Velocity;
 				m_AnchorRigidbody.angularVelocity = m_AngularVelocity;

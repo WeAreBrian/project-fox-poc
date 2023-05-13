@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using static UnityEngine.CullingGroup;
 
-public class Anchor : MonoBehaviour
+public class Anchor : MonoBehaviour, IInteractable
 {
     public UnityEvent<AnchorState> StateChanged;
 
     public Rigidbody2D Rigidbody => m_Rigidbody;
     public AnchorState State => m_State;
 
-    private AnchorState m_State;
+    //public bool IsActive => m_State != AnchorState.Held;
+    public bool IsActive => true;
+    public InputActionReference Input => m_Input;
+
+    [SerializeField]
+    private InputActionReference m_Input;
+	private AnchorState m_State;
     private Rigidbody2D m_Rigidbody;
     private Timer m_FreeTimer;
 
@@ -115,4 +120,9 @@ public class Anchor : MonoBehaviour
         m_FreeTimer.Start(seconds);
         UpdateState(AnchorState.Free);
     }
+
+	public void Interact()
+	{
+		throw new System.NotImplementedException();
+	}
 }

@@ -9,7 +9,7 @@ public class AnchorHolder : MonoBehaviour
 	public static event Trigger pickup;
 
 	public bool HoldingAnchor => m_Anchor != null;
-	public float GrabRadius = 1;
+	//public float GrabRadius = 1;
 	public Vector2 HoldPosition = new Vector2(0, 0.5f);
 
 	public Anchor Anchor => m_Anchor;
@@ -43,7 +43,7 @@ public class AnchorHolder : MonoBehaviour
 		if (HoldingAnchor) return false;
 
 		var anchorLayerMask = LayerMask.GetMask("Anchor");
-		var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
+		var collider = Physics2D.OverlapCircle(transform.position, 1, anchorLayerMask);
 
 		if (collider == null)
 		{

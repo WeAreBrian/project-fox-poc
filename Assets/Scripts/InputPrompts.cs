@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InputPrompts : MonoBehaviour
@@ -10,7 +11,7 @@ public class InputPrompts : MonoBehaviour
 	[SerializeField]
 	private GameObject m_PromptPrefab;
 	private Interactor m_PlayerInteractor;
-	private InputPrompt m_Prompt;
+	private List<InputPrompt> m_Prompts = new List<InputPrompt>();
 
 	private void Start()
 	{
@@ -24,32 +25,44 @@ public class InputPrompts : MonoBehaviour
 		//	m_Prompt.transform.position = Camera.main.WorldToScreenPoint((Vector2)m_Prompt.Interactable.GameObject.transform.position + m_PromptOffset);
 		//}
 
-		var interactable = m_PlayerInteractor.GetInteractable();
+		var interactables = m_PlayerInteractor.GetInteractablesByInput();
 
-		if (interactable == null)
+		// Remove prompts that no longer exist
+		for (var i = m_Prompts.Count - 1; i >= 0; i--)
 		{
-			if (m_Prompt != null)
+			var prompt = m_Prompts[i];
+
+			if (!interactables.Contains(prompt.InteractableObject))
 			{
-				m_Prompt.Dispose();
-				m_Prompt = null;
+				RemoveInputPrompt(prompt);
 			}
 		}
-		else
-		{
-			if (m_Prompt != null)
-			{
-				if (interactable == m_Prompt.Interactable)
-				{
-					return;
-				}
 
-				m_Prompt.Dispose();
-				m_Prompt = null;
+		// Create prompts that don't exist yet
+		foreach (var interactable in interactables)
+		{
+			if (m_Prompts.Any(x => x.InteractableObject == interactable))
+			{
+				continue;
 			}
 
-			m_Prompt = Instantiate(m_PromptPrefab, transform).GetComponent<InputPrompt>();
-			m_Prompt.Interactable = interactable;
-			m_Prompt.Offset = m_PromptOffset;
+			var prompt = CreateInputPrompt(interactable);
+			m_Prompts.Add(prompt);
 		}
+	}
+
+	private void RemoveInputPrompt(InputPrompt prompt)
+	{
+		prompt.Dispose();
+		m_Prompts.Remove(prompt);
+	}
+
+	private InputPrompt CreateInputPrompt(InteractableObject interactable)
+	{
+		var prompt = Instantiate(m_PromptPrefab, transform).GetComponent<InputPrompt>();
+		prompt.InteractableObject = interactable;
+		prompt.Offset = m_PromptOffset;
+
+		return prompt;
 	}
 }

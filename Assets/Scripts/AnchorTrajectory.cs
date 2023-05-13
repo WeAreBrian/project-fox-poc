@@ -62,19 +62,20 @@ public class AnchorTrajectory : MonoBehaviour
             var point = (Vector2)transform.TransformPoint(path[pathIndex]);
             var nextPoint = (Vector2)transform.TransformPoint(path[pathIndex + 1]);
 
-            var direction = (nextPoint - point).normalized;
             var distance = Vector2.Distance(point, nextPoint);
 
-            var hit = Physics2D.Raycast(point, direction, distance, m_GroundMask);
+			Physics2D.queriesHitTriggers = false;
+			var hit = Physics2D.Linecast(point, nextPoint, m_GroundMask);
+			Physics2D.queriesHitTriggers = true;
 
-            if (hit)
+			if (hit)
             {
                 var collisionOffset = hit.distance / distance;
                 return pathIndex + collisionOffset;
             }
         }
 
-        return path.Length - 1;
+		return path.Length - 1;
     }
 
     /// <summary>

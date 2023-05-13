@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Interactor : MonoBehaviour
 {
@@ -13,16 +14,22 @@ public class Interactor : MonoBehaviour
 	{
 		var interactable = collision.GetComponent<IInteractable>();
 
-		if (interactable != null)
+		if (interactable == null)
 		{
-			var interactableObject = new InteractableObject()
-			{
-				Interactable = interactable,
-				GameObject = collision.gameObject
-			};
-
-			m_Interactables.Add(interactableObject);
+			return;
 		}
+
+		var interactableObject = new InteractableObject()
+		{
+			Interactable = interactable,
+			GameObject = collision.gameObject
+		};
+
+		m_Interactables.Add(interactableObject);
+
+		// To ensure that only one listener will be active per input action
+		interactable.Input.action.performed -= OnInputActionPerformed;
+		interactable.Input.action.performed += OnInputActionPerformed;
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
@@ -35,18 +42,23 @@ public class Interactor : MonoBehaviour
 		}
 	}
 
-	public InteractableObject GetInteractable()
+	private void OnInputActionPerformed(InputAction.CallbackContext context)
+	{
+		Interact(context.action);
+	}
+	
+	public IEnumerable<InteractableObject> GetInteractablesByInput()
 	{
 		return m_Interactables
 			.Where(x => x.GameObject != null && x.Interactable.IsActive)
-			.OrderByDescending(x => x.Interactable.Priority)
-			.ThenBy(x => (x.GameObject.transform.position - transform.position).sqrMagnitude)
-			.FirstOrDefault();
+			.GroupBy(x => x.Interactable.Input)
+			.Select(x => x.OrderByDescending(x => x.Interactable.Priority).ThenBy(x => (x.GameObject.transform.position - transform.position).sqrMagnitude).First());
 	}
 	
-	public bool Interact()
+	public bool Interact(InputAction action)
 	{
-		var interactable = GetInteractable();
+		var interactable = GetInteractablesByInput()
+			.FirstOrDefault(x => x.Interactable.Input.action == action);
 
 		if (interactable == null)
 		{

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5663171294973407070}
   - component: {fileID: 5663171294973407057}
   - component: {fileID: 5663171294973407056}
-  - component: {fileID: 5663171294973407071}
+  - component: {fileID: 1096979575113622656}
   m_Layer: 0
   m_Name: Switch
   m_TagString: Untagged
@@ -101,8 +101,10 @@ MonoBehaviour:
   m_ConnectedObject: {fileID: 0}
   m_UntoggledSprite: {fileID: 21300000, guid: 3d32387af02264449bf94db1c55f1141, type: 3}
   m_ToggledSprite: {fileID: 21300000, guid: 3908d9183afeee64f86023e14d8e0b0b, type: 3}
---- !u!70 &5663171294973407071
-CapsuleCollider2D:
+  m_Input: {fileID: -8410250395402933294, guid: ea77d714b2a31b84a8bda518902be3b8,
+    type: 3}
+--- !u!61 &1096979575113622656
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,5 +117,15 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.22, y: 1.33}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.3466666, y: 1.3866667}
+    newSize: {x: 3.52, y: 2.08}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.15, y: 1.3866667}
+  m_EdgeRadius: 0

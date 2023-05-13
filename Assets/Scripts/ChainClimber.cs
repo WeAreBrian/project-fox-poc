@@ -16,8 +16,10 @@ public class ChainClimber : MonoBehaviour
 	[SerializeField]
     private float m_ClimbSpeedDamping = 0.1f;
 
+    [Header("SFX")]
     [SerializeField]
     private AudioClip m_ClimbSound;
+
     [SerializeField]
     private float m_ClimbSoundInterval;
 

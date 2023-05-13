@@ -118,7 +118,7 @@ public class AnchorThrower : MonoBehaviour
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(velocity);
-
+        Debug.Log("Anchor thrown");
         m_animator.SetBool("isThrowing", true);
         AudioController.PlaySound(m_WindUpSound, 1, 1.8f, MixerGroup.SFX);
     }
@@ -127,6 +127,7 @@ public class AnchorThrower : MonoBehaviour
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(m_DropVelocity);
+        m_animator.SetBool("isDropping", true);
     }
 
     private void Update()

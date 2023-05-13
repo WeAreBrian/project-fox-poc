@@ -7,26 +7,26 @@ public class AnchorStall : MonoBehaviour
 	[SerializeField]
 	private float m_StallTime = 1f;
 	[SerializeField]
-	private bool m_RevertVelocity = true;   //Set this in inspector to false if you want it to fall after ending stall.
+	private bool m_RevertVelocity = true;
 	[SerializeField]
 	private float m_Cooldown;
-	
-	private Rigidbody2D m_AnchorRigidbody;
+
+    [SerializeField]
+    private GameObject floatingText;
+    [SerializeField]
+    private InputAction m_AnchorInteract;
+    [SerializeField]
+    private AudioClip m_StallSound;
+    [SerializeField]
+    private AudioClip m_StallEndSound;
+
+    private Rigidbody2D m_AnchorRigidbody;
 	private Anchor m_AnchorScript;
 	private AnchorHolder m_AnchorHolder;
 	private Vector2 m_Velocity;
 	private float m_AngularVelocity;
 	private bool isStalled;
 	private float m_CooldownTimer;
-	[SerializeField]
-	private GameObject floatingText;
-	[SerializeField]
-	private InputAction m_AnchorInteract;
-
-	[SerializeField]
-	private AudioClip m_StallSound;
-	[SerializeField]
-	private AudioClip m_StallEndSound;
 
 	private void Awake()
 	{

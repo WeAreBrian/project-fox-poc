@@ -1,28 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnchorHolder : MonoBehaviour
 {
-	public delegate void Trigger();
-	public static event Trigger pickup;
-
-	public bool HoldingAnchor => m_Anchor != null;
 	public float GrabRadius = 1;
 	public Vector2 HoldPosition = new Vector2(0, 0.5f);
 
-	public Anchor Anchor => m_Anchor;
-	public float HoldTime => Time.time - m_HoldStartTime;
-
-	private Anchor m_Anchor;
-	private float m_HoldStartTime;
-
-	[SerializeField]
-	private VerticalMovement m_WeightedJump;
 	public float m_JumpMultiplier;
 
-	private Animator m_animator;
+    [SerializeField]
+    private VerticalMovement m_WeightedJump;
+
+    public delegate void Trigger();
+    public static event Trigger pickup;
+
+    public bool HoldingAnchor => m_Anchor != null;
+    public Anchor Anchor => m_Anchor;
+    public float HoldTime => Time.time - m_HoldStartTime;
+
+    private Anchor m_Anchor;
+    private float m_HoldStartTime;
+
+    private Animator m_animator;
 
 	private void Awake()
 	{

@@ -18,7 +18,7 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField]
     private float m_MaxSpeedInputThreshold = 5f;
 
-    [Tooltip("Rate at which Air Acceleration decreases from \n 0 speed (100% Air Acceleration) to \n MaxSpeedInputThreshold (0% Air Acceleration)")]
+    [Tooltip("Rate at which Air Acceleration decreases as Fox’s air speed increases. \n\nx-axis is air speed (0 - Max Speed Input Threshold), \ny-axis is amount of Air Acceleration added to Fox's air speed (0-100%)")]
     [SerializeField]
     private AnimationCurve m_AirAccelerationCurve;
 

@@ -4,13 +4,15 @@ using UnityEngine.InputSystem;
 
 public class ChainClimber : MonoBehaviour
 {
-	
+    [Tooltip("Angle at which the chain is registered as climbable")]
     [SerializeField]
     private float m_MaxMountAngle = 20;
 
+    [Tooltip("Max speed when climbing")]
 	[SerializeField]
     private float m_MaxClimbSpeed = 4.5f;
 
+    [Tooltip("Time in seconds to go from 0 to Max Climb Speed")]
 	[SerializeField]
     private float m_ClimbSpeedDamping = 0.1f;
 

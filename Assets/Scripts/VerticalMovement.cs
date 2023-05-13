@@ -15,7 +15,7 @@ public class VerticalMovement : MonoBehaviour
 	[SerializeField]
     private float m_JumpBuffer;
 
-    [Tooltip("Period that a jump input will register before landing")]
+    [Tooltip("If Jump is released before the Fox reaches the apex of his jump, apply this much force to drag the Fox down. Used to create the 'short jump' effect")]
     [SerializeField]
     private float m_JumpDownForce;
 

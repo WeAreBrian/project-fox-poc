@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ChainClimber : MonoBehaviour
 {
-	public float MaxMountAngle = 20;
-	public float MaxClimbSpeed = 4.5f;
-	public float ClimbSpeedDamping = 0.1f;
+	
+    [SerializeField]
+    private float m_MaxMountAngle = 20;
+
+	[SerializeField]
+    private float m_MaxClimbSpeed = 4.5f;
+
+	[SerializeField]
+    private float m_ClimbSpeedDamping = 0.1f;
 
     [SerializeField]
     private AudioClip m_ClimbSound;
@@ -19,7 +23,7 @@ public class ChainClimber : MonoBehaviour
 	public int LinkIndex => Mathf.FloorToInt(m_Chain.Length / m_PhysicsChain.LinkAnchorDistance);
 	public Rigidbody2D Link => m_PhysicsChain.GetLink(LinkIndex);
 	public bool Mounted => m_PendulumDistanceJoint != null;
-	public bool CanMount => m_Chain.PlayerTension > 0 || Vector2.Angle(Vector2.up, m_Chain.PlayerToPendulum) < MaxMountAngle;
+	public bool CanMount => m_Chain.PlayerTension > 0 || Vector2.Angle(Vector2.up, m_Chain.PlayerToPendulum) < m_MaxMountAngle;
 
 	private Grounded m_Grounded;
 	private IdealChain m_Chain;
@@ -171,7 +175,7 @@ public class ChainClimber : MonoBehaviour
 
 	private void Update()
 	{
-		m_ClimbSpeed = Mathf.SmoothDamp(m_ClimbSpeed, m_ClimbInput * MaxClimbSpeed, ref m_ClimbAcceleration, ClimbSpeedDamping);
+		m_ClimbSpeed = Mathf.SmoothDamp(m_ClimbSpeed, m_ClimbInput * m_MaxClimbSpeed, ref m_ClimbAcceleration, m_ClimbSpeedDamping);
 	}
 
 	private void OnDrawGizmosSelected()

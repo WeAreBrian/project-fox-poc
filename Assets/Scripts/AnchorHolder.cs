@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class AnchorHolder : MonoBehaviour
 {
-	public float GrabRadius = 1;
-	public Vector2 HoldPosition = new Vector2(0, 0.5f);
+    [Tooltip("Unit radius the player is allowed to pick up anchor")]
+    [SerializeField]
+    private float m_GrabRadius = 1;
 
-	public float m_JumpMultiplier;
+    [Tooltip("Anchor hold position relative to Fox's position")]
+	[SerializeField]
+    private Vector2 m_HoldPosition = new Vector2(0, 0.5f);
+
+    [Tooltip("Jump force when holding the anchor. Multiplied to regular jump force.")]
+	[SerializeField]
+    private float m_JumpMultiplier;
 
     [SerializeField]
     private VerticalMovement m_WeightedJump;
@@ -18,10 +25,9 @@ public class AnchorHolder : MonoBehaviour
     public Anchor Anchor => m_Anchor;
     public float HoldTime => Time.time - m_HoldStartTime;
 
+    private Animator m_animator;
     private Anchor m_Anchor;
     private float m_HoldStartTime;
-
-    private Animator m_animator;
 
 	private void Awake()
 	{
@@ -42,7 +48,7 @@ public class AnchorHolder : MonoBehaviour
 		if (HoldingAnchor) return false;
 
 		var anchorLayerMask = LayerMask.GetMask("Anchor");
-		var collider = Physics2D.OverlapCircle(transform.position, GrabRadius, anchorLayerMask);
+		var collider = Physics2D.OverlapCircle(transform.position, m_GrabRadius, anchorLayerMask);
 
 		if (collider == null)
 		{
@@ -68,7 +74,7 @@ public class AnchorHolder : MonoBehaviour
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0;
-		rigidBody.position = transform.position + (Vector3)HoldPosition;
+		rigidBody.position = transform.position + (Vector3)m_HoldPosition;
 
 		collider.enabled = false;
 
@@ -110,7 +116,7 @@ public class AnchorHolder : MonoBehaviour
 		if (m_Anchor != null)
 		{
 			var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
-			targetJoint.target = (Vector2)transform.position + HoldPosition;
+			targetJoint.target = (Vector2)transform.position + m_HoldPosition;
 		}
 	}
 }

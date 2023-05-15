@@ -10,6 +10,7 @@ public class Springboard : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D m_Collision)
     {
+        //  AudioController.PlaySound(m_ActivateSound, 1, 1, MixerGroup.SFX);
         Rigidbody2D m_OtherRigidBody = m_Collision.GetComponent<Rigidbody2D>();
         if (m_OtherRigidBody != null)
         {

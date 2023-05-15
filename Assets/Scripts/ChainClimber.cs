@@ -28,6 +28,12 @@ public class ChainClimber : MonoBehaviour
 	private TargetJoint2D m_LinkTargetJoint;
 	private Rigidbody2D m_OldLink;
 
+	[SerializeField]
+	private AudioClip m_ClimbSound;
+	[SerializeField]
+	private float m_ClimbSoundInterval;
+	private float m_ClimbSoundTimer;
+
 	public void Mount()
 	{
 		if (Mounted)
@@ -130,6 +136,20 @@ public class ChainClimber : MonoBehaviour
 		{
 			Dismount();
 			return;
+		}
+
+		if (Mathf.Abs(m_ClimbInput) > 0)
+		{
+			m_ClimbSoundTimer -= Time.fixedDeltaTime;
+			if (m_ClimbSoundTimer < 0)
+			{
+				AudioController.PlaySound(m_ClimbSound, 0.5f + Random.Range(0, 0.5f), 1, MixerGroup.SFX);
+				m_ClimbSoundTimer = m_ClimbSoundInterval;
+			}
+		}
+		else
+		{
+			m_ClimbSoundTimer = m_ClimbSoundInterval;
 		}
 
 		m_MountDistance -= m_ClimbSpeed * Time.fixedDeltaTime;

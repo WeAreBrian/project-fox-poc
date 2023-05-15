@@ -16,6 +16,13 @@ public class ChainTugger : MonoBehaviour
 	private Anchor m_Anchor;
 	private Grounded m_Grounded;
 	private AnchorHolder m_Holder;
+	[SerializeField]
+	private GameObject floatingText;
+
+	[SerializeField]
+	private AudioClip m_PlayerTugSound;
+	[SerializeField]
+	private AudioClip m_FullTugSound;
 
 	private void Awake()
 	{
@@ -32,6 +39,8 @@ public class ChainTugger : MonoBehaviour
 	{
 		if (!m_Cooldown.Paused)
 		{
+			FloatingText f = Instantiate(floatingText).GetComponentInChildren<FloatingText>();
+			f.Set("Tug On Cooldown", transform.position + Vector3.up, Color.green);
 			return;
 		}
 
@@ -42,9 +51,11 @@ public class ChainTugger : MonoBehaviour
 			case AnchorState.Grounded:
 				transform.position += new Vector3(0, PlayerJumpOffset);
 				m_Chain.Player.velocity = m_Chain.PlayerToPendulum * PlayerTugSpeed;
+				AudioController.PlaySound(m_PlayerTugSound, 0.4f, 1, MixerGroup.SFX);
 				break;
 			case AnchorState.Lodged:
 				DislodgeAnchor();
+				AudioController.PlaySound(m_FullTugSound, 1, 1, MixerGroup.SFX);
 				break;
 			case AnchorState.Free:
 				if (!m_Grounded.OnGround)
@@ -62,6 +73,8 @@ public class ChainTugger : MonoBehaviour
 					m_Chain.Anchor.velocity = CalculateInitialVelocity(m_Chain.Anchor.position, m_Chain.Player.position, AnchorFreeTravelTime);
 					LeanTween.delayedCall(AnchorFreeTravelTime, () => m_Holder.GrabAnchor());
 				}
+
+				AudioController.PlaySound(m_FullTugSound, 1, 1, MixerGroup.SFX);
 				break;
 		}
 

@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class PhysicsChain : MonoBehaviour
 {
-	public float Length = 15;
+	public float Length;
 	public Vector2 LinkSize = new Vector2(0.3f, 0.9f);
-	public Sprite LinkSprite;
-	public float LinkMass = 1;
+	public GameObject Link;
 	public Rigidbody2D Anchor;
 	public Rigidbody2D Player;
 	//public float TargetJointFrequency = 15;
@@ -20,6 +19,7 @@ public class PhysicsChain : MonoBehaviour
 	private Rigidbody2D[] m_Links;
 	//private TargetJoint2D m_AnchorTargetJoint;
 	//private TargetJoint2D m_PlayerTargetJoint;
+
 
 	public Rigidbody2D GetLink(int index)
 	{
@@ -78,6 +78,8 @@ public class PhysicsChain : MonoBehaviour
 			position += direction * LinkAnchorDistance;
 
 			m_Links[i] = link;
+
+			link.GetComponent<Link>().index = i;
 		}
 
 		for (var i = 1; i < m_Links.Length; i++)
@@ -114,19 +116,7 @@ public class PhysicsChain : MonoBehaviour
 
 	private Rigidbody2D CreateLink()
 	{
-		var link = new GameObject();
-		link.layer = LayerMask.NameToLayer("Chain");
-
-		var spriteRenderer = link.AddComponent<SpriteRenderer>();
-		spriteRenderer.sprite = LinkSprite;
-
-		var rigidBody = link.AddComponent<Rigidbody2D>();
-		rigidBody.mass = LinkMass;
-
-		var collider = link.AddComponent<CapsuleCollider2D>();
-		collider.size = LinkSize;
-
-		return rigidBody;
+		return Instantiate(Link).GetComponent<Rigidbody2D>();
 	}
 
 	private void ConnectLink(Rigidbody2D link, Rigidbody2D previousLink)

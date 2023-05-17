@@ -6,7 +6,7 @@ using System.Linq;
 public class Springboard : MonoBehaviour, IToggle
 {
 	[SerializeField]
-	private float m_SpringHeight = 10f;
+	private float m_SpringForce = 10f;
 	[SerializeField]
 	private AudioClip m_ActivateSound;
 
@@ -163,7 +163,7 @@ public class Springboard : MonoBehaviour, IToggle
 			rb.velocity = perpendicularVel;
 
             //Adds the force of the springboard to the object. The magic number is just a coeffiecent to try get the springheight variable to be as close to real units as possible.
-            rb.AddForce(m_SpringHeight * transform.up * rb.mass, ForceMode2D.Impulse);
+            rb.AddForce(m_SpringForce * transform.up * rb.mass, ForceMode2D.Impulse);
 		}
 	}
 }

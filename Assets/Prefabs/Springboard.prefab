@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.41788125, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e700c02675a40ca4fafe5ed443605ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpringForce: 120
+  m_SpringForce: 100
   m_ActivateSound: {fileID: 8300000, guid: 005ba4404e55baf41a39be755454ccae, type: 3}
 --- !u!61 &8193736428366324790
 BoxCollider2D:
@@ -152,5 +152,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.95, y: 0.005}
+  m_Size: {x: 0.9, y: 0.005}
   m_EdgeRadius: 0

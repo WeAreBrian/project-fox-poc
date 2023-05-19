@@ -6,12 +6,13 @@ public class LayerParallax : MonoBehaviour
 {
     public Transform ReferenceTransform;
     public float SpeedMultiplier;
-    public PositionDelta camera;
+    private PositionDelta camera;
 
     // Start is called before the first frame update
     void Start()
     {
         camera = Camera.main.GetComponent<PositionDelta>();
+        transform.localScale = transform.localScale * (1 + SpeedMultiplier);
     }
 
     // Update is called once per frame

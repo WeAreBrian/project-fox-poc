@@ -20,7 +20,7 @@ public class AnimationController : MonoBehaviour
         m_Animator = GetComponentInChildren<Animator>();
         m_Grounded = GetComponent<Grounded>();
         m_RigidBody = GetComponent<Rigidbody2D>();
-        m_model = GetComponentInChildren<Animator>().gameObject;
+        m_model = m_Animator.gameObject;
         m_cam = Camera.main;
     }
 
@@ -29,13 +29,15 @@ public class AnimationController : MonoBehaviour
         // going left, flip fox rotation to face left
         if (value.Get<float>() == -1f)
         {
-            m_model.transform.LookAt(transform.position+Vector3.left);
+            Debug.Log("facing left");
+            m_model.transform.rotation = Quaternion.LookRotation(Vector3.left);
         }
 
         // going right, flip fox rotation to face right
         else if (value.Get<float>() == 1f)
         {
-            m_model.transform.LookAt(transform.position + Vector3.right);
+            Debug.Log("facing right");
+            m_model.transform.localRotation = Quaternion.LookRotation(Vector3.right);
         }
 
         else
@@ -45,6 +47,4 @@ public class AnimationController : MonoBehaviour
 
         m_Animator.SetBool("IsMoving", value.Get<float>() != 0);
     }
-
-
 }

@@ -8,9 +8,11 @@ public class Grounded : MonoBehaviour
 
     [SerializeField]
     private LayerMask m_GroundMask;
-    private const float k_EdgeOffset = 0.05f;
+    private const float k_EdgeOffset = 0.4f;
     private const float k_Height = 0.2f;
     private Collider2D m_Collider;
+    [SerializeField]
+    private AudioClip m_LandSound;
 
     private void Awake()
     {
@@ -23,6 +25,11 @@ public class Grounded : MonoBehaviour
         
         var playerWidth = m_Collider.bounds.extents.x;
         var boxSize = new Vector2(2 * playerWidth - k_EdgeOffset, k_Height);
+
+        if (!OnGround && Physics2D.OverlapBox(playerBottom, boxSize, 0, m_GroundMask))
+        {
+            AudioController.PlaySound(m_LandSound, 3, 0.7f, MixerGroup.SFX);
+        }
 
         OnGround = Physics2D.OverlapBox(playerBottom, boxSize, 0, m_GroundMask);
     }

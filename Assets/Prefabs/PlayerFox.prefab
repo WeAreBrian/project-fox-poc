@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 1130451209}
   - component: {fileID: 6171634025277714744}
   - component: {fileID: 4507141940674983407}
+  - component: {fileID: -2199308007790774924}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -467,10 +468,10 @@ MonoBehaviour:
   floatingText: {fileID: 8950826962864852270, guid: 8befd40b5792e0147bb596d46f7cd32c,
     type: 3}
   m_AnchorInteract:
-    m_Name: 
+    m_Name: Anchor Interact
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 
+    m_Id: dd5cdf0f-5244-4a56-bad0-6e83cb257a42
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -540,6 +541,18 @@ MonoBehaviour:
     type: 3}
   m_PlayerTugSound: {fileID: 8300000, guid: 7e76af4e890a10648b79c226f01b0fe5, type: 3}
   m_FullTugSound: {fileID: 8300000, guid: 66165d4d1ae66b9448058b984c11538d, type: 3}
+--- !u!114 &-2199308007790774924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad647ed0988f34484b0ea50aa1cfbd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

@@ -63,6 +63,7 @@ public class IdealChain : MonoBehaviour
 		m_MaxDistanceJoint.connectedAnchor = Vector2.zero;
 		m_MaxDistanceJoint.connectedBody = Anchor;
 		m_MaxDistanceJoint.distance = MaxLength;
+		m_MaxDistanceJoint.enableCollision = true;
 	}
 
 	private void FixedUpdate()

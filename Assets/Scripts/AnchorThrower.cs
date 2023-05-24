@@ -28,6 +28,12 @@ public class AnchorThrower : MonoBehaviour
     private AnchorHolder m_Holder;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
+
+    [SerializeField]
+    private AudioClip m_WindUpSound;
+    [SerializeField]
+    private float m_WindUpSoundInterval;
+    private float m_WindUpSoundTimer;
     
     private void Awake()
     {
@@ -92,14 +98,16 @@ public class AnchorThrower : MonoBehaviour
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(velocity);
-
+        Debug.Log("Anchor thrown");
         m_animator.SetBool("isThrowing", true);
+        AudioController.PlaySound(m_WindUpSound, 1, 1.8f, MixerGroup.SFX);
     }
 
     private void DropAnchor()
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(DropVelocity);
+        m_animator.SetBool("isDropping", true);
     }
 
     private void Update()
@@ -113,6 +121,17 @@ public class AnchorThrower : MonoBehaviour
         {
 			m_animator.SetBool("isAiming", true);
 			OrientAnchor();
+            PlayWindupSound();
+        }
+    }
+
+    private void PlayWindupSound()
+    {
+        m_WindUpSoundTimer -= Time.fixedDeltaTime;
+        if (m_WindUpSoundTimer < 0)
+        {
+            AudioController.PlaySound(m_WindUpSound, 0.3f, 1.4f, MixerGroup.SFX);
+            m_WindUpSoundTimer = m_WindUpSoundInterval;
         }
     }
 

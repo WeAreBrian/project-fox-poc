@@ -32,13 +32,13 @@ public class AnimatorStateMachine : MonoBehaviour
     void OnMove(InputValue value)
     {
 		// going left, flip fox rotation to face left
-		if (value.Get<float>() == -1f)
+		if (value.Get<float>() >= -1f && value.Get<float>() < 0)
 		{
 			m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
 		}
 
-		// going right, flip fox rotation to face right
-		if (value.Get<float>() == 1f)
+        // going right, flip fox rotation to face right
+        if (value.Get<float>() <= 1f && value.Get<float>() > 0)
         {
 			m_Sprite.transform.localScale = new Vector2(1, transform.localScale.y);
 		}

@@ -46,8 +46,7 @@ public class AnimatorStateMachine : MonoBehaviour
         if (m_debugInfo) { Debug.Log("Move Input: " + value.Get<float>().ToString()); }
         
         // Run animation does not activate during air time
-		//if (m_Animator.GetBool("OnGround"))
-        if (!m_Grounded.OnGround)
+		if (m_Animator.GetBool("OnGround"))
 		{
 			return;
 		}

@@ -1,38 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 public class HorizontalMovement : MonoBehaviour
 {
-    [Header("Ground movement")]
-    [Tooltip("Fox's speed on the ground")]
-    [SerializeField]
-    private float m_GroundSpeed = 5f;
+    public float MoveSpeed => m_Grounded.OnGround ? GroundMoveSpeed : AirMoveSpeed;
 
-    [Header("Air movement")]
-    [Tooltip("Fox's acceleration in the air (there's a discrepancy because ground movement doesn't have acceleration)")]
-    [SerializeField]
-    private float m_AirAcceleration = 3f;
-
-    [Tooltip("Fox's max speed to cap off the air acceleration")]
-    [SerializeField]
-    private float m_MaxAirSpeed;
-
-    [Tooltip("How much ")]
-    [SerializeField]
-    private AnimationCurve m_AirAccelerationCurve;
-    private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirAcceleration;
-
+    [Tooltip("Speed of the player when in the air")]
+    public float AirMoveSpeed = 3f;
+    public float MaxVelocityInputThreshold;
+    public AnimationCurve CoefficientCurve;
+    public float GroundMoveSpeed = 5;
     private Rigidbody2D rb;
+    [SerializeField]
     private float directionX;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
-    [SerializeField]
-    private float m_FootstepInterval;
-    private float m_FootstepTimer;
-    private bool m_IsLeftFoot;
-    [SerializeField]
-    private List<AudioClip> m_FootStepSounds;
+    
     
     private void Start()
     {
@@ -55,16 +40,14 @@ public class HorizontalMovement : MonoBehaviour
         }
 
         var horizontalAxisValue = directionX;
-        if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
 
         if (m_Grounded.OnGround)
         {
             rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
-            PlayFootStepSound();
         }
         else
         {
-            rb.AddForce(new Vector2(directionX * m_AirAcceleration * 40 * GetAirCoefficient() , 0));
+            rb.AddForce(new Vector2(directionX * AirMoveSpeed * 40 * GetAirCoefficient() , 0));
         }
     }
 
@@ -73,25 +56,12 @@ public class HorizontalMovement : MonoBehaviour
         var coefficient = 0f;
         if ((directionX > 0 && rb.velocity.x > 0) || (directionX < 0 && rb.velocity.x < 0))
         {
-            coefficient = (m_MaxAirSpeed-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, m_MaxAirSpeed))/m_MaxAirSpeed;
+            coefficient = (MaxVelocityInputThreshold-Mathf.Clamp(Mathf.Abs(rb.velocity.x), 0, MaxVelocityInputThreshold))/MaxVelocityInputThreshold;
         }
         else
         {
             coefficient = 1;
         }
-        return m_AirAccelerationCurve.Evaluate(coefficient);
-    }
-
-    private void PlayFootStepSound()
-    {
-        m_FootstepTimer -= Time.deltaTime * Mathf.Abs(directionX);
-        if (m_FootstepTimer <= 0)
-        {
-            var footIndex = Random.Range(0, 2);
-            var offset = 0.05f - Random.Range(0, 0.1f);
-            AudioController.PlaySound(m_FootStepSounds[footIndex], 0.5f, 1 + offset, MixerGroup.SFX);
-
-            m_FootstepTimer = m_FootstepInterval;
-        }
+        return CoefficientCurve.Evaluate(coefficient);
     }
 }

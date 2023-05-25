@@ -1,25 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AnchorStall : MonoBehaviour
 {
-	private AnchorState m_State;
-	private Vector2 m_Velocity;
-	private float m_AngularVelocity;
-	private Rigidbody2D m_AnchorRigidbody;
-	private AnchorHolder m_AnchorHolder;
-	private Anchor m_AnchorScript;
-	private bool isStalled;
-
 	[SerializeField]
 	private float m_StallTime = 1f;
 	[SerializeField]
 	private bool m_RevertVelocity = true;   //Set this in inspector to false if you want it to fall after ending stall.
 	[SerializeField]
 	private float m_Cooldown;
-	[SerializeField]
+	
+	private Rigidbody2D m_AnchorRigidbody;
+	private Anchor m_AnchorScript;
+	private AnchorHolder m_AnchorHolder;
+	private Vector2 m_Velocity;
+	private float m_AngularVelocity;
+	private bool isStalled;
 	private float m_CooldownTimer;
+	[SerializeField]
+	private GameObject floatingText;
+	[SerializeField]
+	private InputAction m_AnchorInteract;
+
+	[SerializeField]
+	private AudioClip m_StallSound;
+	[SerializeField]
+	private AudioClip m_StallEndSound;
 
 	private void Awake()
 	{
@@ -28,6 +35,7 @@ public class AnchorStall : MonoBehaviour
 		GameObject m_AnchorObject = GameObject.Find("Anchor");
 		m_AnchorScript = m_AnchorObject.GetComponent<Anchor>();
 		m_AnchorRigidbody = m_AnchorScript.GetComponent<Rigidbody2D>();
+		m_AnchorInteract = GetComponent<PlayerInput>().actions["AnchorInteract"];
 	}
 
 
@@ -39,20 +47,37 @@ public class AnchorStall : MonoBehaviour
 	private void OnAnchorInteract()
 	{
 		//if fox is not holding the anchor and its not already being stalled.
-		if (!m_AnchorHolder.HoldingAnchor && !isStalled && m_CooldownTimer < 0)
+		if (!m_AnchorHolder.HoldingAnchor && !isStalled && m_AnchorInteract.IsPressed())
 		{
-			//Save values
-			isStalled = true;
-			m_CooldownTimer = m_Cooldown;
-			if (m_RevertVelocity)
+			if (m_CooldownTimer < 0)
 			{
-				m_Velocity = m_AnchorRigidbody.velocity;
-				m_AngularVelocity = m_AnchorRigidbody.angularVelocity;
+
+				//Save values
+				isStalled = true;
+				m_CooldownTimer = m_Cooldown;
+				if (m_RevertVelocity)
+				{
+					m_Velocity = m_AnchorRigidbody.velocity;
+					m_AngularVelocity = m_AnchorRigidbody.angularVelocity;
+				}
+
+				//Stall
+				m_AnchorRigidbody.bodyType = RigidbodyType2D.Static;
+				StartCoroutine(WaitCoroutine(m_StallTime));
+			}
+			else
+			{
+				FloatingText f = Instantiate(floatingText).GetComponentInChildren<FloatingText>();
+				f.Set("Stall On Cooldown", transform.position + Vector3.up, Color.blue);
+				return;
 			}
 			
 			//Stall
 			m_AnchorRigidbody.bodyType = RigidbodyType2D.Static;
+			m_AnchorScript.ActivateShake(m_StallTime);
 			StartCoroutine(WaitCoroutine(m_StallTime));
+
+			AudioController.PlaySound(m_StallSound, 1, 1, MixerGroup.SFX);
 		}
 
 		//Do this after stall timer
@@ -67,6 +92,11 @@ public class AnchorStall : MonoBehaviour
 				m_AnchorRigidbody.angularVelocity = m_AngularVelocity;
 			}
 			isStalled = false;
+
+			if (!m_AnchorHolder.HoldingAnchor)
+			{
+				AudioController.PlaySound(m_StallEndSound, 0.5f, 1, MixerGroup.SFX);
+			}
 		}
 	}
 }

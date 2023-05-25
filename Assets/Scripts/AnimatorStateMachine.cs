@@ -32,13 +32,13 @@ public class AnimatorStateMachine : MonoBehaviour
     void OnMove(InputValue value)
     {
 		// going left, flip fox rotation to face left
-		if (value.Get<float>() == -1f)
+		if (value.Get<float>() >= -1f && value.Get<float>() < 0)
 		{
 			m_Sprite.transform.localScale = new Vector2(-1, transform.localScale.y);
 		}
 
-		// going right, flip fox rotation to face right
-		if (value.Get<float>() == 1f)
+        // going right, flip fox rotation to face right
+        if (value.Get<float>() <= 1f && value.Get<float>() > 0)
         {
 			m_Sprite.transform.localScale = new Vector2(1, transform.localScale.y);
 		}
@@ -46,7 +46,8 @@ public class AnimatorStateMachine : MonoBehaviour
         if (m_debugInfo) { Debug.Log("Move Input: " + value.Get<float>().ToString()); }
         
         // Run animation does not activate during air time
-		if (m_Animator.GetBool("OnGround"))
+		//if (m_Animator.GetBool("OnGround"))
+        if (!m_Grounded.OnGround)
 		{
 			return;
 		}

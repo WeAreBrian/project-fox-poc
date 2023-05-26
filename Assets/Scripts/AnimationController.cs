@@ -21,10 +21,11 @@ public class AnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Animator = GetComponentInChildren<Animator>();
+
+        m_model = GameObject.Find("FoxModel");
+        m_Animator = m_model.GetComponent<Animator>();
         m_Grounded = GetComponent<Grounded>();
         m_RigidBody = GetComponent<Rigidbody2D>();
-        m_model = GetComponentInChildren<Animator>().gameObject;
         m_AnchorHolder = GetComponent<AnchorHolder>();
         m_ChainClimber = GetComponent<ChainClimber>();
         m_cam = Camera.main;

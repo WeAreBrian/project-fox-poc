@@ -71,7 +71,7 @@ public class Anchor : MonoBehaviour
         {
             UpdateState(AnchorState.Lodged);
         }
-        else
+        else if (!collision.gameObject.CompareTag("Player"))
         {
             foreach (ContactPoint2D hitpos in collision.contacts)
             {
@@ -86,6 +86,11 @@ public class Anchor : MonoBehaviour
             }
             UpdateState(AnchorState.Grounded);
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        
     }
 
     public void ActivateShake(float duration)

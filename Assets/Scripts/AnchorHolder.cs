@@ -11,6 +11,7 @@ public class AnchorHolder : MonoBehaviour
 	public bool HoldingAnchor => m_Anchor != null;
 	public float GrabRadius = 1;
 	public Vector2 HoldPosition = new Vector2(0, 0.5f);
+	public Vector3 HoldRotation = new Vector3(0, 0, 115);
 
 	public Anchor Anchor => m_Anchor;
 	public float HoldTime => Time.time - m_HoldStartTime;
@@ -22,12 +23,9 @@ public class AnchorHolder : MonoBehaviour
 	private VerticalMovement m_WeightedJump;
 	public float m_JumpMultiplier;
 
-	private Animator m_animator;
-
 	private void Awake()
 	{
 		m_WeightedJump = GetComponent<VerticalMovement>();
-		m_animator = GetComponentInChildren<Animator>();
 	}
 
 	private void OnAnchorInteract()
@@ -57,32 +55,29 @@ public class AnchorHolder : MonoBehaviour
 			return false;
 		}
 
-		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+		//var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
 
-		if (targetJoint == null)
-		{
-			targetJoint = m_Anchor.AddComponent<TargetJoint2D>();
-			targetJoint.autoConfigureTarget = false;
-		}
+		//if (targetJoint == null)
+		//{
+		//	targetJoint = m_Anchor.AddComponent<TargetJoint2D>();
+		//	targetJoint.autoConfigureTarget = false;
+		//}
 
-		targetJoint.enabled = true;
+		//targetJoint.enabled = true;
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0;
 		rigidBody.position = transform.position + (Vector3)HoldPosition;
+		m_Anchor.transform.rotation = Quaternion.Euler(HoldRotation);
 
 		collider.enabled = false;
 
 		pickup?.Invoke();
 		m_Anchor.PickUp();
 
-		m_Anchor.transform.SetParent(transform);
-
 		m_WeightedJump.JumpCoefficient = m_JumpMultiplier;
 		m_HoldStartTime = Time.time;
 
-		
-		m_animator.SetBool("isPickingUp", true);
 		return true;
 	}
 
@@ -91,8 +86,8 @@ public class AnchorHolder : MonoBehaviour
 		if (!HoldingAnchor) return null;
 		m_WeightedJump.JumpCoefficient = 1;
 
-		var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
-		targetJoint.enabled = false;
+		//var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
+		//targetJoint.enabled = false;
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 1;
@@ -100,8 +95,6 @@ public class AnchorHolder : MonoBehaviour
 		var collider = m_Anchor.GetComponent<Collider2D>();
 		collider.enabled = true;
 
-
-		m_Anchor.transform.SetParent(null);
 
 		m_Anchor.Drop();
 
@@ -116,8 +109,7 @@ public class AnchorHolder : MonoBehaviour
 	{
 		if (m_Anchor != null)
 		{
-			var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
-			targetJoint.target = (Vector2)transform.position + HoldPosition;
+			m_Anchor.transform.position = transform.position + (Vector3)HoldPosition;
 		}
 	}
 }

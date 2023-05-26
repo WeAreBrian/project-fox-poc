@@ -8,6 +8,8 @@ public class HorizontalMovement : MonoBehaviour
     [Tooltip("Fox's speed on the ground")]
     [SerializeField]
     private float m_GroundSpeed = 5f;
+    [SerializeField]
+    private float m_HoldingAnchorSpeed = 3f;
 
     [Header("Air movement")]
     [Tooltip("Fox's acceleration in the air (there's a discrepancy because ground movement doesn't have acceleration)")]
@@ -21,12 +23,23 @@ public class HorizontalMovement : MonoBehaviour
     [Tooltip("How much ")]
     [SerializeField]
     private AnimationCurve m_AirAccelerationCurve;
-    private float MoveSpeed => m_Grounded.OnGround ? m_GroundSpeed : m_AirAcceleration;
+    private float MoveSpeed 
+    {
+        get 
+        {
+
+            if (m_Holder.HoldingAnchor) return m_HoldingAnchorSpeed;
+            if (!m_Grounded.OnGround) return m_AirAcceleration;
+            return m_GroundSpeed;
+            
+        }
+    }
 
     private Rigidbody2D rb;
     private float directionX;
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
+    private AnchorHolder m_Holder;
     [SerializeField]
     private float m_FootstepInterval;
     private float m_FootstepTimer;
@@ -39,6 +52,7 @@ public class HorizontalMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         m_Grounded = GetComponent<Grounded>();
         m_Thrower = GetComponent<AnchorThrower>();
+        m_Holder = GetComponent<AnchorHolder>();
     }
     
     private void OnMove(InputValue value)

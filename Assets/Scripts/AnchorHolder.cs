@@ -75,6 +75,9 @@ public class AnchorHolder : MonoBehaviour
 
 		pickup?.Invoke();
 		m_Anchor.PickUp();
+
+		m_Anchor.transform.SetParent(transform);
+
 		m_WeightedJump.JumpCoefficient = m_JumpMultiplier;
 		m_HoldStartTime = Time.time;
 
@@ -96,6 +99,9 @@ public class AnchorHolder : MonoBehaviour
 
 		var collider = m_Anchor.GetComponent<Collider2D>();
 		collider.enabled = true;
+
+
+		m_Anchor.transform.SetParent(null);
 
 		m_Anchor.Drop();
 

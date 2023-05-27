@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a229682e1b37a748b77ca652571bb71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxMountAngle: 20
+  MaxMountAngle: 50
   MaxClimbSpeed: 4.5
   ClimbSpeedDamping: 0.1
   m_ClimbSound: {fileID: 8300000, guid: f060a7b91a02a0f448f2ea15c9cc2661, type: 3}
@@ -419,7 +419,7 @@ MonoBehaviour:
   Cooldown: 1.5
   PlayerJumpOffset: 0.25
   PlayerTugSpeed: 10
-  AnchorDislodgeTravelTime: 0.85
+  AnchorDislodgeTravelTime: 0.4
   AnchorFreeTravelTime: 0.85
   floatingText: {fileID: 8950826962864852270, guid: 8befd40b5792e0147bb596d46f7cd32c,
     type: 3}

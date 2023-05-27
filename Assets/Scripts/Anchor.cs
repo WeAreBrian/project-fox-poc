@@ -88,11 +88,6 @@ public class Anchor : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        
-    }
-
     public void ActivateShake(float duration)
     {
         StartCoroutine(Shake(duration));

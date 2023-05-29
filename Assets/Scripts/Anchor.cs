@@ -74,15 +74,13 @@ public class Anchor : MonoBehaviour
         }
         else if (!collision.gameObject.CompareTag("Player"))
         {
+
             foreach (ContactPoint2D hitpos in collision.contacts)
             {
-                var objectBounds = collision.gameObject.GetComponent<Collider2D>().bounds;
-                if (hitpos.point.x < objectBounds.min.x+0.1f || hitpos.point.x > objectBounds.max.x-0.1f || hitpos.point.y < objectBounds.min.y+0.1f)
+                if (IsTop(hitpos.point, collision.gameObject.GetComponent<Collider2D>().bounds))
                 {
-                    Debug.Log("hit a side");
                     AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
                     UpdateState(AnchorState.Free);
-                    return;
                 }
             }
             UpdateState(AnchorState.Grounded);
@@ -92,6 +90,17 @@ public class Anchor : MonoBehaviour
     public void ActivateShake(float duration)
     {
         StartCoroutine(Shake(duration));
+    }
+    
+    //This will return true if the collision point is above the bounds of the objectBounds
+    //This will only be accurate for objects which are axis oriented so this solution needs to be revisited (ie platforms on an angle will not work with this solution
+    private bool IsTop(Vector2 collisionPoint, Bounds objectBounds)
+    {
+        if (collisionPoint.x < objectBounds.min.x + 0.1f || collisionPoint.x > objectBounds.max.x - 0.1f || collisionPoint.y < objectBounds.min.y + 0.1f)
+        {
+            return false;
+        }
+        return true;
     }
 
     private IEnumerator Shake(float duration)

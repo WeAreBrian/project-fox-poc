@@ -48,14 +48,18 @@ public class Anchor : MonoBehaviour
     private void Update()
     {
         m_FreeTimer.Tick();
+        Shake();
+    }
 
+    private void Shake()
+    {
         if (m_Shake)
         {
             var progress = (m_ShakeAmplitudeTimer / m_ShakeDuration);
 
             m_ShakeAmplitudeTimer -= Time.deltaTime;
-            float x = transform.position.x * Mathf.Sin(Time.time * m_ShakeFrequency * m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
-            float y = transform.position.y * Mathf.Sin(Time.time * m_ShakeFrequency*1.2f* m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
+            float x = transform.position.x * Mathf.Sin(Time.time * m_ShakeFrequency * m_ShakeAmplitude.Evaluate(1 - progress)) * 0.01f * m_ShakeAmplitude.Evaluate(1 - progress);
+            float y = transform.position.y * Mathf.Sin(Time.time * m_ShakeFrequency * 1.2f * m_ShakeAmplitude.Evaluate(1 - progress)) * 0.01f * m_ShakeAmplitude.Evaluate(1 - progress);
             float z = 0;
 
             m_TimerSprite.transform.localScale = new Vector3(1.5f * progress, 1.5f * progress, 1.5f * progress);

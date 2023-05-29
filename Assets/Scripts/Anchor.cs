@@ -79,7 +79,6 @@ public class Anchor : MonoBehaviour
             {
                 if (IsTop(hitpos.point, collision.gameObject.GetComponent<Collider2D>().bounds))
                 {
-                    AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
                     UpdateState(AnchorState.Free);
                 }
             }
@@ -87,6 +86,8 @@ public class Anchor : MonoBehaviour
         }
     }
 
+    //This is just a wrapper method so that the coroutine can be started externally without calling coroutine in a different script
+    //Coroutines fucking suck though and i wanna change this but and also we arent going to use stall probably so who fucking cares
     public void ActivateShake(float duration)
     {
         StartCoroutine(Shake(duration));
@@ -103,6 +104,8 @@ public class Anchor : MonoBehaviour
         return true;
     }
 
+    //Increases shake amplitude over duration
+    //Resets position after shake is finished so that it doesnt actually move when the shake is finished
     private IEnumerator Shake(float duration)
     {
         m_Shake = true;
@@ -116,6 +119,9 @@ public class Anchor : MonoBehaviour
         m_TimerSprite.SetActive(false);
     }
 
+
+    //Moves Object to ghost layer so that it will not interact with the player for the duration specified
+    //This will prevent the anchor from hitting the player when the anchor is thrown
     private IEnumerator DisableFoxCollision()
     {
         gameObject.layer = LayerMask.NameToLayer("Ghost");
@@ -130,6 +136,7 @@ public class Anchor : MonoBehaviour
         UpdateState(AnchorState.Held);
     }
 
+    //Updates the rigidbody and whatnot based on the state that the anchor is entering
     private void UpdateState(AnchorState next)
     {
         Debug.Log("Setting state to " + next);
@@ -164,6 +171,11 @@ public class Anchor : MonoBehaviour
             if (next == AnchorState.Lodged)
             {
                 AudioController.PlaySound(m_AnchorLodge, 1, 1, MixerGroup.SFX);
+            }
+            else if (next == AnchorState.Free)
+            {
+
+                AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
             }
             else
             {

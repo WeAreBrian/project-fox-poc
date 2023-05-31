@@ -23,9 +23,8 @@ public class FloatingText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //makes the text wobble on the x axis
         var x = Mathf.Sin(Time.time * 0.1f) * 1f;
-
         transform.position = new Vector3(startingPos.x+x, transform.position.y+(dir.y/1000), 0);
     }
 
@@ -36,6 +35,7 @@ public class FloatingText : MonoBehaviour
         text.color = colour;
     }
 
+    // Destroy self after delay
     public IEnumerator Finish(float lifetime)
     {
         yield return new WaitForSeconds(lifetime);

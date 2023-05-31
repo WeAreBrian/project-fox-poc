@@ -54,6 +54,7 @@ public class AnchorHolder : MonoBehaviour
 		{
 			return false;
 		}
+
 		//Changed to update position to prepare for 3D animation integration 
 		//var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
 

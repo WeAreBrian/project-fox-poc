@@ -21,7 +21,6 @@ public class AnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         m_model = GameObject.Find("FoxModel");
         m_Animator = m_model.GetComponent<Animator>();
         m_Grounded = GetComponent<Grounded>();
@@ -33,11 +32,12 @@ public class AnimationController : MonoBehaviour
 
     private void Update()
     {
-
-
+        //sent parameters to animator
         m_Animator.SetBool("Grounded", m_Grounded.OnGround);
         m_Animator.SetBool("HoldingAnchor", m_AnchorHolder.HoldingAnchor);
         m_Animator.SetBool("Climbing", m_ChainClimber.Mounted);
+
+        //scale animation speed to speed of the action (applies to walking and climbing only, as of now)
         if (m_Grounded.OnGround && m_Moving)
         {
             m_Animator.speed = Mathf.Abs(m_RigidBody.velocity.x) * k_WalkSpeedScale;

@@ -167,20 +167,21 @@ public class Anchor : MonoBehaviour
             m_Rigidbody.bodyType = RigidbodyType2D.Kinematic;
             m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.angularVelocity = 0;
+        }
 
-            if (next == AnchorState.Lodged)
-            {
-                AudioController.PlaySound(m_AnchorLodge, 1, 1, MixerGroup.SFX);
-            }
-            else if (next == AnchorState.Free)
-            {
+        //play sound based on state
+        if (next == AnchorState.Lodged)
+        {
+            AudioController.PlaySound(m_AnchorLodge, 1, 1, MixerGroup.SFX);
+        }
+        else if (next == AnchorState.Free)
+        {
 
-                AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
-            }
-            else
-            {
-                AudioController.PlaySound(m_AnchorLand, 1, 1, MixerGroup.SFX);
-            }
+            AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
+        }
+        else
+        {
+            AudioController.PlaySound(m_AnchorLand, 1, 1, MixerGroup.SFX);
         }
 
         StateChanged?.Invoke(next);

@@ -55,6 +55,10 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates an object which plays a sound oneshot and will not be destroyed on scene load
+    /// </summary>
+    /// <returns>Gameobject created</returns>
     public static GameObject PlaySound(AudioClip clip, float volume, float pitch, MixerGroup mixerGroup)
     {
         if (Time.timeScale == 0)
@@ -80,6 +84,7 @@ public class AudioController : MonoBehaviour
         return audioSource.gameObject;
     }
 
+    //gets the audiomixergroup corresponding to the enumerator value
     private static AudioMixerGroup GetMixerGroup(MixerGroup group)
     {
         return mixer.FindMatchingGroups(group.ToString())[0];

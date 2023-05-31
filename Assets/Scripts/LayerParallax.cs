@@ -11,7 +11,7 @@ public class LayerParallax : MonoBehaviour
 
     private void Awake()
     {
-
+        //Adds speed multiplier to any child scripts for relative movement
         foreach (LayerParallax p in GetComponentsInChildren<LayerParallax>().Skip(1))
         {
             p.SpeedMultiplier += SpeedMultiplier;

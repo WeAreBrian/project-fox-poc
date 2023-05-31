@@ -207,6 +207,8 @@ public class Anchor : MonoBehaviour
         m_Rigidbody.velocity = velocity;
 	}
 
+
+    //This is used to prevent the anchor from lodging in a grapple surface immediately after the player tugs it out of the grapple surface
     public void FreeForDuration(float seconds)
     {
         m_FreeTimer.Start(seconds);

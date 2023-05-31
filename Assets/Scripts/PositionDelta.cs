@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class PositionDelta : MonoBehaviour
 {
+    //returns the change in position since last frame of this object
     public Vector3 Delta;
     private Vector3 m_PositionLastFrame;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

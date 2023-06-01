@@ -71,7 +71,7 @@ public class IdealChain : MonoBehaviour
 		UpdatePoints();
 		UpdateDistanceJoints();
 		ApplyTensionForces();
-		UpdateLineRenderer();
+		//UpdateLineRenderer();
 	}
 
 	private bool Sweep(Vector2 origin, Vector2 from, Vector2 to, out ChainPoint point)

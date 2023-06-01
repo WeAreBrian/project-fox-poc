@@ -8,7 +8,7 @@ public class AnimationController : MonoBehaviour
     private Animator m_Animator;
     private Grounded m_Grounded;
     private AnchorHolder m_AnchorHolder;
-    private ChainMovement m_ChainMovement;
+    private ChainClimber m_ChainClimber;
     [SerializeField] bool m_debugInfo;
     private Rigidbody2D m_RigidBody;
     private GameObject m_model;
@@ -21,12 +21,13 @@ public class AnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Animator = GetComponentInChildren<Animator>();
+
+        m_model = GameObject.Find("FoxModel");
+        m_Animator = m_model.GetComponent<Animator>();
         m_Grounded = GetComponent<Grounded>();
         m_RigidBody = GetComponent<Rigidbody2D>();
-        m_model = GetComponentInChildren<Animator>().gameObject;
         m_AnchorHolder = GetComponent<AnchorHolder>();
-        m_ChainMovement = GetComponent<ChainMovement>();
+        m_ChainClimber = GetComponent<ChainClimber>();
         m_cam = Camera.main;
     }
 
@@ -36,12 +37,12 @@ public class AnimationController : MonoBehaviour
 
         m_Animator.SetBool("Grounded", m_Grounded.OnGround);
         m_Animator.SetBool("HoldingAnchor", m_AnchorHolder.HoldingAnchor);
-        m_Animator.SetBool("Climbing", m_ChainMovement.Mounted);
+        m_Animator.SetBool("Climbing", m_ChainClimber.Mounted);
         if (m_Grounded.OnGround && m_Moving)
         {
             m_Animator.speed = Mathf.Abs(m_RigidBody.velocity.x) * k_WalkSpeedScale;
         }
-        else if (m_ChainMovement.Mounted)
+        else if (m_ChainClimber.Mounted)
         {
             m_Animator.speed = Mathf.Abs(m_RigidBody.velocity.y);
         }

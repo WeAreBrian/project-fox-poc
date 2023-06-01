@@ -3,108 +3,167 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public enum SpringboardState
-{
-    Ready,
-    Triggered,
-    Resetting
-}
-
 public class Springboard : MonoBehaviour, IToggle
 {
-    private SpringboardState m_State;
-    [SerializeField]
-    private float m_SpringDistance;
-    [SerializeField]
-    private float m_SpringResetSpeed;
-    [SerializeField]
-    private LayerMask m_IgnoreLayers;
-    [SerializeField]
-    private float m_SpringForce;
-    [SerializeField]
-    private float m_ResetTime;
-    private Vector3 m_restingPosition;
-    private bool m_SelfToggle = true;
-    private Rigidbody2D m_Rb;
-    private Anchor m_FreeOnToggle;
+	[SerializeField]
+	private float m_SpringForce = 10f;
+	[SerializeField]
+	private AudioClip m_ActivateSound;
 
-    [SerializeField]
-    private AudioClip m_ActivateSound;
+	//IToggle stuff
+	[SerializeField]
+	private float m_ResetTime = 1f;
+	[SerializeField]
+	private LayerMask m_IgnoreLayers;
+	private bool m_SelfToggle = true;
+	private Anchor m_FreeOnToggle;
 
-    private void Start()
-    {
-        m_Rb = GetComponent<Rigidbody2D>();
-        m_restingPosition = transform.position;
-    }
+	//private SpringboardState m_State;
+	private Rigidbody2D[] m_ChainRigidBodiesArray;
+	private bool m_GottenChainLinks = false;
+	private AnchorHolder m_AnchorHolder;
+	private VerticalMovement m_VerticalMovement;
+	private Grounded m_Grounded;
+	private Anchor m_AnchorScript;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (m_State == SpringboardState.Triggered)
-        {
-            if (transform.localPosition.y >= m_restingPosition.y + m_SpringDistance)
+	//private Rigidbody2D[] m_RigidbodiesInTriggerZone;
+	private List<Rigidbody2D> m_RigidbodiesInTriggerZone = new List<Rigidbody2D>();
+
+	//debug stuff
+	private int count;
+
+	private void Start()
+	{
+		m_AnchorHolder = GameObject.FindGameObjectWithTag("Anchor").GetComponent<AnchorHolder>();
+		m_VerticalMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<VerticalMovement>();
+		m_Grounded = GameObject.FindGameObjectWithTag("Player").GetComponent<Grounded>();
+		m_AnchorScript = GameObject.FindGameObjectWithTag("Anchor").GetComponent<Anchor>();
+	}
+
+	private void OnTriggerEnter2D(Collider2D m_Collision)
+	{
+		//Doing this here just once cos otherwise the chain links aren't spawned yet if I do it in Start()
+		if (!m_GottenChainLinks)
+		{
+			GetChainLinks();
+		}
+
+		Anchor anchorScript = m_Collision.gameObject.GetComponent<Anchor>();
+		if (anchorScript != null)
+		{
+			m_FreeOnToggle = anchorScript;
+		}
+
+		//Thank you Ideka on UnityAnswers
+		if (m_IgnoreLayers == (m_IgnoreLayers | (1 << m_Collision.gameObject.layer))) return;
+
+		//Get the rigidbody of the other collider
+		Rigidbody2D m_OtherRigidBody = m_Collision.GetComponent<Rigidbody2D>();
+		if (m_OtherRigidBody != null && !IsRigidBodyIsAChainRigidBody(m_OtherRigidBody))    //if collider has a rigidbody and also is not a chainlink
+		{
+
+			//Debug.Log("Bounce: " + m_Collision + count++);
+
+			//Adds the rigidbody to the list
+			m_RigidbodiesInTriggerZone.Add(m_OtherRigidBody);
+			Debug.Log(m_RigidbodiesInTriggerZone.Count);
+
+			if (m_OtherRigidBody != null)
+			{
+                if (!m_SelfToggle) return;
+                Toggle();
+			}
+
+			
+			
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D m_Collision)
+	{
+		//Get the rigidbody of the other collider
+		Rigidbody2D m_OtherRigidBody = m_Collision.GetComponent<Rigidbody2D>();
+		if (m_OtherRigidBody != null && !IsRigidBodyIsAChainRigidBody(m_OtherRigidBody))    //if collider has a rigidbody and also is not a chainlink
+		{
+			m_RigidbodiesInTriggerZone.Remove(m_OtherRigidBody);
+			Debug.Log(m_RigidbodiesInTriggerZone.Count);
+		}
+	}
+
+	// Ignores the chain links
+	private bool IsRigidBodyIsAChainRigidBody(Rigidbody2D m_RBToCheck){
+		foreach (Rigidbody2D chainLink in m_ChainRigidBodiesArray)
+		{
+			if (chainLink == m_RBToCheck){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Gets the chain links
+	private void GetChainLinks()
+	{
+
+		m_ChainRigidBodiesArray = GameObject.Find("PhysicsChain").GetComponentsInChildren<Rigidbody2D>();
+		m_GottenChainLinks = true;
+	}
+
+	public float GetResetTime()
+	{
+		return m_ResetTime;
+	}
+
+	public void Toggle()
+	{
+		m_FreeOnToggle?.FreeForDuration(1f);
+		m_FreeOnToggle = null;
+
+		//m_State = SpringboardState.Triggered;
+
+		AddForceToRigidBodies();
+
+		AudioController.PlaySound(m_ActivateSound, 1, 1, MixerGroup.SFX);
+	}
+
+	public void DisableSelfToggle()
+	{
+		m_SelfToggle = false;
+	}
+
+	private void AddForceToRigidBodies()
+	{
+		//Okay, Sach explains time. whats going on here is basically to allow springboards to be rotated and bounce in the
+		//rotated direction, as well as reseting the "horizontal" velocity (from the POV of the springboard), we are essentially figuring
+		//out the "horizontal" (or paralell?) velocity of the object from the pov of the springboard, setting that to "0" (not really but essentially
+		//from the pov of the springboard), and then adding the bounce force in the direction of the springboard. This will prevent inconsistence bounce heights.
+
+		foreach(Rigidbody2D rb in m_RigidbodiesInTriggerZone)
+		{
+            // The freefall in the verticalmovement script messes up the gravity of the player.
+            if (rb.gameObject.name == "PlayerFox")
             {
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + m_SpringDistance, transform.localPosition.z);
-                m_State = SpringboardState.Resetting;
+                m_VerticalMovement.TemporarilyDisableFreeFall();
             }
-        }
-        else if (m_State == SpringboardState.Resetting)
-        {
-            m_Rb.velocity = Vector2.zero;
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - m_SpringResetSpeed, transform.localPosition.z);
-            if (transform.localPosition.y <= m_restingPosition.y)
-            {
-                transform.localPosition = m_restingPosition;
-                m_State = SpringboardState.Ready;
-            }
-        }
-    }
 
-    public float GetResetTime()
-    {
-        return m_ResetTime;
-    }
+            // Get the springboard's up direction
+            Vector2 bounceUp = transform.up;
 
-    public void DisableSelfToggle()
-    {
-        m_SelfToggle = false;
-    }
+			// Calculate the perpendicular direction to the bounce pad
+			Vector2 bouncePerpendicular = new Vector2(bounceUp.y, -bounceUp.x);
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Anchor anchorScript = collision.gameObject.GetComponent<Anchor>();
-        if (anchorScript != null)
-        {
-            m_FreeOnToggle = anchorScript;
-        }
+			// Get the other objects's current velocity
+			Vector2 objectVelocity = rb.velocity;
 
-        if (!m_SelfToggle) return;
+			// Project the objectVelocity onto the perpendicular direction to get the perpendicular velocity
+			float perpendicularSpeed = Vector2.Dot(objectVelocity, bouncePerpendicular);
+			Vector2 perpendicularVel = perpendicularSpeed * bouncePerpendicular;
 
-        if (m_State == SpringboardState.Resetting) return;
+			// Set the objects's new velocity. This will keep the objects's perpendicular velocity and set the parallel velocity to 0.
+			rb.velocity = perpendicularVel;
 
-        //Thank you Ideka on UnityAnswers
-        if (m_IgnoreLayers == (m_IgnoreLayers | (1 << collision.gameObject.layer))) return;
-
-        foreach(ContactPoint2D hitpos in collision.contacts)
-        {
-            if (hitpos.point.y < GetComponent<Collider2D>().bounds.max.y)
-            {
-                Debug.Log("not on top");
-                return;
-            }
-        }
-        
-        Toggle();
-    }
-
-    public void Toggle()
-    {
-        m_FreeOnToggle?.FreeForDuration(1f);
-        m_FreeOnToggle = null;
-
-        m_State = SpringboardState.Triggered;
-        m_Rb.AddForce(m_SpringForce * Vector2.up, ForceMode2D.Impulse);
-
-        AudioController.PlaySound(m_ActivateSound, 1, 1, MixerGroup.SFX);
-    }
+            //Adds the force of the springboard to the object. The magic number is just a coeffiecent to try get the springheight variable to be as close to real units as possible.
+            rb.AddForce(m_SpringForce * transform.up * rb.mass, ForceMode2D.Impulse);
+		}
+	}
 }

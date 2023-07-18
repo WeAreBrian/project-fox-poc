@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=4682471baa914405b9f6bdfca6a180e4&amp;type=3#ButtonStyle" />
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/UI/tresure_map_texture.png?fileID=2800000&amp;guid=06bc814483298457e817b954ee84773e&amp;type=3#tresure_map_texture&apos;); -unity-background-scale-mode: scale-and-crop;">
+        <ui:VisualElement name="ButtonContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Button text="Resume" display-tooltip-when-elided="true" name="Resume" />
+            <ui:Button text="Level Select" display-tooltip-when-elided="true" name="LevelSelect" />
+            <ui:Button text="Settings" display-tooltip-when-elided="true" name="Settings" />
+            <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="MainMenu" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=4682471baa914405b9f6bdfca6a180e4&amp;type=3#ButtonStyle" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/UI/tresure_map_texture.png?fileID=2800000&amp;guid=06bc814483298457e817b954ee84773e&amp;type=3#tresure_map_texture&apos;);">
+        <ui:Label tabindex="-1" text="Level Select" display-tooltip-when-elided="true" name="Title" style="-unity-text-align: upper-center;" />
+        <ui:VisualElement name="ContainerContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:VisualElement name="LevelPreviewContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; justify-content: space-around; align-self: center;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Images/cave_prototype/cave_prototype_image.png?fileID=2800000&amp;guid=a0aca7969d03ec246a1818e75b17267d&amp;type=3#cave_prototype_image&apos;);" />
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Materials/fox%20sub%20paint/body_Base_color_1001.png?fileID=2800000&amp;guid=b738c4cb1883cbb4785a13c928d96ed6&amp;type=3#body_Base_color_1001&apos;);" />
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Tiles/Platform%20Pack/platformPack_tilesheet@2.png?fileID=2800000&amp;guid=2056825534cda4237a7d767ce817a784&amp;type=3#platformPack_tilesheet@2&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="LevelButtonsContainer" class="button-wrapper" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); position: relative; flex-direction: row; justify-content: space-around; align-items: center; align-self: center; width: 100%;">
+                <ui:Button text="Level 1" display-tooltip-when-elided="true" name="Level1" class="level-button" style="width: auto;" />
+                <ui:Button text="Level 2" display-tooltip-when-elided="true" name="Level2" class="level-button" style="width: auto;" />
+                <ui:Button text="Level 3" display-tooltip-when-elided="true" name="Level3" class="level-button" style="width: auto;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" />
+    </ui:VisualElement>
+</ui:UXML>

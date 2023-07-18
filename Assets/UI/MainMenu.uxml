@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=4682471baa914405b9f6bdfca6a180e4&amp;type=3#ButtonStyle" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/UI/menubackground.png?fileID=2800000&amp;guid=6e056f102cd2146b7be9c60f16da85c0&amp;type=3#menubackground&apos;); -unity-background-scale-mode: scale-and-crop; width: 100%; height: 100%;">
+        <ui:VisualElement name="VisualElement" class="button-wrapper" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); position: relative; width: auto; height: auto; margin-right: 0; margin-top: 16%; align-self: flex-start; flex-direction: column; -unity-background-scale-mode: scale-and-crop; transform-origin: center; scale: 1 1; align-items: flex-end; justify-content: flex-start; margin-left: 79%;">
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="Play" />
+            <ui:Button text="Settings" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

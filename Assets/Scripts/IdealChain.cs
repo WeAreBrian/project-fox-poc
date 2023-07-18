@@ -138,11 +138,11 @@ public class IdealChain : MonoBehaviour
 			var point = m_Points[i];
 			var nextPoint = m_Points[i + 1];
 
-			if (Sweep(point.Position, nextPoint.OldPosition, nextPoint.Position, out var newPoint))
-			{
-				m_Points.Insert(++i, newPoint);
-				PointAdded?.Invoke(newPoint);
-			}
+			//if (Sweep(point.Position, nextPoint.OldPosition, nextPoint.Position, out var newPoint))
+			//{
+			//	m_Points.Insert(++i, newPoint);
+			//	PointAdded?.Invoke(newPoint);
+			//}
 		}
 	}
 

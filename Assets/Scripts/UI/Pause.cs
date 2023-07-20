@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
         //Get levelselect object
         GameObject m_LevelSelectObject = GameObject.Find("LevelSelectMenu");
 		m_LevelSelectRoot = m_LevelSelectObject.GetComponent<UIDocument>().rootVisualElement;
-
+		//enable the component (its disabled by default so doesnt get in the way of the scene view when editting levels
 		GetComponent<UIDocument>().enabled = true;
 		m_PauseRoot = GetComponent<UIDocument>().rootVisualElement;
 		//Hide UI on load

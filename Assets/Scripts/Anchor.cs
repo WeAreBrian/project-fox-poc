@@ -75,8 +75,7 @@ public class Anchor : MonoBehaviour
         {
             foreach (ContactPoint2D hitpos in collision.contacts)
             {
-                var objectBounds = collision.gameObject.GetComponent<Collider2D>().bounds;
-                if (hitpos.point.x < objectBounds.min.x+0.1f || hitpos.point.x > objectBounds.max.x-0.1f || hitpos.point.y < objectBounds.min.y+0.1f)
+                if (hitpos.normal != Vector2.up)
                 {
                     Debug.Log("hit a side");
                     AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);

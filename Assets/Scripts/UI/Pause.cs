@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
 
-public class PauseMenu : MonoBehaviour
+public class Pause : MonoBehaviour
 {
 	public static bool s_GamePaused = false;
 	private VisualElement m_PauseRoot;
@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour
 	//Note update in other scripts still runs when game is paused (Timescale = 0) but FixedUpdate does NOT. Input checks in other Update()s still go off so need to check if Pause.s_GamePaused = false for other stuff.
 
 
-    private void OnPause()	//uses input system
+    public void TryPause()	//uses input system
     {
         if (s_GamePaused)
         {
@@ -53,6 +53,7 @@ public class PauseMenu : MonoBehaviour
             PauseGame();
         }
     }
+
 
 
     private void PauseGame()

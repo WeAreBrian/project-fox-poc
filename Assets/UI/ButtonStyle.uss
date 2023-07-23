@@ -11,5 +11,17 @@
   background-color: rgba(0, 0, 0, 0);
   color: white;
   width: 100%;
-  
+}
+
+.level-button {
+  border-width: 3px;
+}
+
+.level-image {
+  margin: 10px;
+}
+
+.pause-button {
+  border-width: 3px;
+  border-color: white;
 }

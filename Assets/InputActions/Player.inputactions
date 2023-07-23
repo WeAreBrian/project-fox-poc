@@ -176,6 +176,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3b419007-3f27-404f-adbc-0e8fc69b8463",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b0bc9446-6df3-4ef5-9073-b7332ad53af5",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -192,6 +203,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15b29c6a-0129-4412-a49a-4e9984543e9b",
+                    "path": "<SwitchProControllerHID>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -220,22 +242,11 @@
                 },
                 {
                     "name": "",
-                    "id": "5db075b5-6587-438a-8434-8115dac452fb",
-                    "path": "<Gamepad>/dpad/up",
+                    "id": "0b850d84-ad29-42b3-8aa6-743b4ce8b24b",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Mount",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7fabfaa4-9252-431a-8bdd-bf5122005c2b",
-                    "path": "<Gamepad>/leftStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "",
                     "action": "Mount",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -258,6 +269,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Tug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c8ef1f7-a65d-42ae-8958-9b074a4c18d1",
+                    "path": "<SwitchProControllerHID>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Tug",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -308,6 +330,17 @@
                 },
                 {
                     "name": "",
+                    "id": "7af28999-300f-4a3c-bde9-c762a792a177",
+                    "path": "<SwitchProControllerHID>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b00b7e80-8b07-4eff-87f3-1b6144d10fb2",
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press(behavior=2)",
@@ -324,6 +357,17 @@
                     "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "AnchorInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9694b60f-0274-402c-9d8e-c82c4cc6c0c1",
+                    "path": "<SwitchProControllerHID>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "AnchorInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -415,6 +459,17 @@
                     "action": "Climb",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8e0e5548-3d72-4349-87be-4b5bf5d1b14e",
+                    "path": "<Gamepad>/leftStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

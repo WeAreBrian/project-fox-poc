@@ -37,25 +37,25 @@ public class PauseMenu : MonoBehaviour
 		m_MainMenuButton.clicked += () => LoadScene("MainMenu");
 	}
 
-	//Note update still runs when game is paused (Timescale = 0) but FixedUpdate does NOT. Input checks in other Update()s still go off so need to check if Pause.s_GamePaused = false for other stuff.
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			if (s_GamePaused)
-			{
-				//If currently paused:
-				UnpauseGame();
-			}
-			else
-			{
-				//If not paused:
-				PauseGame();
-			}
-		}
-	}
+	//Note update in other scripts still runs when game is paused (Timescale = 0) but FixedUpdate does NOT. Input checks in other Update()s still go off so need to check if Pause.s_GamePaused = false for other stuff.
 
-	private void PauseGame()
+
+    private void OnPause()	//uses input system
+    {
+        if (s_GamePaused)
+        {
+            //If currently paused:
+            UnpauseGame();
+        }
+        else
+        {
+            //If not paused:
+            PauseGame();
+        }
+    }
+
+
+    private void PauseGame()
 	{
 		s_GamePaused = true;
 		m_PreviousTimeScale = Time.timeScale;	

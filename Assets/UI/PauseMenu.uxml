@@ -1,11 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=4682471baa914405b9f6bdfca6a180e4&amp;type=3#ButtonStyle" />
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/Images/UI/treasure_map_texture.png?fileID=2800000&amp;guid=06bc814483298457e817b954ee84773e&amp;type=3#treasure_map_texture&apos;); -unity-background-scale-mode: scale-and-crop; display: flex; opacity: 1;">
-        <ui:VisualElement name="ButtonContainer" class="button-wrapper" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); font-size: 20px; -unity-font-style: bold; align-self: center; justify-content: center;">
-            <ui:Button text="Resume" display-tooltip-when-elided="true" name="Resume" style="-unity-font-style: normal;" />
-            <ui:Button text="Level Select" display-tooltip-when-elided="true" name="LevelSelect" style="display: flex; font-size: 20px; -unity-font-style: normal;" />
-            <ui:Button text="Settings" display-tooltip-when-elided="true" name="Settings" style="-unity-font-style: normal;" />
-            <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="MainMenu" style="-unity-font-style: normal;" />
+        <ui:VisualElement name="ButtonContainer" class="button-wrapper" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); font-size: 20px; -unity-font-style: bold-and-italic; align-self: center; justify-content: center;">
+            <ui:Button text="Resume" display-tooltip-when-elided="true" name="Resume" style="-unity-font-style: bold;" />
+            <ui:Button text="Level Select" display-tooltip-when-elided="true" name="LevelSelect" style="display: flex; font-size: 20px; -unity-font-style: bold;" />
+            <ui:Button text="Settings" display-tooltip-when-elided="true" name="Settings" style="-unity-font-style: bold;" />
+            <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="MainMenu" style="-unity-font-style: bold;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WorldInteract",
+                    "name": "Recall",
                     "type": "Button",
                     "id": "dc0afaa5-860d-4507-a148-8a500c31c1e4",
                     "expectedControlType": "Button",
@@ -258,7 +258,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "WorldInteract",
+                    "action": "Recall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -269,7 +269,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "WorldInteract",
+                    "action": "Recall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

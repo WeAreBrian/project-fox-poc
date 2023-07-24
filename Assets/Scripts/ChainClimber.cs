@@ -45,6 +45,8 @@ public class ChainClimber : MonoBehaviour
 
         anchorInteractAction.started += DoMount;
         anchorInteractAction.canceled += DoDismount;
+
+		AnchorHolder.pickup += Dismount;
     }
 
 	private void DoMount(InputAction.CallbackContext context)

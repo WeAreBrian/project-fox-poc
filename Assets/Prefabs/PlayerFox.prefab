@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 1852206392}
   - component: {fileID: 8843809252378637354}
   - component: {fileID: 2160122249298376338}
+  - component: {fileID: 2794392424498695009}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -489,6 +490,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a591ae5b1413d64aa5965991eca2803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_RecallSound: {fileID: 0}
+--- !u!114 &2794392424498695009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b85b56fbb069d4da630d4299dbbc82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LeftOffset: {x: -0.5, y: 0}
+  m_RightOffset: {x: 0.5, y: 0}
+  m_BoxCenterOffset: {x: 0, y: 0}
+  m_HeightOffset: {x: 0, y: 2.38}
+  m_CollisionRadius: 0.34
+  m_GroundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  m_MantleForce: 100
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

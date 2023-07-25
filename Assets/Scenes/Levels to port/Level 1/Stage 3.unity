@@ -1548,18 +1548,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 107137074636933804, guid: fea7d46b09dd64780ba611993068e295,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2127809753}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea7d46b09dd64780ba611993068e295, type: 3}
---- !u!1 &735332093 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 107137074636933804, guid: fea7d46b09dd64780ba611993068e295,
-    type: 3}
-  m_PrefabInstance: {fileID: 700798260}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &796463837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7855,24 +7845,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 700798260}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2127809753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735332093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b85b56fbb069d4da630d4299dbbc82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LeftOffset: {x: -0.5, y: 0}
-  m_RightOffset: {x: 0.5, y: 0}
-  m_BoxCenterOffset: {x: 0, y: 0}
-  m_HeightOffset: {x: 0, y: 2.38}
-  m_CollisionRadius: 0.34
-  m_GroundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  m_MantleForce: 100

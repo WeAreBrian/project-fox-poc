@@ -40,6 +40,8 @@ public class RecallBoost : MonoBehaviour
 
     private void RecallPressed()
     {
+        Debug.Log("asdfadsf" + m_Anchor.GetComponent<Anchor>().State);
+
         if (m_OnlyBoostGrapples)
         {
             if (m_Anchor.GetComponent<Anchor>().State == AnchorState.Lodged)
@@ -75,6 +77,9 @@ public class RecallBoost : MonoBehaviour
         {
             
             m_FoxRB.AddForce(Vector2.up * CalculateVerticalForceAdditionWhenGrappling());
+        }
+        else
+        {
         }
 
         m_FoxRB.AddForce(m_AnchorForceDirection * m_AddForceFromAnchorDirection);

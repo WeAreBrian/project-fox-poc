@@ -9,9 +9,10 @@ public class RecallBoost : MonoBehaviour
     private GameObject m_Fox;
     private Rigidbody2D m_AnchorRB;
     private Rigidbody2D m_FoxRB;
-    private InputAction m_RecallAction;
+    private PlayerInput m_PlayerInput;
 
-    [SerializeField]
+
+    
     private bool m_OnlyBoostGrapples = false;
     [SerializeField]
     private float m_MultiplyFoxsVelocity = 1.3f;
@@ -25,22 +26,25 @@ public class RecallBoost : MonoBehaviour
     
 
 
-    private void Awake()
+    private void Start()
     {
+        m_PlayerInput = GetComponent<PlayerInput>();
+
         m_Anchor = GameObject.FindGameObjectWithTag("Anchor");
         m_Fox = GameObject.FindGameObjectWithTag("Player");
         m_AnchorRB = m_Anchor.GetComponent<Rigidbody2D>();
         m_FoxRB = m_Fox.GetComponent<Rigidbody2D>();
 
-        m_RecallAction = GetComponent<PlayerInput>().actions["Recall"];
-        m_RecallAction.performed += ctx => RecallPressed();
+        //m_RecallAction = GetComponent<PlayerInput>().actions["Recall"];
+        //m_RecallAction.performed += ctx => RecallPressed();
 
 
     }
 
-    private void RecallPressed()
+    private void OnRecall()
     {
         Debug.Log("asdfadsf" + m_Anchor.GetComponent<Anchor>().State);
+
 
         if (m_OnlyBoostGrapples)
         {
@@ -53,14 +57,6 @@ public class RecallBoost : MonoBehaviour
         {
             BoostVelocity();
         }
-    }
-
-    private void Update()
-    {
-        Vector2 m_AnchorForceDirection = m_Fox.transform.position - m_Anchor.transform.position;
-
-        //Debug.Log(m_Anchor.GetComponent<Anchor>().State);
-        
     }
 
     private void BoostVelocity()
@@ -80,6 +76,7 @@ public class RecallBoost : MonoBehaviour
         }
         else
         {
+            m_FoxRB.AddForce(Vector2.up * CalculateVerticalForceAdditionWhenGrappling());
         }
 
         m_FoxRB.AddForce(m_AnchorForceDirection * m_AddForceFromAnchorDirection);
@@ -88,21 +85,23 @@ public class RecallBoost : MonoBehaviour
 
     private float CalculateVerticalForceAdditionWhenGrappling()
     {
-        Vector2 m_AnchorForceDirection = m_Fox.transform.position - m_Anchor.transform.position;
+        //Vector2 m_AnchorForceDirection = m_Fox.transform.position - m_Anchor.transform.position;
 
-        // Calculate the angle in radians using Mathf.Atan2
-        float m_AngleRadians = Mathf.Atan2(m_AnchorForceDirection.y, m_AnchorForceDirection.x);
+        //// Calculate the angle in radians using Mathf.Atan2
+        //float m_AngleRadians = Mathf.Atan2(m_AnchorForceDirection.y, m_AnchorForceDirection.x);
 
-        // Convert the angle from radians to degrees
-        float m_AngleDegrees = m_AngleRadians * Mathf.Rad2Deg;
+        //// Convert the angle from radians to degrees
+        //float m_AngleDegrees = m_AngleRadians * Mathf.Rad2Deg;
 
-        //Get absolute angle from where down is 0degrees
-        float m_Angle = Mathf.Abs(Mathf.Abs(m_AngleDegrees) - 90f);
+        ////Get absolute angle from where down is 0degrees
+        //float m_Angle = Mathf.Abs(Mathf.Abs(m_AngleDegrees) - 90f);
 
-        Debug.Log(Mathf.Lerp(0f, m_AddGrappledVerticalForceMax, m_Angle / 90f));
-        
+        //Debug.Log(Mathf.Lerp(0f, m_AddGrappledVerticalForceMax, m_Angle / 90f));
 
-        // Map the angle value to the range.
-        return Mathf.Lerp(0f, m_AddGrappledVerticalForceMax, m_Angle / 90f);
+
+        //// Map the angle value to the range.
+        //return Mathf.Lerp(0f, m_AddGrappledVerticalForceMax, m_Angle / 90f);
+
+        return 0f;
     }
 }

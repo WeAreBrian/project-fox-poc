@@ -27,6 +27,7 @@ public class ChainClimber : MonoBehaviour
 	private DistanceJoint2D m_PendulumDistanceJoint;
 	private TargetJoint2D m_LinkTargetJoint;
 	private Rigidbody2D m_OldLink;
+	private AnchorHolder m_AnchorHolder;
 
 	[SerializeField]
 	private AudioClip m_ClimbSound;
@@ -39,6 +40,8 @@ public class ChainClimber : MonoBehaviour
 
         m_Chain = FindObjectOfType<IdealChain>();
         m_PhysicsChain = FindObjectOfType<PhysicsChain>();
+
+		m_AnchorHolder = GetComponent<AnchorHolder>();
 
         var playerInput = GetComponent<PlayerInput>();
         var anchorInteractAction = playerInput.actions["Mount"];
@@ -60,6 +63,12 @@ public class ChainClimber : MonoBehaviour
         {
             return;
         }
+
+		if (m_AnchorHolder.HoldingAnchor)
+		{
+			return;
+		}
+
         Mount();
     }
 

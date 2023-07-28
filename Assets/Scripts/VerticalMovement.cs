@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class VerticalMovement : MonoBehaviour
 {
+
+	public delegate void Trigger();
+	public static event Trigger jumped;
+
 	public float JumpForce;
 
 	public bool m_FastFall = false; //A public variable for enabling or disabling fast fall. E.g. for springboard.
@@ -21,6 +25,7 @@ public class VerticalMovement : MonoBehaviour
 	private Rigidbody2D m_RigidBody;
 	private Grounded m_Grounded;
 	private AnchorThrower m_Thrower;
+	private HorizontalMovement m_HorizontalMovement;
 
 	private bool m_desiredJump;
 	private bool m_isJumping;
@@ -141,7 +146,7 @@ public class VerticalMovement : MonoBehaviour
 			m_coyoteTimeCounter = 0;
 
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
-
+			jumped.Invoke();
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 		}
 	}

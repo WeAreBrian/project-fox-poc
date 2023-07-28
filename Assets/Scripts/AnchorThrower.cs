@@ -103,7 +103,6 @@ public class AnchorThrower : MonoBehaviour
     private void OnAim(InputValue value)
     {
         var inputDirection = value.Get<Vector2>();
-        Debug.Log(inputDirection);
 
         if (Mathf.Approximately(inputDirection.sqrMagnitude, 0))
         {

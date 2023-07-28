@@ -18,7 +18,7 @@ public class AnchorThrower : MonoBehaviour
     public float ThrowCooldown = 0.2f;
     public Vector2 DropVelocity = new Vector2(0, 1.5f);
 
-	public bool WindingUp => m_Trajectory.gameObject.activeSelf;
+	public bool WindingUp => m_Trajectory.gameObject.activeSelf || m_AimArrow.activeSelf;
     public float HoldTime => Time.time - m_WindUpStartTime;
     public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate(HoldTime / WindUpTime));
     public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
@@ -41,6 +41,7 @@ public class AnchorThrower : MonoBehaviour
     {
         m_Trajectory = GetComponentInChildren<AnchorTrajectory>();
         m_Trajectory.gameObject.SetActive(false);
+        m_AimArrow.SetActive(false);
 
         m_Holder = GetComponent<AnchorHolder>();
         var playerInput = GetComponent<PlayerInput>();
@@ -84,16 +85,9 @@ public class AnchorThrower : MonoBehaviour
         {
             DropAnchor();
         }
-        if (ShowTrajectory)
-        {
-            m_Trajectory.gameObject.SetActive(false);
-        }
-        else
-        {
-            m_AimArrow.SetActive(false);
-        }
-        
-        
+
+        m_Trajectory.gameObject.SetActive(false);
+        m_AimArrow.SetActive(false);
     }
 
     private void OnAim(InputValue value)
@@ -105,6 +99,10 @@ public class AnchorThrower : MonoBehaviour
         {
             return;
         }
+
+        Vector3 dir = (m_AimArrow.transform.position - transform.position);
+        float angle = Mathf.Atan2(dir.y, dir.x);
+        m_AimArrow.transform.SetPositionAndRotation((Vector2)transform.position + new Vector2(0, 0.5f) +(inputDirection*1.5f), Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg + 90));
 
         m_ThrowDirection = inputDirection;
     }
@@ -125,7 +123,10 @@ public class AnchorThrower : MonoBehaviour
 
     private void Update()
     {
-        m_Trajectory.Velocity = ThrowVelocity;
+        if (ShowTrajectory)
+        {
+            m_Trajectory.Velocity = ThrowVelocity;
+        }
     }
 
     private void FixedUpdate()

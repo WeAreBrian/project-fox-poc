@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class AnchorThrower : MonoBehaviour
 {
+    public bool ShowTrajectory;
+
     public float MinThrowSpeed = 8;
     public float MaxThrowSpeed = 15;
     [Range(0, 2)]
@@ -23,6 +25,8 @@ public class AnchorThrower : MonoBehaviour
 
     [SerializeField]
     private AnchorTrajectory m_Trajectory;
+    [SerializeField]
+    private GameObject m_AimArrow;
     private AnchorHolder m_Holder;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
@@ -54,7 +58,15 @@ public class AnchorThrower : MonoBehaviour
         }
 
         m_WindUpStartTime = Time.time;
-        m_Trajectory.gameObject.SetActive(true);
+
+        if (ShowTrajectory)
+        {
+            m_Trajectory.gameObject.SetActive(true);
+        }
+        else
+        {
+            m_AimArrow.SetActive(true);
+        }
     }
 
     private void OnAnchorInteractCanceled(InputAction.CallbackContext context)
@@ -72,15 +84,22 @@ public class AnchorThrower : MonoBehaviour
         {
             DropAnchor();
         }
-
-        m_Trajectory.gameObject.SetActive(false);
-
+        if (ShowTrajectory)
+        {
+            m_Trajectory.gameObject.SetActive(false);
+        }
+        else
+        {
+            m_AimArrow.SetActive(false);
+        }
+        
         
     }
 
     private void OnAim(InputValue value)
     {
         var inputDirection = value.Get<Vector2>();
+        Debug.Log(inputDirection);
 
         if (Mathf.Approximately(inputDirection.sqrMagnitude, 0))
         {
@@ -133,6 +152,8 @@ public class AnchorThrower : MonoBehaviour
         var anchor = m_Holder.Anchor.Rigidbody;
         var angle = Vector2.SignedAngle(-anchor.transform.up, m_ThrowDirection);
 
+
+
         anchor.AddTorque(-anchor.angularVelocity * damping);
         anchor.AddTorque(angle * strength);
     }
@@ -143,5 +164,10 @@ public class AnchorThrower : MonoBehaviour
         var anchorInteractAction = playerInput.actions["AnchorInteract"];
         anchorInteractAction.started -= OnAnchorInteractStarted;
         anchorInteractAction.canceled -= OnAnchorInteractCanceled;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position, m_ThrowDirection);
     }
 }

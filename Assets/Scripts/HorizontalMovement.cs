@@ -27,7 +27,7 @@ public class HorizontalMovement : MonoBehaviour
     {
         get 
         {
-
+            if (m_Thrower.WindingUp) return 0;
             if (m_Holder.HoldingAnchor) return m_HoldingAnchorSpeed;
             if (!m_Grounded.OnGround) return m_AirAcceleration;
             return m_GroundSpeed;
@@ -62,12 +62,6 @@ public class HorizontalMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_Thrower.WindingUp)
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            return;
-        }
-
         var horizontalAxisValue = directionX;
         if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
 
@@ -78,7 +72,7 @@ public class HorizontalMovement : MonoBehaviour
         }
         else
         {
-            rb.AddForce(new Vector2(directionX * m_AirAcceleration * 40 * GetAirCoefficient() , 0));
+            rb.AddForce(new Vector2(directionX * MoveSpeed * 40 * GetAirCoefficient() , 0));
         }
     }
 

@@ -201,10 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ab3354648954851aa2118b29a80bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GroundSpeed: 6
-  m_HoldingAnchorSpeed: 3
-  m_AirAcceleration: 4
-  m_MaxAirSpeed: 10
+  m_GroundSpeed: 10
+  m_HoldingAnchorSpeed: 5
+  m_AirAcceleration: 6
+  m_MaxAirSpeed: 14
   m_AirAccelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -282,8 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTrajectory: 0
-  MinThrowSpeed: 17
-  MaxThrowSpeed: 17
+  MinThrowSpeed: 22
+  MaxThrowSpeed: 22
   WindUpTime: 0.5
   WindUpCurve:
     serializedVersion: 2

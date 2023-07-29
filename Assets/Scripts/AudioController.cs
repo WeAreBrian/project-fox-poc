@@ -62,8 +62,6 @@ public class AudioController : MonoBehaviour
             return null;
         }
 
-        Debug.Log("Playing Sound");
-
         GameObject soundGameObject = new GameObject("Sound");
         DontDestroyOnLoad(soundGameObject);
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();

@@ -29,6 +29,7 @@ public class PhysicsChain : MonoBehaviour
 	private void Start()
 	{
 		CreateCompactChain();
+		Recall.activate += ResetChain;
 
 		//m_AnchorTargetJoint = m_Links.First().gameObject.AddComponent<TargetJoint2D>();
 		//m_AnchorTargetJoint.anchor = Vector2.zero;
@@ -126,5 +127,18 @@ public class PhysicsChain : MonoBehaviour
 		hingeJoint.autoConfigureConnectedAnchor = false;
 		hingeJoint.connectedAnchor = new Vector2(0, LinkAnchorOffset);
 		hingeJoint.anchor = new Vector2(0, -LinkAnchorOffset);
+	}
+
+	public void ResetChain()
+	{
+		foreach (Rigidbody2D rb in m_Links)
+		{
+			rb.transform.position = Player.position;
+		}
+	}
+
+	public void OnDestroy()
+	{
+		Recall.activate -= ResetChain;
 	}
 }

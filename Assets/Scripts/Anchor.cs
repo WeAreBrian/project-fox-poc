@@ -56,7 +56,7 @@ public class Anchor : MonoBehaviour
             m_ShakeAmplitudeTimer -= Time.deltaTime;
             float x = transform.position.x * Mathf.Sin(Time.time * m_ShakeFrequency * m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
             float y = transform.position.y * Mathf.Sin(Time.time * m_ShakeFrequency*1.2f* m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
-            float z = transform.position.z;
+            float z = 0;
 
             m_TimerSprite.transform.localScale = new Vector3(1.5f * progress, 1.5f * progress, 1.5f * progress);
 
@@ -64,6 +64,8 @@ public class Anchor : MonoBehaviour
             gameObject.transform.position = m_ShakePos + new Vector3(x, y, z);
         }
     }
+    
+    // Testing main push (to delete)
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -71,12 +73,11 @@ public class Anchor : MonoBehaviour
         {
             UpdateState(AnchorState.Lodged);
         }
-        else
+        else if (!collision.gameObject.CompareTag("Player"))
         {
             foreach (ContactPoint2D hitpos in collision.contacts)
             {
-                var objectBounds = collision.gameObject.GetComponent<Collider2D>().bounds;
-                if (hitpos.point.x < objectBounds.min.x+0.1f || hitpos.point.x > objectBounds.max.x-0.1f || hitpos.point.y < objectBounds.min.y+0.1f)
+                if (hitpos.normal != Vector2.up)
                 {
                     Debug.Log("hit a side");
                     AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
@@ -104,6 +105,14 @@ public class Anchor : MonoBehaviour
         m_Shake = false;
         transform.position = m_ShakePos;
         m_TimerSprite.SetActive(false);
+    }
+
+    private IEnumerator DisableFoxCollision()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Ghost");
+        yield return new WaitForSeconds(0.1f);
+        gameObject.layer = LayerMask.NameToLayer("Anchor");
+
     }
 
 
@@ -161,6 +170,7 @@ public class Anchor : MonoBehaviour
     public void Drop()
     {
         UpdateState(AnchorState.Free);
+        StartCoroutine(DisableFoxCollision());
     }
 
     public void Throw(Vector2 velocity)

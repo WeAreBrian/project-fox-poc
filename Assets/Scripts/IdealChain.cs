@@ -63,6 +63,20 @@ public class IdealChain : MonoBehaviour
 		m_MaxDistanceJoint.connectedAnchor = Vector2.zero;
 		m_MaxDistanceJoint.connectedBody = Anchor;
 		m_MaxDistanceJoint.distance = MaxLength;
+		m_MaxDistanceJoint.enableCollision = true;
+
+		AnchorHolder.pickup += ResetPoints;
+	}
+
+	private void ResetPoints()
+	{
+		m_Points.Clear();
+
+		m_Points = new List<ChainPoint>
+		{
+			new ChainPoint(Anchor),
+			new ChainPoint(Player),
+		};
 	}
 
 	private void FixedUpdate()

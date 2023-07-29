@@ -5,6 +5,8 @@ public class VerticalMovement : MonoBehaviour
 {
 	public float JumpForce;
 
+	public bool m_FastFall = false; //A public variable for enabling or disabling fast fall. E.g. for springboard.
+
 	[HideInInspector]
 	public float JumpCoefficient = 1;
 
@@ -33,6 +35,8 @@ public class VerticalMovement : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_JumpSound;
 
+	private int m_GroundedTicks;
+
 	private void Awake()
 	{
 		m_RigidBody = GetComponent<Rigidbody2D>();
@@ -41,7 +45,14 @@ public class VerticalMovement : MonoBehaviour
 		
 	}
 
-	private void Update()
+    public void TemporarilyDisableFreeFall()	//This is to be used externally in other scripts e.g. springboard
+	{
+		m_FastFall = false;
+		Debug.Log("Free fall Disabled");
+	}
+
+
+    private void Update()
 	{
 		// If the player wants to jump, but isn't allowed to jump yet (ie. is mid-air, etc.),
 		// we'll be nice and hold onto that request for a little more time to process it later
@@ -77,11 +88,24 @@ public class VerticalMovement : MonoBehaviour
 		CheckJumpState();
 
 		// If fox is jumping up and player releases jump key, make the jump shorter
-		if(m_isJumping && m_RigidBody.velocity.y > 0f && m_onJumpRelease)
+		if(m_isJumping && m_RigidBody.velocity.y > 0f && m_onJumpRelease && m_FastFall)
 		{
 			m_RigidBody.AddForce(Vector2.down * m_jumpDownForce);
 		}
-	}
+
+		//if (m_Grounded.OnGround)
+		//{
+		//	if(m_GroundedTicks < 5)
+		//	{
+		//		m_GroundedTicks++;
+  //          }
+		//	else
+		//	{
+  //              m_FastFall = true;
+		//		m_GroundedTicks = 0;
+  //          }
+  //      }
+    }
 
 	private void OnJump(InputValue value)
 	{

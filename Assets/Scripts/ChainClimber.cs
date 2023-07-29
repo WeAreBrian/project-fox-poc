@@ -27,25 +27,53 @@ public class ChainClimber : MonoBehaviour
 	private DistanceJoint2D m_PendulumDistanceJoint;
 	private TargetJoint2D m_LinkTargetJoint;
 	private Rigidbody2D m_OldLink;
+	private AnchorHolder m_AnchorHolder;
 
 	[SerializeField]
 	private AudioClip m_ClimbSound;
 	[SerializeField]
 	private float m_ClimbSoundInterval;
 	private float m_ClimbSoundTimer;
+    private void Awake()
+    {
+        m_Grounded = GetComponent<Grounded>();
+
+        m_Chain = FindObjectOfType<IdealChain>();
+        m_PhysicsChain = FindObjectOfType<PhysicsChain>();
+
+		m_AnchorHolder = GetComponent<AnchorHolder>();
+
+        var playerInput = GetComponent<PlayerInput>();
+        var anchorInteractAction = playerInput.actions["Mount"];
+
+        anchorInteractAction.started += DoMount;
+        //anchorInteractAction.canceled += DoDismount;
+
+		AnchorHolder.pickup += Dismount;
+    }
+
+	private void DoMount(InputAction.CallbackContext context)
+    {
+        if (Mounted)
+        {
+            return;
+        }
+
+        if (!CanMount)
+        {
+            return;
+        }
+
+		if (m_AnchorHolder.HoldingAnchor)
+		{
+			return;
+		}
+
+        Mount();
+    }
 
 	public void Mount()
 	{
-		if (Mounted)
-		{
-			return;
-		}
-
-		if (!CanMount)
-		{
-			return;
-		}
-
 		m_PendulumDistanceJoint = gameObject.AddComponent<DistanceJoint2D>();
 		m_PendulumDistanceJoint.autoConfigureConnectedAnchor = false;
 		m_PendulumDistanceJoint.autoConfigureDistance = false;
@@ -59,13 +87,22 @@ public class ChainClimber : MonoBehaviour
 		CreateLinkTargetJoint();
 	}
 
-	public void Dismount()
-	{
-		if (!Mounted)
-		{
-			return;
-		}
+	private void DoDismount(InputAction.CallbackContext context)
+    {
+        if (!Mounted)
+        {
+            return;
+        }
+        Dismount();
+    }
 
+    private void OnJump()
+    {
+        Dismount();
+    }
+
+    public void Dismount()
+	{
 		Destroy(m_PendulumDistanceJoint);
 		m_PendulumDistanceJoint = null;
 
@@ -76,30 +113,17 @@ public class ChainClimber : MonoBehaviour
 	public void Climb(float direction)
 	{
 		m_ClimbInput = direction;
-	}
+    }
 
-	private void OnJump()
-	{
-		Dismount();
-	}
-
-	private void OnMount()
-	{
-		Mount();
-	}
-
-	private void OnClimb(InputValue value)
-	{
-		var direction = value.Get<float>();
-		Climb(direction);
-	}
-
-	private void Awake()
-	{
-		m_Grounded = GetComponent<Grounded>();
-
-		m_Chain = FindObjectOfType<IdealChain>();
-		m_PhysicsChain = FindObjectOfType<PhysicsChain>();
+    private void OnClimb(InputValue value)
+    {
+        if (!Mounted)
+        {
+            return;
+        }
+		
+        var direction = value.Get<float>();
+        Climb(direction);
 	}
 
 	private void UpdateDistanceJoint()
@@ -132,9 +156,9 @@ public class ChainClimber : MonoBehaviour
 			return;
 		}
 
-		if (m_Grounded.OnGround || m_Chain.Anchor.bodyType == RigidbodyType2D.Dynamic)
+		// If we're climbing down, don't push the player lower into the ground
+		if ((m_Grounded.OnGround || m_Chain.Anchor.bodyType == RigidbodyType2D.Dynamic) && m_ClimbInput < 0)
 		{
-			Dismount();
 			return;
 		}
 

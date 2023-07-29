@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class AnchorThrower : MonoBehaviour
 {
+    public bool ShowTrajectory;
+
     public float MinThrowSpeed = 8;
     public float MaxThrowSpeed = 15;
     [Range(0, 2)]
@@ -16,13 +18,15 @@ public class AnchorThrower : MonoBehaviour
     public float ThrowCooldown = 0.2f;
     public Vector2 DropVelocity = new Vector2(0, 1.5f);
 
-	public bool WindingUp => m_Trajectory.gameObject.activeSelf;
+	public bool WindingUp => m_Trajectory.gameObject.activeSelf || m_AimArrow.activeSelf;
     public float HoldTime => Time.time - m_WindUpStartTime;
     public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate(HoldTime / WindUpTime));
     public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
 
     [SerializeField]
     private AnchorTrajectory m_Trajectory;
+    [SerializeField]
+    private GameObject m_AimArrow;
     private AnchorHolder m_Holder;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
@@ -37,6 +41,7 @@ public class AnchorThrower : MonoBehaviour
     {
         m_Trajectory = GetComponentInChildren<AnchorTrajectory>();
         m_Trajectory.gameObject.SetActive(false);
+        m_AimArrow.SetActive(false);
 
         m_Holder = GetComponent<AnchorHolder>();
         var playerInput = GetComponent<PlayerInput>();
@@ -54,7 +59,15 @@ public class AnchorThrower : MonoBehaviour
         }
 
         m_WindUpStartTime = Time.time;
-        m_Trajectory.gameObject.SetActive(true);
+
+        if (ShowTrajectory)
+        {
+            m_Trajectory.gameObject.SetActive(true);
+        }
+        else
+        {
+            m_AimArrow.SetActive(true);
+        }
     }
 
     private void OnAnchorInteractCanceled(InputAction.CallbackContext context)
@@ -74,18 +87,22 @@ public class AnchorThrower : MonoBehaviour
         }
 
         m_Trajectory.gameObject.SetActive(false);
-
-        
+        m_AimArrow.SetActive(false);
     }
 
     private void OnAim(InputValue value)
     {
         var inputDirection = value.Get<Vector2>();
+        Debug.Log(inputDirection);
 
         if (Mathf.Approximately(inputDirection.sqrMagnitude, 0))
         {
             return;
         }
+
+        Vector3 dir = (m_AimArrow.transform.position - transform.position);
+        float angle = Mathf.Atan2(dir.y, dir.x);
+        m_AimArrow.transform.SetPositionAndRotation((Vector2)transform.position + new Vector2(0, 0.5f) +(inputDirection*1.5f), Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg + 90));
 
         m_ThrowDirection = inputDirection;
     }
@@ -106,7 +123,10 @@ public class AnchorThrower : MonoBehaviour
 
     private void Update()
     {
-        m_Trajectory.Velocity = ThrowVelocity;
+        if (ShowTrajectory)
+        {
+            m_Trajectory.Velocity = ThrowVelocity;
+        }
     }
 
     private void FixedUpdate()
@@ -133,6 +153,8 @@ public class AnchorThrower : MonoBehaviour
         var anchor = m_Holder.Anchor.Rigidbody;
         var angle = Vector2.SignedAngle(-anchor.transform.up, m_ThrowDirection);
 
+
+
         anchor.AddTorque(-anchor.angularVelocity * damping);
         anchor.AddTorque(angle * strength);
     }
@@ -143,5 +165,10 @@ public class AnchorThrower : MonoBehaviour
         var anchorInteractAction = playerInput.actions["AnchorInteract"];
         anchorInteractAction.started -= OnAnchorInteractStarted;
         anchorInteractAction.canceled -= OnAnchorInteractCanceled;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position, m_ThrowDirection);
     }
 }

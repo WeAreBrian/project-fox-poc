@@ -17,6 +17,7 @@ public class AnchorThrower : MonoBehaviour
     public float ThrowHoldTime = 0.2f;
     public float ThrowCooldown = 0.2f;
     public Vector2 DropVelocity = new Vector2(0, 1.5f);
+    public float BulletTimeSpeed = 0.5f;
 
 	public bool WindingUp => m_Trajectory.gameObject.activeSelf || m_AimArrow.activeSelf;
     public float HoldTime => Time.time - m_WindUpStartTime;
@@ -28,6 +29,7 @@ public class AnchorThrower : MonoBehaviour
     [SerializeField]
     private GameObject m_AimArrow;
     private AnchorHolder m_Holder;
+    private Grounded m_Grounded;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
 
@@ -43,6 +45,7 @@ public class AnchorThrower : MonoBehaviour
         m_Trajectory.gameObject.SetActive(false);
         m_AimArrow.SetActive(false);
 
+        m_Grounded = GetComponent<Grounded>();
         m_Holder = GetComponent<AnchorHolder>();
         var playerInput = GetComponent<PlayerInput>();
         var anchorInteractAction = playerInput.actions["AnchorInteract"];
@@ -68,6 +71,11 @@ public class AnchorThrower : MonoBehaviour
         {
             m_AimArrow.SetActive(true);
         }
+
+        if (!m_Grounded.OnGround)
+        {
+            Time.timeScale = BulletTimeSpeed;
+        }
     }
 
     private void OnAnchorInteractCanceled(InputAction.CallbackContext context)
@@ -88,12 +96,13 @@ public class AnchorThrower : MonoBehaviour
 
         m_Trajectory.gameObject.SetActive(false);
         m_AimArrow.SetActive(false);
+
+        Time.timeScale = 1;
     }
 
     private void OnAim(InputValue value)
     {
         var inputDirection = value.Get<Vector2>();
-        Debug.Log(inputDirection);
 
         if (Mathf.Approximately(inputDirection.sqrMagnitude, 0))
         {

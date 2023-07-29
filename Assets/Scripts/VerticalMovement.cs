@@ -5,7 +5,6 @@ public class VerticalMovement : MonoBehaviour
 {
 	public float JumpForce;
 
-	[HideInInspector]
 	public bool m_FastFall = false; //A public variable for enabling or disabling fast fall. E.g. for springboard.
 
 	[HideInInspector]
@@ -94,18 +93,18 @@ public class VerticalMovement : MonoBehaviour
 			m_RigidBody.AddForce(Vector2.down * m_jumpDownForce);
 		}
 
-		if (m_Grounded.OnGround)
-		{
-			if(m_GroundedTicks < 5)
-			{
-				m_GroundedTicks++;
-            }
-			else
-			{
-                m_FastFall = true;
-				m_GroundedTicks = 0;
-            }
-        }
+		//if (m_Grounded.OnGround)
+		//{
+		//	if(m_GroundedTicks < 5)
+		//	{
+		//		m_GroundedTicks++;
+  //          }
+		//	else
+		//	{
+  //              m_FastFall = true;
+		//		m_GroundedTicks = 0;
+  //          }
+  //      }
     }
 
 	private void OnJump(InputValue value)

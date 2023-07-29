@@ -65,6 +65,8 @@ public class AnchorHolder : MonoBehaviour
 
 		//targetJoint.enabled = true;
 
+
+
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0;
 		rigidBody.position = transform.position + (Vector3)HoldPosition;
@@ -79,6 +81,25 @@ public class AnchorHolder : MonoBehaviour
 		m_HoldStartTime = Time.time;
 
 		return true;
+	}
+
+	public void ForcePickup()
+	{
+		m_Anchor = FindObjectOfType<Anchor>();
+
+		var collider = m_Anchor.GetComponent<Collider2D>();
+		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
+		rigidBody.gravityScale = 0;
+		rigidBody.position = transform.position + (Vector3)HoldPosition;
+		m_Anchor.transform.rotation = Quaternion.Euler(HoldRotation);
+
+		collider.enabled = false;
+
+		pickup?.Invoke();
+		m_Anchor.PickUp();
+
+		m_WeightedJump.JumpCoefficient = m_JumpMultiplier;
+		m_HoldStartTime = Time.time;
 	}
 
 	public Anchor DropAnchor()

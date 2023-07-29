@@ -64,6 +64,8 @@ public class Anchor : MonoBehaviour
             gameObject.transform.position = m_ShakePos + new Vector3(x, y, z);
         }
     }
+    
+    // Testing main push (to delete)
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

@@ -44,39 +44,12 @@ public class ChainTugger : MonoBehaviour
 			return;
 		}
 
-		switch (m_Anchor.State)
-		{
-			case AnchorState.Held:
-				return;
-			case AnchorState.Grounded:
-				transform.position += new Vector3(0, PlayerJumpOffset);
-				m_Chain.Player.velocity = m_Chain.PlayerToPendulum * PlayerTugSpeed;
-				AudioController.PlaySound(m_PlayerTugSound, 0.4f, 1, MixerGroup.SFX);
-				break;
-			case AnchorState.Lodged:
-				DislodgeAnchor();
-				AudioController.PlaySound(m_FullTugSound, 1, 1, MixerGroup.SFX);
-				break;
-			case AnchorState.Free:
-				if (!m_Grounded.OnGround)
-				{
-					var midpoint = (m_Chain.Anchor.position + m_Chain.Player.position) / 2;
-					var travelTime = AnchorFreeTravelTime / 2;
 
-					m_Chain.Anchor.velocity = CalculateInitialVelocity(m_Chain.Anchor.position, midpoint, travelTime);
-					m_Chain.Player.velocity = CalculateInitialVelocity(m_Chain.Player.position, midpoint, travelTime);
-
-					LeanTween.delayedCall(travelTime, () => m_Holder.GrabAnchor());
-				}
-				else
-				{
-					m_Chain.Anchor.velocity = CalculateInitialVelocity(m_Chain.Anchor.position, m_Chain.Player.position, AnchorFreeTravelTime);
-					LeanTween.delayedCall(AnchorFreeTravelTime, () => m_Holder.GrabAnchor());
-				}
-
-				AudioController.PlaySound(m_FullTugSound, 1, 1, MixerGroup.SFX);
-				break;
-		}
+		transform.position += new Vector3(0, PlayerJumpOffset);
+		var tugvector = m_Chain.PlayerToPendulum * PlayerTugSpeed;
+		Debug.Log(tugvector);
+		m_Chain.Player.velocity += tugvector;
+		AudioController.PlaySound(m_PlayerTugSound, 0.4f, 1, MixerGroup.SFX);
 
 		m_Cooldown.Start();
 	}
@@ -84,22 +57,5 @@ public class ChainTugger : MonoBehaviour
 	private void Update()
 	{
 		m_Cooldown.Tick();
-	}
-
-	private void DislodgeAnchor()
-	{
-		var velocity = CalculateInitialVelocity(m_Chain.Anchor.position, m_Chain.AnchorPendulumPoint, AnchorDislodgeTravelTime);
-
-		m_Anchor.Dislodge(velocity);
-
-		LeanTween.delayedCall(AnchorDislodgeTravelTime, () => m_Holder.GrabAnchor());
-	}
-
-	private static Vector2 CalculateInitialVelocity(Vector2 currentPosition, Vector2 targetPosition, float time)
-	{
-		var displacement = targetPosition - currentPosition;
-		var initialVelocity = displacement / time - 0.5f * Physics2D.gravity.y * time * Vector2.up;
-
-		return initialVelocity;
 	}
 }

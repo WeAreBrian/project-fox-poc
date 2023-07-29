@@ -64,6 +64,19 @@ public class IdealChain : MonoBehaviour
 		m_MaxDistanceJoint.connectedBody = Anchor;
 		m_MaxDistanceJoint.distance = MaxLength;
 		m_MaxDistanceJoint.enableCollision = true;
+
+		AnchorHolder.pickup += ResetPoints;
+	}
+
+	private void ResetPoints()
+	{
+		m_Points.Clear();
+
+		m_Points = new List<ChainPoint>
+		{
+			new ChainPoint(Anchor),
+			new ChainPoint(Player),
+		};
 	}
 
 	private void FixedUpdate()
@@ -71,7 +84,7 @@ public class IdealChain : MonoBehaviour
 		UpdatePoints();
 		UpdateDistanceJoints();
 		ApplyTensionForces();
-		//UpdateLineRenderer();
+		UpdateLineRenderer();
 	}
 
 	private bool Sweep(Vector2 origin, Vector2 from, Vector2 to, out ChainPoint point)
@@ -138,11 +151,11 @@ public class IdealChain : MonoBehaviour
 			var point = m_Points[i];
 			var nextPoint = m_Points[i + 1];
 
-			//if (Sweep(point.Position, nextPoint.OldPosition, nextPoint.Position, out var newPoint))
-			//{
-			//	m_Points.Insert(++i, newPoint);
-			//	PointAdded?.Invoke(newPoint);
-			//}
+			if (Sweep(point.Position, nextPoint.OldPosition, nextPoint.Position, out var newPoint))
+			{
+				m_Points.Insert(++i, newPoint);
+				PointAdded?.Invoke(newPoint);
+			}
 		}
 	}
 

@@ -38,7 +38,10 @@ public class AnchorThrower : MonoBehaviour
     [SerializeField]
     private float m_WindUpSoundInterval;
     private float m_WindUpSoundTimer;
-    
+
+    private PlayerInput playerInput;
+    private InputAction anchorInteractAction;
+
     private void Awake()
     {
         m_Trajectory = GetComponentInChildren<AnchorTrajectory>();
@@ -47,8 +50,8 @@ public class AnchorThrower : MonoBehaviour
 
         m_Grounded = GetComponent<Grounded>();
         m_Holder = GetComponent<AnchorHolder>();
-        var playerInput = GetComponent<PlayerInput>();
-        var anchorInteractAction = playerInput.actions["AnchorInteract"];
+        playerInput = GetComponent<PlayerInput>();
+        anchorInteractAction = playerInput.actions["AnchorInteract"];
 
         anchorInteractAction.started += OnAnchorInteractStarted;
         anchorInteractAction.canceled += OnAnchorInteractCanceled;
@@ -179,5 +182,11 @@ public class AnchorThrower : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(transform.position, m_ThrowDirection);
+    }
+
+    private void OnDisable()
+    {
+        anchorInteractAction.started -= OnAnchorInteractStarted;
+        anchorInteractAction.canceled -= OnAnchorInteractCanceled;
     }
 }

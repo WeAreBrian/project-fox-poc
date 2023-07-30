@@ -45,4 +45,10 @@ public class ChainAttachment : MonoBehaviour
 		distanceJoint.connectedBody = fromRigidBody;
 		distanceJoint.distance = maxDistance;
 	}
+
+    private void OnDisable()
+    {
+		m_Chain.LinksCreated -= LinkPlayerAndAnchor;
+
+    }
 }

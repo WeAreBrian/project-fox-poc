@@ -1515,6 +1515,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1866713526479858622, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: ShowTrajectory
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4250636120361761568, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_LocalRotation.x

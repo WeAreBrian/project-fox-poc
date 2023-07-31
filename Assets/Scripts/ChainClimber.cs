@@ -56,18 +56,23 @@ public class ChainClimber : MonoBehaviour
     {
         if (Mounted)
         {
+			Debug.LogWarning("Cannot mount, already mounted");
             return;
         }
 
         if (!CanMount)
         {
+			Debug.LogWarning("Cannot mount, some nonsense");
             return;
         }
 
 		if (m_AnchorHolder.HoldingAnchor)
 		{
+			Debug.LogWarning("Cannot mount, holding anchor");
 			return;
 		}
+
+		Debug.Log("Mounting");
 
         Mount();
     }

@@ -137,7 +137,7 @@ public class PhysicsChain : MonoBehaviour
 		}
 	}
 
-	public void OnDestroy()
+	public void OnDisable()
 	{
 		Recall.activate -= ResetChain;
 	}

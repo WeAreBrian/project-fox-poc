@@ -6,8 +6,11 @@ using UnityEngine.Tilemaps;
 public class TilemapToBoxColliders : MonoBehaviour
 {
     private Tilemap m_TileMap;
+    [Header("Hover for tooltip")]
     [SerializeField]
-    private GameObject m_ChainBoxCollider;   //PLZ MAKE SURE THE PREFAB WITH THIS NAME IS SLOTTED IN
+    [Tooltip("MUST: Slot in the ChainBoxCollider prefab into this variable from the inspector. Search in Assets when clicking the variable. This script should be placed on tilemaps that require a collisions with the chain")]
+    private GameObject m_ChainBoxCollider;   //MUST: Slot in the ChainBoxCollider prefab into this variable from the inspector. Search in Assets when clicking the variable.
+    //This script should be placed on tilemaps that require a collisions with the chain
 
 
     private void Awake()

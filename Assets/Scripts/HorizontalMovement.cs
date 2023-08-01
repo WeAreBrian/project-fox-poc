@@ -151,8 +151,9 @@ public class HorizontalMovement : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
+        m_BHopTimer.Completed -= ResetAirSpeedOnLand;
         VerticalMovement.jumped -= AddPreviousAirSpeed;
     }
 }

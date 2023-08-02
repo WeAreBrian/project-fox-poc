@@ -6,12 +6,15 @@ using UnityEngine.Events;
 public class Grounded : MonoBehaviour
 {
     public UnityEvent Landed;
+    public UnityEvent HitHazard;
 
     public bool OnGround { get; private set; }
     private bool m_GroundedLastFrame;
 
     [SerializeField]
     private LayerMask m_GroundMask;
+    [SerializeField]
+    private LayerMask m_HazardMask;
     private const float k_EdgeOffset = 0.4f;
     private const float k_Height = 0.2f;
     private Collider2D m_Collider;
@@ -40,6 +43,10 @@ public class Grounded : MonoBehaviour
         if (!m_GroundedLastFrame && OnGround)
         {
             Landed.Invoke();
+        }
+        else if (!m_GroundedLastFrame && Physics2D.OverlapBox(playerBottom, boxSize, 0, m_HazardMask))
+        {
+            HitHazard.Invoke();
         }
     }
 

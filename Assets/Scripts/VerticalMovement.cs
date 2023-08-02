@@ -26,6 +26,7 @@ public class VerticalMovement : MonoBehaviour
 	private Grounded m_Grounded;
 	private AnchorThrower m_Thrower;
 	private HorizontalMovement m_HorizontalMovement;
+	private AnchorHolder m_AnchorHolder;
 
 	private bool m_desiredJump;
 	private bool m_isJumping;
@@ -47,7 +48,9 @@ public class VerticalMovement : MonoBehaviour
 		m_RigidBody = GetComponent<Rigidbody2D>();
 		m_Grounded = GetComponent<Grounded>();
 		m_Thrower = GetComponent<AnchorThrower>();
-		
+		m_Grounded.HitHazard.AddListener(Bounce);
+		m_AnchorHolder = GetComponent<AnchorHolder>();
+
 	}
 
     public void TemporarilyDisableFreeFall()	//This is to be used externally in other scripts e.g. springboard
@@ -126,6 +129,14 @@ public class VerticalMovement : MonoBehaviour
 		{
 			if (m_debug) { Debug.Log("OnJumpDown activated"); }
 			m_onJumpRelease = true;
+		}
+	}
+
+	private void Bounce()
+	{
+		if (m_AnchorHolder.Surfing)
+		{
+			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, -m_RigidBody.velocity.y);
 		}
 	}
 

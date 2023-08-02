@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AnchorHolder : MonoBehaviour
 {
 	public delegate void Trigger();
 	public static event Trigger pickup;
+
+	public bool Surfing;
 
 	public bool HoldingAnchor => m_Anchor != null;
 	public float GrabRadius = 1;
@@ -26,6 +29,9 @@ public class AnchorHolder : MonoBehaviour
 	private void Awake()
 	{
 		m_WeightedJump = GetComponent<VerticalMovement>();
+		InputAction surf = GetComponent<PlayerInput>().actions["Surf"];
+		surf.started += Surf;
+		surf.canceled += SurfCancel;
 	}
 
 	private void OnAnchorInteract()
@@ -81,6 +87,16 @@ public class AnchorHolder : MonoBehaviour
 		m_HoldStartTime = Time.time;
 
 		return true;
+	}
+
+	private void Surf(InputAction.CallbackContext ctx)
+	{
+		Surfing = HoldingAnchor;
+	}
+
+	private void SurfCancel(InputAction.CallbackContext ctx)
+	{
+		Surfing = false;
 	}
 
 	public void ForcePickup()

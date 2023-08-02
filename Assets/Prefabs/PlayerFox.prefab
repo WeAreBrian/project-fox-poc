@@ -269,9 +269,15 @@ MonoBehaviour:
   Landed:
     m_PersistentCalls:
       m_Calls: []
+  HitHazard:
+    m_PersistentCalls:
+      m_Calls: []
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 384
+  m_HazardMask:
+    serializedVersion: 2
+    m_Bits: 4096
   m_LandSound: {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
 --- !u!114 &1866713526479858622
 MonoBehaviour:
@@ -333,6 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb9f870adee737640b9d79df2537f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Surfing: 0
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   HoldRotation: {x: 0, y: 0, z: 115}
@@ -890,9 +897,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: [{targetCorrespondingSourceObject: {fileID: 8762993646977898693,
-          guid: 4331130a355c61f4a87af15edd985de2, type: 3}, insertIndex: -1, addedObject: {
-          fileID: 5437231209150940090}}]
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8762993646977898693, guid: 4331130a355c61f4a87af15edd985de2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5437231209150940090}
   m_SourcePrefab: {fileID: 100100000, guid: 4331130a355c61f4a87af15edd985de2, type: 3}
 --- !u!1 &4110483698491525625 stripped
 GameObject:

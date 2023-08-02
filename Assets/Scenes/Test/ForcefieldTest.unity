@@ -660,6 +660,10 @@ PrefabInstance:
       propertyPath: m_LinearDrag
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
+      propertyPath: m_BHopWindow
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 107137074636933800, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_RootOrder
@@ -802,7 +806,7 @@ GameObject:
   - component: {fileID: 853004243}
   - component: {fileID: 853004242}
   - component: {fileID: 853004241}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -852,7 +856,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.16, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &853004242
 SpriteRenderer:
@@ -914,7 +918,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853004240}
   m_LocalRotation: {x: 0, y: 0, z: -0.10062218, w: 0.9949248}
-  m_LocalPosition: {x: 1.9684, y: 2.92, z: -0.060036555}
+  m_LocalPosition: {x: 1.9684, y: -4.5, z: -0.060036555}
   m_LocalScale: {x: 3.884176, y: 0.042855002, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

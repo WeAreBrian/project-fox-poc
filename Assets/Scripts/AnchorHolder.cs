@@ -91,11 +91,15 @@ public class AnchorHolder : MonoBehaviour
 
 	private void Surf(InputAction.CallbackContext ctx)
 	{
-		Surfing = HoldingAnchor;
+		if (!HoldingAnchor) return;
+
+		gameObject.layer = LayerMask.NameToLayer("Anchor");
+		Surfing = true;
 	}
 
 	private void SurfCancel(InputAction.CallbackContext ctx)
 	{
+		gameObject.layer = LayerMask.NameToLayer("Player");
 		Surfing = false;
 	}
 
@@ -138,6 +142,8 @@ public class AnchorHolder : MonoBehaviour
 		var anchor = m_Anchor;
 
 		m_Anchor = null;
+
+		Surfing = false;
 
 		return anchor;
 	}

@@ -82,6 +82,8 @@ public class HorizontalMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (m_Holder.Surfing) return;
+
         var horizontalAxisValue = directionX;
         if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
 

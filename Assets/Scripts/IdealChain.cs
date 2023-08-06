@@ -81,6 +81,7 @@ public class IdealChain : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		Debug.Log(m_Points.Count);
 		UpdatePoints();
 		UpdateDistanceJoints();
 		ApplyTensionForces();

@@ -83,6 +83,7 @@ public class HorizontalMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (m_Holder.Surfing) return;
+ 
 
         var horizontalAxisValue = directionX;
         if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
@@ -121,7 +122,7 @@ public class HorizontalMovement : MonoBehaviour
 
     private IEnumerator BHop()
     {
-        yield return new WaitForSeconds(0.001f);
+        yield return new WaitForSeconds(0.03f);
 
         rb.velocity = new Vector2(Mathf.Max(m_AirSpeedOnLand, rb.velocity.x), rb.velocity.y);
     }
@@ -155,7 +156,6 @@ public class HorizontalMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        m_BHopTimer.Completed -= ResetAirSpeedOnLand;
         VerticalMovement.jumped -= AddPreviousAirSpeed;
     }
 }

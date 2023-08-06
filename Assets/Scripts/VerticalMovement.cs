@@ -76,7 +76,7 @@ public class VerticalMovement : MonoBehaviour
 			}
 		}
 
-		if (!m_isJumping && !m_Grounded.OnGround)
+		if (!m_isJumping && !m_Grounded.CanJump)
 		{
 			m_coyoteTimeCounter += Time.deltaTime;
 		}
@@ -101,7 +101,7 @@ public class VerticalMovement : MonoBehaviour
 			m_RigidBody.AddForce(Vector2.down * m_jumpDownForce);
 		}
 
-		//if (m_Grounded.OnGround)
+		//if (m_Grounded.CanJump)
 		//{
 		//	if(m_GroundedTicks < 5)
 		//	{
@@ -151,7 +151,7 @@ public class VerticalMovement : MonoBehaviour
 
 
 		// Fox can only jump when grounded or when there's still coyote time
-		if (m_Grounded.OnGround || (m_coyoteTimeCounter > 0.03f && m_coyoteTimeCounter < m_coyoteTime))
+		if (m_Grounded.CanJump || (m_coyoteTimeCounter > 0.03f && m_coyoteTimeCounter < m_coyoteTime))
 		{
 			m_desiredJump = false;
 			m_isJumping = true;
@@ -166,7 +166,7 @@ public class VerticalMovement : MonoBehaviour
 	private void CheckJumpState ()
 	{
 		// If fox is falling and touch the ground, it's no longer jumping
-		if (m_RigidBody.velocity.y < -0.01f && m_Grounded.OnGround)
+		if (m_RigidBody.velocity.y < -0.01f && m_Grounded.CanJump)
 		{
 			m_isJumping = false;
 			m_onJumpRelease = false;

@@ -205,7 +205,7 @@ MonoBehaviour:
   m_HoldingAnchorSpeed: 4
   m_AirAcceleration: 4
   m_MaxAirSpeed: 10
-  m_BHopWindow: 0.01
+  m_BHopWindow: 0.1
   m_AirAccelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -278,6 +278,9 @@ MonoBehaviour:
   m_HazardMask:
     serializedVersion: 2
     m_Bits: 2048
+  m_ForcefieldMask:
+    serializedVersion: 2
+    m_Bits: 4096
   m_LandSound: {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
 --- !u!114 &1866713526479858622
 MonoBehaviour:

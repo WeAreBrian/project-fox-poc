@@ -24,6 +24,7 @@ public class AnchorHolder : MonoBehaviour
 
 	[SerializeField]
 	private VerticalMovement m_WeightedJump;
+	private Grounded m_Grounded;
 	public float m_JumpMultiplier;
 
 	private void Awake()
@@ -32,6 +33,10 @@ public class AnchorHolder : MonoBehaviour
 		InputAction surf = GetComponent<PlayerInput>().actions["Surf"];
 		surf.started += Surf;
 		surf.canceled += SurfCancel;
+
+		m_Grounded = GetComponent<Grounded>();
+
+		m_Grounded.Landed.AddListener(StopSurf);
 	}
 
 	private void OnAnchorInteract()
@@ -89,18 +94,24 @@ public class AnchorHolder : MonoBehaviour
 		return true;
 	}
 
+	private void StopSurf()
+	{
+		gameObject.layer = LayerMask.NameToLayer("Player");
+		Surfing = false;
+	}
+
 	private void Surf(InputAction.CallbackContext ctx)
 	{
 		if (!HoldingAnchor) return;
+		if (m_Grounded.OnGround) return;
 
-		gameObject.layer = LayerMask.NameToLayer("Forcefield");
+		gameObject.layer = LayerMask.NameToLayer("Surf");
 		Surfing = true;
 	}
 
 	private void SurfCancel(InputAction.CallbackContext ctx)
 	{
-		gameObject.layer = LayerMask.NameToLayer("Player");
-		Surfing = false;
+		StopSurf();
 	}
 
 	public void ForcePickup()

@@ -93,7 +93,7 @@ public class AnchorHolder : MonoBehaviour
 	{
 		if (!HoldingAnchor) return;
 
-		gameObject.layer = LayerMask.NameToLayer("Anchor");
+		gameObject.layer = LayerMask.NameToLayer("Forcefield");
 		Surfing = true;
 	}
 

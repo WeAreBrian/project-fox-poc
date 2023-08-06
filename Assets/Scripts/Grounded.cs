@@ -40,13 +40,19 @@ public class Grounded : MonoBehaviour
         }
         m_GroundedLastFrame = OnGround;
         OnGround = Physics2D.OverlapBox(playerBottom, boxSize, 0, m_GroundMask);
-        if (!m_GroundedLastFrame && OnGround)
+        var hitHazard = Physics2D.OverlapBox(playerBottom, boxSize, 0, m_HazardMask);
+        if (!m_GroundedLastFrame)
         {
-            Landed.Invoke();
-        }
-        else if (!m_GroundedLastFrame && Physics2D.OverlapBox(playerBottom, boxSize, 0, m_HazardMask))
-        {
-            HitHazard.Invoke();
+            Debug.Log(hitHazard);
+            if ( OnGround)
+            {
+                Landed.Invoke();
+            }
+            else if (hitHazard)
+            {
+                Debug.Log("invoking hithazard");
+                HitHazard.Invoke();
+            }
         }
     }
 

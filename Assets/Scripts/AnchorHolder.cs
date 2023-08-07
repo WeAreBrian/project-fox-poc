@@ -23,6 +23,9 @@ public class AnchorHolder : MonoBehaviour
 	private float m_HoldStartTime;
 
 	[SerializeField]
+	private LayerMask m_NotFox;
+
+	[SerializeField]
 	private VerticalMovement m_WeightedJump;
 	private Grounded m_Grounded;
 	public float m_JumpMultiplier;
@@ -59,12 +62,28 @@ public class AnchorHolder : MonoBehaviour
 			return false;
 		}
 
+		var raycastObject = Physics2D.Raycast(transform.position, (collider.transform.position - transform.position), GrabRadius, m_NotFox);
+
+		if (raycastObject)
+		{
+			if (raycastObject.collider.gameObject != collider.gameObject)
+			{
+				return false;
+			}
+		}
+
 		m_Anchor = collider.GetComponent<Anchor>();
 
 		if (m_Anchor == null)
 		{
 			return false;
 		}
+
+
+		//if (raycastObject.collider.gameObject != collider.gameObject)
+		//{
+		//	return false;
+		//}
 		//Changed to update position to prepare for 3D animation integration 
 		//var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
 
@@ -165,5 +184,10 @@ public class AnchorHolder : MonoBehaviour
 		{
 			m_Anchor.transform.position = transform.position + (Vector3)HoldPosition;
 		}
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawRay(transform.position, GameObject.Find("Anchor").transform.position - transform.position);
 	}
 }

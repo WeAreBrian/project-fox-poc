@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Grounded : MonoBehaviour
 {
+    public UnityEvent Landed;
+
     public bool OnGround { get; private set; }
+    private bool m_GroundedLastFrame;
 
     [SerializeField]
     private LayerMask m_GroundMask;
@@ -31,8 +35,12 @@ public class Grounded : MonoBehaviour
         {
             AudioController.PlaySound(m_LandSound, 3, 0.7f, MixerGroup.SFX);
         }
-
+        m_GroundedLastFrame = OnGround;
         OnGround = Physics2D.OverlapBox(playerBottom, boxSize, 0, m_GroundMask);
+        if (!m_GroundedLastFrame && OnGround)
+        {
+            Landed.Invoke();
+        }
     }
 
     private void OnDrawGizmosSelected()

@@ -16,6 +16,9 @@ public class AnchorHolder : MonoBehaviour
 	public Vector2 HoldPosition = new Vector2(0, 0.5f);
 	public Vector3 HoldRotation = new Vector3(0, 0, 115);
 
+	public Vector2 SurfPosition = new Vector2(0, -0.5f);
+	public Vector3 SurfRotation = new Vector3(0, 0, 90);
+
 	public Anchor Anchor => m_Anchor;
 	public float HoldTime => Time.time - m_HoldStartTime;
 
@@ -182,7 +185,14 @@ public class AnchorHolder : MonoBehaviour
 	{
 		if (m_Anchor != null)
 		{
-			m_Anchor.transform.position = transform.position + (Vector3)HoldPosition;
+			if (Surfing)
+            {
+				m_Anchor.transform.SetPositionAndRotation((Vector2)transform.position + SurfPosition, Quaternion.Euler(SurfRotation));
+            }
+            else
+            {
+				m_Anchor.transform.position = transform.position + (Vector3)HoldPosition;
+			}
 		}
 	}
 

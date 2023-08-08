@@ -2,11 +2,11 @@ name: Release 🚀
 
 on:
   workflow_dispatch:
-  inputs:
-    buildNumber:
-      description: 'QA Build Number (default to latest)'
-      required: false
-      type: number
+    inputs:
+      buildNumber:
+        description: 'QA Build Number (default to latest)'
+        required: false
+        type: number
 
 permissions:
   contents: write
@@ -96,9 +96,9 @@ jobs:
           PACKAGE: build/a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
           VERSION: ${{ needs.draftRelease.outputs.tag_name }}
 
-  notifyWebSuccess:
+  notifySuccess:
     needs: publishRelease
-    name: Notify Web Success 📢
+    name: Notify Status to Discord 📢
     runs-on: ubuntu-latest
     if: always()
     steps:

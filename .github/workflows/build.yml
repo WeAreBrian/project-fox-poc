@@ -97,13 +97,17 @@ jobs:
           name: Build-${{ matrix.targetPlatform }}-${{ github.run_number }}
           path: build/${{ matrix.targetPlatform }}
 
-  uploadWebGL:
+
+  deployWebGL:
     needs: buildWebGL
-    name: Upload WebGL to GitHub Pages 🚢
+    name: Deploy WebGL to GitHub Pages 🚢
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download Build
         uses: actions/download-artifact@v2
@@ -117,17 +121,12 @@ jobs:
           branch: build-webgl
           folder: build/WebGL
 
-  prepareWebGLForDeploy:
-    needs: uploadWebGL
-    name: Prepare GH Pages for deployment 🔧
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
+      - name: Checkout WebGL Branch
         uses: actions/checkout@v3
         with:
           ref: build-webgl
 
-      - name: Setup Pages
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v3
 
       - name: Build with Jekyll
@@ -136,30 +135,23 @@ jobs:
           source: .
           destination: ./_site
 
-      - name: Upload artifact
+      - name: Upload artifact for GitHub Pages Deploy
         uses: actions/upload-pages-artifact@v1
 
-  deploy:
-    needs: prepareWebGLForDeploy
-    name: Deploy build 🚀
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
 
-  notifyWebSuccess:
-    needs: [deploy, buildDownloadables]
+
+  notifySuccess:
+    needs: [deployWebGL, buildDownloadables]
     name: Notify Web Success 📢
     runs-on: ubuntu-latest
     if: always()
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
 
-      - name: Notify Web Success
+      - name: Notify Success
         if: env.WORKFLOW_CONCLUSION == 'success'
         uses: nobrayner/discord-webhook@v1
         with:

@@ -41,9 +41,7 @@ jobs:
         with:
           path: Library
           key: Library-WebGL
-          restore-keys: |
-            Library-WebGL
-            Library-
+          restore-keys: Library-
             
       - name: Build into WebGL
         uses: game-ci/unity-builder@v2.2.0

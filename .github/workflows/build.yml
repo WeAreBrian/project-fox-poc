@@ -17,6 +17,11 @@ env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
+
+  ###########################
+  # Check for Unity license #
+  ###########################
+
   checksLicense:
     name: Check for Unity license ✔️
     runs-on: ubuntu-latest
@@ -24,6 +29,10 @@ jobs:
       - name: Fail - No license
         if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
         run: exit 1
+
+  ###########################
+  #   Build WebGL and PCs   #
+  ###########################
 
   buildWebGL:
     needs: checksLicense
@@ -97,6 +106,9 @@ jobs:
           name: Build-${{ matrix.targetPlatform }}-${{ github.run_number }}
           path: build/${{ matrix.targetPlatform }}
 
+  ###########################
+  #  Deploy to GitHub Pages #
+  ###########################
 
   deployWebGL:
     needs: buildWebGL
@@ -142,6 +154,9 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
 
+  ###########################
+  #  Notify Workflow Result #
+  ###########################
 
   notifySuccess:
     needs: [deployWebGL, buildDownloadables]
@@ -191,6 +206,10 @@ jobs:
           include-details: "false"
           color-cancelled: "#ffd513"
 
+  ###########################
+  #    Link Build to PR     #
+  ###########################
+  
   linkToPr:
     needs: notifyWebSuccess
     name: Link to PR 🔗

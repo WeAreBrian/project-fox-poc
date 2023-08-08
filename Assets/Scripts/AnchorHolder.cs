@@ -16,11 +16,17 @@ public class AnchorHolder : MonoBehaviour
 	public Vector2 HoldPosition = new Vector2(0, 0.5f);
 	public Vector3 HoldRotation = new Vector3(0, 0, 115);
 
+	public Vector2 SurfPosition = new Vector2(0, -0.5f);
+	public Vector3 SurfRotation = new Vector3(0, 0, 90);
+
 	public Anchor Anchor => m_Anchor;
 	public float HoldTime => Time.time - m_HoldStartTime;
 
 	private Anchor m_Anchor;
 	private float m_HoldStartTime;
+
+	[SerializeField]
+	private LayerMask m_NotFox;
 
 	[SerializeField]
 	private VerticalMovement m_WeightedJump;
@@ -59,12 +65,28 @@ public class AnchorHolder : MonoBehaviour
 			return false;
 		}
 
+		var raycastObject = Physics2D.Raycast(transform.position, (collider.transform.position - transform.position), GrabRadius, m_NotFox);
+
+		if (raycastObject)
+		{
+			if (raycastObject.collider.gameObject != collider.gameObject)
+			{
+				return false;
+			}
+		}
+
 		m_Anchor = collider.GetComponent<Anchor>();
 
 		if (m_Anchor == null)
 		{
 			return false;
 		}
+
+
+		//if (raycastObject.collider.gameObject != collider.gameObject)
+		//{
+		//	return false;
+		//}
 		//Changed to update position to prepare for 3D animation integration 
 		//var targetJoint = m_Anchor.GetComponent<TargetJoint2D>();
 
@@ -163,7 +185,19 @@ public class AnchorHolder : MonoBehaviour
 	{
 		if (m_Anchor != null)
 		{
-			m_Anchor.transform.position = transform.position + (Vector3)HoldPosition;
+			if (Surfing)
+            {
+				m_Anchor.transform.SetPositionAndRotation((Vector2)transform.position + SurfPosition, Quaternion.Euler(SurfRotation));
+            }
+            else
+            {
+				m_Anchor.transform.position = transform.position + (Vector3)HoldPosition;
+			}
 		}
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawRay(transform.position, GameObject.Find("Anchor").transform.position - transform.position);
 	}
 }

@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 2794392424498695009}
   - component: {fileID: 8583358091099009673}
   - component: {fileID: 8015112956025727630}
+  - component: {fileID: 2111517087813912528}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -346,6 +347,11 @@ MonoBehaviour:
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   HoldRotation: {x: 0, y: 0, z: 115}
+  SurfPosition: {x: 0, y: -0.5}
+  SurfRotation: {x: 0, y: 0, z: 90}
+  m_NotFox:
+    serializedVersion: 2
+    m_Bits: 6529
   m_WeightedJump: {fileID: 1208819179330828543}
   m_JumpMultiplier: 0.5
 --- !u!114 &6745542584575392125
@@ -566,6 +572,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.5}
   m_EdgeRadius: 0
+--- !u!210 &2111517087813912528
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_SortingLayerID: -1529567835
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

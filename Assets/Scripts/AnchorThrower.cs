@@ -97,6 +97,13 @@ public class AnchorThrower : MonoBehaviour
             DropAnchor();
         }
 
+        WindUpStop();
+    }
+
+    private void WindUpStop()
+    {
+
+
         m_Trajectory.gameObject.SetActive(false);
         m_AimArrow.SetActive(false);
 
@@ -145,8 +152,15 @@ public class AnchorThrower : MonoBehaviour
     {
         if (WindingUp)
         {
-			OrientAnchor();
-            PlayWindupSound();
+            if (!m_Holder.Anchor)
+            {
+                WindUpStop();
+            }
+            else
+            {
+                OrientAnchor();
+                PlayWindupSound();
+            }
         }
     }
 

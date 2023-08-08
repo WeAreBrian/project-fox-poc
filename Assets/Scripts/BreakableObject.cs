@@ -6,9 +6,9 @@ public class BreakableObject : MonoBehaviour
 {
     public GameObject m_brokenWallPieces; 
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Anchor"))
+        if (collision.CompareTag("Anchor"))
     	{
             Instantiate(m_brokenWallPieces, transform.position, transform.rotation);
             Destroy(gameObject); 

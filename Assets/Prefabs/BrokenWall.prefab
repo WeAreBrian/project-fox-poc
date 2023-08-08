@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9177562132553524354}
   - component: {fileID: 2572555300142806171}
   - component: {fileID: 2756290866228287662}
-  - component: {fileID: 638528200628494230}
-  m_Layer: 0
+  - component: {fileID: 4433922486614073155}
+  m_Layer: 11
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &638528200628494230
+--- !u!61 &4433922486614073155
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,8 +169,8 @@ GameObject:
   - component: {fileID: 1669455470713004722}
   - component: {fileID: 3892902893723354969}
   - component: {fileID: 7384301475475397730}
-  - component: {fileID: 1371931754405826900}
-  m_Layer: 0
+  - component: {fileID: 875446383113119868}
+  m_Layer: 11
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &1371931754405826900
+--- !u!61 &875446383113119868
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -326,8 +326,8 @@ GameObject:
   - component: {fileID: 128480223057685823}
   - component: {fileID: 1397939703929595402}
   - component: {fileID: 6893688639330440010}
-  - component: {fileID: 7876685577298734816}
-  m_Layer: 0
+  - component: {fileID: 6348447001482983295}
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &7876685577298734816
+--- !u!61 &6348447001482983295
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -519,8 +519,8 @@ GameObject:
   - component: {fileID: 5773474537795547522}
   - component: {fileID: 1535342064537548796}
   - component: {fileID: 6932295097573051082}
-  - component: {fileID: 9054268343742684851}
-  m_Layer: 0
+  - component: {fileID: 6695640550440591808}
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -619,7 +619,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &9054268343742684851
+--- !u!61 &6695640550440591808
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -676,8 +676,8 @@ GameObject:
   - component: {fileID: 9046425508976740}
   - component: {fileID: 888889065992271858}
   - component: {fileID: 7646613370407700886}
-  - component: {fileID: 1620893672664787727}
-  m_Layer: 0
+  - component: {fileID: 1094207947483688976}
+  m_Layer: 11
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,7 +776,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &1620893672664787727
+--- !u!61 &1094207947483688976
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

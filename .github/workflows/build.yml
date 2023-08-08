@@ -158,9 +158,9 @@ jobs:
   #  Notify Workflow Result #
   ###########################
 
-  notifySuccess:
+  notifyStatus:
     needs: [deployWebGL, buildDownloadables]
-    name: Notify Web Success 📢
+    name: Notify Status to Discord 📢
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -211,7 +211,7 @@ jobs:
   ###########################
   
   linkToPr:
-    needs: notifyWebSuccess
+    needs: notifyStatus
     name: Link to PR 🔗
     runs-on: ubuntu-latest
     steps:

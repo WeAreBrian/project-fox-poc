@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fail - No license
-        if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
+        if: ${{ !startsWith(env.UNITY_LICENSE, 'SC') }}
         run: exit 1
 
   ###########################

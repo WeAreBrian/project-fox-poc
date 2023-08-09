@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fail - No license
-        if: ${{ !startsWith(env.UNITY_LICENSE, 'SC') }}
+        if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
         run: exit 1
 
   ###########################
@@ -55,7 +55,7 @@ jobs:
       - name: Build into WebGL
         uses: game-ci/unity-builder@v2.2.0
         env:
-          UNITY_SERIAL: ${{ env.UNITY_LICENSE }}
+          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
@@ -95,7 +95,7 @@ jobs:
       - name: Build
         uses: game-ci/unity-builder@v2
         env:
-          UNITY_SERIAL: ${{ secrets.UNITY_LICENSE }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:

@@ -42,7 +42,9 @@ public class VerticalMovement : MonoBehaviour
 
     [SerializeField]
     private GameObject m_JumpingDustPoof;
-    
+    [SerializeField]
+    private float m_JumpingDustPoofPlaybackSpeed = 2f;
+
 
     private int m_GroundedTicks;
 
@@ -152,6 +154,7 @@ public class VerticalMovement : MonoBehaviour
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
 			jumped.Invoke();
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
+			SpawnJumpingDustPrefab();
 		}
 	}
 
@@ -165,4 +168,26 @@ public class VerticalMovement : MonoBehaviour
 			
 		}
 	}
+
+    private void SpawnJumpingDustPrefab()
+    {
+        // Instantiate the prefab
+        GameObject m_JumpingDustPoofInstance = Instantiate(m_JumpingDustPoof, transform.position, Quaternion.identity);
+
+        // Get the Animator component from the spawned object
+        Animator m_Animator = m_JumpingDustPoofInstance.GetComponent<Animator>();
+
+        if (m_Animator != null)
+        {
+            // Get the speed and duration of the animation
+            AnimatorClipInfo[] m_ClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0); // Assuming the animation is in layer 0
+            AnimationClip m_AnimationClip = m_ClipInfo[0].clip;
+
+			m_Animator.speed = m_JumpingDustPoofPlaybackSpeed;
+            float m_AdjustedAnimationDuration = m_AnimationClip.length / m_JumpingDustPoofPlaybackSpeed;
+
+            // Destroy the object after the adjusted animation duration
+            Destroy(m_JumpingDustPoofInstance, m_AdjustedAnimationDuration);
+        }
+    }
 }

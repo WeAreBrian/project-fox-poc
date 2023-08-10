@@ -45,6 +45,8 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField]
     private float m_JumpingDustPoofPlaybackSpeed = 2f;
 
+	private AnimationPrefabSpawner m_AnimationPrefabHolder;
+
 
     private int m_GroundedTicks;
 
@@ -53,8 +55,8 @@ public class VerticalMovement : MonoBehaviour
 		m_RigidBody = GetComponent<Rigidbody2D>();
 		m_Grounded = GetComponent<Grounded>();
 		m_Thrower = GetComponent<AnchorThrower>();
-		
-	}
+		m_AnimationPrefabHolder = GetComponent<AnimationPrefabSpawner>();
+    }
 
     public void TemporarilyDisableFreeFall()	//This is to be used externally in other scripts e.g. springboard
 	{
@@ -154,7 +156,9 @@ public class VerticalMovement : MonoBehaviour
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
 			jumped.Invoke();
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
-			SpawnAnimationPrefab(m_JumpingDustPoof, m_JumpingDustPoofPlaybackSpeed);
+
+			//Spawn animation prefab using the script
+			m_AnimationPrefabHolder.SpawnAnimationPrefab(m_JumpingDustPoof, m_JumpingDustPoofPlaybackSpeed);
 		}
 	}
 
@@ -168,26 +172,4 @@ public class VerticalMovement : MonoBehaviour
 			
 		}
 	}
-
-    private void SpawnAnimationPrefab(GameObject m_AnimationPrefab, float m_AnimationSpeed)
-    {
-        // Instantiate the prefab
-        GameObject m_AnimationInstance = Instantiate(m_AnimationPrefab, transform.position, Quaternion.identity);
-
-        // Get the Animator component from the spawned object
-        Animator m_Animator = m_AnimationInstance.GetComponent<Animator>();
-
-        if (m_Animator != null)
-        {
-            // Get the speed and duration of the animation
-            AnimatorClipInfo[] m_ClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0); // Assuming the animation is in layer 0
-            AnimationClip m_AnimationClip = m_ClipInfo[0].clip;
-
-			m_Animator.speed = m_AnimationSpeed;
-            float m_AdjustedAnimationDuration = m_AnimationClip.length / m_AnimationSpeed;
-
-            // Destroy the object after the adjusted animation duration
-            Destroy(m_AnimationInstance, m_AdjustedAnimationDuration);
-        }
-    }
 }

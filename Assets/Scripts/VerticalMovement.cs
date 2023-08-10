@@ -40,7 +40,11 @@ public class VerticalMovement : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_JumpSound;
 
-	private int m_GroundedTicks;
+    [SerializeField]
+    private GameObject m_JumpingDustPoof;
+    
+
+    private int m_GroundedTicks;
 
 	private void Awake()
 	{

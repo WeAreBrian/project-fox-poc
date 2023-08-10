@@ -154,7 +154,7 @@ public class VerticalMovement : MonoBehaviour
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
 			jumped.Invoke();
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
-			SpawnJumpingDustPrefab();
+			SpawnAnimationPrefab(m_JumpingDustPoof, m_JumpingDustPoofPlaybackSpeed);
 		}
 	}
 
@@ -169,13 +169,13 @@ public class VerticalMovement : MonoBehaviour
 		}
 	}
 
-    private void SpawnJumpingDustPrefab()
+    private void SpawnAnimationPrefab(GameObject m_AnimationPrefab, float m_AnimationSpeed)
     {
         // Instantiate the prefab
-        GameObject m_JumpingDustPoofInstance = Instantiate(m_JumpingDustPoof, transform.position, Quaternion.identity);
+        GameObject m_AnimationInstance = Instantiate(m_AnimationPrefab, transform.position, Quaternion.identity);
 
         // Get the Animator component from the spawned object
-        Animator m_Animator = m_JumpingDustPoofInstance.GetComponent<Animator>();
+        Animator m_Animator = m_AnimationInstance.GetComponent<Animator>();
 
         if (m_Animator != null)
         {
@@ -183,11 +183,11 @@ public class VerticalMovement : MonoBehaviour
             AnimatorClipInfo[] m_ClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0); // Assuming the animation is in layer 0
             AnimationClip m_AnimationClip = m_ClipInfo[0].clip;
 
-			m_Animator.speed = m_JumpingDustPoofPlaybackSpeed;
-            float m_AdjustedAnimationDuration = m_AnimationClip.length / m_JumpingDustPoofPlaybackSpeed;
+			m_Animator.speed = m_AnimationSpeed;
+            float m_AdjustedAnimationDuration = m_AnimationClip.length / m_AnimationSpeed;
 
             // Destroy the object after the adjusted animation duration
-            Destroy(m_JumpingDustPoofInstance, m_AdjustedAnimationDuration);
+            Destroy(m_AnimationInstance, m_AdjustedAnimationDuration);
         }
     }
 }

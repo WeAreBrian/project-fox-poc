@@ -254,6 +254,10 @@ MonoBehaviour:
   m_debug: 0
   m_jumpDownForce: 400
   m_JumpSound: {fileID: 8300000, guid: b82db259cde0cbb42815ed64144cb701, type: 3}
+  m_JumpingDustPoof: {fileID: 2473405945096596177, guid: 43962cf03e5484e19b6c6fac8bd7db01,
+    type: 3}
+  m_LandingDustPoof: {fileID: 2473405945096596177, guid: 2e5f2c9c7d65d4589ae3d0c81c8b4028,
+    type: 3}
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,9 +894,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: [{targetCorrespondingSourceObject: {fileID: 8762993646977898693,
-          guid: 4331130a355c61f4a87af15edd985de2, type: 3}, insertIndex: -1, addedObject: {
-          fileID: 5437231209150940090}}]
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8762993646977898693, guid: 4331130a355c61f4a87af15edd985de2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5437231209150940090}
   m_SourcePrefab: {fileID: 100100000, guid: 4331130a355c61f4a87af15edd985de2, type: 3}
 --- !u!1 &4110483698491525625 stripped
 GameObject:

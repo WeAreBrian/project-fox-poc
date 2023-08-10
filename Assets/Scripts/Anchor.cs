@@ -112,6 +112,8 @@ public class Anchor : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Ghost");
         yield return new WaitForSeconds(0.1f);
         gameObject.layer = LayerMask.NameToLayer("Anchor");
+        var collider = GetComponent<Collider2D>();
+        collider.enabled = true;
 
     }
 

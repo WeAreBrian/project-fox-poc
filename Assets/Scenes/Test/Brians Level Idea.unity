@@ -2050,22 +2050,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 474916486, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: m_LinearDrag
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: m_BHopWindow
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: m_GroundSpeed
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 474916487, guid: fea7d46b09dd64780ba611993068e295, type: 3}
-      propertyPath: m_HoldingAnchorSpeed
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 107137074636933800, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_RootOrder

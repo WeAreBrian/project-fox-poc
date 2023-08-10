@@ -257,8 +257,9 @@ MonoBehaviour:
   m_JumpSound: {fileID: 8300000, guid: b82db259cde0cbb42815ed64144cb701, type: 3}
   m_JumpingDustPoof: {fileID: 2473405945096596177, guid: 43962cf03e5484e19b6c6fac8bd7db01,
     type: 3}
-  m_JumpingDustPoofPlaybackSpeed: 3
-  m_JumpingDustPoofPosition: {x: 0, y: 0.4, z: 0}
+  m_JumpingDustPoofPlaybackSpeed: 2
+  m_JumpingDustPoofPosition: {x: 0, y: 1, z: 0}
+  m_JumpingDustPoofScale: {x: 1.5, y: 1.5, z: 1.5}
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +283,7 @@ MonoBehaviour:
     type: 3}
   m_LandingDustPoofPlaybackSpeed: 3
   m_LandingDustPoofPosition: {x: 0, y: 0.4, z: 0}
+  m_LandingDustPoofScale: {x: 1, y: 1, z: 1}
 --- !u!114 &1866713526479858622
 MonoBehaviour:
   m_ObjectHideFlags: 0

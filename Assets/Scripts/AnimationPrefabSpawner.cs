@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class AnimationPrefabSpawner : MonoBehaviour
 {
-    public void SpawnAnimationPrefab(GameObject m_AnimationPrefab, float m_AnimationSpeed, Vector3 m_Position = new Vector3())
+    public void SpawnAnimationPrefab(GameObject m_AnimationPrefab, float m_AnimationSpeed, Vector3 m_Position, Vector3 m_Scale)
     {
         // Instantiate the prefab
         GameObject m_AnimationInstance = Instantiate(m_AnimationPrefab, transform.position + m_Position, Quaternion.identity);
+        m_AnimationInstance.transform.localScale = m_Scale;
 
         // Get the Animator component from the spawned object
         Animator m_Animator = m_AnimationInstance.GetComponent<Animator>();

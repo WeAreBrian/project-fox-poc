@@ -24,7 +24,9 @@ public class Grounded : MonoBehaviour
     [SerializeField]
     private float m_LandingDustPoofPlaybackSpeed = 2f;
     [SerializeField]
-    private Vector3 m_LandingDustPoofPosition = new Vector3();
+    private Vector3 m_LandingDustPoofPosition = new Vector3(0,0,0);
+    [SerializeField]
+    private Vector3 m_LandingDustPoofScale = new Vector3(1,1,1);
     private AnimationPrefabSpawner m_AnimationPrefabHolder;
 
 
@@ -53,7 +55,7 @@ public class Grounded : MonoBehaviour
             Landed.Invoke();
 
             //Spawn animation prefab using the script
-            m_AnimationPrefabHolder.SpawnAnimationPrefab(m_LandingDustPoof, m_LandingDustPoofPlaybackSpeed, m_LandingDustPoofPosition);
+            m_AnimationPrefabHolder.SpawnAnimationPrefab(m_LandingDustPoof, m_LandingDustPoofPlaybackSpeed, m_LandingDustPoofPosition, m_LandingDustPoofScale);
         }
     }
 

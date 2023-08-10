@@ -45,7 +45,9 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField]
     private float m_JumpingDustPoofPlaybackSpeed = 2f;
 	[SerializeField]
-    private Vector3 m_JumpingDustPoofPosition = new Vector3();
+    private Vector3 m_JumpingDustPoofPosition = new Vector3(0,0,0);
+    [SerializeField]
+    private Vector3 m_JumpingDustPoofScale = new Vector3(1, 1, 1);
     private AnimationPrefabSpawner m_AnimationPrefabHolder;
 
 
@@ -159,7 +161,7 @@ public class VerticalMovement : MonoBehaviour
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 
 			//Spawn animation prefab using the script
-			m_AnimationPrefabHolder.SpawnAnimationPrefab(m_JumpingDustPoof, m_JumpingDustPoofPlaybackSpeed, m_JumpingDustPoofPosition);
+			m_AnimationPrefabHolder.SpawnAnimationPrefab(m_JumpingDustPoof, m_JumpingDustPoofPlaybackSpeed, m_JumpingDustPoofPosition, m_JumpingDustPoofScale);
 		}
 	}
 

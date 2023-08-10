@@ -2125,6 +2125,26 @@ PrefabInstance:
       propertyPath: MinThrowSpeed
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 2160122249298376338, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_CooldownColour.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2160122249298376338, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_CooldownColour.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2160122249298376338, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_CooldownColour.g
+      value: 0.10865705
+      objectReference: {fileID: 0}
+    - target: {fileID: 2160122249298376338, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_CooldownColour.r
+      value: 0.8396226
+      objectReference: {fileID: 0}
     - target: {fileID: 3642870710035614992, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_IsActive

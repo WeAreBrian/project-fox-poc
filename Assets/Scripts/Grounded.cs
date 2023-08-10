@@ -19,9 +19,20 @@ public class Grounded : MonoBehaviour
     private AudioClip m_LandSound;
     private float m_ColliderOffset = 0.25f;
 
+    [SerializeField]
+    private GameObject m_LandingDustPoof;
+    [SerializeField]
+    private float m_LandingDustPoofPlaybackSpeed = 2f;
+    [SerializeField]
+    private Vector3 m_LandingDustPoofPosition = new Vector3();
+    private AnimationPrefabSpawner m_AnimationPrefabHolder;
+
+
     private void Awake()
     {
         m_Collider = GetComponent<Collider2D>();
+        m_AnimationPrefabHolder = GetComponent<AnimationPrefabSpawner>();
+
     }
 
     private void FixedUpdate()
@@ -40,6 +51,9 @@ public class Grounded : MonoBehaviour
         if (!m_GroundedLastFrame && OnGround)
         {
             Landed.Invoke();
+
+            //Spawn animation prefab using the script
+            m_AnimationPrefabHolder.SpawnAnimationPrefab(m_LandingDustPoof, m_LandingDustPoofPlaybackSpeed, m_LandingDustPoofPosition);
         }
     }
 

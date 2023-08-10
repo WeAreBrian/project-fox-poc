@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroundSpeed: 8
   m_HoldingAnchorSpeed: 4
-  m_AirAcceleration: 4
+  m_AirAcceleration: 8
   m_MaxAirSpeed: 10
   m_BHopWindow: 0.1
   m_AirAccelerationCurve:
@@ -353,7 +353,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6529
   m_WeightedJump: {fileID: 1208819179330828543}
-  m_JumpMultiplier: 0.5
+  m_JumpMultiplier: 0.8
 --- !u!114 &6745542584575392125
 MonoBehaviour:
   m_ObjectHideFlags: 0

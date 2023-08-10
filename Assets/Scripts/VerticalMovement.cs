@@ -50,6 +50,7 @@ public class VerticalMovement : MonoBehaviour
 		m_Thrower = GetComponent<AnchorThrower>();
 		m_Grounded.HitHazard.AddListener(Bounce);
 		m_AnchorHolder = GetComponent<AnchorHolder>();
+		m_HorizontalMovement = GetComponent<HorizontalMovement>();
 
 	}
 
@@ -157,7 +158,8 @@ public class VerticalMovement : MonoBehaviour
 			m_isJumping = true;
 			m_coyoteTimeCounter = 0;
 
-			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
+			var horizontal = m_HorizontalMovement.BHopSpeed == 0 ? m_RigidBody.velocity.x: m_HorizontalMovement.BHopSpeed;
+			m_RigidBody.velocity = new Vector2(horizontal, JumpForce * JumpCoefficient);
 			jumped.Invoke();
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 		}

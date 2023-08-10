@@ -28,6 +28,24 @@ public class HorizontalMovement : MonoBehaviour
 
     private Timer m_BHopTimer;
 
+    private bool m_BHopOnNextJump;
+
+    public float BHopSpeed
+    {
+        get
+        {
+            m_BHopOnNextJump = false;
+            if (m_BHopOnNextJump)
+            {
+                return m_AirSpeedOnLand;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
     [Tooltip("How much ")]
     [SerializeField]
     private AnimationCurve m_AirAccelerationCurve;
@@ -87,8 +105,7 @@ public class HorizontalMovement : MonoBehaviour
 
         var horizontalAxisValue = directionX;
         if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
-
-        if (m_Grounded.OnGround)
+        if (m_Grounded.OnGround && m_BHopTimer.Paused)
         {
             rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
             PlayFootStepSound();
@@ -115,16 +132,18 @@ public class HorizontalMovement : MonoBehaviour
     {
         if (m_AirSpeedOnLand > 0)
         {
-            Debug.Log("BHoppin Baby! Regaining " + m_AirSpeedOnLand);
-            StartCoroutine(BHop());
+
+            //if input is opposite of saved velocity, cancel bhop
+            if (directionX > 0 && m_AirSpeedOnLand < 0) return;
+            if (directionX < 0 && m_AirSpeedOnLand > 0) return;
+
+            m_BHopOnNextJump = true;
         }
     }
 
-    private IEnumerator BHop()
+    public void ResetBHop()
     {
-        yield return new WaitForSeconds(0.03f);
-
-        rb.velocity = new Vector2(Mathf.Max(m_AirSpeedOnLand, rb.velocity.x), rb.velocity.y);
+        m_BHopOnNextJump = false;
     }
 
     private float GetAirCoefficient()

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: efa50999acac27d4888aaa17fd5f6f60
+guid: 841409075ece4ce449d6625d5bc38eaf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -106,30 +106,143 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: assets-temple_prototype-1_0009_roacks_0
+      name: AssetForcefield_0
       rect:
         serializedVersion: 2
         x: 0
+        y: 356
+        width: 47
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d980b19c16b122d47b901bbcf2e6f00d
+      internalID: 721369068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetForcefield_1
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 347
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 041117239bf3da74a84f5c166132d52a
+      internalID: 622641013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetForcefield_2
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 285
+        width: 33
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d36fac9f9e25704398c0c987362a4ab
+      internalID: -610334451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetForcefield_3
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 219
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61238a21f3cab7243ba8095639b6200b
+      internalID: -1716538987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetForcefield_4
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 112
+        width: 58
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f008bb1fd5f8e56499a07428a72f0da4
+      internalID: -1327604119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetForcefield_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 57
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3a5fefe172daae44867ba59760c6f09
+      internalID: 19745440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetForcefield_6
+      rect:
+        serializedVersion: 2
+        x: 43
         y: 0
-        width: 207
-        height: 73
+        width: 25
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,92 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13cd20f8bdbf81d448325bd4c5d1331a
-      internalID: 1675626558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: assets-temple_prototype-1_0009_roacks_1
-      rect:
-        serializedVersion: 2
-        x: 351
-        y: 4
-        width: 274
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 819983b5b354a794e8a3fcbadf20a905
-      internalID: -1730086296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: assets-temple_prototype-1_0009_roacks_2
-      rect:
-        serializedVersion: 2
-        x: 730
-        y: 4
-        width: 199
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3d4397df0958994b90aa28b1d179682
-      internalID: 2117919866
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: assets-temple_prototype-1_0009_roacks_3
-      rect:
-        serializedVersion: 2
-        x: 957
-        y: 4
-        width: 156
-        height: 117
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6fdc74d4c06a6949b96c79d4e3c0619
-      internalID: -663977197
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: assets-temple_prototype-1_0009_roacks_4
-      rect:
-        serializedVersion: 2
-        x: 1251
-        y: 4
-        width: 239
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c5d908f8b0bbaff45aa971792ca3ec92
-      internalID: 88518404
+      spriteID: 3293ebbee60571242b097cdbda8a67ca
+      internalID: 1670834902
       vertices: []
       indices: 
       edges: []
@@ -238,11 +267,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      assets-temple_prototype-1_0009_roacks_0: 1675626558
-      assets-temple_prototype-1_0009_roacks_1: -1730086296
-      assets-temple_prototype-1_0009_roacks_2: 2117919866
-      assets-temple_prototype-1_0009_roacks_3: -663977197
-      assets-temple_prototype-1_0009_roacks_4: 88518404
+      AssetForcefield_0: 721369068
+      AssetForcefield_1: 622641013
+      AssetForcefield_2: -610334451
+      AssetForcefield_3: -1716538987
+      AssetForcefield_4: -1327604119
+      AssetForcefield_5: 19745440
+      AssetForcefield_6: 1670834902
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

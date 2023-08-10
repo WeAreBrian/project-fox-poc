@@ -1,0 +1,145 @@
+name: Release 🚀
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildNumber:
+        description: 'QA Build Number (default to latest)'
+        required: false
+        type: number
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  draftRelease:
+    name: Draft Release 📜
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.output_upload_url.outputs.upload_url }}
+      tag_name: ${{ steps.output_tag_name.outputs.tag_name }}
+      release_id: ${{ steps.output_release_id.outputs.release_id }}
+      html_url: ${{ steps.output_html_url.outputs.html_url }}
+    steps:
+      - name: Draft a Release
+        uses: release-drafter/release-drafter@master
+        id: release-draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - id: output_upload_url
+        run: echo "upload_url=${{ steps.release-draft.outputs.upload_url }}" >> "$GITHUB_OUTPUT"
+      - id: output_tag_name
+        run: echo "tag_name=${{ steps.release-draft.outputs.tag_name }}" >> "$GITHUB_OUTPUT"
+      - id: output_release_id
+        run: echo "release_id=${{ steps.release-draft.outputs.id }}" >> "$GITHUB_OUTPUT"
+      - id: output_html_url
+        run: echo "html_url=${{ steps.release-draft.outputs.html_url }}" >> "$GITHUB_OUTPUT"
+
+  downloadBuildFromBuildPipeline:
+    name: Download Build 📥
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          run-number: ${{ inputs.buildNumber }}
+          path: build
+
+  uploadBuildToDraft:
+    needs: [draftRelease, downloadBuildFromBuildPipeline]
+    name: Upload to Release Draft 📦
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        targetPlatform:
+          - StandaloneOSX
+          - StandaloneWindows
+    steps:
+      - name: Rename artifact
+        run: mv build/Build-${{ matrix.targetPlatform }}-${{ inputs.buildNumber }}.zip build/a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+
+      - name: Upload Builds as Release Asset
+        uses: gfreezy/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.draftRelease.outputs.upload_url }}
+          release_id: ${{ needs.draftRelease.outputs.release_id }}
+          asset_path: ./build/a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          asset_name: a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          asset_content_type: application/zip
+      
+  deploy:
+    needs: [draftRelease, uploadBuildToDraft]
+    name: Deploy 🚀
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish Release
+        uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ needs.draftRelease.outputs.release_id }}
+
+      - name: Publish to Itch.io
+        uses: yeslayla/butler-publish-itchio-action@v1.0.2
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.ITCH_API_KEY }}
+          CHANNEL: ${{ matrix.targetPlatform }}
+          ITCH_GAME: ${{ secrets.ITCH_GAME_ID }}
+          ITCH_USER: ${{ secrets.ITCH_USERNAME }}
+          PACKAGE: build/a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          VERSION: ${{ needs.draftRelease.outputs.tag_name }}
+
+  notifySuccess:
+    needs: publishRelease
+    name: Notify Status to Discord 📢
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v3
+
+      - name: Notify Web Success
+        if: env.WORKFLOW_CONCLUSION == 'success'
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ github.workflow }} #${{ github.run_number }}"
+          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/894758305690452039/success_kid.png"
+          title: "✅ Deployment status: SUCCESS!"
+          description: |
+            🌐 [Visit the site](https://wearebrian.github.io/project-fox-poc/)
+            🖥️ [Download Windows & Mac build](https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }})
+          include-details: "false"
+          color-success: "#2eb886"
+
+      - name: Notify Failure
+        if: env.WORKFLOW_CONCLUSION == 'failure'
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ github.workflow }} #${{ github.run_number }}"
+          avatar-url: "https://media.discordapp.net/attachments/857447804977152000/1104388925256106045/this-is-fine_sq-0bd6d8072e991dc4708be3668cd480ae7df18a11-s800-c85.jpg"
+          title: "❌ Deployment status: FAILED . . ."
+          include-details: "true"
+          color-failure: "#a30200"
+
+      - name: Notify Cancelled
+        if: env.WORKFLOW_CONCLUSION == 'cancelled'
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ github.workflow }} #${{ github.run_number }}"
+          avatar-url: "https://media.discordapp.net/attachments/821500555696013343/925737666685837353/Blank-Nut-Button.png"
+          title: "⚠️ Deployment status: CANCELLED . . ."
+          description: ""
+          include-details: "false"
+          color-cancelled: "#ffd513"

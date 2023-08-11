@@ -15,17 +15,26 @@ public class BreakableObject : MonoBehaviour
 
     Quaternion GetParticleSprayDirection(Collider2D collision)
     {
+        // get local position of colliding obj
         Vector2 m_localPos = gameObject.transform.position - collision.gameObject.transform.position;
-        if (m_localPos.x > 0 && !m_isVertical) {
-            return Quaternion.Euler(-90, 0, 0);
+
+        if (m_isVertical)
+        {
+            if (m_localPos.x > 0)
+            {
+                return Quaternion.Euler(0, 90, 0);
+            }
+           return Quaternion.Euler(0,-90, 0);
         }
 
-        else if (m_localPos.y > 0 && m_isVertical) {
-            return Quaternion.Euler(0, -90, 0);
+        //if horizontal wall
+
+		if (m_localPos.y > 0) {
+            return Quaternion.Euler(-90, 0, 0);
         }
-        else {
-            return Quaternion.identity;
-        }
+        
+        return Quaternion.Euler(90,0,0);
+
     }
     void OnTriggerEnter2D(Collider2D collision)
     {

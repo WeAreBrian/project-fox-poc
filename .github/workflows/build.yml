@@ -65,7 +65,7 @@ jobs:
       - name: Upload Build
         uses: actions/upload-artifact@v3
         with:
-          name: build-WebGL
+          name: Build-WebGL-${{ github.run_number }}
           path: build/WebGL
 
   buildDownloadables:

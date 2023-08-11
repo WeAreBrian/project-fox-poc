@@ -22,20 +22,29 @@ jobs:
   # Check for Unity license #
   ###########################
 
-  checksLicense:
-    name: Check for Unity license ✔️
+  buildPrep:
+    name: Prepare to Build 📋
     runs-on: ubuntu-latest
     steps:
-      - name: Fail - No license
+      - name: Check for Unity license
         if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
         run: exit 1
+
+      - name: Get SHA of triggering commit
+        run: echo "${{ github.sha }}" > github/trigger_sha.txt
+
+      - name: Save trigger SHA
+        uses: actions/upload-artifact@v3
+        with:
+          name: trigger_sha
+          path: github/trigger_sha.txt
 
   ###########################
   #   Build WebGL and PCs   #
   ###########################
 
   buildWebGL:
-    needs: checksLicense
+    needs: buildPrep
     name: Build WebGL 🌐
     runs-on: ubuntu-latest
     steps:
@@ -69,7 +78,7 @@ jobs:
           path: build/WebGL
 
   buildDownloadables:
-    needs: checksLicense
+    needs: buildPrep
     name: Build ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -217,6 +226,7 @@ jobs:
     name: Link to PR 🔗
     runs-on: ubuntu-latest
     steps:
+      - uses: technote-space/workflow-conclusion-action@v3
       - name: Link to PR 🔗
         if: env.WORKFLOW_CONCLUSION == 'success'
         uses: actions/github-script@v4
@@ -227,7 +237,7 @@ jobs:
             const { owner, repo } = context.repo;
             const pullRequestNumber = context.payload.pull_request.number;
 
-            github.issues.createComment({
+            github.rest.issues.createComment({
               owner,
               repo,
               issue_number: pullRequestNumber,

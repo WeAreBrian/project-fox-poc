@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 3754421894374030316}
   - component: {fileID: 7642590366845207327}
   - component: {fileID: 3497578039071984159}
+  - component: {fileID: 8499191584684451982}
   m_Layer: 12
   m_Name: Particle System
   m_TagString: Untagged
@@ -808,7 +809,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 0.12, z: 1}
+    m_Scale: {x: 1, y: 0.13033594, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -4991,6 +4992,20 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8499191584684451982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702734924406769335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2a7d9aaec5cad4195dff4a0f032644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ContainerTransform: {fileID: 8972524248413476101}
+  m_ParticleSystem: {fileID: 7642590366845207327}
 --- !u!1 &8972524247347898710
 GameObject:
   m_ObjectHideFlags: 0

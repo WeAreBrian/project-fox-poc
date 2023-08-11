@@ -146,6 +146,7 @@ public class Anchor : MonoBehaviour
         // Set body type based on state
         if (next == AnchorState.Free || next == AnchorState.Held)
         {
+            HapticManager.instance.RumblePulse(0.5f, 0.5f, 0.05f);
             m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
         }
         else
@@ -158,13 +159,13 @@ public class Anchor : MonoBehaviour
 
             if (next == AnchorState.Lodged)
             {
-                HapticManager.instance.RumblePulse(0.5f, 0.75f, 0.1f);
+                HapticManager.instance.RumblePulse(0.5f, 0.75f, 0.05f);
                 CameraShake.instance.Shake(2, 0.2f);
                 AudioController.PlaySound(m_AnchorLodge, 1, 1, MixerGroup.SFX);
             }
             else
             {
-                HapticManager.instance.RumblePulse(0.25f, 1f, 0.05f);
+                HapticManager.instance.RumblePulse(0.25f, 1f, 0.1f);
                 CameraShake.instance.Shake(2, 0.1f);
                 AudioController.PlaySound(m_AnchorLand, 1, 1, MixerGroup.SFX);
             }

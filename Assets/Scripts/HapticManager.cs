@@ -7,6 +7,8 @@ public class HapticManager : MonoBehaviour
 {
     public static HapticManager instance;
 
+    public float GlobalIntensity = 2;
+
     private Gamepad m_Pad;
 
     private void Awake()
@@ -29,7 +31,7 @@ public class HapticManager : MonoBehaviour
         {
 
             m_Pad.SetMotorSpeeds(lowFrequency, highFrequency);
-            StartCoroutine(StopRumble(duration));
+            StartCoroutine(StopRumble(duration*GlobalIntensity));
         }
     }
 

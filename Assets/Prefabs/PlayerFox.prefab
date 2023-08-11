@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 2794392424498695009}
   - component: {fileID: 8583358091099009673}
   - component: {fileID: 8015112956025727630}
+  - component: {fileID: 8444935620643434777}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -254,6 +255,11 @@ MonoBehaviour:
   m_debug: 0
   m_jumpDownForce: 400
   m_JumpSound: {fileID: 8300000, guid: b82db259cde0cbb42815ed64144cb701, type: 3}
+  m_JumpingDustPoof: {fileID: 2473405945096596177, guid: 43962cf03e5484e19b6c6fac8bd7db01,
+    type: 3}
+  m_JumpingDustPoofPlaybackSpeed: 2
+  m_JumpingDustPoofPosition: {x: 0, y: 1, z: 0}
+  m_JumpingDustPoofScale: {x: 1.5, y: 1.5, z: 1.5}
 --- !u!114 &8127432424583510208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +279,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   m_LandSound: {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
+  m_LandingDustPoof: {fileID: 2473405945096596177, guid: 2e5f2c9c7d65d4589ae3d0c81c8b4028,
+    type: 3}
+  m_LandingDustPoofPlaybackSpeed: 3
+  m_LandingDustPoofPosition: {x: 0, y: 0.4, z: 0}
+  m_LandingDustPoofScale: {x: 1, y: 1, z: 1}
 --- !u!114 &1866713526479858622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +567,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &8444935620643434777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebebb0e6498a74432977baf9bd809c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,9 +913,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: [{targetCorrespondingSourceObject: {fileID: 8762993646977898693,
-          guid: 4331130a355c61f4a87af15edd985de2, type: 3}, insertIndex: -1, addedObject: {
-          fileID: 5437231209150940090}}]
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8762993646977898693, guid: 4331130a355c61f4a87af15edd985de2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5437231209150940090}
   m_SourcePrefab: {fileID: 100100000, guid: 4331130a355c61f4a87af15edd985de2, type: 3}
 --- !u!1 &4110483698491525625 stripped
 GameObject:

@@ -358,7 +358,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1592238576}
   - {fileID: 1093032048}
@@ -368,7 +368,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.24701118, y: -26.119282}
-  m_SizeDelta: {x: 3489.1987, y: 1352.7454}
+  m_SizeDelta: {x: 3489.199, y: 1352.7454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &268024010
 MonoBehaviour:
@@ -875,6 +875,7 @@ GameObject:
   - component: {fileID: 1093032048}
   - component: {fileID: 1093032050}
   - component: {fileID: 1093032049}
+  - component: {fileID: 1093032051}
   m_Layer: 5
   m_Name: rumble
   m_TagString: Untagged
@@ -940,6 +941,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093032047}
   m_CullTransparentMesh: 1
+--- !u!225 &1093032051
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093032047}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1325902794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1393,7 @@ GameObject:
   - component: {fileID: 1592238576}
   - component: {fileID: 1592238578}
   - component: {fileID: 1592238577}
+  - component: {fileID: 1592238579}
   m_Layer: 5
   m_Name: click
   m_TagString: Untagged
@@ -1397,7 +1411,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5952903, y: 0.5952903, z: 0.17858711}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 268024009}
   m_RootOrder: -1
@@ -1445,6 +1459,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1592238575}
   m_CullTransparentMesh: 1
+--- !u!225 &1592238579
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592238575}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1634867321
 GameObject:
   m_ObjectHideFlags: 0

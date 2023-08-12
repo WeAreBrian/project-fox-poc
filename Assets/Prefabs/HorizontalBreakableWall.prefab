@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8249759678476262854}
   - component: {fileID: 94407362187907070}
   - component: {fileID: 5792839866745909805}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HorizontalBreakableWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &6621740112927950979
 MeshFilter:
@@ -103,6 +103,7 @@ MonoBehaviour:
     type: 3}
   m_smokeParticles: {fileID: 418568451906456123, guid: 010d0f4c66fed46e5a0f27e80914414f,
     type: 3}
+  m_isVertical: 0
 --- !u!61 &8249759678476262854
 BoxCollider2D:
   m_ObjectHideFlags: 0

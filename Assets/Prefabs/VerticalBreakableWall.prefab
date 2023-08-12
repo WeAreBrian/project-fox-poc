@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8613574938166536564}
   - component: {fileID: 5963664315172964181}
   - component: {fileID: 5590030724337942423}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: VerticalBreakableWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
     type: 3}
   m_smokeParticles: {fileID: 418568451906456123, guid: 010d0f4c66fed46e5a0f27e80914414f,
     type: 3}
+  m_isVertical: 1
 --- !u!61 &8613574938166536564
 BoxCollider2D:
   m_ObjectHideFlags: 0

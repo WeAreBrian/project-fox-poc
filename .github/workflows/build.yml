@@ -19,7 +19,7 @@ env:
 jobs:
 
   ###########################
-  # Check for Unity license #
+  #    Prebuild: Get info   #
   ###########################
 
   buildPrep:
@@ -31,7 +31,9 @@ jobs:
         run: exit 1
 
       - name: Get SHA of triggering commit
-        run: echo "${{ github.sha }}" > github/trigger_sha.txt
+        run: |
+          mkdir github
+          echo "${{ github.sha }}" >> github/trigger_sha.txt
 
       - name: Save trigger SHA
         uses: actions/upload-artifact@v3

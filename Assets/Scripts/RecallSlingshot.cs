@@ -14,7 +14,7 @@ public class RecallSlingshot : MonoBehaviour
     [Header("Hover over them for tooltip instructions.")]
     [SerializeField]
     [Tooltip("Ticking this makes it only work when coming off a grapple surface")]
-    private bool m_OnlyBoostGrapples = false;
+    private bool m_OnlyBoostGrapples = true;
     [SerializeField]
     [Tooltip("Multiplies the fox's current velocity")]
     private float m_MultiplyFoxsVelocity = 1.2f;

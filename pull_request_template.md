@@ -1,8 +1,10 @@
-# [POC-number: Ticket name](ticket-link-here)
+# [FOX-ticket_number: Ticket name](ticket-link-here)
 
 **Test scene (if any):**
+- `Scenes/SceneName.unity`
 
-## Changes summary: 
+## Changes summary:
+- 
 
 ## Checklist before requesting a review:
 - [ ] I have run the game locally

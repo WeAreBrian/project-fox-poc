@@ -137,7 +137,7 @@ jobs:
       - name: Download Build
         uses: actions/download-artifact@v3
         with:
-          name: build-WebGL
+          name: Build-WebGL-${{ github.run_number }}
           path: build
 
       - name: Deploy to GitHub Pages

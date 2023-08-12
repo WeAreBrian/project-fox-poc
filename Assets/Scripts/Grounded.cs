@@ -75,14 +75,15 @@ public class Grounded : MonoBehaviour
             if ( OnGround)
             {
                 Landed.Invoke();
+
+                //Spawn animation prefab using the script
+                m_AnimationPrefabHolder.SpawnAnimationPrefab(m_LandingDustPoof, m_LandingDustPoofPlaybackSpeed, m_LandingDustPoofPosition, m_LandingDustPoofScale);
             }
             else if (hitHazard)
             {
                 HitHazard.Invoke();
             }
 
-            //Spawn animation prefab using the script
-            m_AnimationPrefabHolder.SpawnAnimationPrefab(m_LandingDustPoof, m_LandingDustPoofPlaybackSpeed, m_LandingDustPoofPosition, m_LandingDustPoofScale);
         }
     }
 

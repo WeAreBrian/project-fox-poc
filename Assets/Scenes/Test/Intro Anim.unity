@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 118237531}
   - component: {fileID: 118237533}
   - component: {fileID: 118237532}
+  - component: {fileID: 118237534}
   m_Layer: 5
   m_Name: crack big
   m_TagString: Untagged
@@ -150,15 +151,15 @@ RectTransform:
   m_GameObject: {fileID: 118237530}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2648036, y: 1.2648036, z: 0.37944114}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2648036, y: 1.264804, z: 0.3794411}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1016498744}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 395.15527, y: 345.8519}
+  m_AnchoredPosition: {x: 439.99982, y: 309.99985}
   m_SizeDelta: {x: 282, y: 121}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &118237532
@@ -199,6 +200,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118237530}
   m_CullTransparentMesh: 1
+--- !u!225 &118237534
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118237530}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &127938606
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +419,7 @@ GameObject:
   - component: {fileID: 292191657}
   - component: {fileID: 292191659}
   - component: {fileID: 292191658}
+  - component: {fileID: 292191660}
   m_Layer: 5
   m_Name: crack small
   m_TagString: Untagged
@@ -422,8 +436,8 @@ RectTransform:
   m_GameObject: {fileID: 292191656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.50210047, y: 0.50210047, z: 0.15063015}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.50210047, y: 0.5021005, z: 0.1506301}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1016498744}
   m_RootOrder: -1
@@ -471,6 +485,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292191656}
   m_CullTransparentMesh: 1
+--- !u!225 &292191660
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292191656}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &485704629
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,7 +823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -191.24681, y: 330.0852}
+  m_AnchoredPosition: {x: -191.24681, y: 329}
   m_SizeDelta: {x: 2213.0654, y: 1113.0166}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1049458331

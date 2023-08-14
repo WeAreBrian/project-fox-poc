@@ -69,9 +69,4 @@ public class Switch : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        WorldInteract.Activated -= Toggle;
-
-    }
 }

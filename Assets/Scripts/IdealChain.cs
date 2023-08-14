@@ -321,9 +321,4 @@ public class IdealChain : MonoBehaviour
 			Gizmos.DrawRay((previousPoint.Position + point.Position) / 2, lineNormal);
 		}
 	}
-
-    private void OnDisable()
-    {
-        AnchorHolder.pickup -= ResetPoints;
-    }
 }

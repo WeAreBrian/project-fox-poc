@@ -255,8 +255,4 @@ public class ChainMovement : MonoBehaviour
 			}
 		}
 	}
-    private void OnDisable()
-    {
-		AnchorHolder.pickup -= Dismount;
-    }
 }

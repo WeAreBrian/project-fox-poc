@@ -3,10 +3,6 @@ using UnityEngine.InputSystem;
 
 public class VerticalMovement : MonoBehaviour
 {
-
-	public delegate void Trigger();
-	public static event Trigger jumped;
-
 	public float JumpForce;
 
 	public bool m_FastFall = false; //A public variable for enabling or disabling fast fall. E.g. for springboard.
@@ -25,7 +21,6 @@ public class VerticalMovement : MonoBehaviour
 	private Rigidbody2D m_RigidBody;
 	private Grounded m_Grounded;
 	private AnchorThrower m_Thrower;
-	private HorizontalMovement m_HorizontalMovement;
 
 	private bool m_desiredJump;
 	private bool m_isJumping;
@@ -40,26 +35,15 @@ public class VerticalMovement : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_JumpSound;
 
-    [SerializeField]
-    private GameObject m_JumpingDustPoof;
-    [SerializeField]
-    private float m_JumpingDustPoofPlaybackSpeed = 2f;
-	[SerializeField]
-    private Vector3 m_JumpingDustPoofPosition = new Vector3(0,0,0);
-    [SerializeField]
-    private Vector3 m_JumpingDustPoofScale = new Vector3(1, 1, 1);
-    private AnimationPrefabSpawner m_AnimationPrefabHolder;
-
-
-    private int m_GroundedTicks;
+	private int m_GroundedTicks;
 
 	private void Awake()
 	{
 		m_RigidBody = GetComponent<Rigidbody2D>();
 		m_Grounded = GetComponent<Grounded>();
 		m_Thrower = GetComponent<AnchorThrower>();
-		m_AnimationPrefabHolder = GetComponent<AnimationPrefabSpawner>();
-    }
+		
+	}
 
     public void TemporarilyDisableFreeFall()	//This is to be used externally in other scripts e.g. springboard
 	{
@@ -157,11 +141,8 @@ public class VerticalMovement : MonoBehaviour
 			m_coyoteTimeCounter = 0;
 
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
-			jumped.Invoke();
-			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 
-			//Spawn animation prefab using the script
-			m_AnimationPrefabHolder.SpawnAnimationPrefab(m_JumpingDustPoof, m_JumpingDustPoofPlaybackSpeed, m_JumpingDustPoofPosition, m_JumpingDustPoofScale);
+			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 		}
 	}
 

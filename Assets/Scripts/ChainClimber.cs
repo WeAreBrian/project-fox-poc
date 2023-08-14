@@ -34,6 +34,9 @@ public class ChainClimber : MonoBehaviour
 	[SerializeField]
 	private float m_ClimbSoundInterval;
 	private float m_ClimbSoundTimer;
+
+	private InputAction anchorInteractAction;
+
     private void Awake()
     {
         m_Grounded = GetComponent<Grounded>();
@@ -44,10 +47,9 @@ public class ChainClimber : MonoBehaviour
 		m_AnchorHolder = GetComponent<AnchorHolder>();
 
         var playerInput = GetComponent<PlayerInput>();
-        var anchorInteractAction = playerInput.actions["Mount"];
+        anchorInteractAction = playerInput.actions["Mount"];
 
         anchorInteractAction.started += DoMount;
-        //anchorInteractAction.canceled += DoDismount;
 
 		AnchorHolder.pickup += Dismount;
     }
@@ -56,7 +58,8 @@ public class ChainClimber : MonoBehaviour
     {
         if (Mounted)
         {
-            return;
+			Dismount();
+			return;
         }
 
         if (!CanMount)
@@ -86,20 +89,6 @@ public class ChainClimber : MonoBehaviour
 
 		CreateLinkTargetJoint();
 	}
-
-	private void DoDismount(InputAction.CallbackContext context)
-    {
-        if (!Mounted)
-        {
-            return;
-        }
-        Dismount();
-    }
-
-    private void OnJump()
-    {
-        Dismount();
-    }
 
     public void Dismount()
 	{
@@ -208,4 +197,11 @@ public class ChainClimber : MonoBehaviour
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(Link.transform.TransformPoint(LinkAnchor), 0.2f);
 	}
+
+    private void OnDisable()
+    {
+		AnchorHolder.pickup -= Dismount;
+        anchorInteractAction.started -= DoMount;
+
+    }
 }

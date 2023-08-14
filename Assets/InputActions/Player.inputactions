@@ -96,9 +96,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Surf",
                     "type": "Button",
-                    "id": "0fe0784e-49bd-452b-b981-0037bf2aacc6",
+                    "id": "5294593c-2305-4137-a374-97e5358f2402",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -218,30 +218,8 @@
                 },
                 {
                     "name": "",
-                    "id": "15b29c6a-0129-4412-a49a-4e9984543e9b",
-                    "path": "<SwitchProControllerHID>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "0f018de4-e45f-46d9-8857-3def227c1fc5",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Mount",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "83ada7b3-e941-4f0d-9d8b-9c6142e25e3d",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -252,7 +230,7 @@
                 {
                     "name": "",
                     "id": "0b850d84-ad29-42b3-8aa6-743b4ce8b24b",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -284,17 +262,6 @@
                 },
                 {
                     "name": "",
-                    "id": "5c8ef1f7-a65d-42ae-8958-9b074a4c18d1",
-                    "path": "<SwitchProControllerHID>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Tug",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "db786c7e-05f3-4dee-8a16-327dd4a38d47",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -307,10 +274,21 @@
                 {
                     "name": "",
                     "id": "5d9d5d61-7563-4179-8f44-38ca19856e95",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Recall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "758d0b8e-4936-44ee-a1cb-306c9b75f5bd",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Recall",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -339,17 +317,6 @@
                 },
                 {
                     "name": "",
-                    "id": "7af28999-300f-4a3c-bde9-c762a792a177",
-                    "path": "<SwitchProControllerHID>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b00b7e80-8b07-4eff-87f3-1b6144d10fb2",
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press(behavior=2)",
@@ -366,17 +333,6 @@
                     "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "AnchorInteract",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9694b60f-0274-402c-9d8e-c82c4cc6c0c1",
-                    "path": "<SwitchProControllerHID>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
                     "action": "AnchorInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -494,7 +450,7 @@
                 {
                     "name": "",
                     "id": "0b82bc49-2db9-4927-914a-f6863753ea8a",
-                    "path": "<XInputController>/start",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -504,45 +460,34 @@
                 },
                 {
                     "name": "",
-                    "id": "0312c00f-646f-4270-95a4-e26592296378",
-                    "path": "<Keyboard>/escape",
+                    "id": "bfdd2f80-ee67-42ae-a59f-954bad3a9e0f",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
+                    "action": "Surf",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b7a9a693-99d1-4408-907e-e3ea1a1a34e7",
-                    "path": "<Keyboard>/p",
+                    "id": "6650b516-a656-4022-846a-2f1b13a06b97",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
+                    "action": "Surf",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "076380a0-8ee4-4ea0-99a7-4ac089d06fd4",
-                    "path": "<XInputController>/start",
+                    "id": "8d2655a9-556a-48ca-8cb7-a7afe109f416",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4e718d3b-fbbf-416f-9c36-b5197578ca11",
-                    "path": "<DualShockGamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Pause",
+                    "groups": "",
+                    "action": "Surf",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

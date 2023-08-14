@@ -11,29 +11,43 @@ public class Recall : MonoBehaviour
 
 	private Anchor m_Anchor;
 	private AnchorHolder m_Holder;
-	private InputAction m_RecallAction;
+	private Grounded m_Grounded;
+
 
 	[SerializeField]
+	private Color m_CooldownColour;
+	private Material m_AnchorMaterial;
+
+	private bool OnCooldown => m_AnchorMaterial.color == m_CooldownColour;
+
+    [SerializeField]
 	private AudioClip m_RecallSound;
 
 	private void Awake()
 	{
 		m_Anchor = FindObjectOfType<Anchor>();
 		m_Holder = GetComponent<AnchorHolder>();
-		m_RecallAction = GetComponent<PlayerInput>().actions["Recall"];
-		m_RecallAction.performed += Activate;
+		m_Grounded = GetComponent<Grounded>();
+		m_Grounded.Landed.AddListener(ResetRecall);
+		m_AnchorMaterial = m_Anchor.GetComponentInChildren<MeshRenderer>().material;
+
 	}
 
-	private void Activate(InputAction.CallbackContext context)
+
+
+    private void OnRecall()
 	{
-		AudioController.PlaySound(m_RecallSound, 1, 1, MixerGroup.SFX);
-		m_Anchor.transform.position = transform.position;
-		m_Holder.ForcePickup();
-		activate.Invoke();
+		if (!OnCooldown && !m_Holder.HoldingAnchor)
+        {
+			AudioController.PlaySound(m_RecallSound, 1, 1, MixerGroup.SFX);
+			m_Anchor.transform.position = transform.position;
+			m_Holder.ForcePickup();
+			m_AnchorMaterial.color = m_CooldownColour;
+		}
 	}
 
-	private void OnDestroy()
-	{
-		m_RecallAction.performed -= Activate;
+	private void ResetRecall()
+    {
+		m_AnchorMaterial.color = Color.white;
 	}
 }

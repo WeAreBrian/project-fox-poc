@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
 
 public class HorizontalMovement : MonoBehaviour
 {
@@ -20,6 +21,31 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField]
     private float m_MaxAirSpeed;
 
+    private float m_AirSpeedOnLand;
+    [Tooltip("How long the player has to jump again after landing to regain airspeed")]
+    [SerializeField]
+    private float m_BHopWindow;
+
+    private Timer m_BHopTimer;
+
+    private bool m_BHopOnNextJump;
+
+    public float BHopSpeed
+    {
+        get
+        {
+            m_BHopOnNextJump = false;
+            if (m_BHopOnNextJump)
+            {
+                return m_AirSpeedOnLand;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
     [Tooltip("How much ")]
     [SerializeField]
     private AnimationCurve m_AirAccelerationCurve;
@@ -27,7 +53,7 @@ public class HorizontalMovement : MonoBehaviour
     {
         get 
         {
-
+            if (m_Thrower.WindingUp) return 0;
             if (m_Holder.HoldingAnchor) return m_HoldingAnchorSpeed;
             if (!m_Grounded.OnGround) return m_AirAcceleration;
             return m_GroundSpeed;
@@ -53,6 +79,13 @@ public class HorizontalMovement : MonoBehaviour
         m_Grounded = GetComponent<Grounded>();
         m_Thrower = GetComponent<AnchorThrower>();
         m_Holder = GetComponent<AnchorHolder>();
+
+        m_BHopTimer = new Timer();
+        m_BHopTimer.Duration = m_BHopWindow;
+        m_BHopTimer.Completed += ResetAirSpeedOnLand;
+
+        m_Grounded.Landed.AddListener(StartBHopTimer);
+        VerticalMovement.jumped += AddPreviousAirSpeed;
     }
     
     private void OnMove(InputValue value)
@@ -60,26 +93,57 @@ public class HorizontalMovement : MonoBehaviour
         directionX = value.Get<float>();
     }
 
+    private void Update()
+    {
+        m_BHopTimer.Tick();
+    }
+
     private void FixedUpdate()
     {
-        if (m_Thrower.WindingUp)
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            return;
-        }
+        if (m_Holder.Surfing) return;
+ 
 
         var horizontalAxisValue = directionX;
         if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
-
-        if (m_Grounded.OnGround)
+        if (m_Grounded.OnGround && m_BHopTimer.Paused)
         {
             rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
             PlayFootStepSound();
         }
         else
         {
-            rb.AddForce(new Vector2(directionX * m_AirAcceleration * 40 * GetAirCoefficient() , 0));
+            rb.AddForce(new Vector2(directionX * MoveSpeed * 40 * GetAirCoefficient() , 0));
         }
+    }
+
+    private void StartBHopTimer()
+    {
+        m_AirSpeedOnLand = rb.velocity.x;
+        m_BHopTimer.Start();
+    }
+
+    private void ResetAirSpeedOnLand()
+    {
+        m_AirSpeedOnLand = 0;
+        m_BHopTimer.Stop();
+    }
+
+    private void AddPreviousAirSpeed()
+    {
+        if (m_AirSpeedOnLand > 0)
+        {
+
+            //if input is opposite of saved velocity, cancel bhop
+            if (directionX > 0 && m_AirSpeedOnLand < 0) return;
+            if (directionX < 0 && m_AirSpeedOnLand > 0) return;
+
+            m_BHopOnNextJump = true;
+        }
+    }
+
+    public void ResetBHop()
+    {
+        m_BHopOnNextJump = false;
     }
 
     private float GetAirCoefficient()
@@ -107,5 +171,10 @@ public class HorizontalMovement : MonoBehaviour
 
             m_FootstepTimer = m_FootstepInterval;
         }
+    }
+
+    private void OnDisable()
+    {
+        VerticalMovement.jumped -= AddPreviousAirSpeed;
     }
 }

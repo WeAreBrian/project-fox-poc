@@ -79,6 +79,8 @@ public class Anchor : MonoBehaviour
                 {
                     Debug.Log("hit a side");
                     AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
+                    CameraShake.instance.Shake(1, 0.2f);
+                    HapticManager.instance.RumblePulse(0.25f, 0.25f, 0.1f);
                     UpdateState(AnchorState.Free);
                     return;
                 }
@@ -110,6 +112,8 @@ public class Anchor : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Ghost");
         yield return new WaitForSeconds(0.1f);
         gameObject.layer = LayerMask.NameToLayer("Anchor");
+        var collider = GetComponent<Collider2D>();
+        collider.enabled = true;
 
     }
 
@@ -140,6 +144,7 @@ public class Anchor : MonoBehaviour
         // Set body type based on state
         if (next == AnchorState.Free || next == AnchorState.Held)
         {
+            HapticManager.instance.RumblePulse(0.5f, 0.5f, 0.05f);
             m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
         }
         else
@@ -152,10 +157,14 @@ public class Anchor : MonoBehaviour
 
             if (next == AnchorState.Lodged)
             {
+                HapticManager.instance.RumblePulse(0.5f, 0.75f, 0.05f);
+                CameraShake.instance.Shake(2, 0.2f);
                 AudioController.PlaySound(m_AnchorLodge, 1, 1, MixerGroup.SFX);
             }
             else
             {
+                HapticManager.instance.RumblePulse(0.25f, 1f, 0.1f);
+                CameraShake.instance.Shake(2, 0.1f);
                 AudioController.PlaySound(m_AnchorLand, 1, 1, MixerGroup.SFX);
             }
         }

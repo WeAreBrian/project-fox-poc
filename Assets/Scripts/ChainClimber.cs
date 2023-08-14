@@ -50,7 +50,6 @@ public class ChainClimber : MonoBehaviour
         anchorInteractAction = playerInput.actions["Mount"];
 
         anchorInteractAction.started += DoMount;
-        //anchorInteractAction.canceled += DoDismount;
 
 		AnchorHolder.pickup += Dismount;
     }
@@ -59,7 +58,8 @@ public class ChainClimber : MonoBehaviour
     {
         if (Mounted)
         {
-            return;
+			Dismount();
+			return;
         }
 
         if (!CanMount)
@@ -89,20 +89,6 @@ public class ChainClimber : MonoBehaviour
 
 		CreateLinkTargetJoint();
 	}
-
-	private void DoDismount(InputAction.CallbackContext context)
-    {
-        if (!Mounted)
-        {
-            return;
-        }
-        Dismount();
-    }
-
-    private void OnJump()
-    {
-        Dismount();
-    }
 
     public void Dismount()
 	{

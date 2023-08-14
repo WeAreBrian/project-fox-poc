@@ -26,6 +26,7 @@ public class VerticalMovement : MonoBehaviour
 	private Grounded m_Grounded;
 	private AnchorThrower m_Thrower;
 	private HorizontalMovement m_HorizontalMovement;
+	private AnchorHolder m_AnchorHolder;
 
 	private bool m_desiredJump;
 	private bool m_isJumping;
@@ -58,6 +59,11 @@ public class VerticalMovement : MonoBehaviour
 		m_RigidBody = GetComponent<Rigidbody2D>();
 		m_Grounded = GetComponent<Grounded>();
 		m_Thrower = GetComponent<AnchorThrower>();
+		m_Grounded.HitHazard.AddListener(Bounce);
+		m_AnchorHolder = GetComponent<AnchorHolder>();
+		m_HorizontalMovement = GetComponent<HorizontalMovement>();
+
+	
 		m_AnimationPrefabHolder = GetComponent<AnimationPrefabSpawner>();
     }
 
@@ -84,7 +90,7 @@ public class VerticalMovement : MonoBehaviour
 			}
 		}
 
-		if (!m_isJumping && !m_Grounded.OnGround)
+		if (!m_isJumping && !m_Grounded.CanJump)
 		{
 			m_coyoteTimeCounter += Time.deltaTime;
 		}
@@ -109,7 +115,7 @@ public class VerticalMovement : MonoBehaviour
 			m_RigidBody.AddForce(Vector2.down * m_jumpDownForce);
 		}
 
-		//if (m_Grounded.OnGround)
+		//if (m_Grounded.CanJump)
 		//{
 		//	if(m_GroundedTicks < 5)
 		//	{
@@ -140,6 +146,15 @@ public class VerticalMovement : MonoBehaviour
 		}
 	}
 
+	private void Bounce()
+	{
+		Debug.Log("bouncing");
+		if (m_AnchorHolder.Surfing)
+		{
+			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, -m_RigidBody.velocity.y);
+		}
+	}
+
 	private void DoJump()
 	{
 		if (m_debug) { Debug.Log("DoJump activated"); }
@@ -150,13 +165,14 @@ public class VerticalMovement : MonoBehaviour
 
 
 		// Fox can only jump when grounded or when there's still coyote time
-		if (m_Grounded.OnGround || (m_coyoteTimeCounter > 0.03f && m_coyoteTimeCounter < m_coyoteTime))
+		if (m_Grounded.CanJump || (m_coyoteTimeCounter > 0.03f && m_coyoteTimeCounter < m_coyoteTime))
 		{
 			m_desiredJump = false;
 			m_isJumping = true;
 			m_coyoteTimeCounter = 0;
 
-			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, JumpForce * JumpCoefficient);
+			var horizontal = m_HorizontalMovement.BHopSpeed == 0 ? m_RigidBody.velocity.x: m_HorizontalMovement.BHopSpeed;
+			m_RigidBody.velocity = new Vector2(horizontal, JumpForce * JumpCoefficient);
 			jumped.Invoke();
 			AudioController.PlaySound(m_JumpSound, 1, 1, MixerGroup.SFX);
 
@@ -168,7 +184,7 @@ public class VerticalMovement : MonoBehaviour
 	private void CheckJumpState ()
 	{
 		// If fox is falling and touch the ground, it's no longer jumping
-		if (m_RigidBody.velocity.y < -0.01f && m_Grounded.OnGround)
+		if (m_RigidBody.velocity.y < -0.01f && m_Grounded.CanJump)
 		{
 			m_isJumping = false;
 			m_onJumpRelease = false;

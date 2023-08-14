@@ -11,7 +11,6 @@ public class AnimationController : MonoBehaviour
     private AnchorThrower m_Thrower;
     private AnchorHolder m_Holder;
     private Rigidbody2D m_RigidBody;
-    private float k_WalkSpeedScale = 0.3f;
     private bool m_Moving;
 
     private Camera m_cam;

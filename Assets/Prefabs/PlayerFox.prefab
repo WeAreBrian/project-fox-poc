@@ -28,6 +28,8 @@ GameObject:
   - component: {fileID: 8015112956025727630}
   - component: {fileID: 2111517087813912528}
   - component: {fileID: 4379814004752795122}
+  - component: {fileID: 2200327642219540464}
+  - component: {fileID: 5822406008445146550}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -606,6 +608,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebebb0e6498a74432977baf9bd809c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2200327642219540464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad647ed0988f34484b0ea50aa1cfbd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5822406008445146550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67cd3429e1ab24650a527b99fa4bd1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6063310992840300421

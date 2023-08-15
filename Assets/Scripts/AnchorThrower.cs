@@ -32,6 +32,7 @@ public class AnchorThrower : MonoBehaviour
     private Grounded m_Grounded;
     private Vector2 m_ThrowDirection;
     private float m_WindUpStartTime;
+    private GameObject m_Anchor;
 
     [SerializeField]
     private AudioClip m_WindUpSound;
@@ -55,6 +56,8 @@ public class AnchorThrower : MonoBehaviour
 
         anchorInteractAction.started += OnAnchorInteractStarted;
         anchorInteractAction.canceled += OnAnchorInteractCanceled;
+
+        m_Anchor = GameObject.FindGameObjectWithTag("Anchor");
 	}
 
     private void OnAnchorInteractStarted(InputAction.CallbackContext context)
@@ -121,9 +124,11 @@ public class AnchorThrower : MonoBehaviour
 
         Vector3 dir = (m_AimArrow.transform.position - transform.position);
         float angle = Mathf.Atan2(dir.y, dir.x);
-        m_AimArrow.transform.SetPositionAndRotation((Vector2)transform.position + new Vector2(0, 0.5f) +(inputDirection*1.5f), Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg + 90));
+        Quaternion m_Rotation = Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg + 90);
+        m_AimArrow.transform.SetPositionAndRotation((Vector2)transform.position + new Vector2(0, 0.5f) +(inputDirection*1.5f), m_Rotation);
 
         m_ThrowDirection = inputDirection;
+        //m_Anchor.transform.rotation = m_Rotation;
     }
 
     private void ThrowAnchor(Vector2 velocity)
@@ -174,15 +179,13 @@ public class AnchorThrower : MonoBehaviour
         }
     }
 
-    private void OrientAnchor(float strength = 4, float damping = 1)
+    private void OrientAnchor()
     {
-        var anchor = m_Holder.Anchor.Rigidbody;
-        var angle = Vector2.SignedAngle(-anchor.transform.up, m_ThrowDirection);
+        Vector3 m_Direction = (m_AimArrow.transform.position - transform.position);
+        float m_Angle = Mathf.Atan2(m_Direction.y, m_Direction.x);
+        Quaternion m_Rotation = Quaternion.Euler(0f, 0f, m_Angle * Mathf.Rad2Deg + 90);
 
-
-
-        anchor.AddTorque(-anchor.angularVelocity * damping);
-        anchor.AddTorque(angle * strength);
+        m_Anchor.transform.rotation = m_Rotation;
     }
 
     private void OnDestroy()

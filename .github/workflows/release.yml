@@ -37,19 +37,6 @@ jobs:
       - id: output_html_url
         run: echo "html_url=${{ steps.release-draft.outputs.html_url }}" >> "$GITHUB_OUTPUT"
 
-  downloadBuildFromBuildPipeline:
-    name: Download Build 📥
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: build.yml
-          run_number: ${{ inputs.buildNumber }}
-      - run: ls
-
   tagCommit:
     needs: draftRelease
     name: Tag Commit For Release 🏷️
@@ -97,7 +84,7 @@ jobs:
           echo "Tag already present: ${{ steps.tag_create.outputs.tag_exists }}"
 
   uploadBuildToDraft:
-    needs: [draftRelease, downloadBuildFromBuildPipeline]
+    needs: draftRelease
     name: Upload to Release Draft 📦
     runs-on: ubuntu-latest
     strategy:
@@ -107,6 +94,13 @@ jobs:
           - StandaloneOSX
           - StandaloneWindows
     steps:
+      - name: Download build
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          run_number: ${{ inputs.buildNumber }}
+
       - name: Rename Folders for Release
         run: find . -type d -name 'Build-*' -exec bash -c 'mv "$0" "A-Foxs-Tale_${0#Build-}_${{ needs.draftRelease.outputs.tag_name }}"' {} \;
       - run: ls

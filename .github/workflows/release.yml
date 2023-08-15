@@ -117,7 +117,7 @@ jobs:
       
   deployToGithub:
     needs: [draftRelease, uploadBuildToDraft]
-    name: Deploy 🚀
+    name: Release on GitHub 🚀
     runs-on: ubuntu-latest
     steps:
       - name: Publish Release
@@ -129,7 +129,7 @@ jobs:
       
   deployToItch:
     needs: [draftRelease, uploadBuildToDraft]
-    name: Deploy 🚀
+    name: Deploy on Itch.io 🏠
     runs-on: ubuntu-latest
     strategy:
       matrix:

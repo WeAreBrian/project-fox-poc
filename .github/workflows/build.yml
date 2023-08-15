@@ -231,17 +231,12 @@ jobs:
       - uses: technote-space/workflow-conclusion-action@v3
       - name: Link to PR 🔗
         if: env.WORKFLOW_CONCLUSION == 'success'
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { context, github } = require('@actions/github');
-            const { owner, repo } = context.repo;
-            const pullRequestNumber = context.payload.pull_request.number;
-
             github.rest.issues.createComment({
-              owner,
-              repo,
-              issue_number: pullRequestNumber,
+              issue_number: ${{ github.run_number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               body: `Link to build: https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }}`
             });

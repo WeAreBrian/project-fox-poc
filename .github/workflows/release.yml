@@ -77,9 +77,9 @@ jobs:
           commit_sha: ${{ steps.read_sha.outputs.sha }}
           tag_prefix: ""
 
-  uploadBuildToDraft:
+  deployToItch:
     needs: draftRelease
-    name: Upload to Release Draft 📦
+    name: Deploy to Itch.io 🏠
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -114,9 +114,19 @@ jobs:
           asset_path: ./A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
           asset_name: A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
           asset_content_type: application/zip
+
+      - name: Deploy to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.ITCH_API_KEY }}
+          CHANNEL: ${{ matrix.targetPlatform }}
+          ITCH_GAME: ${{ secrets.ITCH_GAME_ID }}
+          ITCH_USER: ${{ secrets.ITCH_USERNAME }}
+          PACKAGE: ./A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          VERSION: ${{ needs.draftRelease.outputs.tag_name }}
       
   deployToGithub:
-    needs: [draftRelease, uploadBuildToDraft]
+    needs: [draftRelease, deployToItch]
     name: Release on GitHub 🚀
     runs-on: ubuntu-latest
     steps:
@@ -126,31 +136,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_id: ${{ needs.draftRelease.outputs.release_id }}
-      
-  deployToItch:
-    needs: [draftRelease, uploadBuildToDraft]
-    name: Deploy on Itch.io 🏠
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        targetPlatform:
-          - WebGL
-          - StandaloneOSX
-          - StandaloneWindows64
-
-    steps:
-      - name: Publish to Itch.io
-        uses: josephbmanley/butler-publish-itchio-action@v1.0.3
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.ITCH_API_KEY }}
-          CHANNEL: ${{ matrix.targetPlatform }}
-          ITCH_GAME: ${{ secrets.ITCH_GAME_ID }}
-          ITCH_USER: ${{ secrets.ITCH_USERNAME }}
-          PACKAGE: ./A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
-          VERSION: ${{ needs.draftRelease.outputs.tag_name }}
 
   notifySuccess:
-    needs: [deployToGithub, deployToItch]
+    needs: [deployToItch, deployToGithub]
     name: Notify Status to Discord 📢
     runs-on: ubuntu-latest
     if: always()

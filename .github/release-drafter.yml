@@ -23,6 +23,7 @@ version-resolver:
   patch:
     labels:
       - "patch"
+default: patch
 
 include-labels:
   - "major"

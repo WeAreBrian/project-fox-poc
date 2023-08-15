@@ -9,7 +9,7 @@ categories:
   - title: "⚡ Release"
     label: "major"
   - title: "🚀 New Features"
-    label: "feature"
+    label: "minor"
   - title: "🐞 Bug Fixes"
     label: "patch"
 
@@ -23,6 +23,11 @@ version-resolver:
   patch:
     labels:
       - "patch"
+
+inclde-labels:
+  - "major"
+  - "minor"
+  - "patch"
 
 exclude-labels:
   - "skip-changelog"

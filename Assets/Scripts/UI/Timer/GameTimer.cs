@@ -10,6 +10,8 @@ public class GameTimer : MonoBehaviour
     private float m_TimeElapsed;
     private bool m_TimerIsRunning;
 
+    public float TimeElapsed { get => m_TimeElapsed; }
+
     private void Start()
     {
         ResetTimer();

@@ -140,14 +140,14 @@ jobs:
 
     steps:
       - name: Publish to Itch.io
-        uses: KikimoraGames/itch-publish@v0.0.3
-        with:
-          butlerApiKey: ${{ secrets.ITCH_API_KEY }}
-          gameData: ./A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
-          itchUsername: ${{ secrets.ITCH_USERNAME }}
-          itchGameId: ${{ secrets.ITCH_GAME_ID }}
-          buildChannel: ${{ matrix.targetPlatform }}
-          buildNumber: ${{ needs.draftRelease.outputs.tag_name }}
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.2
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.ITCH_API_KEY }}
+          CHANNEL: ${{ matrix.targetPlatform }}
+          ITCH_GAME: ${{ secrets.ITCH_GAME_ID }}
+          ITCH_USER: ${{ secrets.ITCH_USERNAME }}
+          PACKAGE: ./A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          VERSION: ${{ needs.draftRelease.outputs.tag_name }}
 
   notifySuccess:
     needs: [deployToGithub, deployToItch]

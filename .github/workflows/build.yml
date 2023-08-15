@@ -229,6 +229,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
+
+      - name: Get PR Number
+        uses: 8BitJonny/gh-get-current-pr@2.2.0
+        id: PR
+          
       - name: Link to PR 🔗
         if: env.WORKFLOW_CONCLUSION == 'success'
         uses: actions/github-script@v6
@@ -236,7 +241,7 @@ jobs:
           github-token: ${{ secrets.GH_PAT }}
           script: |
             github.rest.issues.createComment({
-              issue_number: ${{ github.event.number }},
+              issue_number: ${{ steps.PR.outputs.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `Link to build: https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }}`

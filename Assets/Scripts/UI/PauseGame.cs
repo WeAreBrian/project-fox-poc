@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PauseOnFox : MonoBehaviour
+public class PauseGame : MonoBehaviour
 {
     GameObject m_PauseMenu;
     // Start is called before the first frame update

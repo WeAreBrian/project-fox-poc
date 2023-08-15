@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
 
-public class Pause : MonoBehaviour
+public class ShowPauseMenu : MonoBehaviour
 {
 	public static bool s_GamePaused = false;
 	private VisualElement m_PauseRoot;

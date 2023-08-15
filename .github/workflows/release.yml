@@ -133,7 +133,7 @@ jobs:
           CHANNEL: ${{ matrix.targetPlatform }}
           ITCH_GAME: ${{ secrets.ITCH_GAME_ID }}
           ITCH_USER: ${{ secrets.ITCH_USERNAME }}
-          PACKAGE: build/A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          PACKAGE: A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
           VERSION: ${{ needs.draftRelease.outputs.tag_name }}
 
   notifySuccess:

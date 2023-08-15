@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8532552572255201572}
   - component: {fileID: 8532552572255201571}
+  - component: {fileID: 8262861025337830715}
   m_Layer: 0
   m_Name: PhysicsChain
   m_TagString: Untagged
@@ -49,3 +50,15 @@ MonoBehaviour:
   Link: {fileID: 824484886045038957, guid: d1832ef849add334fa3163964b156bba, type: 3}
   Anchor: {fileID: 0}
   Player: {fileID: 0}
+--- !u!210 &8262861025337830715
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8532552572255201573}
+  m_Enabled: 1
+  m_SortingLayerID: -1529567835
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

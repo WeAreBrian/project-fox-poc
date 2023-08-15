@@ -100,16 +100,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: build.yml
           run_number: ${{ inputs.buildNumber }}
-
-      - name: Rename Folders for Release
-        run: find . -type d -name 'Build-*' -exec bash -c 'mv "$0" "A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}"' {} \;
-      - run: ls
+          name: ${{ matrix.targetPlatform }}
+          name_is_regexp: true
 
       - name: Zip Build
         uses: TheDoctor0/zip-release@0.6.0
         with:
           type: "zip"
-          path: A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}
+          path: Build-${{ matrix.targetPlatform }}-${{ github.run_number }}
           filename: "A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip"
 
       - name: Upload Builds as Release Asset

@@ -48,6 +48,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: build.yml
           run_number: ${{ inputs.buildNumber }}
+      - run: ls
 
   tagCommit:
     needs: draftRelease

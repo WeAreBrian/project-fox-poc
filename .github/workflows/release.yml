@@ -67,9 +67,14 @@ jobs:
 
       - uses: actions/checkout@v3
       - name: Tag Commit
-        run: |
-          git checkout ${{ steps.read_sha.outputs.sha }}
-          git tag ${{ needs.draftRelease.outputs.tag_name }}
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: ${{ needs.draftRelease.outputs.tag_name }}
+          default_bump: false
+          default_prerelease_bump: false
+          commit_sha: ${{ steps.read_sha.outputs.sha }}
 
   uploadBuildToDraft:
     needs: draftRelease
@@ -95,7 +100,7 @@ jobs:
         uses: TheDoctor0/zip-release@0.6.0
         with:
           type: "zip"
-          path: Build-${{ matrix.targetPlatform }}-${{ github.run_number }}
+          path: Build-${{ matrix.targetPlatform }}-${{ inputs.buildNumber }}
           filename: "A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip"
 
       - name: Upload Builds as Release Asset

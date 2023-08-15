@@ -233,6 +233,7 @@ jobs:
         if: env.WORKFLOW_CONCLUSION == 'success'
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GH_PAT }}
           script: |
             github.rest.issues.createComment({
               issue_number: ${{ github.run_number }},

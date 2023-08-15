@@ -85,7 +85,7 @@ jobs:
         targetPlatform:
           - WebGL
           - StandaloneOSX
-          - StandaloneWindows
+          - StandaloneWindows64
     steps:
       - name: Download build
         uses: dawidd6/action-download-artifact@v2

@@ -91,7 +91,7 @@ jobs:
     steps:
       - name: Rename directories
         run: |
-          for directory in Build-${{ matrix.targetPlatform }}-*; do
+          for directory in Build-${{ matrix.targetPlatform }}-${{ inputs.buildNumber }}; do
             new_directory="${directory/-*/-${{ needs.draftRelease.outputs.tag_name }}}"
 
             mv "$directory" "$new_directory"

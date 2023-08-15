@@ -90,6 +90,7 @@ jobs:
           - StandaloneOSX
           - StandaloneWindows
     steps:
+      - run: ls
       - name: Rename Folders for Release
         run: |
           for folder in ./*; do

@@ -74,9 +74,10 @@ jobs:
           done < "$input_file"
           echo "sha=$file_text" >> "$GITHUB_OUTPUT"
 
-      - run: echo ${{ steps.read_sha.outputs.sha }}"
+      - run: echo ${{ steps.read_sha.outputs.sha }}
 
-      - run: git tag -a ${{ needs.draftRelease.outputs.tag_name }} ${{ steps.read_sha.outputs.sha }} -m "${{ steps.read_sha.outputs.sha }}"
+      - name: Tag Commit
+        run: git tag -a ${{ needs.draftRelease.outputs.tag_name }} ${{ steps.read_sha.outputs.sha }} -m "${{ steps.read_sha.outputs.sha }}"
 
   uploadBuildToDraft:
     needs: [draftRelease, downloadBuildFromBuildPipeline]
@@ -89,13 +90,8 @@ jobs:
           - StandaloneOSX
           - StandaloneWindows
     steps:
-      - name: Rename directories
-        run: |
-          for directory in Build-${{ matrix.targetPlatform }}-${{ inputs.buildNumber }}; do
-            new_directory="${directory/-*/-${{ needs.draftRelease.outputs.tag_name }}}"
-
-            mv "$directory" "$new_directory"
-          done
+      - name: Rename Folders for Release
+        run: mv Build-${{ matrix.targetPlatform }}-${{ inputs.buildNumber }} A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}
 
       - name: Upload Builds as Release Asset
         uses: gfreezy/upload-release-asset@v1.0.2

@@ -67,21 +67,9 @@ jobs:
 
       - uses: actions/checkout@v3
       - name: Tag Commit
-        uses: rickstaa/action-create-tag@v1
-        id: "tag_create"
-        with:
-          tag: "${{ needs.draftRelease.outputs.tag_name }}"
-          tag_exists_error: false
-          message: "${{ needs.draftRelease.outputs.tag_name }}"
-          commit_sha: ${{ steps.read_sha.outputs.sha }}
-
-      # Print result using the env variable.
-      -  run: |
-          echo "Tag already present: ${{ env.TAG_EXISTS }}"
-
-      # Print result using the action output.
-      - run: |
-          echo "Tag already present: ${{ steps.tag_create.outputs.tag_exists }}"
+        run: |
+          git checkout ${{ steps.read_sha.outputs.sha }}
+          git tag ${{ needs.draftRelease.outputs.tag_name }}
 
   uploadBuildToDraft:
     needs: draftRelease

@@ -15,9 +15,10 @@ public class ShowPauseMenu : MonoBehaviour
 	private void OnEnable()
 	{
 		s_GamePaused = false;
-        //Get levelselect object
-        GameObject m_LevelSelectObject = GameObject.Find("LevelSelectMenu");
-		m_LevelSelectRoot = m_LevelSelectObject.GetComponent<UIDocument>().rootVisualElement;
+		// Hiding level select menu for now
+		//Get levelselect object
+		// GameObject m_LevelSelectObject = GameObject.Find("LevelSelectMenu");
+		// m_LevelSelectRoot = m_LevelSelectObject.GetComponent<UIDocument>().rootVisualElement;
 		//enable the component (its disabled by default so doesnt get in the way of the scene view when editting levels
 		GetComponent<UIDocument>().enabled = true;
 		m_PauseRoot = GetComponent<UIDocument>().rootVisualElement;
@@ -25,41 +26,43 @@ public class ShowPauseMenu : MonoBehaviour
 		m_PauseRoot.style.display = DisplayStyle.None;
 		//getting all the buttons
 		Button m_ResumeButton = m_PauseRoot.Q<Button>("Resume");
-		Button m_LevelSelectButton = m_PauseRoot.Q<Button>("LevelSelect");
-		Button m_SettingsButton = m_PauseRoot.Q<Button>("Settings");
-		Button m_MainMenuButton = m_PauseRoot.Q<Button>("MainMenu");
+		Button m_RestartButton = m_PauseRoot.Q<Button>("Restart");
+		// Hiding these 3 buttons for now
+		// Button m_LevelSelectButton = m_PauseRoot.Q<Button>("LevelSelect");
+		// Button m_SettingsButton = m_PauseRoot.Q<Button>("Settings");
+		// Button m_MainMenuButton = m_PauseRoot.Q<Button>("MainMenu");
 
 		//Setting what dem buttons do
 		m_ResumeButton.clicked += () => UnpauseGame();
+		m_RestartButton.clicked += () => RestartGame();
+		// Hiding these UI screens for now
 		//Show levelselect ui
-		m_LevelSelectButton.clicked += () => m_LevelSelectRoot.style.display = DisplayStyle.Flex;
-		m_SettingsButton.clicked += () => Debug.Log("TODO Settings");
-		m_MainMenuButton.clicked += () => LoadScene("MainMenu");
+		// m_LevelSelectButton.clicked += () => m_LevelSelectRoot.style.display = DisplayStyle.Flex;
+		// m_SettingsButton.clicked += () => Debug.Log("TODO Settings");
+		// m_MainMenuButton.clicked += () => LoadScene("MainMenu");
 	}
 
 	//Note update in other scripts still runs when game is paused (Timescale = 0) but FixedUpdate does NOT. Input checks in other Update()s still go off so need to check if Pause.s_GamePaused = false for other stuff.
 
 
-    public void TryPause()	//uses input system
-    {
-        if (s_GamePaused)
-        {
-            //If currently paused:
-            UnpauseGame();
-        }
-        else
-        {
-            //If not paused:
-            PauseGame();
-        }
-    }
+	public void TryPause()  //uses input system
+	{
+		if (s_GamePaused)
+		{
+			//If currently paused:
+			UnpauseGame();
+		}
+		else
+		{
+			//If not paused:
+			PauseGame();
+		}
+	}
 
-
-
-    private void PauseGame()
+	private void PauseGame()
 	{
 		s_GamePaused = true;
-		m_PreviousTimeScale = Time.timeScale;	
+		m_PreviousTimeScale = Time.timeScale;
 		Time.timeScale = 0;
 		AudioListener.pause = true; //pauses audio
 		m_PauseRoot.style.display = DisplayStyle.Flex;
@@ -71,7 +74,16 @@ public class ShowPauseMenu : MonoBehaviour
 		Time.timeScale = m_PreviousTimeScale;   //Sets timescale to previous timescale (instead of 1) so that incase there was a slowmo effect then it doesnt cancel it.
 		AudioListener.pause = false;
 		m_PauseRoot.style.display = DisplayStyle.None;
-		m_LevelSelectRoot.style.display = DisplayStyle.None;
+		// m_LevelSelectRoot.style.display = DisplayStyle.None;
+	}
+
+	private void RestartGame()
+	{
+		s_GamePaused = false;
+		Time.timeScale = m_PreviousTimeScale;
+		AudioListener.pause = false;
+		m_PauseRoot.style.display = DisplayStyle.None;
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	private void LoadScene(string scene)

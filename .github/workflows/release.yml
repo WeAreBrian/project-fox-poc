@@ -140,7 +140,7 @@ jobs:
 
     steps:
       - name: Publish to Itch.io
-        uses: josephbmanley/butler-publish-itchio-action@v1.0.2
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.3
         env:
           BUTLER_CREDENTIALS: ${{ secrets.ITCH_API_KEY }}
           CHANNEL: ${{ matrix.targetPlatform }}

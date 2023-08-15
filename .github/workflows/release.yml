@@ -37,6 +37,18 @@ jobs:
       - id: output_html_url
         run: echo "html_url=${{ steps.release-draft.outputs.html_url }}" >> "$GITHUB_OUTPUT"
 
+  downloadBuildFromBuildPipeline:
+    name: Download Build 📥
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          run_number: ${{ inputs.buildNumber }}
+
   tagCommit:
     needs: draftRelease
     name: Tag Commit For Release 🏷️
@@ -48,14 +60,14 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: build.yml
-          run-number: ${{ inputs.buildNumber }}
+          run_number: ${{ inputs.buildNumber }}
           name: trigger_sha
           name_is_regexp: true
 
       - name: Get SHA
         id: read_sha
         run: |
-          input_file="trigger_sha.txt"
+          input_file="trigger_sha/trigger_sha.txt"
           while read line
           do
             file_text=$line
@@ -65,19 +77,6 @@ jobs:
       - run: echo ${{ steps.read_sha.outputs.sha }}"
 
       - run: git tag -a ${{ needs.draftRelease.outputs.tag_name }} ${{ steps.read_sha.outputs.sha }} -m "${{ steps.read_sha.outputs.sha }}"
-
-  downloadBuildFromBuildPipeline:
-    name: Download Build 📥
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: build.yml
-          run-number: ${{ inputs.buildNumber }}
-          path: build
 
   uploadBuildToDraft:
     needs: [draftRelease, downloadBuildFromBuildPipeline]
@@ -90,8 +89,13 @@ jobs:
           - StandaloneOSX
           - StandaloneWindows
     steps:
-      - name: Rename artifact
-        run: mv build/Build-${{ matrix.targetPlatform }}-${{ inputs.buildNumber }}.zip build/a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+      - name: Rename directories
+        run: |
+          for directory in Build-${{ matrix.targetPlatform }}-*; do
+            new_directory="${directory/-*/-${{ needs.draftRelease.outputs.tag_name }}}"
+
+            mv "$directory" "$new_directory"
+          done
 
       - name: Upload Builds as Release Asset
         uses: gfreezy/upload-release-asset@v1.0.2
@@ -100,8 +104,8 @@ jobs:
         with:
           upload_url: ${{ needs.draftRelease.outputs.upload_url }}
           release_id: ${{ needs.draftRelease.outputs.release_id }}
-          asset_path: ./build/a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
-          asset_name: a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          asset_path: ./A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          asset_name: A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
           asset_content_type: application/zip
       
   deploy:
@@ -123,7 +127,7 @@ jobs:
           CHANNEL: ${{ matrix.targetPlatform }}
           ITCH_GAME: ${{ secrets.ITCH_GAME_ID }}
           ITCH_USER: ${{ secrets.ITCH_USERNAME }}
-          PACKAGE: build/a-foxs-tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
+          PACKAGE: build/A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}.zip
           VERSION: ${{ needs.draftRelease.outputs.tag_name }}
 
   notifySuccess:

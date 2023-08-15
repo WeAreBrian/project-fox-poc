@@ -78,6 +78,9 @@ jobs:
 
       - run: echo ${{ steps.read_sha.outputs.sha }}
 
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
       - name: Tag Commit
         run: git tag -a ${{ needs.draftRelease.outputs.tag_name }} ${{ steps.read_sha.outputs.sha }} -m "${{ steps.read_sha.outputs.sha }}"
 
@@ -94,10 +97,7 @@ jobs:
     steps:
       - run: ls
       - name: Rename Folders for Release
-        run: |
-          for folder in ./*; do
-            mv "Build-${{ matrix.targetPlatform }}-${{ inputs.buildNumber }}" "A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}"
-          done
+        run: rename -v 's/Build-(\w+)-(\d+)/A-Foxs-Tale_$1_${{ needs.draftRelease.outputs.tag_name }}/' Build-*
         
       - name: Upload Builds as Release Asset
         uses: gfreezy/upload-release-asset@v1.0.2

@@ -138,6 +138,7 @@ jobs:
           - StandaloneOSX
           - StandaloneWindows64
 
+    steps:
       - name: Publish to Itch.io
         uses: KikimoraGames/itch-publish@v0.0.3
         with:

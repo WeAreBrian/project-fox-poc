@@ -102,7 +102,7 @@ jobs:
           run_number: ${{ inputs.buildNumber }}
 
       - name: Rename Folders for Release
-        run: find . -type d -name 'Build-*' -exec bash -c 'mv "$0" "A-Foxs-Tale_${0#Build-}_${{ needs.draftRelease.outputs.tag_name }}"' {} \;
+        run: find . -type d -name 'Build-*' -exec bash -c 'mv "$0" "A-Foxs-Tale_${{ matrix.targetPlatform }}_${{ needs.draftRelease.outputs.tag_name }}"' {} \;
       - run: ls
 
       - name: Zip Build

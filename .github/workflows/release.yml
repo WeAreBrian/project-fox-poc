@@ -78,11 +78,17 @@ jobs:
 
       - run: echo ${{ steps.read_sha.outputs.sha }}
 
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
       - name: Tag Commit
-        run: git tag -a ${{ needs.draftRelease.outputs.tag_name }} ${{ steps.read_sha.outputs.sha }} -m "${{ steps.read_sha.outputs.sha }}"
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GH_PAT }}
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ needs.draftRelease.outputs.tag_name }}',
+              sha: ${{ steps.read_sha.outputs.sha }}
+            })
 
   uploadBuildToDraft:
     needs: [draftRelease, downloadBuildFromBuildPipeline]
@@ -97,7 +103,7 @@ jobs:
     steps:
       - run: ls
       - name: Rename Folders for Release
-        run: rename -v 's/Build-(\w+)-(\d+)/A-Foxs-Tale_$1_${{ needs.draftRelease.outputs.tag_name }}/' Build-*
+        run: find . -type d -name 'Build-*' -exec bash -c 'mv "$0" "A-Foxs-Tale_${0#Build-}_${{ needs.draftRelease.outputs.tag_name }}"' {} \;
         
       - name: Upload Builds as Release Asset
         uses: gfreezy/upload-release-asset@v1.0.2

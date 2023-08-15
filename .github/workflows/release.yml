@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       buildNumber:
-        description: 'QA Build Number (default to latest)'
-        required: false
+        description: 'QA Build Number'
+        required: true
         type: number
 
 permissions:

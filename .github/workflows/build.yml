@@ -236,7 +236,7 @@ jobs:
           github-token: ${{ secrets.GH_PAT }}
           script: |
             github.rest.issues.createComment({
-              issue_number: ${{ github.run_number }},
+              issue_number: ${{ github.event.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `Link to build: https://github.com/WeAreBrian/project-fox-poc/actions/runs/${{ github.run_id }}`

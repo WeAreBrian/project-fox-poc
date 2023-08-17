@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 29d57d403509c8e489c362af19ded1d7
+guid: a89db590be856e94caff099301793e40
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: run sprites_0
+      name: climb sprites_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcb4a7ccc51e964469e21932bfafe3e7
-      internalID: -728633990
+      spriteID: 7400839462d1b5f479ef85764a6135f6
+      internalID: -1345162734
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_1
+      name: climb sprites_1
       rect:
         serializedVersion: 2
         x: 400
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8825839824a902489e9c75bf4e4b4e3
-      internalID: 413901512
+      spriteID: 6f6156a447270f24698ab8cec48aecdc
+      internalID: 918868808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_2
+      name: climb sprites_2
       rect:
         serializedVersion: 2
         x: 800
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89cbbd87c0eeffe43980698ed6f0601b
-      internalID: -1409724250
+      spriteID: 61a85ae15f8996143bc2a0a39bc28072
+      internalID: 723662229
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_3
+      name: climb sprites_3
       rect:
         serializedVersion: 2
         x: 1200
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db2d9c046f44a014890090127d40ef12
-      internalID: -1989481304
+      spriteID: 95d875f30ff014e4c868ee3a41b71cc8
+      internalID: 673985997
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_4
+      name: climb sprites_4
       rect:
         serializedVersion: 2
         x: 1600
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3c7576aeec8e694c86d3ae118d42166
-      internalID: -1292061739
+      spriteID: f14e9e802c935c94a82d6960b981da12
+      internalID: -1697352272
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_5
+      name: climb sprites_5
       rect:
         serializedVersion: 2
         x: 2000
@@ -242,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4110b204c289c0d439be07bdef190d9e
-      internalID: -1977977695
+      spriteID: 270239ecfffef9345ab3583522cdf4a9
+      internalID: 1650546598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_6
+      name: climb sprites_6
       rect:
         serializedVersion: 2
         x: 0
@@ -263,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d548ef7ac5d336d4d9e2a1d0c49af7b2
-      internalID: -1619711680
+      spriteID: 6a3a97d62e180674e96a2cfaccedd1af
+      internalID: -551121066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_7
+      name: climb sprites_7
       rect:
         serializedVersion: 2
         x: 400
@@ -284,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fed9ab0a8ff441a4e8482e924841bae0
-      internalID: -1743481511
+      spriteID: 70003ba4f628d314c985c8ef1788dc41
+      internalID: -270233559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_8
+      name: climb sprites_8
       rect:
         serializedVersion: 2
         x: 800
@@ -305,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 379f0b36a4258ad4cb25f4fb32e6aefd
-      internalID: -80777182
+      spriteID: 6abea6cf57b74ae418fd9f2cf37e8b00
+      internalID: -499962887
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: run sprites_9
+      name: climb sprites_9
       rect:
         serializedVersion: 2
         x: 1200
@@ -326,134 +326,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f758139f51f6d3428775b77bc68efa3
-      internalID: -1946582129
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: run sprites_10
-      rect:
-        serializedVersion: 2
-        x: 1600
-        y: 2000
-        width: 400
-        height: 500
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ea5a6ac953f63974a82b727631b30758
-      internalID: -1419012422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: run sprites_11
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 2000
-        width: 400
-        height: 500
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f9326abe5be5dc34a87abffc470e6623
-      internalID: -2120865440
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: run sprites_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1500
-        width: 400
-        height: 500
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8892a8aa0e5b2f14c8c30daf0347bad2
-      internalID: 559093668
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: run sprites_13
-      rect:
-        serializedVersion: 2
-        x: 400
-        y: 1500
-        width: 400
-        height: 500
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fab5232fbed6e8b418d60cf5095abaef
-      internalID: -637746363
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: run sprites_14
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 1500
-        width: 400
-        height: 500
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 13c119bc5138fae42810d3c55ca36fa1
-      internalID: 1145687559
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: run sprites_15
-      rect:
-        serializedVersion: 2
-        x: 1200
-        y: 1500
-        width: 400
-        height: 500
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e116e80fa7c2f946af1527baccecceb
-      internalID: 28973249
+      spriteID: e3160b9a46d843042a19d37772183ecd
+      internalID: 1904560831
       vertices: []
       indices: 
       edges: []
@@ -461,7 +335,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6d482c6688f1e484ab24d578926eaf7a
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -469,22 +343,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      run sprites_0: -728633990
-      run sprites_1: 413901512
-      run sprites_10: -1419012422
-      run sprites_11: -2120865440
-      run sprites_12: 559093668
-      run sprites_13: -637746363
-      run sprites_14: 1145687559
-      run sprites_15: 28973249
-      run sprites_2: -1409724250
-      run sprites_3: -1989481304
-      run sprites_4: -1292061739
-      run sprites_5: -1977977695
-      run sprites_6: -1619711680
-      run sprites_7: -1743481511
-      run sprites_8: -80777182
-      run sprites_9: -1946582129
+      climb sprites_0: -1345162734
+      climb sprites_1: 918868808
+      climb sprites_2: 723662229
+      climb sprites_3: 673985997
+      climb sprites_4: -1697352272
+      climb sprites_5: 1650546598
+      climb sprites_6: -551121066
+      climb sprites_7: -270233559
+      climb sprites_8: -499962887
+      climb sprites_9: 1904560831
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

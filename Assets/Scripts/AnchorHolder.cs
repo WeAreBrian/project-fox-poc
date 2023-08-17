@@ -13,8 +13,8 @@ public class AnchorHolder : MonoBehaviour
 
 	public bool HoldingAnchor => m_Anchor != null;
 	public float GrabRadius = 1;
-	public Vector2 HoldPosition = new Vector2(0, 0.5f);
-	public Vector3 HoldRotation = new Vector3(0, 0, 115);
+	public Vector3 HoldPosition = new Vector2(0, 0.5f);
+	public Vector3 HoldRotation = new Vector3(0, 0, 30);
 
 	public Vector2 SurfPosition = new Vector2(0, -0.5f);
 	public Vector3 SurfRotation = new Vector3(0, 0, 90);
@@ -102,7 +102,7 @@ public class AnchorHolder : MonoBehaviour
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0;
-		rigidBody.position = transform.position + (Vector3)HoldPosition;
+		rigidBody.position = transform.position + HoldPosition;
 		m_Anchor.transform.rotation = Quaternion.Euler(HoldRotation);
 
 		collider.enabled = false;
@@ -143,7 +143,7 @@ public class AnchorHolder : MonoBehaviour
 		var collider = m_Anchor.GetComponent<Collider2D>();
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0;
-		rigidBody.position = transform.position + (Vector3)HoldPosition;
+		rigidBody.position = transform.position + HoldPosition;
 		m_Anchor.transform.rotation = Quaternion.Euler(HoldRotation);
 
 		collider.enabled = false;
@@ -188,7 +188,7 @@ public class AnchorHolder : MonoBehaviour
             }
             else
             {
-				m_Anchor.transform.position = transform.position + (Vector3)HoldPosition;
+				m_Anchor.transform.position = transform.position + HoldPosition;
 			}
 		}
 	}
@@ -196,5 +196,17 @@ public class AnchorHolder : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 		Gizmos.DrawRay(transform.position, GameObject.Find("Anchor").transform.position - transform.position);
+	}
+
+	private void OnMove(InputValue value)
+	{
+		if (m_Anchor == null) return;
+
+		if (value.Get<float>() == 0) return;
+
+		var facingLeft = value.Get<float>() < 0;
+		var dir = facingLeft ? 180 : 0;
+		HoldPosition = new Vector3(HoldPosition.x, HoldPosition.y, facingLeft ? 0 : 1);
+		m_Anchor.transform.SetLocalPositionAndRotation(m_Anchor.transform.position, Quaternion.Euler(0, dir, HoldRotation.z));
 	}
 }

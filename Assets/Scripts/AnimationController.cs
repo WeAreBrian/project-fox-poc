@@ -59,5 +59,8 @@ public class AnimationController : MonoBehaviour
         m_Animator.SetBool("IsMoving", m_Moving);
     }
 
-
+    void OnClimb(InputValue value)
+    {
+        m_Animator.SetBool("ClimbingMoving", value.Get<float>() != 0);
+    }
 }

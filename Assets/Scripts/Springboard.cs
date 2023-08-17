@@ -25,6 +25,7 @@ public class Springboard : MonoBehaviour, IToggle
 	private VerticalMovement m_VerticalMovement;
 	private Grounded m_Grounded;
 	private Anchor m_AnchorScript;
+	private Animator m_Animator;
 
 	//private Rigidbody2D[] m_RigidbodiesInTriggerZone;
 	private List<Rigidbody2D> m_RigidbodiesInTriggerZone = new List<Rigidbody2D>();
@@ -38,6 +39,7 @@ public class Springboard : MonoBehaviour, IToggle
 		m_VerticalMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<VerticalMovement>();
 		m_Grounded = GameObject.FindGameObjectWithTag("Player").GetComponent<Grounded>();
 		m_AnchorScript = GameObject.FindGameObjectWithTag("Anchor").GetComponent<Anchor>();
+		m_Animator = GetComponentInChildren<Animator>();
 	}
 
 	private void OnTriggerEnter2D(Collider2D m_Collision)
@@ -123,6 +125,7 @@ public class Springboard : MonoBehaviour, IToggle
 
 		AddForceToRigidBodies();
 
+		m_Animator.SetTrigger("Activate");
 		AudioController.PlaySound(m_ActivateSound, 1, 1, MixerGroup.SFX);
 	}
 

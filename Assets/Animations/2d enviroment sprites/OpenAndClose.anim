@@ -101,14 +101,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.68333334
-    functionName: 
+    functionName: EnableCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 3.2833333
-    functionName: 
+    functionName: DisableCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

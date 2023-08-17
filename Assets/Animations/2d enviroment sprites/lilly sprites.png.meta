@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -173,7 +173,112 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: lilly sprites_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 800
+        width: 352
+        height: 177
+      alignment: 9
+      pivot: {x: 0.49181747, y: 0.19896151}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f06250b4ea55e624297caa1b8ee015af
+      internalID: -1713926345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lilly sprites_1
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 800
+        width: 352
+        height: 200
+      alignment: 9
+      pivot: {x: 0.5040911, y: 0.21197937}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d3f7b0dc76e5544ca3c174841260792
+      internalID: -2003697389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lilly sprites_2
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 566
+        width: 352
+        height: 177
+      alignment: 9
+      pivot: {x: 0.49999988, y: 0.19082521}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 714d572ebd1825e43bc4fa5fa3e5b910
+      internalID: -339775075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lilly sprites_3
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 566
+        width: 352
+        height: 117
+      alignment: 9
+      pivot: {x: 0.50818235, y: 0.26613677}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dcabd70a2c67c34a817125982257659
+      internalID: 354941758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lilly sprites_4
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 332
+        width: 352
+        height: 114
+      alignment: 9
+      pivot: {x: 0.49999988, y: 0.22208525}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b36189c3a3417fa44b147c9faacc4bb0
+      internalID: -1934588645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -184,7 +289,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      lilly sprites_0: -1713926345
+      lilly sprites_1: -2003697389
+      lilly sprites_2: -339775075
+      lilly sprites_3: 354941758
+      lilly sprites_4: -1934588645
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

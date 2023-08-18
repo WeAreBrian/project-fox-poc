@@ -185,20 +185,30 @@ public class Anchor : MonoBehaviour
 
 	private void SpawnAnchorImpactImage()
 	{
-		Destroy(m_SpawnedAnchorImpactImage);
+        Destroy(m_SpawnedAnchorImpactImage);
 
-		//Get position and normal of the collision where anchor hit object
+        // Get position and normal of the collision where anchor hit object
         Vector3 m_CollisionPosition = m_Collision.contacts[0].point;
         Vector2 m_CollisionNormal = m_Collision.contacts[0].normal;
 
-		//Get an angle out of the normal vector
-        float m_Angle = Mathf.Atan2(m_CollisionNormal.y, m_CollisionNormal.x) * Mathf.Rad2Deg;
-        m_Angle -= 90; //This is to properly orient the sprite
+        // Define a layer mask to target the "Terrain" layer
+        LayerMask m_TerrainLayerMask = LayerMask.GetMask("Terrain");
 
-		//turn angle into rotation
+        // Calculate ray direction using collision normal
+        Vector2 m_RayDirection = -m_CollisionNormal;
+
+        // Calculate spawn position using a raycast
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, m_RayDirection, Mathf.Infinity, m_TerrainLayerMask);
+        Vector3 m_SpawnPosition = hit.point;
+
+        // Get an angle out of the normal vector
+        float m_Angle = Mathf.Atan2(m_CollisionNormal.y, m_CollisionNormal.x) * Mathf.Rad2Deg;
+        m_Angle -= 90; // This is to properly orient the sprite
+
+        // Turn angle into rotation
         Quaternion m_Rotation = Quaternion.AngleAxis(m_Angle, Vector3.forward);
-		
-        m_SpawnedAnchorImpactImage = Instantiate(m_AnchorImpactImage, m_CollisionPosition, m_Rotation);
+
+        m_SpawnedAnchorImpactImage = Instantiate(m_AnchorImpactImage, m_SpawnPosition, m_Rotation);
 
     }
 

@@ -185,7 +185,7 @@ public class Anchor : MonoBehaviour
 
 	private void SpawnAnchorImpactImage()
 	{
-        Destroy(m_SpawnedAnchorImpactImage);
+        //Destroy(m_SpawnedAnchorImpactImage);
 
         // Get position and normal of the collision where anchor hit object
         Vector3 m_CollisionPosition = m_Collision.contacts[0].point;

@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// this is disabled for now but not deleted just in case we need it again
+
 public class AnchorStall : MonoBehaviour
 {
 	[SerializeField]

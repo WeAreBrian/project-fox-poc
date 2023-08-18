@@ -16,18 +16,18 @@ GameObject:
   - component: {fileID: 8127432424583510208}
   - component: {fileID: 1866713526479858622}
   - component: {fileID: 8191183188405619863}
-  - component: {fileID: 6745542584575392125}
   - component: {fileID: 3023190908246841861}
   - component: {fileID: 6171634025277714744}
-  - component: {fileID: 4507141940674983407}
   - component: {fileID: 1852206392}
   - component: {fileID: 8843809252378637354}
   - component: {fileID: 2160122249298376338}
   - component: {fileID: 2794392424498695009}
   - component: {fileID: 8583358091099009673}
   - component: {fileID: 8015112956025727630}
-  - component: {fileID: 8444935620643434777}
-  - component: {fileID: 3923583092029839427}
+  - component: {fileID: 2111517087813912528}
+  - component: {fileID: 4379814004752795122}
+  - component: {fileID: 2200327642219540464}
+  - component: {fileID: 5822406008445146550}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -66,7 +66,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 10
-  m_LinearDrag: 0.2
+  m_LinearDrag: 0.4
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 929c753567057f24ab1c8c30d1f412ce, type: 2}
@@ -203,11 +203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ab3354648954851aa2118b29a80bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GroundSpeed: 8
-  m_HoldingAnchorSpeed: 4
-  m_AirAcceleration: 4
+  m_GroundSpeed: 12
+  m_HoldingAnchorSpeed: 8
+  m_AirAcceleration: 8
   m_MaxAirSpeed: 10
-  m_BHopWindow: 0.01
+  m_BHopWindow: 0.05
   m_AirAccelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -276,9 +276,18 @@ MonoBehaviour:
   Landed:
     m_PersistentCalls:
       m_Calls: []
+  HitHazard:
+    m_PersistentCalls:
+      m_Calls: []
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 384
+  m_HazardMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_ForcefieldMask:
+    serializedVersion: 2
+    m_Bits: 4096
   m_LandSound: {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
   m_LandingDustPoof: {fileID: 2473405945096596177, guid: 2e5f2c9c7d65d4589ae3d0c81c8b4028,
     type: 3}
@@ -345,39 +354,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb9f870adee737640b9d79df2537f7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Surfing: 0
   GrabRadius: 1
   HoldPosition: {x: 0, y: 0.5}
   HoldRotation: {x: 0, y: 0, z: 115}
+  SurfPosition: {x: 0, y: -0.5}
+  SurfRotation: {x: 0, y: 0, z: 90}
+  m_NotFox:
+    serializedVersion: 2
+    m_Bits: 6529
   m_WeightedJump: {fileID: 1208819179330828543}
-  m_JumpMultiplier: 0.5
---- !u!114 &6745542584575392125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107137074636933804}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b437cfd50d5e4419987f5bcf19a16a52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_StallTime: 2
-  m_RevertVelocity: 0
-  m_Cooldown: 5
-  floatingText: {fileID: 8950826962864852270, guid: 8befd40b5792e0147bb596d46f7cd32c,
-    type: 3}
-  m_AnchorInteract:
-    m_Name: Anchor Interact
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: d07d996e-f1b1-4511-be8c-2f6926965d16
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  m_StallSound: {fileID: 8300000, guid: 7f5d49e1e5679ea4c8a80a98c57cef3f, type: 3}
-  m_StallEndSound: {fileID: 8300000, guid: 4c53ced2d72763544a4fd588a6e48025, type: 3}
+  m_JumpMultiplier: 0.7
 --- !u!114 &3023190908246841861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,27 +394,6 @@ MonoBehaviour:
   ClimbSpeedDamping: 0.1
   m_ClimbSound: {fileID: 8300000, guid: f060a7b91a02a0f448f2ea15c9cc2661, type: 3}
   m_ClimbSoundInterval: 0.4
---- !u!114 &4507141940674983407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107137074636933804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b877a944f01944a9ce48f3437632a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Cooldown: 1.5
-  PlayerJumpOffset: 0.25
-  PlayerTugSpeed: 10
-  AnchorDislodgeTravelTime: 0.4
-  AnchorFreeTravelTime: 0.85
-  floatingText: {fileID: 8950826962864852270, guid: 8befd40b5792e0147bb596d46f7cd32c,
-    type: 3}
-  m_PlayerTugSound: {fileID: 8300000, guid: 7e76af4e890a10648b79c226f01b0fe5, type: 3}
-  m_FullTugSound: {fileID: 8300000, guid: 66165d4d1ae66b9448058b984c11538d, type: 3}
 --- !u!114 &1852206392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a591ae5b1413d64aa5965991eca2803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CooldownColour: {r: 0, g: 0, b: 0, a: 0}
   m_RecallSound: {fileID: 0}
 --- !u!114 &2794392424498695009
 MonoBehaviour:
@@ -568,7 +535,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &8444935620643434777
+--- !u!210 &2111517087813912528
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_SortingLayerID: -1529567835
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &4379814004752795122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -580,7 +559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebebb0e6498a74432977baf9bd809c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3923583092029839427
+--- !u!114 &2200327642219540464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -589,14 +568,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 107137074636933804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87bf7097eb6ff420f96e6c953f95d127, type: 3}
+  m_Script: {fileID: 11500000, guid: ad647ed0988f34484b0ea50aa1cfbd51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnlyBoostGrapples: 1
-  m_MultiplyFoxsVelocity: 1.2
-  m_AddGrappledVerticalForceMax: 1500
-  m_AddForceToFoxsMoveDirection: 100
-  m_AddForceFromAnchorDirection: 300
+--- !u!114 &5822406008445146550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67cd3429e1ab24650a527b99fa4bd1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

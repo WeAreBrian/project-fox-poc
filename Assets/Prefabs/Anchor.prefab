@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5066340218285788534}
   - component: {fileID: 5066340218285788531}
   - component: {fileID: 2871652073308871481}
+  - component: {fileID: 6439212569294059226}
   m_Layer: 7
   m_Name: Anchor
   m_TagString: Anchor
@@ -248,6 +249,18 @@ PolygonCollider2D:
       - {x: 0.5127516, y: 0.08057451}
       - {x: 0.010997772, y: 0.62237066}
   m_UseDelaunayMesh: 0
+--- !u!210 &6439212569294059226
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5066340218285788536}
+  m_Enabled: 1
+  m_SortingLayerID: -1529567835
+  m_SortingLayer: 2
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1001 &812903841954458383
 PrefabInstance:
   m_ObjectHideFlags: 0

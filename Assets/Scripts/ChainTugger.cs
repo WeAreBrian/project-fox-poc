@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 
+// this is disabled for now but not deleted just in case we need it again
+
 public class ChainTugger : MonoBehaviour
 {
 	public float Cooldown = 1.5f;

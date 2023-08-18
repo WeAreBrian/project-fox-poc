@@ -68,11 +68,6 @@ public class AnimationController : MonoBehaviour
             m_model.transform.rotation = Quaternion.Euler(0, 90, 0);
         }
 
-        else
-        {
-            m_model.transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-
         m_Moving = value.Get<float>() != 0;
 
         m_Animator.SetBool("IsMoving", m_Moving);

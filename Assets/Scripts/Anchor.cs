@@ -34,6 +34,12 @@ public class Anchor : MonoBehaviour
     [SerializeField]
     private AudioClip m_AnchorBump;
 
+    [SerializeField]
+    private GameObject m_AnchorImpactImage;
+    private GameObject m_SpawnedAnchorImpactImage;
+
+    private Collision2D m_Collision;
+
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -67,6 +73,7 @@ public class Anchor : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        m_Collision = collision;    //For spawning anchor impact image
         if (collision.gameObject.CompareTag("Grapplable"))
         {
             UpdateState(AnchorState.Lodged);
@@ -157,12 +164,14 @@ public class Anchor : MonoBehaviour
 
             if (next == AnchorState.Lodged)
             {
+                SpawnAnchorImpactImage();
                 HapticManager.instance.RumblePulse(0.5f, 0.75f, 0.05f);
                 CameraShake.instance.Shake(2, 0.2f);
                 AudioController.PlaySound(m_AnchorLodge, 1, 1, MixerGroup.SFX);
             }
             else
             {
+                SpawnAnchorImpactImage();
                 HapticManager.instance.RumblePulse(0.25f, 1f, 0.1f);
                 CameraShake.instance.Shake(2, 0.1f);
                 AudioController.PlaySound(m_AnchorLand, 1, 1, MixerGroup.SFX);
@@ -172,6 +181,17 @@ public class Anchor : MonoBehaviour
         StateChanged?.Invoke(next);
 
 		m_State = next;
+    }
+
+    private void SpawnAnchorImpactImage()
+    {
+        Destroy(m_SpawnedAnchorImpactImage);
+
+        Vector3 spawnPosition = m_Collision.contacts[0].point;
+        Quaternion spawnRotation = Quaternion.identity; //same rotation
+
+
+        m_SpawnedAnchorImpactImage = Instantiate(m_AnchorImpactImage, spawnPosition, spawnRotation);
     }
 
     public void Drop()

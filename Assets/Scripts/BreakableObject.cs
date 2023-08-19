@@ -15,8 +15,11 @@ public class BreakableObject : MonoBehaviour
 
     Quaternion GetParticleSprayDirection(Collider2D collision)
     {
+        // get fox pos
+        GameObject fox = GameObject.FindGameObjectWithTag("Player");
+
         // get local position of colliding obj
-        Vector2 m_localPos = gameObject.transform.position - collision.gameObject.transform.position;
+        Vector2 m_localPos = gameObject.transform.position - fox.gameObject.transform.position;
 
         if (m_isVertical)
         {

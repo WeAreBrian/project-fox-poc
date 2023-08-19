@@ -1,21 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FadeAndDestroy : MonoBehaviour
 {
     SpriteRenderer[] m_SpriteRenderers;
 
     [SerializeField]
-    private float m_FadeOutDelay = 1f;
+    private float m_FadeOutDelay;
     [SerializeField]
-    private float m_FadeOutLength = 1f;
+    private float m_FadeOutLength;
+    [SerializeField]
+    private float m_DestroyTimer = 5f;
+    [SerializeField]
+    private bool m_ShouldShrink = true;
+
 
     private float m_Timer;
+    private Vector2 m_OriginalScale;
 
     private void Awake()
     {
         m_SpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+
+        m_FadeOutDelay = 0; //Random.Range(0.5f, 1.5f);
+        m_FadeOutLength = 0.2f; //Random.Range(0.2f, 0.5f);
+
+        m_OriginalScale = transform.localScale;
+        Debug.Log(m_OriginalScale);
+
     }
 
     private void Start()
@@ -53,11 +67,19 @@ public class FadeAndDestroy : MonoBehaviour
 
             }
 
-            //Destroy after finishes fading out
-            if (alpha <= 0.0f)
+            if (m_ShouldShrink)
             {
-                Destroy(gameObject);
+                // new scale towards 0
+                Vector2 m_NewScale = Vector2.Lerp(m_OriginalScale, m_OriginalScale * 0.9f, progress);
+                transform.localScale = m_NewScale;
             }
+            
+
+        }
+
+        if (m_Timer > m_DestroyTimer)
+        {
+            Destroy(gameObject);
         }
     }
 }

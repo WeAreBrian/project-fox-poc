@@ -145,6 +145,9 @@ public class Anchor : MonoBehaviour
 		//Reset rotation when anchor is picked up
 		if (next == AnchorState.Held)
 		{
+			//Set destroy timer to the crater
+			m_SpawnedAnchorImpactImage.AddComponent<FadeAndDestroy>();
+
 			m_Rigidbody.rotation = 0;
 		}
 

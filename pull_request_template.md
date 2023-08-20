@@ -1,5 +1,3 @@
-# [FOX-ticket_number: Ticket name](ticket-link-here)
-
 **Test scene (if any):**
 - `Scenes/SceneName.unity`
 

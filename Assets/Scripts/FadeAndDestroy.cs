@@ -28,8 +28,6 @@ public class FadeAndDestroy : MonoBehaviour
         m_FadeOutLength = 0.2f; //Random.Range(0.2f, 0.5f);
 
         m_OriginalScale = transform.localScale;
-        Debug.Log(m_OriginalScale);
-
     }
 
     private void Start()

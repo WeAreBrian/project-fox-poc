@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 087e9c02215a7a9448ab6eab3ed97377
+guid: 44998ed5a9ff80941b860f002aaf99bd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -119,69 +119,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: tvOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pitchplant sprites_0
+      name: water fall puff ani_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 255
-        width: 107
-        height: 235
+        x: 114
+        y: 1307
+        width: 806
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 682a1a9202d92a34db24160934a91c7d
-      internalID: -396276116
+      spriteID: b1c0b757b0a2cc54284262f90cb76fbd
+      internalID: 1828000846
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pitchplant sprites_1
+      name: water fall puff ani_1
       rect:
         serializedVersion: 2
-        x: 171
-        y: 255
-        width: 115
-        height: 235
+        x: 1033
+        y: 1300
+        width: 960
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,8 +158,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e46507b2dddc46408f0843ab92097ad
-      internalID: -804383376
+      spriteID: 0338f4eb561df964a922a9788bfeb490
+      internalID: 806413495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: water fall puff ani_2
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 1247
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 019134781d1bbce4ea86b5d03afbb72a
+      internalID: 743274724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: water fall puff ani_3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 1146
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7e0885304f5f02468c8b4f7a743b3c7
+      internalID: -1036715993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: water fall puff ani_4
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1152
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bb219c2c398f454b9b377460ca34d4a
+      internalID: 971027873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: water fall puff ani_5
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 1114
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fcf10ed1188686408495b0cea63f037
+      internalID: -1042664599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: water fall puff ani_6
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 543
+        width: 911
+        height: 480
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7840d4f7ea05534a8fa5d178523d3cd
+      internalID: 657821955
       vertices: []
       indices: 
       edges: []
@@ -227,8 +280,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      pitchplant sprites_0: -396276116
-      pitchplant sprites_1: -804383376
+      water fall puff ani_0: 1828000846
+      water fall puff ani_1: 806413495
+      water fall puff ani_2: 743274724
+      water fall puff ani_3: -1036715993
+      water fall puff ani_4: 971027873
+      water fall puff ani_5: -1042664599
+      water fall puff ani_6: 657821955
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

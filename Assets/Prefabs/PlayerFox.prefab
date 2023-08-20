@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 4379814004752795122}
   - component: {fileID: 2200327642219540464}
   - component: {fileID: 5822406008445146550}
+  - component: {fileID: 7491427315496765127}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -589,6 +590,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67cd3429e1ab24650a527b99fa4bd1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7491427315496765127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87bf7097eb6ff420f96e6c953f95d127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OnlyBoostGrapples: 1
+  m_MultiplyFoxsVelocity: 1.2
+  m_AddGrappledVerticalForceMax: 1500
+  m_AddForceToFoxsMoveDirection: 100
+  m_AddForceFromAnchorDirection: 300
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0

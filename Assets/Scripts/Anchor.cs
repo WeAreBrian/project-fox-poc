@@ -157,10 +157,9 @@ public class Anchor : MonoBehaviour
 		//Reset rotation when anchor is picked up
 		if (next == AnchorState.Held)
 		{
-			//Set destroy timer to the crater
-			m_SpawnedAnchorImpactImage.AddComponent<FadeAndDestroy>();
-
-			m_Rigidbody.rotation = 0;
+			//destroy last crater
+            FadeAndDestroyAnchorImpact();
+            m_Rigidbody.rotation = 0;
 		}
 
 		// Set body type based on state
@@ -200,7 +199,8 @@ public class Anchor : MonoBehaviour
 
 	private void SpawnAnchorImpactImage()
 	{
-        //Destroy(m_SpawnedAnchorImpactImage);
+		//destroy any leftover craters that got spawned (issue with anchor states in some situtaions, e.g. throwing anchor at spikes standing next to it, doesnt cause it to lodge/ground)
+		FadeAndDestroyAnchorImpact();
 
         // Get position and normal of the collision where anchor hit object
         Vector2 m_CollisionNormal = m_Collision.contacts[0].normal;
@@ -232,6 +232,20 @@ public class Anchor : MonoBehaviour
         Quaternion m_RotationForDebris = Quaternion.Euler(new Vector3(0, 0, m_ZRotationOfVelocity - 90));
 		//Set the debris rotation to be the angle the anchor came from
 		m_SpawnedAnchorImpactImage.transform.Find("VelocityBasedDebris").transform.rotation = m_RotationForDebris;
+    }
+
+    //Set destroy timer to the crater object
+    private void FadeAndDestroyAnchorImpact()
+	{
+		//check if one has been spawned yet
+		if(m_SpawnedAnchorImpactImage != null)
+		{
+			//check if it already has a script to destroy itself
+			if (m_SpawnedAnchorImpactImage.GetComponent<FadeAndDestroy>() == null)
+			{
+                m_SpawnedAnchorImpactImage.AddComponent<FadeAndDestroy>();
+            }
+        }
     }
 
     public void Drop()

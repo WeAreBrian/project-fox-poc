@@ -40,7 +40,10 @@ public class Anchor : MonoBehaviour
 
 	private Collision2D m_Collision;
 
-	private void Awake()
+	public Vector2 m_LastVelocity;
+
+
+    private void Awake()
 	{
 		m_Rigidbody = GetComponent<Rigidbody2D>();
 
@@ -70,8 +73,17 @@ public class Anchor : MonoBehaviour
 			gameObject.transform.position = m_ShakePos + new Vector3(x, y, z);
 		}
 	}
-	
-	private void OnCollisionEnter2D(Collision2D collision)
+
+    private void FixedUpdate()
+    {
+		//Get the flying velocity
+		if(m_State == AnchorState.Free)
+		{
+            m_LastVelocity = m_Rigidbody.velocity;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
 	{
 		m_Collision = collision;    //For spawning anchor impact image
 		if (collision.gameObject.CompareTag("Grapplable"))
@@ -191,7 +203,6 @@ public class Anchor : MonoBehaviour
         //Destroy(m_SpawnedAnchorImpactImage);
 
         // Get position and normal of the collision where anchor hit object
-        Vector3 m_CollisionPosition = m_Collision.contacts[0].point;
         Vector2 m_CollisionNormal = m_Collision.contacts[0].normal;
 
         // Define a layer mask to target the "Terrain" layer
@@ -213,6 +224,14 @@ public class Anchor : MonoBehaviour
 
         m_SpawnedAnchorImpactImage = Instantiate(m_AnchorImpactImage, m_SpawnPosition, m_Rotation);
 
+
+
+		//Get angle of the last velocity of anchor (while in the air)
+        float m_ZRotationOfVelocity = Mathf.Atan2(m_LastVelocity.y, m_LastVelocity.x) * Mathf.Rad2Deg;
+		//angle to rotation
+        Quaternion m_RotationForDebris = Quaternion.Euler(new Vector3(0, 0, m_ZRotationOfVelocity - 90));
+		//Set the debris rotation to be the angle the anchor came from
+		m_SpawnedAnchorImpactImage.transform.Find("VelocityBasedDebris").transform.rotation = m_RotationForDebris;
     }
 
     public void Drop()

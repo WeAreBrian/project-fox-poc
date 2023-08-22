@@ -16,6 +16,15 @@ public class FadeAndDestroy : MonoBehaviour
     [SerializeField]
     private bool m_ShouldShrink = true;
 
+    [SerializeField]
+    private bool m_ClockIsRunning = true;
+
+    public bool ClockIsRunning
+    {
+        get { return m_ClockIsRunning; }
+        set { m_ClockIsRunning = value; }
+    }
+
 
     private float m_Timer;
     private Vector2 m_OriginalScale;
@@ -48,7 +57,10 @@ public class FadeAndDestroy : MonoBehaviour
 
     private void Update()
     {
-        m_Timer += Time.deltaTime;
+        if (m_ClockIsRunning)
+        {
+            m_Timer += Time.deltaTime;
+        }
 
         if (m_Timer > m_FadeOutDelay)
         {

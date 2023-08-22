@@ -1608,7 +1608,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -1000.8233
+        value: -663.3332
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1617,7 +1617,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.75
-        value: -1000.8233
+        value: -663.3332
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1626,7 +1626,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: -1000.8233
+        value: -663.3332
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1647,7 +1647,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 340.39755
+        value: 340.3976
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1656,7 +1656,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.75
-        value: 340.39755
+        value: 340.3976
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1665,7 +1665,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: 340.39755
+        value: 340.3976
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1764,7 +1764,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1773,7 +1773,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.75
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1782,7 +1782,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4587,7 +4587,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -1000.8233
+        value: -663.3332
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4596,7 +4596,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.75
-        value: -1000.8233
+        value: -663.3332
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4605,7 +4605,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: -1000.8233
+        value: -663.3332
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4626,7 +4626,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 340.39755
+        value: 340.3976
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4635,7 +4635,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.75
-        value: 340.39755
+        value: 340.3976
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4644,7 +4644,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: 340.39755
+        value: 340.3976
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4860,7 +4860,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4869,7 +4869,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.75
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -4878,7 +4878,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -8250,7 +8250,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: bb1/sparkle
+    path: bb5 sep
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -8262,7 +8262,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: bb1/sparkle
+    path: bb5 sep
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -8274,7 +8274,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: bb1/sparkle
+    path: bb5 sep
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -8322,7 +8322,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: bb3/rumble
+    path: bb1/sparkle
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -8334,7 +8334,19 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: bb3/rumble
+    path: bb1/sparkle
+    classID: 224
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: bb1/sparkle
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -8357,20 +8369,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: bb5 sep
-    classID: 224
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: bb5 sep
+    path: bb3/rumble
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -8382,7 +8382,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: bb5 sep
+    path: bb3/rumble
     classID: 224
     script: {fileID: 0}
     flags: 0

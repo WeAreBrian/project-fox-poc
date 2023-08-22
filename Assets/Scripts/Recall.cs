@@ -33,7 +33,7 @@ public class Recall : MonoBehaviour
 		m_Grounded = GetComponent<Grounded>();
 		m_Grounded.Landed.AddListener(ResetRecall);
 		m_AnchorMaterial = m_Anchor.GetComponentInChildren<MeshRenderer>().material;
-
+		m_Anchor.StateChanged.AddListener(AnchorStateChange);
 	}
 
 
@@ -48,9 +48,20 @@ public class Recall : MonoBehaviour
 			AudioController.PlaySound(m_RecallSound, 1, 1, MixerGroup.SFX);
 			m_Anchor.transform.position = transform.position;
 			m_Holder.ForcePickup();
-			m_AnchorMaterial.color = m_CooldownColour;
+			if (!m_Grounded.OnGround)
+            {
+				m_AnchorMaterial.color = m_CooldownColour;
+			}
 		}
 	}
+
+	private void AnchorStateChange(AnchorState state)
+    {
+		if (state == AnchorState.Lodged)
+        {
+			ResetRecall();
+        }
+    }
 
 	private void ResetRecall()
     {

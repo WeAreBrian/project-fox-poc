@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2534847312cc3d54e86ca59fad0f2272
+guid: 81aee3aaf42da5649a9fcdaed0b607a0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,7 +121,126 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Breakable wood debris_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 39
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 11.5, y: 18.5}
+        - {x: 2.5, y: 21.5}
+        - {x: -6.5, y: 16.5}
+        - {x: -17.5, y: 5.5}
+        - {x: -18.5, y: -11.5}
+        - {x: -14.5, y: -16.5}
+        - {x: -9.5, y: -19.5}
+        - {x: 0.5, y: -19.5}
+        - {x: 11.5, y: -15.5}
+        - {x: 19.5, y: -6.5}
+        - {x: 19.5, y: 11.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57091e96996bd4142bbb10100fb87030
+      internalID: -24037950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breakable wood debris_1
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 38
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -9, y: 17.5}
+        - {x: -19, y: 18.5}
+        - {x: -19, y: 18.5}
+        - {x: -17, y: -4.5}
+        - {x: -6, y: -13.5}
+        - {x: 13, y: -17.5}
+        - {x: 17, y: -16.5}
+        - {x: 15, y: -0.5}
+        - {x: 8, y: 4.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d16431a8e950b241b60cc00b5eead86
+      internalID: -1535851954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breakable wood debris_2
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 0
+        width: 43
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -18.5, y: -16}
+        - {x: -21.5, y: -29}
+        - {x: -20.5, y: -28}
+        - {x: 16.5, y: 7}
+        - {x: 21.5, y: 29}
+        - {x: 12.5, y: 26}
+        - {x: -11.5, y: 4}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64bce48674a98e640b8119f325dcdd1b
+      internalID: -717152621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breakable wood debris_3
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 0
+        width: 40
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -12, y: 26}
+        - {x: -20, y: 29}
+        - {x: -20, y: 14}
+        - {x: -5, y: -22}
+        - {x: 16, y: -27}
+        - {x: 17, y: -21}
+        - {x: 14, y: -7}
+        - {x: 7, y: 7}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1844c04f757da040995305f32b530a8
+      internalID: 1026893350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +251,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Breakable wood debris_0: -24037950
+      Breakable wood debris_1: -1535851954
+      Breakable wood debris_2: -717152621
+      Breakable wood debris_3: 1026893350
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -18,35 +18,34 @@ public class BreakableObject : MonoBehaviour
         m_Collider = GetComponent<Collider2D>();
     }
 
+    //Determine impact direction using anchor's velocity at moment of impact
     private Quaternion DetermineImpactDirection(Vector3 rbVelocity)
     {
-        // If the object is rotated, compensate for rotation
+        // If the wall is rotated, also rotate velocity vector to compensate
         float objectRotation = transform.localEulerAngles.z;
         Quaternion invertedRotation = Quaternion.Euler(0f, 0f, -objectRotation);
-
-        // Convert velocity vector to local space
         Vector2 localRbVelocity = invertedRotation * rbVelocity;
 
-        // Compare local positions to determine front or back
         if (localRbVelocity.x > 0)
         {
-            //Debug.Log("Hit from the back in local space.");
+            // If velocity is locally positive, the wall is hit from the back
+            // The FX is facing forward by default
             return Quaternion.Euler(0, 0, 0);
         }
-        else
-        {
-            //Debug.Log("Hit from the front in local space.");
+
+        // If velocity is locally negative, the wall is hit from the front
+        // We'll flip the FX accordingly
             return Quaternion.Euler(0, 180, 0);
         }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Anchor"))
         {
-            Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
-            m_WoodVFX.transform.localRotation = DetermineImpactDirection(new Vector3(rb.velocity.x, rb.velocity.y, 0));
+            Rigidbody2D AnchorRb = collision.GetComponent<Rigidbody2D>();
+            m_WoodVFX.transform.localRotation = DetermineImpactDirection(AnchorRb.velocity);
 
+            // Disable scripts and objects (avoid destroy to avoid having to clean up)
             m_Collider.enabled = false;
             m_Plank.SetActive(false);
             m_WoodExplodeVFX.SetActive(true);

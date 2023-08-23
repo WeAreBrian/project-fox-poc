@@ -35,8 +35,8 @@ public class BreakableObject : MonoBehaviour
 
         // If velocity is locally negative, the wall is hit from the front
         // We'll flip the FX accordingly
-            return Quaternion.Euler(0, 180, 0);
-        }
+        return Quaternion.Euler(0, 180, 0);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -48,6 +48,9 @@ public class BreakableObject : MonoBehaviour
             // Disable scripts and objects (avoid destroy to avoid having to clean up)
             m_Collider.enabled = false;
             m_Plank.SetActive(false);
+
+			HapticManager.instance.RumblePulse(0.25f, 1f, 0.1f);
+            CameraShake.instance.Shake(2, 0.2f);
             m_WoodExplodeVFX.SetActive(true);
         }
     }

@@ -103,13 +103,18 @@ public class IdealChain : MonoBehaviour
 			return false;
 		}
 
-		var colliderCorner = ColliderCorners.GetCorner(hit.collider, hit.point);
+		if (hit.collider.isTrigger)
+		{
+			return false;
+        }
+
+        var colliderCorner = ColliderCorners.GetCorner(hit.collider, hit.point);
 		var offset = hit.transform.InverseTransformPoint(colliderCorner.Position + colliderCorner.Normal * Width / 2);
 		var corner = hit.transform.InverseTransformPoint(colliderCorner.Position);
 
-		point = new ChainPoint(hit.collider, offset, corner);
+        point = new ChainPoint(hit.collider, offset, corner);
 
-		if (Vector2.Distance(point.Position, origin) < k_MinPointDistance)
+        if (Vector2.Distance(point.Position, origin) < k_MinPointDistance)
 		{
 			return false;
 		}

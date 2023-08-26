@@ -31,7 +31,7 @@ public class AudioController : MonoBehaviour
         {
             instance = this;
             mixer = inspectorMixer;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {

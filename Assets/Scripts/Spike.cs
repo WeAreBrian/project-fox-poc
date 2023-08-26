@@ -12,6 +12,10 @@ public class Spike : MonoBehaviour
     private void Start()
     {
         S_Collided = false;
+        if (GameObject.Find("HoleTransition") == null)
+        {
+            Debug.Log("<color=red>The LevelTransitioner Prefab should be in the level. Put at the above the other UI in the hierachy. Ask Sach for more help</color>");
+        }
         m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
         m_HoleTransition.OnShrinkComplete += OnShrinkCompleteCallback;
     }

@@ -96,21 +96,16 @@ public class CloseOrOpenCircle : MonoBehaviour
         // Keep child's world scale intact when parent is at zero
         m_ChildTransform.localScale = m_ChildInitialWorldScale / 0.001f;
 
-        try
+        //Tries to load the inputted scene. Otherwise loads the current scene.
+        if(m_SceneToOpen == null)
         {
-            if(m_SceneToOpen == null)
-            {
-                m_SceneToOpen = SceneManager.GetActiveScene().name;
-            }
-            SceneManager.LoadScene(m_SceneToOpen);
+            m_SceneToOpen = SceneManager.GetActiveScene().name;
         }
-        catch
-        {
-            Debug.Log("AY THAT'S NOT A LEGIT SCENENAME BRO");
-        }
+        SceneManager.LoadScene(m_SceneToOpen);
+        
 
         OnShrinkComplete?.Invoke(); // Call the callback
-        Debug.Log("Fin");
+        //Debug.Log("Fin");
     }
 
     public IEnumerator GrowParentObject()
@@ -143,11 +138,11 @@ public class CloseOrOpenCircle : MonoBehaviour
             yield return null;
         }
 
-        // Set the parent scale to one at the end
+        // Set the parent scale to max at the end
         transform.localScale = new Vector3(25,25,1);
 
         // Reset child's local scale to its initial local scale
-        m_ChildTransform.localScale = m_ChildInitialWorldScale / 1.0f;
+        m_ChildTransform.localScale = m_ChildInitialWorldScale;
     }
 
     private void KeepCentredOnFox()

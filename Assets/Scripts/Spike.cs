@@ -14,10 +14,13 @@ public class Spike : MonoBehaviour
         S_Collided = false;
         if (GameObject.Find("HoleTransition") == null)
         {
-            Debug.Log("<color=red>The LevelTransitioner Prefab should be in the level. Put at the above the other UI in the hierachy. Ask Sach for more help</color>");
+            Debug.Log("The LevelTransitioner Prefab should be in the level. Put at the above the other UI in the hierachy. Ask Sach for more help. Spikes will still work without it :D");
         }
-        m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
-        m_HoleTransition.OnShrinkComplete += OnShrinkCompleteCallback;
+        else
+        {
+            m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
+            m_HoleTransition.OnShrinkComplete += OnShrinkCompleteCallback;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,7 +28,14 @@ public class Spike : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && S_Collided == false)
         {
             S_Collided = true;
-            StartCoroutine(m_HoleTransition.ShrinkParentObject());
+            if(m_HoleTransition != null)
+            {
+                StartCoroutine(m_HoleTransition.ShrinkParentObject());
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
 

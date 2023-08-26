@@ -9,18 +9,15 @@ public class LevelEnd : MonoBehaviour
 
     private bool m_EndDelayStarted = false;
 
-    private GrowAndShrink m_GrowAndShrink;
 
     private void Awake()
     {
-        m_GrowAndShrink = transform.Find("CircleLight").GetComponent<GrowAndShrink>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Call the TimerAction method after the specified delay
         Invoke("TimerEnded", m_EndDelay);
-        Destroy(m_GrowAndShrink);
     }
 
     private void TimerEnded()
@@ -30,7 +27,8 @@ public class LevelEnd : MonoBehaviour
         {
             m_EndDelayStarted = true;
             // This method will be called after the specified delay
-            Debug.Log("Timer action executed!");
+
+            //Debug.Log("Timer action executed!");
         }
         
     }

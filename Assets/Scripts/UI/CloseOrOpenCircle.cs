@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CloseOrOpenCircle : MonoBehaviour
@@ -14,6 +15,7 @@ public class CloseOrOpenCircle : MonoBehaviour
     private Vector3 m_ChildInitialWorldScale;
     private GameObject m_PlayerFox;
     private RectTransform m_RectTransform;
+    private Image m_Image;
 
     public Action OnShrinkComplete;
 
@@ -21,6 +23,9 @@ public class CloseOrOpenCircle : MonoBehaviour
     {
         m_PlayerFox = GameObject.Find("PlayerFox");
         m_RectTransform = GetComponent<RectTransform>();
+        m_Image = GetComponent<Image>();
+
+        m_Image.enabled = true; //this so it can be disabled in the editor but turn on in play mode
     }
 
     void Start()
@@ -34,7 +39,7 @@ public class CloseOrOpenCircle : MonoBehaviour
 
         // Assuming the first child is the one to keep the same relative scale
         m_ChildTransform = transform.GetChild(0);
-        m_ChildInitialWorldScale = m_ChildTransform.lossyScale;
+        m_ChildInitialWorldScale = m_ChildTransform.lossyScale * 2;
 
         StartCoroutine(GrowParentObject());
 

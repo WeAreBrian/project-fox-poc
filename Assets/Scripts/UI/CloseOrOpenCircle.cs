@@ -147,11 +147,15 @@ public class CloseOrOpenCircle : MonoBehaviour
 
     private void KeepCentredOnFox()
     {
-        // Calculate the position of the UI element based on the object's position
-        Vector3 worldPosition = m_PlayerFox.transform.position;
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+        if(m_PlayerFox != null)
+        {
+            // Calculate the position of the UI element based on the object's position
+            Vector3 worldPosition = m_PlayerFox.transform.position;
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
 
-        // Set the position of the UI element's RectTransform
-        m_RectTransform.position = screenPosition;
+            // Set the position of the UI element's RectTransform
+            m_RectTransform.position = screenPosition;
+        }
+        
     }
 }

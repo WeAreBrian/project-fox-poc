@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Spike : MonoBehaviour
 {
-    CloseOrOpenCircle m_HoleTransition;
+    private CloseOrOpenCircle m_HoleTransition;
 
     private static bool S_Collided = false; //prevents multiple collision events spamming
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelEnd : MonoBehaviour
 {
@@ -9,15 +10,23 @@ public class LevelEnd : MonoBehaviour
 
     private bool m_EndDelayStarted = false;
 
+    private CloseOrOpenCircle m_HoleTransition;
+    private GameTimer m_GameTimer;
+
+    public string S_TimeText;
 
     private void Awake()
     {
+        m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
+        m_GameTimer = GameObject.Find("SpeedrunTimer").GetComponent<GameTimer>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Call the TimerAction method after the specified delay
         Invoke("TimerEnded", m_EndDelay);
+        PlayerPrefs.SetFloat("LastScore", m_GameTimer.TimeElapsed);
+        PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
     }
 
     private void TimerEnded()
@@ -29,8 +38,10 @@ public class LevelEnd : MonoBehaviour
             // This method will be called after the specified delay
 
             //Debug.Log("Timer action executed!");
+            StartCoroutine(m_HoleTransition.ShrinkParentObject("LevelEnd"));
+
         }
-        
+
     }
 
     private void Update()
@@ -40,4 +51,5 @@ public class LevelEnd : MonoBehaviour
 
         }
     }
+
 }

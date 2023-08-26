@@ -33,7 +33,7 @@ public class CloseOrOpenCircle : MonoBehaviour
 
         if (transform.childCount == 0)
         {
-            Debug.LogWarning("This GameObject has no child. The script won't do anything.");
+            Debug.LogWarning("This GameObject has no child. The script won't do anything. Contact Sach");
             return;
         }
 
@@ -66,7 +66,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         
     }
 
-    public IEnumerator ShrinkParentObject()
+    public IEnumerator ShrinkParentObject(String m_SceneToOpen = null)
     {
         
 
@@ -96,7 +96,18 @@ public class CloseOrOpenCircle : MonoBehaviour
         // Keep child's world scale intact when parent is at zero
         m_ChildTransform.localScale = m_ChildInitialWorldScale / 0.001f;
 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        try
+        {
+            if(m_SceneToOpen == null)
+            {
+                m_SceneToOpen = SceneManager.GetActiveScene().name;
+            }
+            SceneManager.LoadScene(m_SceneToOpen);
+        }
+        catch
+        {
+            Debug.Log("AY THAT'S NOT A LEGIT SCENENAME BRO");
+        }
 
         OnShrinkComplete?.Invoke(); // Call the callback
         Debug.Log("Fin");

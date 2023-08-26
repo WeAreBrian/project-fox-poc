@@ -18,16 +18,12 @@ public class Spike : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             StartCoroutine(m_HoleTransition.ShrinkParentObject());
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
     private void OnShrinkCompleteCallback()
     {
-        Debug.Log("Shrink operation in CloseOrOpenCircle is complete.");
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+        //Debug.Log("Shrink operation in CloseOrOpenCircle is complete.");
     }
 
     private void OnDisable()

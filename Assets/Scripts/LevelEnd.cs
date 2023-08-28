@@ -13,8 +13,6 @@ public class LevelEnd : MonoBehaviour
     private CloseOrOpenCircle m_HoleTransition;
     private GameTimer m_GameTimer;
 
-    public string S_TimeText;
-
     private void Awake()
     {
         m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();

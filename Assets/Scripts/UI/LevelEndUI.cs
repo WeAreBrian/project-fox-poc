@@ -48,7 +48,7 @@ public class LevelEndUI : MonoBehaviour
         int m_Milliseconds = (int)((m_TimeInSeconds * 1000) % 1000);
 
         // Create a formatted string
-        return string.Format("{0:00}:{1:00}:{2:000}", m_Minutes, m_Seconds, m_Milliseconds);
+        return string.Format("{0:00}:{1:00}.{2:000}", m_Minutes, m_Seconds, m_Milliseconds);
     }
 
 }

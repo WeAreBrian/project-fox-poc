@@ -23,7 +23,11 @@ public class GameTimer : MonoBehaviour
         if (m_TimerIsRunning)
         {
             m_TimeElapsed += Time.deltaTime;
-            m_TimerText = m_TimeElapsed.ToString("00:00.00");
+            int minutes = (int)m_TimeElapsed / 60;
+            int seconds = (int)m_TimeElapsed % 60;
+            int milliseconds = (int)(m_TimeElapsed * 100) % 100;
+
+            m_TimerText = string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
             m_TimerTextMesh.text = m_TimerText;
         }
     }

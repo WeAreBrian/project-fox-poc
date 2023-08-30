@@ -548,16 +548,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1219785270441968203, guid: 11f0a0769822b438897e9017210b0063,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -92.15199
-      objectReference: {fileID: 0}
-    - target: {fileID: 1219785270441968203, guid: 11f0a0769822b438897e9017210b0063,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -47.72766
-      objectReference: {fileID: 0}
     - target: {fileID: 2486720122642363398, guid: 11f0a0769822b438897e9017210b0063,
         type: 3}
       propertyPath: m_Name
@@ -621,21 +611,6 @@ PrefabInstance:
     - target: {fileID: 6338816026462705312, guid: 11f0a0769822b438897e9017210b0063,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8202173907988241996, guid: 11f0a0769822b438897e9017210b0063,
-        type: 3}
-      propertyPath: m_Speed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8202173907988241996, guid: 11f0a0769822b438897e9017210b0063,
-        type: 3}
-      propertyPath: EnableDebuggingKeys
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8202173907988241996, guid: 11f0a0769822b438897e9017210b0063,
-        type: 3}
-      propertyPath: GrowCircleOnStartScene
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

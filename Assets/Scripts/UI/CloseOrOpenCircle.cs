@@ -112,7 +112,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         m_ChildTransform.localScale = m_ChildInitialWorldScale / 0.001f;
 
         //Tries to load the inputted scene. Otherwise loads the current scene.
-        Debug.Log("Open New Scene");
+        //Debug.Log("Open New Scene");
         if(m_SceneToOpen == null)
         {
             m_SceneToOpen = SceneManager.GetActiveScene().name;

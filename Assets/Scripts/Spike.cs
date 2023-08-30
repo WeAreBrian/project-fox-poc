@@ -14,7 +14,7 @@ public class Spike : MonoBehaviour
         S_Collided = false;
         if (GameObject.Find("HoleTransition") == null)
         {
-            Debug.Log("The LevelTransitioner Prefab should be in the level. Put at the above the other UI in the hierachy. Ask Sach for more help. Spikes will still work without it :D");
+            Debug.Log("Can't find the LevelTransitioner prefab in the scene. Ask Sach if help is needed.");
         }
         else
         {

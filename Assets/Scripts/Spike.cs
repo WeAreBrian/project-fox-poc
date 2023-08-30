@@ -19,7 +19,6 @@ public class Spike : MonoBehaviour
         else
         {
             m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
-            m_HoleTransition.OnShrinkComplete += OnShrinkCompleteCallback;
         }
     }
 
@@ -37,16 +36,5 @@ public class Spike : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
-    }
-
-    private void OnShrinkCompleteCallback() //This will get spammed for every spike in the level
-    {
-        Debug.Log("Shrink operation in CloseOrOpenCircle is complete.");
-    }
-
-    private void OnDisable()
-    {
-        m_HoleTransition.OnShrinkComplete -= OnShrinkCompleteCallback;
-
     }
 }

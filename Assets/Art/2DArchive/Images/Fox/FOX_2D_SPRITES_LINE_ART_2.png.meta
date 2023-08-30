@@ -77,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -89,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -101,6 +103,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -495,23 +511,23 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      FOX_2D_SPRITES_LINE_ART_2_7: -263724421
-      FOX_2D_SPRITES_LINE_ART_2_16: 1624904965
-      FOX_2D_SPRITES_LINE_ART_2_14: -175976864
-      FOX_2D_SPRITES_LINE_ART_2_3: -304726091
-      FOX_2D_SPRITES_LINE_ART_2_12: 696716657
-      FOX_2D_SPRITES_LINE_ART_2_6: 979454478
-      FOX_2D_SPRITES_LINE_ART_2_1: -1333684354
-      FOX_2D_SPRITES_LINE_ART_2_5: 1432476397
       FOX_2D_SPRITES_LINE_ART_2_0: -352499293
-      FOX_2D_SPRITES_LINE_ART_2_4: 258472249
-      FOX_2D_SPRITES_LINE_ART_2_8: 37524678
+      FOX_2D_SPRITES_LINE_ART_2_1: -1333684354
       FOX_2D_SPRITES_LINE_ART_2_10: -1856982208
       FOX_2D_SPRITES_LINE_ART_2_11: -435929554
-      FOX_2D_SPRITES_LINE_ART_2_2: 588382361
+      FOX_2D_SPRITES_LINE_ART_2_12: 696716657
       FOX_2D_SPRITES_LINE_ART_2_13: -68667703
+      FOX_2D_SPRITES_LINE_ART_2_14: -175976864
       FOX_2D_SPRITES_LINE_ART_2_15: -2129733576
+      FOX_2D_SPRITES_LINE_ART_2_16: 1624904965
       FOX_2D_SPRITES_LINE_ART_2_17: 792241352
+      FOX_2D_SPRITES_LINE_ART_2_2: 588382361
+      FOX_2D_SPRITES_LINE_ART_2_3: -304726091
+      FOX_2D_SPRITES_LINE_ART_2_4: 258472249
+      FOX_2D_SPRITES_LINE_ART_2_5: 1432476397
+      FOX_2D_SPRITES_LINE_ART_2_6: 979454478
+      FOX_2D_SPRITES_LINE_ART_2_7: -263724421
+      FOX_2D_SPRITES_LINE_ART_2_8: 37524678
       FOX_2D_SPRITES_LINE_ART_2_9: 19278978
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

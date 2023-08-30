@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class CloseOrOpenCircle : MonoBehaviour
 {
     public float m_Speed = 70f; // The speed at which the parent will shrink or grow
-    public KeyCode m_ShrinkKey = KeyCode.Space; // The key that will trigger the shrink effect
+    public KeyCode m_ShrinkKey = KeyCode.H; // The key that will trigger the shrink effect
     public KeyCode m_GrowKey = KeyCode.G; // The key that will trigger the grow effect
 
     private Transform m_ChildTransform;
@@ -41,7 +41,10 @@ public class CloseOrOpenCircle : MonoBehaviour
         m_ChildTransform = transform.GetChild(0);
         m_ChildInitialWorldScale = m_ChildTransform.lossyScale * 2;
 
-        StartCoroutine(GrowParentObject());
+        SetScales();
+
+
+        StartCoroutine(ExecuteAfterAllStarts());
 
 
 
@@ -50,6 +53,7 @@ public class CloseOrOpenCircle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Note this is just for testing, these keys are just debug keys
         // Trigger the shrinking effect when the specified key is pressed
         if (Input.GetKeyDown(m_ShrinkKey))
         {
@@ -66,12 +70,20 @@ public class CloseOrOpenCircle : MonoBehaviour
         
     }
 
+    private IEnumerator ExecuteAfterAllStarts()
+    {
+        yield return null;  //This line makes Unity wait til the next frame to continue the execution. Basically this is to prevent a hitch when doing the transition. All the objects in the scene will do their Start() code, THEN this one can start it's transition instead of starting it, letting everything else go, then continuing.
+        StartCoroutine(GrowParentObject());
+    }
+
     public IEnumerator ShrinkParentObject(String m_SceneToOpen = null)
     {
         
 
         while (transform.localScale.x > 0.001f)
         {
+            yield return null;
+
             // Shrink the parent
             transform.localScale -= Vector3.one * Time.deltaTime * m_Speed;
 
@@ -87,7 +99,7 @@ public class CloseOrOpenCircle : MonoBehaviour
 
             KeepCentredOnFox();
 
-            yield return null;
+            
         }
 
         // Set the parent scale to (almost) zero at the end
@@ -97,6 +109,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         m_ChildTransform.localScale = m_ChildInitialWorldScale / 0.001f;
 
         //Tries to load the inputted scene. Otherwise loads the current scene.
+        Debug.Log("Open New Scene");
         if(m_SceneToOpen == null)
         {
             m_SceneToOpen = SceneManager.GetActiveScene().name;
@@ -110,13 +123,9 @@ public class CloseOrOpenCircle : MonoBehaviour
 
     public IEnumerator GrowParentObject()
     {
-        
 
-        // Start from a very small scale
-        transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
 
-        // Initial scale for the child to maintain its world scale
-        m_ChildTransform.localScale = m_ChildInitialWorldScale / 0.001f;
+        SetScales();
 
         while (transform.localScale.x < 25.0f)
         {
@@ -157,5 +166,14 @@ public class CloseOrOpenCircle : MonoBehaviour
             m_RectTransform.position = screenPosition;
         }
         
+    }
+
+    private void SetScales()
+    {
+        // Start from a very small scale
+        transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+
+        // Initial scale for the child to maintain its world scale
+        m_ChildTransform.localScale = m_ChildInitialWorldScale / 0.001f;
     }
 }

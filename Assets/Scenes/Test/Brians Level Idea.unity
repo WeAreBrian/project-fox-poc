@@ -623,6 +623,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8202173907988241996, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: m_Speed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8202173907988241996, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: EnableDebuggingKeys
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8202173907988241996, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: GrowCircleOnStartScene
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

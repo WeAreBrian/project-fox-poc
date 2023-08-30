@@ -7,10 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class CloseOrOpenCircle : MonoBehaviour
 {
-    public float m_Speed = 70f; // The speed at which the parent will shrink or grow
-    public KeyCode m_ShrinkKey = KeyCode.H; // The key that will trigger the shrink effect
-    public KeyCode m_GrowKey = KeyCode.G; // The key that will trigger the grow effect
-
+    [SerializeField]
+    private float m_Speed = 100f; // The speed at which the parent will shrink or grow
     private Transform m_ChildTransform;
     private Vector3 m_ChildInitialWorldScale;
     private GameObject m_PlayerFox;
@@ -18,6 +16,13 @@ public class CloseOrOpenCircle : MonoBehaviour
     private Image m_Image;
 
     public Action OnShrinkComplete;
+
+    [SerializeField]
+    private bool GrowCircleOnStartScene = true;
+    [SerializeField]
+    private bool EnableDebuggingKeys = false;
+    private readonly KeyCode m_ShrinkKey = KeyCode.H; // The key that will trigger the shrink effect
+    private readonly KeyCode m_GrowKey = KeyCode.G; // The key that will trigger the grow effect
 
     private void Awake()
     {
@@ -41,37 +46,35 @@ public class CloseOrOpenCircle : MonoBehaviour
         m_ChildTransform = transform.GetChild(0);
         m_ChildInitialWorldScale = m_ChildTransform.lossyScale * 2;
 
-        SetScales();
-
-
-        StartCoroutine(ExecuteAfterAllStarts());
-
-
-
+        if (GrowCircleOnStartScene)
+        {
+            StartCoroutine(ExecuteAfterAllStarts());
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Note this is just for testing, these keys are just debug keys
-        // Trigger the shrinking effect when the specified key is pressed
-        if (Input.GetKeyDown(m_ShrinkKey))
+        if (EnableDebuggingKeys)
         {
-            StartCoroutine(ShrinkParentObject());
-        }
+            // Trigger the shrinking effect when the specified key is pressed
+            if (Input.GetKeyDown(m_ShrinkKey))
+            {
+                StartCoroutine(ShrinkParentObject());
+            }
 
-        // Trigger the growing effect when the specified key is pressed
-        if (Input.GetKeyDown(m_GrowKey))
-        {
-            StartCoroutine(GrowParentObject());
-        }
+            // Trigger the growing effect when the specified key is pressed
+            if (Input.GetKeyDown(m_GrowKey))
+            {
+                StartCoroutine(GrowParentObject());
+            }
 
-        
-        
+        }
     }
 
     private IEnumerator ExecuteAfterAllStarts()
     {
+        SetScales();
         yield return null;  //This line makes Unity wait til the next frame to continue the execution. Basically this is to prevent a hitch when doing the transition. All the objects in the scene will do their Start() code, THEN this one can start it's transition instead of starting it, letting everything else go, then continuing.
         StartCoroutine(GrowParentObject());
     }

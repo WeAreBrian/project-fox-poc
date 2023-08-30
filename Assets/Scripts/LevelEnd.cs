@@ -16,7 +16,7 @@ public class LevelEnd : MonoBehaviour
     private void Awake()
     {
         m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
-        m_GameTimer = GameObject.Find("SpeedrunTimer").GetComponent<GameTimer>();
+        m_GameTimer = GameObject.Find("Speedrun Timer").GetComponent<GameTimer>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

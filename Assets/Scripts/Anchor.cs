@@ -215,6 +215,9 @@ public class Anchor : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, m_RayDirection, Mathf.Infinity, m_TerrainLayerMask);
         Vector3 m_SpawnPosition = hit.point;
 
+		//move the z position behind the anchor
+		m_SpawnPosition.z = -0.12f;
+
         // Get an angle out of the normal vector
         float m_Angle = Mathf.Atan2(m_CollisionNormal.y, m_CollisionNormal.x) * Mathf.Rad2Deg;
         m_Angle -= 90; // This is to properly orient the sprite

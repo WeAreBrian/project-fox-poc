@@ -113,17 +113,21 @@ public class Anchor : MonoBehaviour
 	{
 		//Get the transform of the sprites hierachy in the prefab
 		Transform m_AnchorImpactSpriteTransform = m_AnchorImpact.transform.Find("Sprites");
-
+		GameObject m_AnchorImpactSprite;
 		if(m_Collision.gameObject.name.Contains("HoneyGrappleSurface"))
         {
 			//Enable honey sprite
-            m_AnchorImpactSpriteTransform.Find("HoneySprite").gameObject.SetActive(true);
+			m_AnchorImpactSprite = m_AnchorImpactSpriteTransform.Find("HoneySprite").gameObject;
         }
         else
 		{
             //Enable rock sprite
-            m_AnchorImpactSpriteTransform.Find("RockSprite").gameObject.SetActive(true);
+            m_AnchorImpactSprite =  m_AnchorImpactSpriteTransform.Find("RockSprite").gameObject;
         }
+
+		//Enable sprite then randomly flip it
+        m_AnchorImpactSprite.SetActive(true);
+        m_AnchorImpactSprite.GetComponent<SpriteRenderer>().flipX = Random.Range(0, 2) == 1;
     }
 
 	public void ActivateShake(float duration)

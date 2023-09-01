@@ -46,7 +46,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 100
   m_LinearDrag: 1
   m_AngularDrag: 10
   m_GravityScale: 0
@@ -316,7 +316,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 100
   m_LinearDrag: 1
   m_AngularDrag: 10
   m_GravityScale: 0
@@ -375,7 +375,7 @@ TargetJoint2D:
   m_AutoConfigureTarget: 0
   m_MaxForce: 10000
   m_DampingRatio: 1
-  m_Frequency: 0.2
+  m_Frequency: 0.02
 --- !u!1 &7627422469844250386
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +422,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 100
   m_LinearDrag: 1
   m_AngularDrag: 10
   m_GravityScale: 0
@@ -508,7 +508,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 100
   m_LinearDrag: 1
   m_AngularDrag: 10
   m_GravityScale: 0

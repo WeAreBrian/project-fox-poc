@@ -108,6 +108,24 @@ public class Anchor : MonoBehaviour
 		}
 	}
 
+	// Checks what surface the anchorimpact is hit with and enables the sprite for it
+	private void CheckWhatSurfaceCollided(GameObject m_AnchorImpact)
+	{
+		//Get the transform of the sprites hierachy in the prefab
+		Transform m_AnchorImpactSpriteTransform = m_AnchorImpact.transform.Find("Sprites");
+
+		if(m_Collision.gameObject.name.Contains("HoneyGrappleSurface"))
+        {
+			//Enable honey sprite
+            m_AnchorImpactSpriteTransform.Find("HoneySprite").gameObject.SetActive(true);
+        }
+        else
+		{
+            //Enable rock sprite
+            m_AnchorImpactSpriteTransform.Find("RockSprite").gameObject.SetActive(true);
+        }
+    }
+
 	public void ActivateShake(float duration)
 	{
 		StartCoroutine(Shake(duration));
@@ -227,7 +245,8 @@ public class Anchor : MonoBehaviour
 
         m_SpawnedAnchorImpactImage = Instantiate(m_AnchorImpactImage, m_SpawnPosition, m_Rotation);
 
-
+		//Set the correct sprite based on which surface it hit
+		CheckWhatSurfaceCollided(m_SpawnedAnchorImpactImage);
 
 		//Get angle of the last velocity of anchor (while in the air)
         float m_ZRotationOfVelocity = Mathf.Atan2(m_LastVelocity.y, m_LastVelocity.x) * Mathf.Rad2Deg;

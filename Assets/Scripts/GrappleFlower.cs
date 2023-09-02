@@ -24,10 +24,17 @@ public class GrappleFlower : MonoBehaviour
         {
             m_Anchor.FreeForDuration(0.1f);
         }
+        else
+        {
+            Debug.Log("Anchor null");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Ignore Chain collisions
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Chain")) return;
+
         m_Anchor = collision.gameObject.GetComponent<Anchor>();
     }
 }

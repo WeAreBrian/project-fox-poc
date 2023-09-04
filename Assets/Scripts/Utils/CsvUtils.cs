@@ -1,5 +1,6 @@
 using System.IO;
 using System;
+using UnityEngine;
 
 public static class CsvUtils
 {
@@ -16,6 +17,12 @@ public static class CsvUtils
         // Create the save file at the specified path
         string saveFileName = @"SpeedrunDatabase.csv";
         m_FullSavePath = Path.Combine(fullPath, saveFileName);
+
+        if (File.Exists(m_FullSavePath))
+        {
+            // File already exists
+            return;
+        }
 
         using StreamWriter csv = new StreamWriter(m_FullSavePath);
         csv.WriteLine("name,lv1Time,lv2Time,lv3Time,totalTime,email");

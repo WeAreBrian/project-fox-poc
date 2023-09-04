@@ -9,7 +9,7 @@ public struct SpeedrunProfile
     public string PlayerEmail;
 
     // Player name is "YOU" initially so that they'll see where they are on the leaderboard later before inputting their own name
-    public SpeedrunProfile(string playerName = "YOU", float lv1Time = 0, float lv2Time = 0, float lv3Time = 0, float totalTime = 0, string playerEmail = "")
+    public SpeedrunProfile(string playerName, float lv1Time, float lv2Time, float lv3Time, float totalTime, string playerEmail)
     {
         PlayerName = playerName;
         Lv1Time = lv1Time;

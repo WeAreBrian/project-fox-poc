@@ -7,7 +7,8 @@ public static class SaveUtils
     /// </summary>
     public static void InitializeProfile()
     {
-        SpeedrunProfile profile = new SpeedrunProfile();
+        CsvUtils.CreateSaveFile();
+        SpeedrunProfile profile = new SpeedrunProfile("YOU", 0f, 0f, 0f, 0f, "");
 
         PlayerPrefs.SetString("PlayerName", profile.PlayerName);
         PlayerPrefs.SetFloat("Lv1Time", profile.Lv1Time);

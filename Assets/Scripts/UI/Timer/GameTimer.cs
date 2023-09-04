@@ -15,6 +15,9 @@ public class GameTimer : MonoBehaviour
     {
         ResetTimer();
         StartTimer();
+
+        // CsvUtils.CreateSaveFile(); // Only meant for testing, to be deleted
+        // CsvUtils.WriteToFile(new SpeedrunProfile());
     }
 
     private void Update()

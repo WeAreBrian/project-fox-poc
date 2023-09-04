@@ -28,7 +28,7 @@ public class GameTimer : MonoBehaviour
 
     public void ResetTimer()
     {
-        m_TimerTextMesh.text = "00:00.00";
+        m_TimerTextMesh.text = "00:00.000";
         m_TimeElapsed = 0f;
         m_TimerIsRunning = false;
     }

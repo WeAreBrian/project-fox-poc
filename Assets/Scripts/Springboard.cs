@@ -125,7 +125,7 @@ public class Springboard : MonoBehaviour, IToggle
 
 		AddForceToRigidBodies();
 
-		m_Animator.SetTrigger("Activate");
+		m_Animator.SetTrigger("springboardCollision");
 		AudioController.PlaySound(m_ActivateSound, 1, 1, MixerGroup.SFX);
 	}
 

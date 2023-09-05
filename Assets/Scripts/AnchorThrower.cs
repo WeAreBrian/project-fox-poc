@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class AnchorThrower : MonoBehaviour
 {
     public bool ShowTrajectory;
+
+    public UnityEvent WindUp;
+    public UnityEvent Throw;
 
     public float MinThrowSpeed = 8;
     public float MaxThrowSpeed = 15;
@@ -23,6 +27,8 @@ public class AnchorThrower : MonoBehaviour
     public float HoldTime => Time.time - m_WindUpStartTime;
     public float ThrowSpeed => Mathf.Lerp(MinThrowSpeed, MaxThrowSpeed, WindUpCurve.Evaluate(HoldTime / WindUpTime));
     public Vector2 ThrowVelocity => m_ThrowDirection * ThrowSpeed;
+
+    public float AimDirection => m_ThrowDirection.x;
 
     [SerializeField]
     private AnchorTrajectory m_Trajectory;
@@ -82,6 +88,8 @@ public class AnchorThrower : MonoBehaviour
         {
             Time.timeScale = BulletTimeSpeed;
         }
+
+        WindUp.Invoke();
     }
 
     private void OnAnchorInteractCanceled(InputAction.CallbackContext context)
@@ -135,7 +143,7 @@ public class AnchorThrower : MonoBehaviour
     {
         var anchor = m_Holder.DropAnchor();
         anchor.Throw(velocity);
-        Debug.Log("Anchor thrown");
+        Throw.Invoke();
         AudioController.PlaySound(m_WindUpSound, 1, 1.8f, MixerGroup.SFX);
     }
 

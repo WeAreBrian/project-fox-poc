@@ -6,7 +6,6 @@ public class GameTimer : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_TimerTextMesh;
 
-    private string m_TimerText;
     private float m_TimeElapsed;
     private bool m_TimerIsRunning;
 
@@ -23,18 +22,13 @@ public class GameTimer : MonoBehaviour
         if (m_TimerIsRunning)
         {
             m_TimeElapsed += Time.deltaTime;
-            int minutes = (int)m_TimeElapsed / 60;
-            int seconds = (int)m_TimeElapsed % 60;
-            int milliseconds = (int)(m_TimeElapsed * 100) % 100;
-
-            m_TimerText = string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
-            m_TimerTextMesh.text = m_TimerText;
+            m_TimerTextMesh.text = TimeFormatter.Milliseconds(m_TimeElapsed);
         }
     }
 
     public void ResetTimer()
     {
-        m_TimerText = "00:00.00";
+        m_TimerTextMesh.text = "00:00.000";
         m_TimeElapsed = 0f;
         m_TimerIsRunning = false;
     }

@@ -108,6 +108,28 @@ public class Anchor : MonoBehaviour
 		}
 	}
 
+	// Checks what surface the anchorimpact is hit with and enables the sprite for it
+	private void CheckWhatSurfaceCollided(GameObject m_AnchorImpact)
+	{
+		//Get the transform of the sprites hierachy in the prefab
+		Transform m_AnchorImpactSpriteTransform = m_AnchorImpact.transform.Find("Sprites");
+		GameObject m_AnchorImpactSprite;
+		if(m_Collision.gameObject.name.Contains("HoneyGrappleSurface"))
+        {
+			//Enable honey sprite
+			m_AnchorImpactSprite = m_AnchorImpactSpriteTransform.Find("HoneySprite").gameObject;
+        }
+        else
+		{
+            //Enable rock sprite
+            m_AnchorImpactSprite =  m_AnchorImpactSpriteTransform.Find("RockSprite").gameObject;
+        }
+
+		//Enable sprite then randomly flip it
+        m_AnchorImpactSprite.SetActive(true);
+        m_AnchorImpactSprite.GetComponent<SpriteRenderer>().flipX = Random.Range(0, 2) == 1;
+    }
+
 	public void ActivateShake(float duration)
 	{
 		StartCoroutine(Shake(duration));
@@ -215,6 +237,9 @@ public class Anchor : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, m_RayDirection, Mathf.Infinity, m_TerrainLayerMask);
         Vector3 m_SpawnPosition = hit.point;
 
+		//move the z position behind the anchor
+		m_SpawnPosition.z = -0.12f;
+
         // Get an angle out of the normal vector
         float m_Angle = Mathf.Atan2(m_CollisionNormal.y, m_CollisionNormal.x) * Mathf.Rad2Deg;
         m_Angle -= 90; // This is to properly orient the sprite
@@ -224,7 +249,8 @@ public class Anchor : MonoBehaviour
 
         m_SpawnedAnchorImpactImage = Instantiate(m_AnchorImpactImage, m_SpawnPosition, m_Rotation);
 
-
+		//Set the correct sprite based on which surface it hit
+		CheckWhatSurfaceCollided(m_SpawnedAnchorImpactImage);
 
 		//Get angle of the last velocity of anchor (while in the air)
         float m_ZRotationOfVelocity = Mathf.Atan2(m_LastVelocity.y, m_LastVelocity.x) * Mathf.Rad2Deg;

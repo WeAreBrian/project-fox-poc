@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8532552572255201571
 MonoBehaviour:
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a3128ac331b794faedfee271f5e643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Length: 14.5
+  Length: 6.5
   LinkSize: {x: 0.3, y: 0.9}
   Link: {fileID: 824484886045038957, guid: d1832ef849add334fa3163964b156bba, type: 3}
   Anchor: {fileID: 0}

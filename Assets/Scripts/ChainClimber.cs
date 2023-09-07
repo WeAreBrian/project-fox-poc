@@ -54,6 +54,11 @@ public class ChainClimber : MonoBehaviour
 		AnchorHolder.pickup += Dismount;
     }
 
+	public void ForceMount()
+    {
+		Mount();
+    }
+
 	private void DoMount(InputAction.CallbackContext context)
     {
         if (Mounted)

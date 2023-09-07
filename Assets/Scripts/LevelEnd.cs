@@ -25,11 +25,12 @@ public class LevelEnd : MonoBehaviour
         Invoke("TimerEnded", m_EndDelay);
         PlayerPrefs.SetFloat("LastScore", m_GameTimer.TimeElapsed);
         PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
+
+        // TODO: use the new save system in SaveUtils to save the time - to be addressed by FOX-236
     }
 
     private void TimerEnded()
     {
-
         if (!m_EndDelayStarted)
         {
             m_EndDelayStarted = true;
@@ -39,15 +40,5 @@ public class LevelEnd : MonoBehaviour
             StartCoroutine(m_HoleTransition.ShrinkParentObject("LevelEnd"));
 
         }
-
     }
-
-    private void Update()
-    {
-        if (m_EndDelayStarted)
-        {
-
-        }
-    }
-
 }

@@ -15,6 +15,9 @@ public class GameTimer : MonoBehaviour
     {
         ResetTimer();
         StartTimer();
+
+        //SaveUtils.InitializeProfile(); // Only meant for testing, to be deleted
+        //CsvUtils.WriteToFile(SaveUtils.GetPlayerData());
     }
 
     private void Update()

@@ -13,5 +13,6 @@ public class WaterLevelTransition : MonoBehaviour
     public void RaiseWaterLevel()
     {
         LeanTween.scaleY(gameObject, m_WaterLevels[m_StageIndex], m_WaterRisingTime);
+        m_StageIndex++;
     }
 }

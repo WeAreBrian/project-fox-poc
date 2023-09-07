@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class Lilypad : MonoBehaviour
 {
+    private SpriteRenderer m_SpriteRenderer;
+    [SerializeField]
+    private float m_RotationLimit;
+
+    private float m_SpawnPositionX;
+
+    private void Start()
+    {
+        m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
-
-        Debug.Log("Triggering");
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            transform.position += new Vector3(0, 0.01f, 0);
+            LeanTween.cancel(m_SpriteRenderer.gameObject);
+            var relativePoint = transform.position.x - collision.contacts[0].point.x;
+            var fractionOfSize = relativePoint / (collision.collider.bounds.size.x * 0.5f);
+            m_SpriteRenderer.transform.rotation = Quaternion.Euler(0,0,m_RotationLimit * fractionOfSize);
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        LeanTween.rotate(m_SpriteRenderer.gameObject, new Vector3(0,0,0), 1f).setDelay(0.5f);
+    }
+
 }

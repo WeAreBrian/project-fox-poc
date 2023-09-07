@@ -165,7 +165,7 @@ public class AnchorHolder : MonoBehaviour
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 1;
-
+		rigidBody.velocity = Vector2.zero;
 
 		m_Anchor.Drop();
 

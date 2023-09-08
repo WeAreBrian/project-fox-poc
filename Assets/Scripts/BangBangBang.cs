@@ -17,9 +17,9 @@ public class BangBangBang : MonoBehaviour
     private void Continue(InputAction.CallbackContext ctx)
     {
         m_Animator.SetTrigger("Continue");
-        if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("End"))
-        {
-            SceneManager.LoadScene(1);
-        }
+        //if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("End"))
+        //{
+        //    SceneManager.LoadScene(1);
+        //}
     }
 }

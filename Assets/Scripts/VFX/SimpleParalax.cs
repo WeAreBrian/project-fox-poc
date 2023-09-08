@@ -4,23 +4,38 @@ using UnityEngine;
 
 public class SimpleParalax : MonoBehaviour
 {
-    [SerializeField]
-    private Transform m_cam;
 
     [SerializeField]
-    private float m_relateMove = .3f;
+    private float m_relativeMove = .3f;
+    private float m_relativeMoveX; 
+    private float m_relativeMoveY;
 
-    [SerializeField] bool m_lockY;
+	[SerializeField] bool m_lockY;
 
-    // Start is called before the first frame update
-    void Start()
+	private PositionDelta m_camera;
+
+	// Start is called before the first frame update
+	void Start()
     {
-        
+		m_camera = Camera.main.GetComponent<PositionDelta>();
+		m_relativeMoveX = m_relativeMove;
+        if (m_lockY)
+        {
+            m_relativeMoveY = 0;
+        }
+        else
+        {
+            m_relativeMoveY = m_relativeMove; 
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector2 (m_cam.position.x, m_cam.position.y);
-    }
+		if (Time.frameCount == 1) return;
+		Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
+
+		transform.position += move;
+
+	}
 }

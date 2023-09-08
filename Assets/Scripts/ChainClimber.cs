@@ -54,6 +54,11 @@ public class ChainClimber : MonoBehaviour
 		AnchorHolder.pickup += Dismount;
     }
 
+	public void ForceMount()
+    {
+		Mount();
+    }
+
 	private void DoMount(InputAction.CallbackContext context)
     {
         if (Mounted)
@@ -108,7 +113,17 @@ public class ChainClimber : MonoBehaviour
     {
         if (!Mounted)
         {
-            return;
+			if (!CanMount)
+			{
+				return;
+			}
+
+			if (m_AnchorHolder.HoldingAnchor)
+			{
+				return;
+			}
+
+			Mount();
         }
 		
         var direction = value.Get<float>();

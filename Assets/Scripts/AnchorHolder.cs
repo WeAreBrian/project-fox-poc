@@ -31,6 +31,7 @@ public class AnchorHolder : MonoBehaviour
 	[SerializeField]
 	private VerticalMovement m_WeightedJump;
 	private Grounded m_Grounded;
+	private ChainClimber m_ChainClimber;
 	public float m_JumpMultiplier;
 
 	private void Awake()
@@ -41,9 +42,25 @@ public class AnchorHolder : MonoBehaviour
 		surf.canceled += SurfCancel;
 
 		m_Grounded = GetComponent<Grounded>();
+		m_ChainClimber = GetComponent<ChainClimber>();
 
 		m_Grounded.Landed.AddListener(StopSurf);
+		GameObject.Find("Anchor").GetComponent<Anchor>().StateChanged.AddListener(AnchorStateChanged);
 	}
+
+	private void AnchorStateChanged(AnchorState state)
+    {
+		if (state == AnchorState.Lodged)
+        {
+			m_ChainClimber.ForceMount();
+			var rb = GetComponent<Rigidbody2D>();
+			var baseSpeed = 60;
+			var recoveredSpeed = Mathf.Abs(rb.velocity.y);
+			var currentDirection = rb.velocity.x > 0 ? 1 : -1;
+			rb.velocity = new Vector2(rb.velocity.x, 0);
+			rb.AddForce(new Vector2((baseSpeed+recoveredSpeed)*currentDirection,0), ForceMode2D.Impulse);
+        }
+    }
 
 	private void OnAnchorInteract()
 	{
@@ -165,7 +182,7 @@ public class AnchorHolder : MonoBehaviour
 
 		var rigidBody = m_Anchor.GetComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 1;
-
+		rigidBody.velocity = Vector2.zero;
 
 		m_Anchor.Drop();
 

@@ -113,6 +113,16 @@ public class ChainClimber : MonoBehaviour
     {
         if (!Mounted)
         {
+			if (!CanMount)
+			{
+				return;
+			}
+
+			if (m_AnchorHolder.HoldingAnchor)
+			{
+				return;
+			}
+
 			Mount();
         }
 		

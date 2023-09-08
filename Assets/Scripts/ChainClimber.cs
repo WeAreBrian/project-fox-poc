@@ -113,7 +113,7 @@ public class ChainClimber : MonoBehaviour
     {
         if (!Mounted)
         {
-            return;
+			Mount();
         }
 		
         var direction = value.Get<float>();

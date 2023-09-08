@@ -23,7 +23,7 @@ public static class SaveUtils
     /// </summary>
     /// <param name="time">in milliseconds</param>
     /// <param name="lvIndex">between 1-3 because that's how many levels we're planning to have</param>
-    public static void SaveTime(float time, int lvIndex)
+    public static void RecordTime(float time)
     {
         if (lvIndex > 3 || lvIndex < 1)
         {
@@ -63,7 +63,7 @@ public static class SaveUtils
     /// Saves player name. Intended to be called after player inputs their name in the leaderboard
     /// </summary>
     /// <param name="name"></param>
-    public static void SavePlayerName(string name)
+    public static void RecordPlayerName(string name)
     {
         string playerName = string.IsNullOrEmpty(name) ? "AAA" : name;
         PlayerPrefs.SetString("PlayerName", playerName);
@@ -73,7 +73,7 @@ public static class SaveUtils
     /// Saves player email. Intended to be called after player inputs their email in the leaderboard
     /// </summary>
     /// <param name="email"></param>
-    public static void SavePlayerEmail(string email)
+    public static void RecordPlayerEmail(string email)
     {
         string playerEmail = string.IsNullOrEmpty(email) ? "" : email;
         PlayerPrefs.SetString("PlayerEmail", playerEmail);

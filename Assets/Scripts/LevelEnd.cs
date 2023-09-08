@@ -21,12 +21,16 @@ public class LevelEnd : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Call the TimerAction method after the specified delay
-        Invoke("TimerEnded", m_EndDelay);
-        PlayerPrefs.SetFloat("LastScore", m_GameTimer.TimeElapsed);
-        PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Call the TimerAction method after the specified delay
+            Invoke("TimerEnded", m_EndDelay);
+            PlayerPrefs.SetFloat("LastScore", m_GameTimer.TimeElapsed); // This line will be deleted after FOX-219. This is currently preserved to keep the level end ui working
+            SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
+            PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
 
-        // TODO: use the new save system in SaveUtils to save the time - to be addressed by FOX-236
+            // SaveUtils.SaveProfile(); // To be deleted after FOX-232
+        }
     }
 
     private void TimerEnded()

@@ -5,17 +5,24 @@ using UnityEngine;
 public class Tail2D : MonoBehaviour
 {
     [Header("Tail")]
-    [SerializeField] Transform tailAnchor = null;
-    [SerializeField] Rigidbody2D tailRigidbody = null;
+    [SerializeField] private Transform tailAnchor = null;
+    [SerializeField] private Rigidbody2D tailRigidbody = null;
+    [SerializeField] private TargetJoint2D m_TargetJoint = null;
+    [SerializeField] private Animator m_FoxAnimator;
+    [SerializeField] private GameObject m_Tail;
 
-    private Rigidbody2D controllerRigidbody;
+
+    private float m_ScaleValue;
+    private int m_FaceDirection;
+
+    [SerializeField] private Rigidbody2D controllerRigidbody;
     private bool isFlipped;
     readonly Quaternion flippedRotation = new Quaternion(0, 0, 1, 0);
 
     private void Awake()
     {
-        controllerRigidbody = GetComponent<Rigidbody2D>();
-
+        //controllerRigidbody = GetComponent<Rigidbody2D>();
+        m_ScaleValue = m_Tail.transform.localScale.y;
     }
 
     private void UpdateTailPose()
@@ -26,6 +33,7 @@ public class Tail2D : MonoBehaviour
 
         tailRigidbody.MovePosition(targetPosition);
 
+        //Debug.Log(targetPosition - tailRigidbody.position);
         //Debug.Log("Target Pos:" + targetPosition);
         //Debug.Log("Current Pos:" + tailRigidbody.position);
         //Debug.Log("Current Pos T" + tailRigidbody.transform.position);
@@ -39,10 +47,27 @@ public class Tail2D : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateTailPose();
+        SetFacingDirection();
+    }
+
+    private void SetFacingDirection()
+    {
+        
+        
+        if (m_FoxAnimator.GetFloat("Facing") == 0)
+        {
+            m_FaceDirection = -1;
+        }
+        else
+        {
+            m_FaceDirection = (int)m_FoxAnimator.GetFloat("Facing");
+        }
+        m_Tail.transform.localScale = new Vector3(m_ScaleValue * m_FaceDirection, 0.5f, 0.5f);
+
+        //Make the targetjoints target be behind the player facing direction
+        m_TargetJoint.target = m_FoxAnimator.transform.position + new Vector3(m_FaceDirection * -1000, m_FoxAnimator.transform.position.y);
     }
 }
-
-
 
 
 

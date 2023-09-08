@@ -6,6 +6,7 @@ public class SimpleParalax : MonoBehaviour
 {
 
     [SerializeField]
+    [Tooltip("A value between 1 and -1.\nPut negative value for foreground.\nThings further away should have a value closer to 0.")]
     private float m_relativeMove = .3f;
     private float m_relativeMoveX; 
     private float m_relativeMoveY;
@@ -17,8 +18,12 @@ public class SimpleParalax : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+        // gets cam velocity
 		m_camera = Camera.main.GetComponent<PositionDelta>();
+
 		m_relativeMoveX = m_relativeMove;
+
+        // make y movement 0 if locked
         if (m_lockY)
         {
             m_relativeMoveY = 0;
@@ -33,6 +38,8 @@ public class SimpleParalax : MonoBehaviour
     void Update()
     {
 		if (Time.frameCount == 1) return;
+
+        // calculate movement
 		Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
 
 		transform.position += move;

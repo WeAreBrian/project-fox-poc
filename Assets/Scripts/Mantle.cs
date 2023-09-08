@@ -23,11 +23,13 @@ public class Mantle : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody;
     private ChainClimber m_ChainClimber;
+    private Grounded m_Grounded;
 
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_ChainClimber = GetComponent<ChainClimber>();
+        m_Grounded = GetComponent<Grounded>();
     }
 
     private void Update()
@@ -53,6 +55,8 @@ public class Mantle : MonoBehaviour
     }
     private void Activate()
     {
+        if (m_Grounded.OnGround) return;
+        
         Debug.Log("Mantling");
         m_ChainClimber.Dismount();
         m_Rigidbody.AddForce(m_MantleForce*Vector2.up, ForceMode2D.Impulse);

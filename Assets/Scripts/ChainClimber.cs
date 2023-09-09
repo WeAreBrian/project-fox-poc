@@ -52,8 +52,6 @@ public class ChainClimber : MonoBehaviour
         var playerInput = GetComponent<PlayerInput>();
         anchorInteractAction = playerInput.actions["Mount"];
 
-        anchorInteractAction.started += DoMount;
-
 		AnchorHolder.pickup += Dismount;
     }
 

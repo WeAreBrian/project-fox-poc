@@ -201,7 +201,6 @@ public class ChainClimber : MonoBehaviour
     private void OnDisable()
     {
 		AnchorHolder.pickup -= Dismount;
-        anchorInteractAction.started -= DoMount;
 
     }
 }

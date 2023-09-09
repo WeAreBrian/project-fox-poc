@@ -9,7 +9,7 @@ public static class CsvUtils
     public static void CreateSaveFile()
     {
         // Create directory for the game (if there isn't one already)
-        string gamePath = @"My Games\A Foxs Tail";
+        string gamePath = @"My Games\A Foxs Tale";
         string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string fullPath = Path.Combine(myDocPath, gamePath);
         Directory.CreateDirectory(fullPath);

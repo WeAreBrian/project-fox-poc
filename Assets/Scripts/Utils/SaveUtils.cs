@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class SaveUtils
 {
@@ -23,14 +24,19 @@ public static class SaveUtils
     /// </summary>
     /// <param name="time">in milliseconds</param>
     /// <param name="lvIndex">between 1-3 because that's how many levels we're planning to have</param>
-    public static void SaveTime(float time, int lvIndex)
+    public static void RecordTime(float time)
     {
-        if (lvIndex > 3 || lvIndex < 1)
+        // Remember to change this if we add more levels before level 1
+        int levelCountBeforeLevel1 = 0; // This is conveniently 0 for now because level indices start at 1 instead of 0
+        int index = SceneManager.GetActiveScene().buildIndex + levelCountBeforeLevel1;
+
+        // If this is the first time saving, initialize profile
+        if (PlayerPrefs.HasKey($"Lv{index}Time"))
         {
-            Debug.LogError("We only have 3 Lvs, but we're saving to Lv " + lvIndex);
-            return;
+            InitializeProfile();
         }
-        PlayerPrefs.SetFloat($"Lv{lvIndex}Time", time);
+
+        PlayerPrefs.SetFloat($"Lv{index}Time", time);
     }
 
     /// <summary>
@@ -63,7 +69,7 @@ public static class SaveUtils
     /// Saves player name. Intended to be called after player inputs their name in the leaderboard
     /// </summary>
     /// <param name="name"></param>
-    public static void SavePlayerName(string name)
+    public static void RecordPlayerName(string name)
     {
         string playerName = string.IsNullOrEmpty(name) ? "AAA" : name;
         PlayerPrefs.SetString("PlayerName", playerName);
@@ -73,7 +79,7 @@ public static class SaveUtils
     /// Saves player email. Intended to be called after player inputs their email in the leaderboard
     /// </summary>
     /// <param name="email"></param>
-    public static void SavePlayerEmail(string email)
+    public static void RecordPlayerEmail(string email)
     {
         string playerEmail = string.IsNullOrEmpty(email) ? "" : email;
         PlayerPrefs.SetString("PlayerEmail", playerEmail);
@@ -83,12 +89,18 @@ public static class SaveUtils
     /// Gets all save data for the current player. Intended to be called before saving to file
     /// </summary>
     /// <returns>a struct of name, email and all the times in ms</returns>
-    public static SpeedrunProfile GetPlayerData()
+    private static SpeedrunProfile GetPlayerData()
     {
         string playerName = PlayerPrefs.GetString("PlayerName");
         var (lv1Time, lv2Time, lv3Time, totalTime) = GetPlayerTimes();
         string playerEmail = PlayerPrefs.GetString("PlayerEmail");
 
         return new SpeedrunProfile(playerName, lv1Time, lv2Time, lv3Time, totalTime, playerEmail);
+    }
+
+    public static void SaveProfile()
+    {
+        SpeedrunProfile speedrunProfile = GetPlayerData();
+        CsvUtils.WriteToFile(speedrunProfile);
     }
 }

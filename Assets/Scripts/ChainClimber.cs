@@ -28,6 +28,7 @@ public class ChainClimber : MonoBehaviour
 	private TargetJoint2D m_LinkTargetJoint;
 	private Rigidbody2D m_OldLink;
 	private AnchorHolder m_AnchorHolder;
+	private Anchor m_Anchor;
 
 	[SerializeField]
 	private AudioClip m_ClimbSound;
@@ -46,6 +47,8 @@ public class ChainClimber : MonoBehaviour
 
 		m_AnchorHolder = GetComponent<AnchorHolder>();
 
+		m_Anchor = FindObjectOfType<Anchor>();
+
         var playerInput = GetComponent<PlayerInput>();
         anchorInteractAction = playerInput.actions["Mount"];
 
@@ -57,27 +60,6 @@ public class ChainClimber : MonoBehaviour
 	public void ForceMount()
     {
 		Mount();
-    }
-
-	private void DoMount(InputAction.CallbackContext context)
-    {
-        if (Mounted)
-        {
-			Dismount();
-			return;
-        }
-
-        if (!CanMount)
-        {
-            return;
-        }
-
-		if (m_AnchorHolder.HoldingAnchor)
-		{
-			return;
-		}
-
-        Mount();
     }
 
 	public void Mount()
@@ -119,6 +101,11 @@ public class ChainClimber : MonoBehaviour
 			}
 
 			if (m_AnchorHolder.HoldingAnchor)
+			{
+				return;
+			}
+
+			if (m_Anchor.State == AnchorState.Free)
 			{
 				return;
 			}

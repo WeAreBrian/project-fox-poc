@@ -72,6 +72,7 @@ public class HorizontalMovement : MonoBehaviour
     private bool m_IsLeftFoot;
     [SerializeField]
     private List<AudioClip> m_FootStepSounds;
+    private InputAction m_HorizontalInput;
     
     private void Start()
     {
@@ -80,17 +81,14 @@ public class HorizontalMovement : MonoBehaviour
         m_Thrower = GetComponent<AnchorThrower>();
         m_Holder = GetComponent<AnchorHolder>();
 
+        m_HorizontalInput = GetComponent<PlayerInput>().actions["Move"];
+
         m_BHopTimer = new Timer();
         m_BHopTimer.Duration = m_BHopWindow;
         m_BHopTimer.Completed += ResetAirSpeedOnLand;
 
         m_Grounded.Landed.AddListener(StartBHopTimer);
         VerticalMovement.jumped += AddPreviousAirSpeed;
-    }
-    
-    private void OnMove(InputValue value)
-    {
-        directionX = value.Get<float>();
     }
 
     private void Update()
@@ -101,9 +99,10 @@ public class HorizontalMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (m_Holder.Surfing) return;
- 
 
-        var horizontalAxisValue = directionX;
+
+
+        var horizontalAxisValue = m_HorizontalInput.ReadValue<float>();
         if (horizontalAxisValue == 0) m_FootstepTimer = m_FootstepInterval;
         if (m_Grounded.OnGround && m_BHopTimer.Paused)
         {

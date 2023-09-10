@@ -66,6 +66,7 @@ public class HorizontalMovement : MonoBehaviour
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
     private AnchorHolder m_Holder;
+    private InputAction m_HorizontalInput;
     
     private void Start()
     {
@@ -93,10 +94,10 @@ public class HorizontalMovement : MonoBehaviour
     {
         if (m_Holder.Surfing) return;
 
-        var horizontalAxisValue = directionX;
+        directionX = m_HorizontalInput.ReadValue<float>();
         if (m_Grounded.OnGround && m_BHopTimer.Paused)
         {
-            rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(directionX * MoveSpeed, rb.velocity.y);
         }
         else
         {

@@ -6,10 +6,10 @@ public static class CsvUtils
 {
     private static string m_SavePath {
         get
-    {
-        string gamePath = @"My Games\A Foxs Tale";
-        string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string fullPath = Path.Combine(myDocPath, gamePath);
+        {
+            string gamePath = @"My Games\A Foxs Tale";
+            string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string fullPath = Path.Combine(myDocPath, gamePath);
             return fullPath;
         }
     }
@@ -35,5 +35,27 @@ public static class CsvUtils
     {
         using StreamWriter csv = new StreamWriter(m_FullSavePath, true);
         csv.WriteLine($"{profile.PlayerName},{profile.Lv1Time},{profile.Lv2Time},{profile.Lv3Time},{profile.TotalTime},{profile.PlayerEmail}");
+    }
+
+    public static List<SpeedrunProfile> ReadFromFile()
+    {
+        bool hasReadFirstLine = false; // The first line is the headers so we'll skip it
+
+        List<SpeedrunProfile> speedrunProfiles = new List<SpeedrunProfile>();
+        using StreamReader csv = new StreamReader(m_FullSavePath);
+        while (!csv.EndOfStream)
+        {
+            string line = csv.ReadLine();
+            if (!hasReadFirstLine)
+            {
+                hasReadFirstLine = true;
+                UnityEngine.Debug.Log(hasReadFirstLine);
+                continue;
+            }
+            string[] values = line.Split(',');
+            speedrunProfiles.Add(new SpeedrunProfile(values[0], float.Parse(values[1]), float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), "")); // We'll skip loading email for privacy, we only need them for giving out rewards
+        }
+        UnityEngine.Debug.Log(speedrunProfiles.Count);
+        return speedrunProfiles;
     }
 }

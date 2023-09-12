@@ -55,7 +55,6 @@ public static class CsvUtils
             string[] values = line.Split(',');
             speedrunProfiles.Add(new SpeedrunProfile(values[0], float.Parse(values[1]), float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), "")); // We'll skip loading email for privacy, we only need them for giving out rewards
         }
-        UnityEngine.Debug.Log(speedrunProfiles.Count);
         return speedrunProfiles;
     }
 }

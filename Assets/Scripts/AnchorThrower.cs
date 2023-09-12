@@ -133,7 +133,7 @@ public class AnchorThrower : MonoBehaviour
         Vector3 dir = (m_AimArrow.transform.position - transform.position);
         float angle = Mathf.Atan2(dir.y, dir.x);
         Quaternion m_Rotation = Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg + 90);
-        m_AimArrow.transform.SetPositionAndRotation((Vector2)transform.position + new Vector2(0, 0.5f) +(inputDirection*1.5f), m_Rotation);
+        m_AimArrow.transform.SetPositionAndRotation((Vector2)transform.position + new Vector2(0, 0.5f) +(inputDirection*2f), m_Rotation);
 
         m_ThrowDirection = inputDirection;
         //m_Anchor.transform.rotation = m_Rotation;

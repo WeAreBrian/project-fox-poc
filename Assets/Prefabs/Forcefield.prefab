@@ -5092,6 +5092,7 @@ GameObject:
   - component: {fileID: 8972524248413476101}
   - component: {fileID: 8972524248413476100}
   - component: {fileID: 8972524248413476107}
+  - component: {fileID: 6663973423816298585}
   m_Layer: 12
   m_Name: Forcefield
   m_TagString: Untagged
@@ -5214,3 +5215,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.16, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6663973423816298585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972524248413476106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35587740f38571949a4c6fd755038ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

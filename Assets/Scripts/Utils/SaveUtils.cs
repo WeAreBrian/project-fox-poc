@@ -89,7 +89,7 @@ public static class SaveUtils
     /// Gets all save data for the current player. Intended to be called before saving to file
     /// </summary>
     /// <returns>a struct of name, email and all the times in ms</returns>
-    private static SpeedrunProfile GetPlayerData()
+    public static SpeedrunProfile GetPlayerData()
     {
         string playerName = PlayerPrefs.GetString("PlayerName");
         var (lv1Time, lv2Time, lv3Time, totalTime) = GetPlayerTimes();

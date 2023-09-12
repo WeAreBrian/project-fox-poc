@@ -1011,6 +1011,11 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.y
       value: -0.0000018151475
       objectReference: {fileID: 0}
+    - target: {fileID: 3156328037888930467, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_Mass
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 3300382193488502396, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1035,6 +1040,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.00000843103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875863385985460557, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_Mass
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4916998611814432349, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
         type: 3}
@@ -1090,6 +1100,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119182294286321054, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_Mass
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6158968480187728486, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_Mass
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8099158946834653601, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_MaxForce
+      value: 5000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

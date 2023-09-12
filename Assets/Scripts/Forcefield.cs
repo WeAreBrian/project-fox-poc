@@ -11,4 +11,12 @@ public class Forcefield : MonoBehaviour
             collision.gameObject.GetComponent<AnchorHolder>().DropAnchor();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Surf"))
+        {
+            collision.gameObject.GetComponent<AnchorHolder>().Boost(collision.contacts[0].normal);
+        }
+    }
 }

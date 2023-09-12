@@ -151,7 +151,7 @@ public class Anchor : MonoBehaviour
 
 	private void UpdateState(AnchorState next)
 	{
-		Debug.Log("Setting state to " + next);
+		//Debug.Log("Setting state to " + next);
 
 
 		if (!m_FreeTimer.Paused)

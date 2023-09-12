@@ -14,6 +14,7 @@ public class Tail2D : MonoBehaviour
 
     private int m_FaceDirection;
 
+    private bool m_IsMoving;
 
     private void UpdateTailPose()
     {
@@ -26,11 +27,21 @@ public class Tail2D : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateTailPose();
-        SetFacingDirection();
+        if(m_FoxRigidbody.velocity.magnitude > 0.1f)
+        {
+            m_IsMoving = true;
+            SetFacingDirection(0.001f);
+        }
+        else
+        {
+            m_IsMoving = false;
+            SetFacingDirection(1000f);
+        }
+        
     }
 
     //This is the make the tale slowly aim towards the back of the fox through the target joint
-    private void SetFacingDirection()
+    private void SetFacingDirection(float strength = 0.01f)
     {
         //player starts off with no direction until they move, so just set it to -1 if its 0
         if (m_FoxAnimator.GetFloat("Facing") == 0)
@@ -45,5 +56,6 @@ public class Tail2D : MonoBehaviour
 
         //Make the targetjoints target be behind the player facing direction
         m_TargetJoint.target = m_FoxAnimator.transform.position + new Vector3(m_FaceDirection * -1000, m_FoxAnimator.transform.position.y);
+        m_TargetJoint.frequency = strength;
     }
 }

@@ -5,13 +5,17 @@ using UnityEngine;
 public class GrappleFlower : MonoBehaviour
 {
     private Collider2D m_Collider;
+    private Animator m_Animator;
     private Anchor m_Anchor;
+    [SerializeField]
+    private float m_StartTimeOffset;
 
     private void Start()
     {
         m_Collider = GetComponent<Collider2D>();
+        m_Animator = GetComponent<Animator>();
+        m_Animator.SetFloat("Offset", m_StartTimeOffset / m_Animator.GetCurrentAnimatorClipInfo(0).Length);
     }
-
     public void EnableCollider()
     {
         m_Collider.enabled = true;
@@ -23,10 +27,6 @@ public class GrappleFlower : MonoBehaviour
         if (m_Anchor != null)
         {
             m_Anchor.FreeForDuration(0.1f);
-        }
-        else
-        {
-            Debug.Log("Anchor null");
         }
     }
 

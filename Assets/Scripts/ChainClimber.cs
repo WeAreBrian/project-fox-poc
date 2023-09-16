@@ -112,7 +112,6 @@ public class ChainClimber : MonoBehaviour
 
     private void OnClimb(InputValue value)
     {
-		Debug.Log(Mounted);
         if (!Mounted)
         {
 			if (!CanMount)

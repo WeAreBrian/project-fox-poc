@@ -66,6 +66,13 @@ public class HorizontalMovement : MonoBehaviour
     private Grounded m_Grounded;
     private AnchorThrower m_Thrower;
     private AnchorHolder m_Holder;
+    [SerializeField]
+    private float m_FootstepInterval;
+    private float m_FootstepTimer;
+    private bool m_IsLeftFoot;
+    [SerializeField]
+    private List<AudioClip> m_FootStepSounds;
+    private InputAction m_HorizontalInput;
     
     private void Start()
     {
@@ -74,6 +81,8 @@ public class HorizontalMovement : MonoBehaviour
         m_Thrower = GetComponent<AnchorThrower>();
         m_Holder = GetComponent<AnchorHolder>();
 
+        m_HorizontalInput = GetComponent<PlayerInput>().actions["Move"];
+
         m_BHopTimer = new Timer();
         m_BHopTimer.Duration = m_BHopWindow;
         m_BHopTimer.Completed += ResetAirSpeedOnLand;
@@ -81,26 +90,35 @@ public class HorizontalMovement : MonoBehaviour
         m_Grounded.Landed.AddListener(StartBHopTimer);
         VerticalMovement.jumped += AddPreviousAirSpeed;
     }
-    
-    private void OnMove(InputValue value)
-    {
-        directionX = value.Get<float>();
-    }
 
     private void Update()
     {
         m_BHopTimer.Tick();
     }
 
+    private void PlayFootStepSound()
+    {
+        m_FootstepTimer -= Time.deltaTime * Mathf.Abs(directionX);
+        if (m_FootstepTimer <= 0)
+        {
+            var footIndex = Random.Range(0, 2);
+            var offset = 0.05f - Random.Range(0, 0.1f);
+            AudioController.PlaySound(m_FootStepSounds[footIndex], 0.5f, 1 + offset, MixerGroup.SFX);
+
+            m_FootstepTimer = m_FootstepInterval;
+        }
+    }
+
     private void FixedUpdate()
     {
         if (m_Holder.Surfing) return;
- 
 
-        var horizontalAxisValue = directionX;
+        directionX = m_HorizontalInput.ReadValue<float>();
+        if (directionX == 0) m_FootstepTimer = m_FootstepInterval;
         if (m_Grounded.OnGround && m_BHopTimer.Paused)
         {
-            rb.velocity = new Vector2(horizontalAxisValue * MoveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(directionX * MoveSpeed, rb.velocity.y);
+            PlayFootStepSound();
         }
         else
         {

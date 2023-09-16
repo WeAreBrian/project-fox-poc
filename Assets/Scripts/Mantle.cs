@@ -34,6 +34,8 @@ public class Mantle : MonoBehaviour
 
     private void Update()
     {
+        if (m_Grounded.OnGround) return;
+
         if (Physics2D.OverlapCircle((Vector2)transform.position + m_LeftOffset - m_BoxCenterOffset / 2, m_CollisionRadius, m_GroundLayer))
         {
             if (!Physics2D.OverlapCircle((Vector2)transform.position + m_LeftOffset - m_BoxCenterOffset + m_HeightOffset / 2, m_CollisionRadius, m_GroundLayer) && !m_Triggered)
@@ -57,7 +59,6 @@ public class Mantle : MonoBehaviour
     {
         if (m_Grounded.OnGround) return;
         
-        Debug.Log("Mantling");
         m_ChainClimber.Dismount();
         m_Rigidbody.AddForce(m_MantleForce*Vector2.up, ForceMode2D.Impulse);
         m_Triggered = true;

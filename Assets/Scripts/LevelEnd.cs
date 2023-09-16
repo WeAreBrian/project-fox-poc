@@ -12,6 +12,7 @@ public class LevelEnd : MonoBehaviour
 
     private CloseOrOpenCircle m_HoleTransition;
     private GameTimer m_GameTimer;
+    private bool m_levelEnded;
 
     private void Awake()
     {
@@ -21,12 +22,21 @@ public class LevelEnd : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Call the TimerAction method after the specified delay
-        Invoke("TimerEnded", m_EndDelay);
-        PlayerPrefs.SetFloat("LastScore", m_GameTimer.TimeElapsed);
-        PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // A bandaid fix for a bug that causes OnTriggerEnter2D to be called twice
+            if (m_levelEnded)
+                return;
 
-        // TODO: use the new save system in SaveUtils to save the time - to be addressed by FOX-236
+            m_levelEnded = true;
+
+            // Call the TimerAction method after the specified delay
+            Invoke("TimerEnded", m_EndDelay);
+            SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
+            PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
+
+            SaveUtils.SaveProfile(); // To be deleted after other levels are added
+        }
     }
 
     private void TimerEnded()

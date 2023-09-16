@@ -32,7 +32,7 @@ public class Recall : MonoBehaviour
 		m_Holder = GetComponent<AnchorHolder>();
 		m_Grounded = GetComponent<Grounded>();
 		m_Grounded.Landed.AddListener(ResetRecall);
-		m_AnchorMaterial = m_Anchor.GetComponentInChildren<MeshRenderer>().material;
+		m_AnchorMaterial = m_Anchor.GetComponentInChildren<SpriteRenderer>().material;
 		m_Anchor.StateChanged.AddListener(AnchorStateChange);
 	}
 

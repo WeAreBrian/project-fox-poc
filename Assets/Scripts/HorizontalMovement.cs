@@ -100,8 +100,6 @@ public class HorizontalMovement : MonoBehaviour
     {
         if (m_Holder.Surfing) return;
 
-
-
         directionX = m_HorizontalInput.ReadValue<float>();
         if (directionX == 0) m_FootstepTimer = m_FootstepInterval;
         if (m_Grounded.OnGround && m_BHopTimer.Paused)
@@ -157,19 +155,6 @@ public class HorizontalMovement : MonoBehaviour
             coefficient = 1;
         }
         return m_AirAccelerationCurve.Evaluate(coefficient);
-    }
-
-    private void PlayFootStepSound()
-    {
-        m_FootstepTimer -= Time.deltaTime * Mathf.Abs(directionX);
-        if (m_FootstepTimer <= 0)
-        {
-            var footIndex = Random.Range(0, 2);
-            var offset = 0.05f - Random.Range(0, 0.1f);
-            AudioController.PlaySound(m_FootStepSounds[footIndex], 0.5f, 1 + offset, MixerGroup.SFX);
-
-            m_FootstepTimer = m_FootstepInterval;
-        }
     }
 
     private void OnDisable()

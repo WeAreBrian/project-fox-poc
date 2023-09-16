@@ -27,11 +27,14 @@ public class AnchorHolder : MonoBehaviour
 
 	[SerializeField]
 	private LayerMask m_NotFox;
+	[SerializeField]
+	private ParticleSystem m_SparkEmitter;
 
 	[SerializeField]
 	private VerticalMovement m_WeightedJump;
 	private Grounded m_Grounded;
 	private ChainClimber m_ChainClimber;
+	private Rigidbody2D m_Rigidbody;
 	public float m_JumpMultiplier;
 
 	private void Awake()
@@ -46,6 +49,7 @@ public class AnchorHolder : MonoBehaviour
 
 		m_Grounded.Landed.AddListener(StopSurf);
 		GameObject.Find("Anchor").GetComponent<Anchor>().StateChanged.AddListener(AnchorStateChanged);
+		m_Rigidbody = GetComponent<Rigidbody2D>();
 	}
 
 	private void AnchorStateChanged(AnchorState state)
@@ -195,13 +199,39 @@ public class AnchorHolder : MonoBehaviour
 		return anchor;
 	}
 
+	public void Boost(Vector2 normal)
+	{
+		if (!Surfing) return;
+
+		Vector2 boostVector;
+		if (m_Rigidbody.velocity.x < 0)
+		{
+			boostVector = new Vector2(normal.y, -normal.x);
+		}
+		else
+		{
+			boostVector = new Vector2(-normal.y, normal.x);
+		}
+		Debug.Log("surf boost");
+		Debug.Log(boostVector);
+		m_Rigidbody.AddForce(boostVector*50, ForceMode2D.Impulse);
+	}
+
 	private void FixedUpdate()
 	{
+		m_SparkEmitter.Stop();
 		if (m_Anchor != null)
 		{
 			if (Surfing)
             {
 				m_Anchor.transform.SetPositionAndRotation((Vector2)transform.position + SurfPosition, Quaternion.Euler(SurfRotation));
+				if (m_Grounded.OnForcefield)
+				{
+					var sparkObjectRotation = m_Rigidbody.velocity.x > 0 ? 0 : 180;
+					m_SparkEmitter.gameObject.transform.rotation = Quaternion.Euler(0, sparkObjectRotation, 0);
+					m_SparkEmitter.emissionRate = 4 * m_Rigidbody.velocity.magnitude;
+					m_SparkEmitter.Play();
+				}
             }
             else
             {

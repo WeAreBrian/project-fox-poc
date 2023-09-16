@@ -148,7 +148,6 @@ public class VerticalMovement : MonoBehaviour
 
 	private void Bounce()
 	{
-		Debug.Log("bouncing");
 		if (m_AnchorHolder.Surfing)
 		{
 			m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, -m_RigidBody.velocity.y);

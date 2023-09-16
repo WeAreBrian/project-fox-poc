@@ -61,12 +61,28 @@ public class ChainMovement : MonoBehaviour
 			return;
 		}
 
+		ClearJoints();
 
 		m_Chain = furthestLink.Chain;
 		m_Chain.UpdateChainLinksMass(1);
 		m_MountDistance = m_Chain.LinkAnchorDistance * (furthestLink.LinkIndex + 0.5f);
 
 		CreateAttachments();
+	}
+
+	public void ClearJoints()
+	{
+		foreach (Transform t in m_Chain.transform)
+		{
+			foreach (var joint in t.GetComponents<TargetJoint2D>())
+			{
+				Destroy(joint);
+			}
+		}
+		foreach (DistanceJoint2D joint in GetComponents<DistanceJoint2D>())
+		{
+			if (joint.enableCollision == false) Destroy(joint);
+		}
 	}
 
 	public void Dismount()

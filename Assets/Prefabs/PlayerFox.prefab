@@ -234,10 +234,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_FootstepInterval: 0.3
-  m_FootStepSounds:
-  - {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
-  - {fileID: 8300000, guid: 79187dec16a7ab84bbd87fb5b23a60f2, type: 3}
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5696,6 +5692,7 @@ GameObject:
   - component: {fileID: 7453045840984210812}
   - component: {fileID: 2961726244308222665}
   - component: {fileID: 8838527786493068381}
+  - component: {fileID: 6918581502735060861}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -5803,3 +5800,18 @@ SortingGroup:
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &6918581502735060861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7459306747764765158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c1fd9988d29cf43bfff25ce0a77c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FootstepSounds:
+  - {fileID: 8300000, guid: f06a0f32000e6734093991c487021f9a, type: 3}
+  - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}

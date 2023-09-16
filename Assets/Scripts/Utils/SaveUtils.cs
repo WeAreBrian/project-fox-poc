@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -102,5 +104,11 @@ public static class SaveUtils
     {
         SpeedrunProfile speedrunProfile = GetPlayerData();
         CsvUtils.WriteToFile(speedrunProfile);
+    }
+
+    public static List<SpeedrunProfile> LoadProfiles()
+    {
+        List<SpeedrunProfile> profiles = CsvUtils.ReadFromFile();
+        return profiles.OrderBy(x => x.TotalTime).ToList();
     }
 }

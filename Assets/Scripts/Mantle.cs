@@ -57,6 +57,8 @@ public class Mantle : MonoBehaviour
     }
     private void Activate()
     {
+        if (m_Grounded.OnGround) return;
+        
         m_ChainClimber.Dismount();
         m_Rigidbody.AddForce(m_MantleForce*Vector2.up, ForceMode2D.Impulse);
         m_Triggered = true;

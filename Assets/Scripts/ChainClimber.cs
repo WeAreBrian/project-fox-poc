@@ -36,7 +36,7 @@ public class ChainClimber : MonoBehaviour
 	private float m_ClimbSoundInterval;
 	private float m_ClimbSoundTimer;
 
-	private InputAction anchorInteractAction;
+	private InputAction m_ClimbAction;
 
     private void Awake()
     {
@@ -50,7 +50,7 @@ public class ChainClimber : MonoBehaviour
 		m_Anchor = FindObjectOfType<Anchor>();
 
         var playerInput = GetComponent<PlayerInput>();
-        anchorInteractAction = playerInput.actions["Mount"];
+		m_ClimbAction = playerInput.actions["Climb"];
 
 		AnchorHolder.pickup += Dismount;
     }
@@ -104,8 +104,9 @@ public class ChainClimber : MonoBehaviour
 		m_LinkTargetJoint = null;
 	}
 
-	public void Climb(float direction)
+	public void SetClimbSpeed()
 	{
+		var direction = m_ClimbAction.ReadValue<float>();
 		m_ClimbInput = direction;
     }
 
@@ -131,9 +132,6 @@ public class ChainClimber : MonoBehaviour
 
 			Mount();
         }
-		
-        var direction = value.Get<float>();
-        Climb(direction);
 	}
 
 	private void UpdateDistanceJoint()
@@ -185,6 +183,8 @@ public class ChainClimber : MonoBehaviour
 		{
 			m_ClimbSoundTimer = m_ClimbSoundInterval;
 		}
+
+		SetClimbSpeed();
 
 		m_MountDistance -= m_ClimbSpeed * Time.fixedDeltaTime;
 		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.MaxLength);

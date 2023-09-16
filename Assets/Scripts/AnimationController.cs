@@ -34,6 +34,7 @@ public class AnimationController : MonoBehaviour
         m_Animator.SetBool("Grounded", m_Grounded.OnGround);
         m_Animator.SetBool("Climbing", m_ChainClimber.Mounted);
         m_Animator.SetFloat("VerticalVelocity", m_RigidBody.velocity.y);
+        m_Animator.SetFloat("HorizontalVelocity", m_RigidBody.velocity.x);
         m_Animator.SetFloat("AimDirection", m_Thrower.AimDirection);
         m_Animator.SetBool("Surfing", m_Holder.Surfing);
     }
@@ -55,7 +56,7 @@ public class AnimationController : MonoBehaviour
         {
             m_Animator.SetFloat("Facing", value.Get<float>());
         }
-        m_Animator.SetFloat("HorizontalVelocity", value.Get<float>());
+        m_Animator.SetFloat("InputVelocity", value.Get<float>());
         m_Animator.SetBool("IsMoving", m_Moving);
     }
 

@@ -14,23 +14,26 @@ public class Leaderboard : MonoBehaviour
 
     private SpeedrunProfile m_PlayerProfile;
 
-    void Start()
+    private void Start()
     {
+        // Load player profiles
         m_PlayerProfile = SaveUtils.GetPlayerData();
-        GameObject playerProfile = Instantiate(m_ProfilePrefab, m_PlayerProfileSpawn);
-        playerProfile.GetComponent<SpeedrunStatTexts>().Initialize(m_PlayerProfile);
-        List<SpeedrunProfile> profiles = SaveUtils.LoadProfiles();
+        List<SpeedrunProfile> orderedProfiles = SaveUtils.LoadProfiles();
 
-        // Only show 10 profiles
-        for (int i = 0; i < 10; i++)
+        // Show current player profile and their rank
+        GameObject playerProfile = Instantiate(m_ProfilePrefab, m_PlayerProfileSpawn);
+        playerProfile.GetComponent<SpeedrunStatTexts>().Initialize(orderedProfiles.IndexOf(m_PlayerProfile), m_PlayerProfile);
+
+        // Show other profiles
+        for (int i = 0; i < 10; i++) // Only show top 10 profiles
         {
-            if (i >= profiles.Count)
+            if (i >= orderedProfiles.Count)
             {
                 break;
             }
             Vector3 position = new Vector3(0, -i * m_ProfileTextPadding, 0);
             GameObject stat = Instantiate(m_ProfilePrefab, m_TopProfileSpawn);
-            stat.GetComponent<SpeedrunStatTexts>().Initialize(profiles[i]);
+            stat.GetComponent<SpeedrunStatTexts>().Initialize(i+1, orderedProfiles[i]);
             stat.GetComponent<RectTransform>().anchoredPosition = position;
         }
     }

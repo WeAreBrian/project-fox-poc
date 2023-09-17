@@ -49,7 +49,6 @@ public static class CsvUtils
             if (!hasReadFirstLine)
             {
                 hasReadFirstLine = true;
-                UnityEngine.Debug.Log(hasReadFirstLine);
                 continue;
             }
             string[] values = line.Split(',');

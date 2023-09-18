@@ -236,6 +236,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_FootstepInterval: 0.5
+  m_FootStepSounds:
+  - {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
+  - {fileID: 8300000, guid: 79187dec16a7ab84bbd87fb5b23a60f2, type: 3}
+  - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5843,6 +5848,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 107137074636933800}
     m_Modifications:
+    - target: {fileID: 2746204406188869328, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.39648893
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746204406188869328, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.0000017941927
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300382193488502396, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.39220098
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300382193488502396, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.0000028647478
+      objectReference: {fileID: 0}
     - target: {fileID: 4117748769753174822, guid: cb36f42aada9c4fcfa0cd688dcfb67a8,
         type: 3}
       propertyPath: m_Name

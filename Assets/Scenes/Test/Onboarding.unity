@@ -3883,7 +3883,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471525595}
   m_LocalRotation: {x: 0, y: 0, z: -0.20165911, w: 0.97945577}
-  m_LocalPosition: {x: 197.3076, y: 0.22, z: 0}
+  m_LocalPosition: {x: 194.94, y: 1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3936,7 +3936,7 @@ SpriteRenderer:
   m_FlipX: 1
   m_FlipY: 1
   m_DrawMode: 2
-  m_Size: {x: 11.550169, y: 1.43}
+  m_Size: {x: 15.913801, y: 1.43}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
@@ -10761,10 +10761,40 @@ PrefabInstance:
       propertyPath: m_CooldownColour.r
       value: 0.8396226
       objectReference: {fileID: 0}
+    - target: {fileID: 2838516154636234219, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.39648494
+      objectReference: {fileID: 0}
+    - target: {fileID: 2838516154636234219, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.0000134217535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3221557122263479623, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.3922048
+      objectReference: {fileID: 0}
+    - target: {fileID: 3221557122263479623, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.0000028228385
+      objectReference: {fileID: 0}
     - target: {fileID: 3642870710035614992, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077724322293946804, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.4221856
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077724322293946804, guid: fea7d46b09dd64780ba611993068e295,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.000006827526
       objectReference: {fileID: 0}
     - target: {fileID: 4250636120361761568, guid: fea7d46b09dd64780ba611993068e295,
         type: 3}

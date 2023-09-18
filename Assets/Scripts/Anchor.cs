@@ -24,8 +24,6 @@ public class Anchor : MonoBehaviour
 	private float m_ShakeDuration;
 	private float m_ShakeAmplitudeTimer;
 	private Vector3 m_ShakePos;
-	[SerializeField]
-	private GameObject m_TimerSprite;
 
 	[SerializeField]
 	private AudioClip m_AnchorLand;
@@ -50,8 +48,6 @@ public class Anchor : MonoBehaviour
 		m_Rigidbody.useFullKinematicContacts = true;
 
 		m_FreeTimer = new Timer();
-
-		m_TimerSprite.SetActive(false);
 	}
 
 	private void Update()
@@ -126,11 +122,9 @@ public class Anchor : MonoBehaviour
 		m_ShakePos = transform.position;
 		m_ShakeAmplitudeTimer = duration;
 		m_ShakeDuration = duration;
-		m_TimerSprite.SetActive(true);
 		yield return new WaitForSeconds(duration);
 		m_Shake = false;
 		transform.position = m_ShakePos;
-		m_TimerSprite.SetActive(false);
 	}
 
 	private IEnumerator DisableFoxCollision()

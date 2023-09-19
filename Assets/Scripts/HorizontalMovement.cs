@@ -101,7 +101,7 @@ public class HorizontalMovement : MonoBehaviour
         m_FootstepTimer -= Time.deltaTime * Mathf.Abs(directionX);
         if (m_FootstepTimer <= 0)
         {
-            var footIndex = Random.Range(0, 2);
+            var footIndex = Random.Range(0, m_FootStepSounds.Count); 
             var offset = 0.05f - Random.Range(0, 0.1f);
             AudioController.PlaySound(m_FootStepSounds[footIndex], 0.5f, 1 + offset, MixerGroup.SFX);
 

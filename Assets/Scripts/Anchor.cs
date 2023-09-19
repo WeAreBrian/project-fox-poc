@@ -11,7 +11,7 @@ public class Anchor : MonoBehaviour
 
 	public Rigidbody2D Rigidbody => m_Rigidbody;
 	public AnchorState State => m_State;
-
+	[SerializeField]
 	private AnchorState m_State;
 	private Rigidbody2D m_Rigidbody;
 	private Timer m_FreeTimer;
@@ -24,8 +24,6 @@ public class Anchor : MonoBehaviour
 	private float m_ShakeDuration;
 	private float m_ShakeAmplitudeTimer;
 	private Vector3 m_ShakePos;
-	[SerializeField]
-	private GameObject m_TimerSprite;
 
 	[SerializeField]
 	private AudioClip m_AnchorLand;
@@ -50,28 +48,11 @@ public class Anchor : MonoBehaviour
 		m_Rigidbody.useFullKinematicContacts = true;
 
 		m_FreeTimer = new Timer();
-
-		m_TimerSprite.SetActive(false);
 	}
 
 	private void Update()
 	{
 		m_FreeTimer.Tick();
-
-		if (m_Shake)
-		{
-			var progress = (m_ShakeAmplitudeTimer / m_ShakeDuration);
-
-			m_ShakeAmplitudeTimer -= Time.deltaTime;
-			float x = transform.position.x * Mathf.Sin(Time.time * m_ShakeFrequency * m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
-			float y = transform.position.y * Mathf.Sin(Time.time * m_ShakeFrequency*1.2f* m_ShakeAmplitude.Evaluate(1-progress)) * 0.01f* m_ShakeAmplitude.Evaluate(1 - progress);
-			float z = 0;
-
-			m_TimerSprite.transform.localScale = new Vector3(1.5f * progress, 1.5f * progress, 1.5f * progress);
-
-			// Then assign a new vector3
-			gameObject.transform.position = m_ShakePos + new Vector3(x, y, z);
-		}
 	}
 
     private void FixedUpdate()
@@ -141,11 +122,9 @@ public class Anchor : MonoBehaviour
 		m_ShakePos = transform.position;
 		m_ShakeAmplitudeTimer = duration;
 		m_ShakeDuration = duration;
-		m_TimerSprite.SetActive(true);
 		yield return new WaitForSeconds(duration);
 		m_Shake = false;
 		transform.position = m_ShakePos;
-		m_TimerSprite.SetActive(false);
 	}
 
 	private IEnumerator DisableFoxCollision()
@@ -166,7 +145,7 @@ public class Anchor : MonoBehaviour
 
 	private void UpdateState(AnchorState next)
 	{
-		Debug.Log("Setting state to " + next);
+		//Debug.Log("Setting state to " + next);
 
 
 		if (!m_FreeTimer.Paused)

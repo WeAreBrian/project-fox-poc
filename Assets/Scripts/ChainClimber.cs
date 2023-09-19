@@ -28,6 +28,7 @@ public class ChainClimber : MonoBehaviour
 	private TargetJoint2D m_LinkTargetJoint;
 	private Rigidbody2D m_OldLink;
 	private AnchorHolder m_AnchorHolder;
+	private Anchor m_Anchor;
 
 	[SerializeField]
 	private AudioClip m_ClimbSound;
@@ -35,7 +36,7 @@ public class ChainClimber : MonoBehaviour
 	private float m_ClimbSoundInterval;
 	private float m_ClimbSoundTimer;
 
-	private InputAction anchorInteractAction;
+	private InputAction m_ClimbAction;
 
     private void Awake()
     {
@@ -46,37 +47,23 @@ public class ChainClimber : MonoBehaviour
 
 		m_AnchorHolder = GetComponent<AnchorHolder>();
 
-        var playerInput = GetComponent<PlayerInput>();
-        anchorInteractAction = playerInput.actions["Mount"];
+		m_Anchor = FindObjectOfType<Anchor>();
 
-        anchorInteractAction.started += DoMount;
+        var playerInput = GetComponent<PlayerInput>();
+		m_ClimbAction = playerInput.actions["Climb"];
 
 		AnchorHolder.pickup += Dismount;
     }
 
-	private void DoMount(InputAction.CallbackContext context)
+	public void ForceMount()
     {
-        if (Mounted)
-        {
-			Dismount();
-			return;
-        }
-
-        if (!CanMount)
-        {
-            return;
-        }
-
-		if (m_AnchorHolder.HoldingAnchor)
-		{
-			return;
-		}
-
-        Mount();
+		Mount();
     }
 
 	public void Mount()
 	{
+		ClearJoints();
+
 		m_PendulumDistanceJoint = gameObject.AddComponent<DistanceJoint2D>();
 		m_PendulumDistanceJoint.autoConfigureConnectedAnchor = false;
 		m_PendulumDistanceJoint.autoConfigureDistance = false;
@@ -90,17 +77,36 @@ public class ChainClimber : MonoBehaviour
 		CreateLinkTargetJoint();
 	}
 
+	public void ClearJoints()
+	{
+		foreach (Transform t in m_PhysicsChain.transform)
+		{
+			foreach (var joint in t.GetComponents<TargetJoint2D>())
+			{
+				Destroy(joint);
+			}
+		}
+		foreach (DistanceJoint2D joint in GetComponents<DistanceJoint2D>())
+		{
+			if (joint.enableCollision == false)
+			{
+				Debug.Log("Destroying pesky duplicate joint");
+				Destroy(joint);
+			}
+		}
+	}
+
     public void Dismount()
 	{
-		Destroy(m_PendulumDistanceJoint);
-		m_PendulumDistanceJoint = null;
+		ClearJoints();
 
-		Destroy(m_LinkTargetJoint);
+		m_PendulumDistanceJoint = null;
 		m_LinkTargetJoint = null;
 	}
 
-	public void Climb(float direction)
+	public void SetClimbSpeed()
 	{
+		var direction = m_ClimbAction.ReadValue<float>();
 		m_ClimbInput = direction;
     }
 
@@ -108,11 +114,23 @@ public class ChainClimber : MonoBehaviour
     {
         if (!Mounted)
         {
-            return;
+			if (!CanMount)
+			{
+				return;
+			}
+
+			if (m_AnchorHolder.HoldingAnchor)
+			{
+				return;
+			}
+
+			if (m_Anchor.State == AnchorState.Free)
+			{
+				return;
+			}
+
+			Mount();
         }
-		
-        var direction = value.Get<float>();
-        Climb(direction);
 	}
 
 	private void UpdateDistanceJoint()
@@ -165,6 +183,8 @@ public class ChainClimber : MonoBehaviour
 			m_ClimbSoundTimer = m_ClimbSoundInterval;
 		}
 
+		SetClimbSpeed();
+
 		m_MountDistance -= m_ClimbSpeed * Time.fixedDeltaTime;
 		m_MountDistance = Mathf.Clamp(m_MountDistance, 0, m_Chain.MaxLength);
 
@@ -201,7 +221,6 @@ public class ChainClimber : MonoBehaviour
     private void OnDisable()
     {
 		AnchorHolder.pickup -= Dismount;
-        anchorInteractAction.started -= DoMount;
 
     }
 }

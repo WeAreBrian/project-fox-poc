@@ -79,7 +79,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         StartCoroutine(GrowParentObject());
     }
 
-    public IEnumerator ShrinkParentObject(String m_SceneToOpen = null)
+    public IEnumerator ShrinkParentObject(int m_SceneToOpen = 0)
     {
         
 
@@ -113,9 +113,9 @@ public class CloseOrOpenCircle : MonoBehaviour
 
         //Tries to load the inputted scene. Otherwise loads the current scene.
         //Debug.Log("Open New Scene");
-        if(m_SceneToOpen == null)
+        if(m_SceneToOpen == 0)
         {
-            m_SceneToOpen = SceneManager.GetActiveScene().name;
+            m_SceneToOpen = SceneManager.GetActiveScene().buildIndex;
         }
         SceneManager.LoadScene(m_SceneToOpen);
         

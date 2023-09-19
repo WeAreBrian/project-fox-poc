@@ -33,9 +33,9 @@ public class LevelEnd : MonoBehaviour
             // Call the TimerAction method after the specified delay
             Invoke("TimerEnded", m_EndDelay);
             SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
-            PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
+            PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
 
-            SaveUtils.SaveProfile(); // To be deleted after other levels are added
+
         }
     }
 

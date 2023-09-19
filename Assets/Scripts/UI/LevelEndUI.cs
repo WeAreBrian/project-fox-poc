@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -26,13 +24,13 @@ public class LevelEndUI : MonoBehaviour
 
     public void RestartLevelButtonPressed()
     {
-        string m_LastScene = PlayerPrefs.GetString("LastScene");
-        StartCoroutine(m_HoleTransition.ShrinkParentObject(m_LastScene));
+        int lastSceneIndex = PlayerPrefs.GetInt("LastScene");
+        StartCoroutine(m_HoleTransition.ShrinkParentObject(lastSceneIndex));
     }
 
     public void LevelSelectButtonPressed()
     {
         SceneManager.LoadScene("LevelSelection");
-        //StartCoroutine(m_HoleTransition.ShrinkParentObject("LevelSelection"));
+        StartCoroutine(m_HoleTransition.ShrinkParentObject(0)); // 0 = LevelSelection
     }
 }

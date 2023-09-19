@@ -15,6 +15,6 @@ public class PauseGame : MonoBehaviour
 
     private void OnPause()	//uses input system
     {
-        //m_PauseMenu.GetComponent<ShowPauseMenu>().TryPause();
+        m_PauseMenu.GetComponent<ShowPauseMenu>().TryPause();
     }
 }

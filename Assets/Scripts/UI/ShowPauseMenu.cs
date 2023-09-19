@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+
 
 
 public class ShowPauseMenu : MonoBehaviour
@@ -12,8 +14,12 @@ public class ShowPauseMenu : MonoBehaviour
 	private float m_PreviousTimeScale;   //Incase in future we add any slow-mo effects or whatever than pause menu wont mess with it
 	private VisualElement m_LevelSelectRoot;
 
+	private GameObject m_PlayerFox;
+
 	private void OnEnable()
 	{
+		m_PlayerFox = GameObject.FindGameObjectWithTag("Player");
+
 		s_GamePaused = false;
 		// Hiding level select menu for now
 		//Get levelselect object
@@ -42,10 +48,15 @@ public class ShowPauseMenu : MonoBehaviour
 		// m_MainMenuButton.clicked += () => LoadScene("MainMenu");
 	}
 
-	//Note update in other scripts still runs when game is paused (Timescale = 0) but FixedUpdate does NOT. Input checks in other Update()s still go off so need to check if Pause.s_GamePaused = false for other stuff.
+    //Note update in other scripts still runs when game is paused (Timescale = 0) but FixedUpdate does NOT. Input checks in other Update()s still go off so need to check if Pause.s_GamePaused = false for other stuff.
+
+    private void OnPause()
+    {
+		TryPause();
+    }
 
 
-	public void TryPause()  //uses input system
+    public void TryPause()  //uses input system
 	{
 		if (s_GamePaused)
 		{
@@ -72,6 +83,8 @@ public class ShowPauseMenu : MonoBehaviour
 
         // Set the button to be in focus.
         button.Focus();
+
+		m_PlayerFox.GetComponent<PlayerInput>().enabled = false;
     }
 
 	private void UnpauseGame()
@@ -81,9 +94,12 @@ public class ShowPauseMenu : MonoBehaviour
 		AudioListener.pause = false;
 		m_PauseRoot.style.display = DisplayStyle.None;
 		m_LevelSelectRoot.style.display = DisplayStyle.None;
-	}
 
-	private void RestartGame()
+        m_PlayerFox.GetComponent<PlayerInput>().enabled = true;
+
+    }
+
+    private void RestartGame()
 	{
 		s_GamePaused = false;
 		Time.timeScale = m_PreviousTimeScale;

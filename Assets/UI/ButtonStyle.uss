@@ -3,16 +3,33 @@
     flex-direction: column;
     align-items: flex-end;
     align-self: flex-end;
-    -unity-font-style: bold;
 }
 
 .unity-button {
     background-color: rgba(0, 0, 0, 0);
-    color: white;
     width: 100%;
+    border-color: rgba(0, 0, 0, 0);
+    -unity-font-style: normal;
+}
+
+.unity-button:focus {
+    border-width: 5px;
+    border-radius: 5px;
+    -unity-font-style: bold;
+    -unity-text-outline-color: rgba(0, 0, 0, 0);
+    -unity-font: url('project://database/Assets/Font/kg-ten-thousand-reasons.regular.ttf?fileID=12800000&guid=4ba7abda91928d442a7d19e736ab36b0&type=3#kg-ten-thousand-reasons.regular');
+    -unity-font-definition: initial;
+    border-left-color: rgb(63, 62, 62);
+    border-right-color: rgb(63, 62, 62);
+    border-top-color: rgb(63, 62, 62);
+    border-bottom-color: rgb(63, 62, 62);
 }
 
 .level-image {
     margin: 10px;
 }
- 
+
+.unity-text-element {
+    -unity-font-style: normal;
+    font-size: 14px;
+}

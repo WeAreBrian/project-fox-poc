@@ -66,7 +66,13 @@ public class ShowPauseMenu : MonoBehaviour
 		Time.timeScale = 0;
 		AudioListener.pause = true; //pauses audio
 		m_PauseRoot.style.display = DisplayStyle.Flex;
-	}
+
+        // Get the VisualElement object for the button.
+        var button = m_PauseRoot.Q<Button>("Resume");
+
+        // Set the button to be in focus.
+        button.Focus();
+    }
 
 	private void UnpauseGame()
 	{

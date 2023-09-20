@@ -11,26 +11,42 @@ public class Leaderboard : MonoBehaviour
     private Transform m_TopProfileSpawn;
     [SerializeField]
     private Transform m_PlayerProfileSpawn;
+    [SerializeField]
+    private GameObject m_SilverTrophy;
+    [SerializeField]
+    private GameObject m_BronzeTrophy;
 
     private SpeedrunProfile m_PlayerProfile;
 
-    void Start()
+    private void Start()
     {
+        // Load player profiles
         m_PlayerProfile = SaveUtils.GetPlayerData();
-        GameObject playerProfile = Instantiate(m_ProfilePrefab, m_PlayerProfileSpawn);
-        playerProfile.GetComponent<SpeedrunStatTexts>().Initialize(m_PlayerProfile);
-        List<SpeedrunProfile> profiles = SaveUtils.LoadProfiles();
+        List<SpeedrunProfile> orderedProfiles = SaveUtils.LoadProfiles();
 
-        // Only show 10 profiles
-        for (int i = 0; i < 10; i++)
+        if (orderedProfiles.Count < 2)
         {
-            if (i >= profiles.Count)
+            m_SilverTrophy.SetActive(false);
+        }
+        if (orderedProfiles.Count < 3)
+        {
+            m_BronzeTrophy.SetActive(false);
+        }
+
+        // Show current player profile and their rank
+        GameObject playerProfile = Instantiate(m_ProfilePrefab, m_PlayerProfileSpawn);
+        playerProfile.GetComponent<SpeedrunStatTexts>().Initialize(orderedProfiles.IndexOf(m_PlayerProfile) + 1, m_PlayerProfile);
+
+        // Show other profiles
+        for (int i = 0; i < 10; i++) // Only show top 10 profiles
+        {
+            if (i >= orderedProfiles.Count)
             {
                 break;
             }
             Vector3 position = new Vector3(0, -i * m_ProfileTextPadding, 0);
             GameObject stat = Instantiate(m_ProfilePrefab, m_TopProfileSpawn);
-            stat.GetComponent<SpeedrunStatTexts>().Initialize(profiles[i]);
+            stat.GetComponent<SpeedrunStatTexts>().Initialize(i + 1, orderedProfiles[i]);
             stat.GetComponent<RectTransform>().anchoredPosition = position;
         }
     }

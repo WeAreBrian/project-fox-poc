@@ -16,8 +16,9 @@ public class SpeedrunStatTexts : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_TotalTime;
 
-    public void Initialize(SpeedrunProfile speedrunProfile)
+    public void Initialize(int rank, SpeedrunProfile speedrunProfile)
     {
+        m_Rank.text = rank.ToString();
         m_PlayerName.text = speedrunProfile.PlayerName;
         m_Lv1Time.text = TimeFormatter.Milliseconds(speedrunProfile.Lv1Time);
         m_Lv2Time.text = TimeFormatter.Milliseconds(speedrunProfile.Lv2Time);

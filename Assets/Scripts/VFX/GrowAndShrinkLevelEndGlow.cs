@@ -5,26 +5,85 @@ using UnityEngine;
 public class GrowAndShrinkLevelEndGlow : MonoBehaviour
 {
     [SerializeField]
-    private float frequency = 1.0f;      // Frequency of the sine wave
+    private float m_Frequency = 10f;
     [SerializeField]
-    private float amplitude = 0.5f;      // Amplitude determines how much it will grow or shrink
-    private Vector2 baseScale;            // The default scale of the object in 2D
+    private float m_Amplitude = 0.5f;
+    [SerializeField]
+    private float m_GrowthAmount = 20f;
+    [SerializeField]
+    private bool m_TickForGrowOrNotForShrink;
+    private Vector2 m_BaseScale;
+    private float m_ElapsedTime = 0.0f;
 
-    private float elapsedTime = 0.0f;   // Time elapsed since the script started
+    private bool m_IsShrinking = false;
+    private bool m_IsGrowing = false;
+    private float m_ProcessDuration;
+    private float m_ProcessElapsedTime;
+    private Vector3 m_TargetScale;
 
     private void Start()
     {
-        baseScale = transform.localScale; // Store the original scale
+        m_BaseScale = transform.localScale;
     }
 
     private void Update()
     {
-        elapsedTime += Time.deltaTime;
+        if (!m_IsShrinking && !m_IsGrowing)
+        {
+            m_ElapsedTime += Time.deltaTime;
+            float sineValue = Mathf.Sin(m_ElapsedTime * m_Frequency) * m_Amplitude;
+            transform.localScale = new Vector3(m_BaseScale.x + sineValue, m_BaseScale.y + sineValue, 1);
+        }
+        else
+        {
+            m_ProcessElapsedTime += Time.unscaledDeltaTime;
+            float progress = m_ProcessElapsedTime / m_ProcessDuration;
 
-        // Calculate the sine value
-        float sineValue = Mathf.Sin(elapsedTime * frequency) * amplitude;
+            if (progress < 1)
+            {
+                transform.localScale = Vector3.Lerp(m_BaseScale, m_TargetScale, progress);
+            }
+            else
+            {
+                transform.localScale = m_TargetScale;
+                m_BaseScale = transform.localScale;
+                m_IsShrinking = m_IsGrowing = false;
+            }
+        }
+    }
 
-        // Apply the sine value to the object's 2D scale
-        transform.localScale = new Vector3(baseScale.x + sineValue, baseScale.y + sineValue, 1);
+    // Trigger growth or shrink process based on the flag m_TickForGrowOrNotForShrink
+    public void TriggerGrowOrShrinkEvent(float duration)
+    {
+        if (m_TickForGrowOrNotForShrink)
+        {
+            GrowToAmount(duration);
+        }
+        else
+        {
+            ShrinkToNothing(duration);
+        }
+    }
+
+    // Shrink the object to zero scale
+    private void ShrinkToNothing(float duration)
+    {
+        m_IsShrinking = true;
+        m_IsGrowing = false;
+        m_ProcessDuration = duration;
+        m_ProcessElapsedTime = 0.0f;
+        m_TargetScale = Vector3.zero;
+        m_BaseScale = transform.localScale;
+    }
+
+    // Grow the object by m_GrowthAmount
+    private void GrowToAmount(float duration)
+    {
+        m_IsGrowing = true;
+        m_IsShrinking = false;
+        m_ProcessDuration = duration + 0.5f;
+        m_ProcessElapsedTime = 0.0f;
+        m_TargetScale = m_BaseScale + new Vector2(m_GrowthAmount, m_GrowthAmount);
+        m_BaseScale = transform.localScale;
     }
 }

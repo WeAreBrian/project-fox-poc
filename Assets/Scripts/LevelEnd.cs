@@ -33,9 +33,7 @@ public class LevelEnd : MonoBehaviour
             // Call the TimerAction method after the specified delay
             Invoke("TimerEnded", m_EndDelay);
             SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
-            PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
-
-            SaveUtils.SaveProfile(); // To be deleted after other levels are added
+            PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -47,7 +45,7 @@ public class LevelEnd : MonoBehaviour
             // This method will be called after the specified delay
 
             //Debug.Log("Timer action executed!");
-            StartCoroutine(m_HoleTransition.ShrinkParentObject("LevelEnd"));
+            StartCoroutine(m_HoleTransition.ShrinkParentObject(SceneManager.GetActiveScene().buildIndex + 1)); // Load the next scene (level 3 will load leaderboard next)
 
         }
     }

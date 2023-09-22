@@ -33,7 +33,7 @@ public static class SaveUtils
         int index = SceneManager.GetActiveScene().buildIndex + levelCountBeforeLevel1;
 
         // If this is the first time saving, initialize profile
-        if (PlayerPrefs.HasKey($"Lv{index}Time"))
+        if (!PlayerPrefs.HasKey($"Lv{index}Time"))
         {
             InitializeProfile();
         }

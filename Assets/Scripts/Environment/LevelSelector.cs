@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class LevelSelector : MonoBehaviour
@@ -30,8 +29,6 @@ public class LevelSelector : MonoBehaviour
 
 	public void OpenScene()
 	{
-        //Get the scene name from the build index:
-        string m_SceneName = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(m_levelIndex));
-        StartCoroutine(m_HoleTransition.ShrinkParentObject(m_SceneName));
-	}
+        StartCoroutine(m_HoleTransition.ShrinkParentObject(m_levelIndex));
+    }
 }

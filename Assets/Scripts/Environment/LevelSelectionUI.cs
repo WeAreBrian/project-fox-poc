@@ -14,8 +14,7 @@ public class LevelSelectionUI : MonoBehaviour
             if (!scenePath.Contains("LevelSelection") && !scenePath.Contains("LevelEnd"))
             {
                 LevelSelector levelSelector = Instantiate(m_levelSelectorPrefab, gameObject.transform);
-                //levelSelector.Initialize(i, i.ToString());    Uncomment this code when it comes to actual build so only level number is displayed
-                levelSelector.Initialize(i, System.IO.Path.GetFileNameWithoutExtension(scenePath));
+                levelSelector.Initialize(i, $"Level {i}");
             }
         }
     }

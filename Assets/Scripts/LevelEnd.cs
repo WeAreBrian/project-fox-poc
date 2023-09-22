@@ -7,7 +7,7 @@ public class LevelEnd : MonoBehaviour
 {
     [SerializeField]
     private float m_EndDelay = 3f;
-
+    private float m_SlowDownTime = 0.3f;
     private bool m_EndDelayStarted = false;
 
     private CloseOrOpenCircle m_HoleTransition;
@@ -31,7 +31,7 @@ public class LevelEnd : MonoBehaviour
             m_levelEnded = true;
 
             // Call the TimerAction method after the specified delay
-            Invoke("TimerEnded", m_EndDelay);
+            StartCoroutine(EndDelayEnded());
             SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
             PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
 
@@ -49,6 +49,22 @@ public class LevelEnd : MonoBehaviour
             //Debug.Log("Timer action executed!");
             StartCoroutine(m_HoleTransition.ShrinkParentObject("LevelEnd"));
 
+        }
+    }
+
+    //Realtime delay instead of timescaled
+    private IEnumerator EndDelayEnded()
+    {
+        yield return new WaitForSecondsRealtime(m_EndDelay);
+        TimerEnded();
+    }
+
+    private void LateUpdate()
+    {
+        //This is in update to prevent bullet time from changing the timescale
+        if (m_levelEnded)
+        {
+            Time.timeScale = m_SlowDownTime;
         }
     }
 }

@@ -5837,6 +5837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c1fd9988d29cf43bfff25ce0a77c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Footstep:
+    m_PersistentCalls:
+      m_Calls: []
   m_FootstepSounds:
   - {fileID: 8300000, guid: f06a0f32000e6734093991c487021f9a, type: 3}
   - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}

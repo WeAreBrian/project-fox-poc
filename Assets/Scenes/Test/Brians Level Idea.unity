@@ -1079,6 +1079,7 @@ GameObject:
   - component: {fileID: 159550149}
   - component: {fileID: 159550148}
   - component: {fileID: 159550147}
+  - component: {fileID: 159550151}
   m_Layer: 0
   m_Name: Chain
   m_TagString: Untagged
@@ -1243,6 +1244,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &159550151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159550146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f31e515d8233a4992f79e198384b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ChainStepSounds:
+  - {fileID: 8300000, guid: 128275c73e6597946a966acc7deadd90, type: 3}
+  - {fileID: 8300000, guid: 92ee70d157a553e41ac93870c692cd7c, type: 3}
+  - {fileID: 8300000, guid: 5abfbd24e978c934d807e2f2f87c8ed0, type: 3}
+  - {fileID: 8300000, guid: fa8f2d0fffc6f9e4aa9fbffc892a5f48, type: 3}
+  - {fileID: 8300000, guid: 2ae763942eac5a242865af63796a06e1, type: 3}
+  - {fileID: 8300000, guid: 62f7095d75f8e4740b492fb856ea86ab, type: 3}
 --- !u!1 &175697027
 GameObject:
   m_ObjectHideFlags: 0

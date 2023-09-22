@@ -74,4 +74,10 @@ public class LevelEnd : MonoBehaviour
             Time.timeScale = m_SlowDownTime;
         }
     }
+
+    //This just makes sure the next scene is loaded at normal speed!!!
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
+    }
 }

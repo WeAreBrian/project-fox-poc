@@ -88,7 +88,7 @@ public class CloseOrOpenCircle : MonoBehaviour
             yield return null;
 
             // Shrink the parent
-            transform.localScale -= Vector3.one * Time.deltaTime * m_Speed;
+            transform.localScale -= Vector3.one * Time.unscaledDeltaTime * m_Speed;
 
             // Calculate the new local scale for the child to maintain its world scale
             Vector3 newLocalScale = new Vector3(
@@ -133,7 +133,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         while (transform.localScale.x < 25.0f)
         {
             // Grow the parent
-            transform.localScale += Vector3.one * Time.deltaTime * m_Speed;
+            transform.localScale += Vector3.one * Time.unscaledDeltaTime * m_Speed;
 
             // Calculate the new local scale for the child to maintain its world scale
             Vector3 newLocalScale = new Vector3(

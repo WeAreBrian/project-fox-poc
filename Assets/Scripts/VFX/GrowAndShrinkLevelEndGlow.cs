@@ -5,6 +5,10 @@ using UnityEngine;
 public class GrowAndShrinkLevelEndGlow : MonoBehaviour
 {
     [SerializeField]
+    private AnimationCurve growthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
+
+
+    [SerializeField]
     private float m_Frequency = 10f;
     [SerializeField]
     private float m_Amplitude = 0.5f;
@@ -19,7 +23,7 @@ public class GrowAndShrinkLevelEndGlow : MonoBehaviour
     private bool m_IsGrowing = false;
     private float m_ProcessDuration;
     private float m_ProcessElapsedTime;
-    private Vector3 m_TargetScale;
+    private Vector2 m_TargetScale;
 
     private void Start()
     {
@@ -41,7 +45,10 @@ public class GrowAndShrinkLevelEndGlow : MonoBehaviour
 
             if (progress < 1)
             {
-                transform.localScale = Vector3.Lerp(m_BaseScale, m_TargetScale, progress);
+                Debug.Log(progress);
+                float curveValue = growthCurve.Evaluate(progress);
+                Vector2 scaleDifference = m_TargetScale - m_BaseScale;
+                transform.localScale = m_BaseScale + scaleDifference * curveValue;
             }
             else
             {
@@ -51,6 +58,8 @@ public class GrowAndShrinkLevelEndGlow : MonoBehaviour
             }
         }
     }
+
+
 
     // Trigger growth or shrink process based on the flag m_TickForGrowOrNotForShrink
     public void TriggerGrowOrShrinkEvent(float duration)
@@ -81,7 +90,7 @@ public class GrowAndShrinkLevelEndGlow : MonoBehaviour
     {
         m_IsGrowing = true;
         m_IsShrinking = false;
-        m_ProcessDuration = duration + 0.5f;
+        m_ProcessDuration = duration;
         m_ProcessElapsedTime = 0.0f;
         m_TargetScale = m_BaseScale + new Vector2(m_GrowthAmount, m_GrowthAmount);
         m_BaseScale = transform.localScale;

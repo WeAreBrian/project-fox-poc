@@ -37,7 +37,7 @@ public class ShowPauseMenu : MonoBehaviour
 		m_RestartButton.clicked += () => RestartGame();
 		// Hiding these UI screens for now
 		//Show levelselect ui
-		m_LevelSelectButton.clicked += () => m_LevelSelectRoot.style.display = DisplayStyle.Flex;
+		m_LevelSelectButton.clicked += () => LevelSelect();
 		// m_SettingsButton.clicked += () => Debug.Log("TODO Settings");
 		// m_MainMenuButton.clicked += () => LoadScene("MainMenu");
 	}
@@ -57,6 +57,15 @@ public class ShowPauseMenu : MonoBehaviour
 			//If not paused:
 			PauseGame();
 		}
+	}
+
+	private void LevelSelect() 
+	{
+		m_LevelSelectRoot.style.display = DisplayStyle.Flex;
+		m_PauseRoot.style.display = DisplayStyle.None;
+
+		var button = m_LevelSelectRoot.Q<Button>("Level0");
+		button.Focus();
 	}
 
 	private void PauseGame()

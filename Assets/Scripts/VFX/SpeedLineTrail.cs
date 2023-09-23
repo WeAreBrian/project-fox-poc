@@ -7,14 +7,23 @@ public class SpeedLineTrail : MonoBehaviour
     private Rigidbody2D m_ParentRB;
     private float m_Speed;
 
+    [Tooltip("Minimum speed it takes for the effect to start.")]
     [SerializeField]
-    private float m_MinSpeedThreshold = 18.0f;  //Min speed it takes for the effect to start
+    private float m_MinSpeedThreshold = 18.0f;
+
+    [Tooltip("Maximum speed it takes for the effect to be at its maximum.")]
     [SerializeField]
     private float m_MaxSpeedThreshold = 30.0f;
+
+    [Tooltip("How long it takes to smoothly reach the target trail lifetime/length when speed is increasing.")]
     [SerializeField]
-    private float m_RisingDelay = 0f;   //How long it takes to smoothly reach the target trail lifetime/length when speed is increasing
+    private float m_RisingDelay = 0f;
+
+    [Tooltip("How long it takes to smoothly reach the target trail lifetime/length when speed is decreasing.")]
     [SerializeField]
-    private float m_FallingFalling = 0.2f;  //How long it takes to smoothly reach the target trail lifetime/length when speed is decreasing
+    private float m_FallingFalling = 0.2f;
+
+    [Tooltip("Maximum lifetime of the trail. This also looks like the 'length' but not really the length")]
     [SerializeField]
     private float m_MaxTrailLifetime = 1f;
 

@@ -106,5 +106,6 @@ public class ShowPauseMenu : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 		SceneManager.LoadScene(scene);
+		AudioListener.pause = false;
 	}
 }

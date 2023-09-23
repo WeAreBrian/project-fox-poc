@@ -50,5 +50,6 @@ public class LevelSelect : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(scene);
+        AudioListener.pause = false;
     }
 }

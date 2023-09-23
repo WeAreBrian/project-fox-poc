@@ -77,7 +77,7 @@ public class Anchor : MonoBehaviour
 			{
 				if (hitpos.normal != Vector2.up)
 				{
-					Debug.Log("hit a side");
+					//Debug.Log("hit a side");
 					AudioController.PlaySound(m_AnchorBump, 1, 1, MixerGroup.SFX);
 					CameraShake.instance.Shake(1, 0.2f);
 					HapticManager.instance.RumblePulse(0.25f, 0.25f, 0.1f);
@@ -131,9 +131,13 @@ public class Anchor : MonoBehaviour
 	{
 		gameObject.layer = LayerMask.NameToLayer("Ghost");
 		yield return new WaitForSeconds(0.1f);
-		gameObject.layer = LayerMask.NameToLayer("Anchor");
-		var collider = GetComponent<Collider2D>();
-		collider.enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("Anchor");
+		if(m_State != AnchorState.Held)
+		{
+            var collider = GetComponent<Collider2D>();
+            collider.enabled = true;
+        }
+		
 
 	}
 

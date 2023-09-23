@@ -45,7 +45,6 @@ public class GrowAndShrinkLevelEndGlow : MonoBehaviour
 
             if (progress < 1)
             {
-                Debug.Log(progress);
                 float curveValue = growthCurve.Evaluate(progress);
                 Vector2 scaleDifference = m_TargetScale - m_BaseScale;
                 transform.localScale = m_BaseScale + scaleDifference * curveValue;

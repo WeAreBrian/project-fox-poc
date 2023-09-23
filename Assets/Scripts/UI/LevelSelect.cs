@@ -9,7 +9,7 @@ public class LevelSelect : MonoBehaviour
 {
     private string m_Level0 = "Onboarding";
     private string m_Level1 = "Brians Level Idea";
-    private string m_Level2 = "Another Level From Brian For You You Are Welcome";
+    private string m_Level2 = "other forest deco 2";
     private string m_Level3 = "More Levels from brian";
     private VisualElement m_LevelSelectRoot;
     private VisualElement m_PauseRoot;

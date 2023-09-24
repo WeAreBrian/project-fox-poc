@@ -45,7 +45,6 @@ public class ChainSounds : MonoBehaviour
     private void ArialSound()
     {
         var coefficient = Mathf.Clamp(1 / m_PhysicsChain.AveragedChainSpeed, 0.1f, 1);
-        Debug.Log(coefficient);
         arialSoundCooldown.Duration = coefficient;
 
         if (!m_Grounded.OnGround)

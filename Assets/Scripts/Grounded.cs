@@ -7,7 +7,7 @@ public class Grounded : MonoBehaviour
 {
     public UnityEvent Landed;
     public UnityEvent HitHazard;
-
+    public UnityEvent LeftGround;
 
     public bool CanJump
     {
@@ -84,6 +84,13 @@ public class Grounded : MonoBehaviour
                 HitHazard.Invoke();
             }
 
+        }
+        else
+        {
+            if (!OnGround)
+            {
+                LeftGround.Invoke();
+            }
         }
     }
 

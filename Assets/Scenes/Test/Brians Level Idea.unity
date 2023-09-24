@@ -787,6 +787,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaddyObject
       objectReference: {fileID: 0}
+    - target: {fileID: 3101754316065505183, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: m_AmplitudeGain
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3454490857542871669, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5261360363287215126, guid: 11f0a0769822b438897e9017210b0063,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -850,6 +860,11 @@ PrefabInstance:
     - target: {fileID: 6338816026462705312, guid: 11f0a0769822b438897e9017210b0063,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7167905478161482467, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8618846874330787720, guid: 11f0a0769822b438897e9017210b0063,
@@ -1111,6 +1126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d945cad67548094eb10149ea1ae47b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PulledTaut:
+    m_PersistentCalls:
+      m_Calls: []
   PointAdded:
     m_PersistentCalls:
       m_Calls: []
@@ -1263,6 +1281,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fa8f2d0fffc6f9e4aa9fbffc892a5f48, type: 3}
   - {fileID: 8300000, guid: 2ae763942eac5a242865af63796a06e1, type: 3}
   - {fileID: 8300000, guid: 62f7095d75f8e4740b492fb856ea86ab, type: 3}
+  m_PullTautSound: {fileID: 8300000, guid: 7528cf092914e894d8feb15244da1aec, type: 3}
+  m_GrappleTautSound: {fileID: 0}
+  m_ArialChainSounds:
+  - {fileID: 8300000, guid: 61282b20f58648046aed438a7190ac11, type: 3}
+  - {fileID: 8300000, guid: c278f8d0378711846a5d94a065a41437, type: 3}
+  - {fileID: 8300000, guid: d9041ab7d31cb2547990a1872c50b14b, type: 3}
+  - {fileID: 8300000, guid: d321dbd872e3b0448a6959e9bc154eaa, type: 3}
 --- !u!1 &175697027
 GameObject:
   m_ObjectHideFlags: 0

@@ -236,11 +236,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_FootstepInterval: 0.5
-  m_FootStepSounds:
-  - {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
-  - {fileID: 8300000, guid: 79187dec16a7ab84bbd87fb5b23a60f2, type: 3}
-  - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +402,7 @@ MonoBehaviour:
   MaxMountAngle: 50
   MaxClimbSpeed: 4.5
   ClimbSpeedDamping: 0.1
-  m_ClimbSound: {fileID: 8300000, guid: f060a7b91a02a0f448f2ea15c9cc2661, type: 3}
+  m_ClimbSound: {fileID: 8300000, guid: fa8f2d0fffc6f9e4aa9fbffc892a5f48, type: 3}
   m_ClimbSoundInterval: 0.4
 --- !u!114 &1852206392
 MonoBehaviour:

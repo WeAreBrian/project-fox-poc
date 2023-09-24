@@ -44,12 +44,12 @@ public class ChainSounds : MonoBehaviour
 
     private void ArialSound()
     {
-        var coefficient = Mathf.Clamp(1 / m_PhysicsChain.AveragedChainSpeed, 0.1f, 1);
-        arialSoundCooldown.Duration = coefficient;
+        var volumeCoefficient = m_PhysicsChain.AveragedChainSpeed / 20;
+        arialSoundCooldown.Duration = Mathf.Clamp(1 / m_PhysicsChain.AveragedChainSpeed, 0.2f, 2f);
 
         if (!m_Grounded.OnGround)
         {
-            AudioController.PlaySound(RandomChainArialSound, coefficient * 0.5f, 1, MixerGroup.SFX);
+            AudioController.PlaySound(RandomChainArialSound, volumeCoefficient * 0.3f, 1, MixerGroup.SFX);
         }
         
     }

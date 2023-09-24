@@ -12,13 +12,16 @@ public class FootstepScript : MonoBehaviour
 
     public void LeftFootstep()
     {
-        AudioController.PlaySound(m_FootstepSounds[0], 0.3f, 1, MixerGroup.SFX);
+        AudioController.PlaySound(m_FootstepSounds[0], 0.3f, Random.Range(0.95f,1.05f), MixerGroup.SFX);
+        Debug.Log("Left footstep");
         Footstep.Invoke();
     }
 
     public void RightFootstep()
     {
-        AudioController.PlaySound(m_FootstepSounds[1], 0.3f, 1, MixerGroup.SFX);
+        AudioController.PlaySound(m_FootstepSounds[1], 0.3f, Random.Range(0.95f, 1.05f), MixerGroup.SFX);
+
+        Debug.Log("Right footstep");
         Footstep.Invoke();
     }
 }

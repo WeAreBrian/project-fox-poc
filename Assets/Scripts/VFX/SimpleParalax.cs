@@ -15,14 +15,15 @@ public class SimpleParalax : MonoBehaviour
 
 	private PositionDelta m_camera;
 
-	// Start is called before the first frame update
-	void Start()
+    private bool m_ScriptLoaded = true;
+
+    // Start is called before the first frame update
+    void Awake()
     {
         // gets cam velocity
 		m_camera = Camera.main.GetComponent<PositionDelta>();
 
 		m_relativeMoveX = m_relativeMove;
-
         // make y movement 0 if locked
         if (m_lockY)
         {
@@ -37,12 +38,16 @@ public class SimpleParalax : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (Time.frameCount == 1) return;
+        //The parallaxs ends up offset of the first frame isnt skipped. This if statement makes it not execute on first frame only.
+        if (m_ScriptLoaded)
+        {
+            m_ScriptLoaded = false;
+            return;
+        }
 
         // calculate movement
 		Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
 
 		transform.position += move;
-
 	}
 }

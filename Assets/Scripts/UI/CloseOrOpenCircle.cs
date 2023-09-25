@@ -79,7 +79,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         StartCoroutine(GrowParentObject());
     }
 
-    public IEnumerator ShrinkParentObject(String m_SceneToOpen = null)
+    public IEnumerator ShrinkParentObject(int m_SceneToOpen = 0)
     {
         
 
@@ -88,7 +88,7 @@ public class CloseOrOpenCircle : MonoBehaviour
             yield return null;
 
             // Shrink the parent
-            transform.localScale -= Vector3.one * Time.deltaTime * m_Speed;
+            transform.localScale -= Vector3.one * Time.unscaledDeltaTime * m_Speed;
 
             // Calculate the new local scale for the child to maintain its world scale
             Vector3 newLocalScale = new Vector3(
@@ -113,9 +113,9 @@ public class CloseOrOpenCircle : MonoBehaviour
 
         //Tries to load the inputted scene. Otherwise loads the current scene.
         //Debug.Log("Open New Scene");
-        if(m_SceneToOpen == null)
+        if(m_SceneToOpen == 0)
         {
-            m_SceneToOpen = SceneManager.GetActiveScene().name;
+            m_SceneToOpen = SceneManager.GetActiveScene().buildIndex;
         }
         SceneManager.LoadScene(m_SceneToOpen);
         
@@ -133,7 +133,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         while (transform.localScale.x < 25.0f)
         {
             // Grow the parent
-            transform.localScale += Vector3.one * Time.deltaTime * m_Speed;
+            transform.localScale += Vector3.one * Time.unscaledDeltaTime * m_Speed;
 
             // Calculate the new local scale for the child to maintain its world scale
             Vector3 newLocalScale = new Vector3(

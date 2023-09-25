@@ -17,8 +17,8 @@ public class ShowPauseMenu : MonoBehaviour
 		s_GamePaused = false;
 		// Hiding level select menu for now
 		//Get levelselect object
-		// GameObject m_LevelSelectObject = GameObject.Find("LevelSelectMenu");
-		// m_LevelSelectRoot = m_LevelSelectObject.GetComponent<UIDocument>().rootVisualElement;
+		GameObject m_LevelSelectObject = GameObject.Find("LevelSelectMenu");
+		m_LevelSelectRoot = m_LevelSelectObject.GetComponent<UIDocument>().rootVisualElement;
 		//enable the component (its disabled by default so doesnt get in the way of the scene view when editting levels
 		GetComponent<UIDocument>().enabled = true;
 		m_PauseRoot = GetComponent<UIDocument>().rootVisualElement;
@@ -28,7 +28,7 @@ public class ShowPauseMenu : MonoBehaviour
 		Button m_ResumeButton = m_PauseRoot.Q<Button>("Resume");
 		Button m_RestartButton = m_PauseRoot.Q<Button>("Restart");
 		// Hiding these 3 buttons for now
-		// Button m_LevelSelectButton = m_PauseRoot.Q<Button>("LevelSelect");
+		Button m_LevelSelectButton = m_PauseRoot.Q<Button>("LevelSelect");
 		// Button m_SettingsButton = m_PauseRoot.Q<Button>("Settings");
 		// Button m_MainMenuButton = m_PauseRoot.Q<Button>("MainMenu");
 
@@ -37,7 +37,7 @@ public class ShowPauseMenu : MonoBehaviour
 		m_RestartButton.clicked += () => RestartGame();
 		// Hiding these UI screens for now
 		//Show levelselect ui
-		// m_LevelSelectButton.clicked += () => m_LevelSelectRoot.style.display = DisplayStyle.Flex;
+		m_LevelSelectButton.clicked += () => LevelSelect();
 		// m_SettingsButton.clicked += () => Debug.Log("TODO Settings");
 		// m_MainMenuButton.clicked += () => LoadScene("MainMenu");
 	}
@@ -59,6 +59,15 @@ public class ShowPauseMenu : MonoBehaviour
 		}
 	}
 
+	private void LevelSelect() 
+	{
+		m_LevelSelectRoot.style.display = DisplayStyle.Flex;
+		m_PauseRoot.style.display = DisplayStyle.None;
+
+		var button = m_LevelSelectRoot.Q<Button>("Level0");
+		button.Focus();
+	}
+
 	private void PauseGame()
 	{
 		s_GamePaused = true;
@@ -66,7 +75,13 @@ public class ShowPauseMenu : MonoBehaviour
 		Time.timeScale = 0;
 		AudioListener.pause = true; //pauses audio
 		m_PauseRoot.style.display = DisplayStyle.Flex;
-	}
+
+        // Get the VisualElement object for the button.
+        var button = m_PauseRoot.Q<Button>("Resume");
+
+        // Set the button to be in focus.
+        button.Focus();
+    }
 
 	private void UnpauseGame()
 	{
@@ -74,7 +89,7 @@ public class ShowPauseMenu : MonoBehaviour
 		Time.timeScale = m_PreviousTimeScale;   //Sets timescale to previous timescale (instead of 1) so that incase there was a slowmo effect then it doesnt cancel it.
 		AudioListener.pause = false;
 		m_PauseRoot.style.display = DisplayStyle.None;
-		// m_LevelSelectRoot.style.display = DisplayStyle.None;
+		m_LevelSelectRoot.style.display = DisplayStyle.None;
 	}
 
 	private void RestartGame()
@@ -83,6 +98,7 @@ public class ShowPauseMenu : MonoBehaviour
 		Time.timeScale = m_PreviousTimeScale;
 		AudioListener.pause = false;
 		m_PauseRoot.style.display = DisplayStyle.None;
+		m_LevelSelectRoot.style.display = DisplayStyle.None;
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
@@ -90,5 +106,6 @@ public class ShowPauseMenu : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 		SceneManager.LoadScene(scene);
+		AudioListener.pause = false;
 	}
 }

@@ -33,7 +33,7 @@ public static class SaveUtils
         int index = SceneManager.GetActiveScene().buildIndex + levelCountBeforeLevel1;
 
         // If this is the first time saving, initialize profile
-        if (PlayerPrefs.HasKey($"Lv{index}Time"))
+        if (!PlayerPrefs.HasKey($"Lv{index}Time"))
         {
             InitializeProfile();
         }
@@ -106,9 +106,16 @@ public static class SaveUtils
         CsvUtils.WriteToFile(speedrunProfile);
     }
 
+    /// <summary>
+    /// Load an ordered list of profiles by total time
+    /// </summary>
+    /// <returns></returns>
     public static List<SpeedrunProfile> LoadProfiles()
     {
         List<SpeedrunProfile> profiles = CsvUtils.ReadFromFile();
+
+        // Also add the current profile to figure out their ranking
+        profiles.Add(GetPlayerData());
         return profiles.OrderBy(x => x.TotalTime).ToList();
     }
 }

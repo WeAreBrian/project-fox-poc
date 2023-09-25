@@ -11,7 +11,7 @@ public class SimpleParalax : MonoBehaviour
     private float m_relativeMoveX; 
     private float m_relativeMoveY;
     [SerializeField]
-    private bool m_distanceCheck;
+    private bool m_distanceCheck = false;
     private GameObject m_player;
     [SerializeField]
     private float m_distance;
@@ -55,15 +55,36 @@ public class SimpleParalax : MonoBehaviour
 
         // calculate movement
 
+        Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
+
         if (m_distanceCheck)
         {
-            float dist = Vector2.Distance(gameObject.transform.position, m_player.transform.position); 
-
-            if(dist < m_distance) { }
+            if (!IsOffScreen())
+            {
+                Debug.Log(IsOffScreen());
+                return;
+            }
 
         }
-		Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
+
 
 		transform.position += move;
 	}
+
+    bool IsOffScreen()
+    { 
+        SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+        Camera camera = Camera.main;
+        var bounds = sprite.bounds;
+
+        var top = camera.WorldToViewportPoint(bounds.max);
+        var bottom = camera.WorldToViewportPoint(bounds.min);
+
+        Debug.Log("top.y" + top.y);
+        Debug.Log("top.x" + top.x);
+        Debug.Log("bottom.y" + bottom.y);
+        Debug.Log("bottom.x" + bottom.x);
+
+        return (top.y < 0 || bottom.y > 1)&& (top.x < 0 || bottom.x > 1);
+    }
 }

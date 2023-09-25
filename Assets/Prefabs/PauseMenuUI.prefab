@@ -31,7 +31,7 @@ Transform:
   - {fileID: 1576274911122511198}
   - {fileID: 1576274911109432719}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1576274911109432716
 GameObject:
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576274911109432716}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -95,9 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c40436c32c21431fa8771f3f82fec71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Level1: Level 1 Brian
-  m_Level2: Forest Demo
-  m_Level3: Harley Level 1
 --- !u!1 &1576274911122511195
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +135,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576274911122511195}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 

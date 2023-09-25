@@ -17,7 +17,6 @@ public class LevelSelect : MonoBehaviour
     private void OnEnable()
     {
         m_LevelSelectRoot = GetComponent<UIDocument>().rootVisualElement;
-        GetComponent<UIDocument>().enabled = true;
         m_LevelSelectRoot.style.display = DisplayStyle.None;
 
         GameObject m_PauseObject = GameObject.Find("PauseMenu");

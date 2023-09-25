@@ -10,6 +10,11 @@ public class SimpleParalax : MonoBehaviour
     private float m_relativeMove = .3f;
     private float m_relativeMoveX; 
     private float m_relativeMoveY;
+    [SerializeField]
+    private bool m_distanceCheck;
+    private GameObject m_player;
+    [SerializeField]
+    private float m_distance;
 
 	[SerializeField] bool m_lockY;
 
@@ -22,6 +27,8 @@ public class SimpleParalax : MonoBehaviour
 		m_camera = Camera.main.GetComponent<PositionDelta>();
 
 		m_relativeMoveX = m_relativeMove;
+
+        m_player = GameObject.FindGameObjectWithTag("Player");
 
         // make y movement 0 if locked
         if (m_lockY)
@@ -40,6 +47,14 @@ public class SimpleParalax : MonoBehaviour
 		if (Time.frameCount == 1) return;
 
         // calculate movement
+
+        if (m_distanceCheck)
+        {
+            float dist = Vector2.Distance(gameObject.transform.position, m_player.transform.position); 
+
+            if(dist < m_distance) { }
+
+        }
 		Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
 
 		transform.position += move;

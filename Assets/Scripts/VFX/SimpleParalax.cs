@@ -10,6 +10,11 @@ public class SimpleParalax : MonoBehaviour
     private float m_relativeMove = .3f;
     private float m_relativeMoveX; 
     private float m_relativeMoveY;
+    [SerializeField]
+    private bool m_distanceCheck = false;
+    private GameObject m_player;
+    [SerializeField]
+    private float m_distance;
 
 	[SerializeField] bool m_lockY;
 
@@ -24,6 +29,9 @@ public class SimpleParalax : MonoBehaviour
 		m_camera = Camera.main.GetComponent<PositionDelta>();
 
 		m_relativeMoveX = m_relativeMove;
+
+        m_player = GameObject.FindGameObjectWithTag("Player");
+
         // make y movement 0 if locked
         if (m_lockY)
         {
@@ -46,8 +54,37 @@ public class SimpleParalax : MonoBehaviour
         }
 
         // calculate movement
-		Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
+
+        Vector3 move = new Vector3(m_camera.Delta.x * -m_relativeMoveX, m_camera.Delta.y * -m_relativeMoveY, 0);
+
+        if (m_distanceCheck)
+        {
+            if (!IsOffScreen())
+            {
+                Debug.Log(IsOffScreen());
+                return;
+            }
+
+        }
+
 
 		transform.position += move;
 	}
+
+    bool IsOffScreen()
+    { 
+        SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+        Camera camera = Camera.main;
+        var bounds = sprite.bounds;
+
+        var top = camera.WorldToViewportPoint(bounds.max);
+        var bottom = camera.WorldToViewportPoint(bounds.min);
+
+        Debug.Log("top.y" + top.y);
+        Debug.Log("top.x" + top.x);
+        Debug.Log("bottom.y" + bottom.y);
+        Debug.Log("bottom.x" + bottom.x);
+
+        return (top.y < 0 || bottom.y > 1)&& (top.x < 0 || bottom.x > 1);
+    }
 }

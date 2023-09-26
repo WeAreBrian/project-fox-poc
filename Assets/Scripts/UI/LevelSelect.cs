@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
-    private string m_Level0 = "Level0";
-    private string m_Level1 = "Level1";
-    private string m_Level2 = "Level2";
-    private string m_Level3 = "Level3";
+    private string m_Level0 = "Level 0";
+    private string m_Level1 = "Level 1";
+    private string m_Level2 = "Level 2";
+    private string m_Level3 = "Level 3";
     private VisualElement m_LevelSelectRoot;
     private VisualElement m_PauseRoot;
 

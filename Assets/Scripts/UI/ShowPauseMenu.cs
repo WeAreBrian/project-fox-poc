@@ -24,6 +24,7 @@ public class ShowPauseMenu : MonoBehaviour
 		m_PauseRoot = GetComponent<UIDocument>().rootVisualElement;
 		//Hide UI on load
 		m_PauseRoot.style.display = DisplayStyle.None;
+		m_LevelSelectRoot.style.display = DisplayStyle.None;
 		//getting all the buttons
 		Button m_ResumeButton = m_PauseRoot.Q<Button>("Resume");
 		Button m_RestartButton = m_PauseRoot.Q<Button>("Restart");

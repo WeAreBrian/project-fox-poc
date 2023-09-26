@@ -132,14 +132,15 @@ public class Anchor : MonoBehaviour
 
 	private IEnumerator DisableFoxCollision()
 	{
+		if (m_State != AnchorState.Held)
+		{
+			var collider = GetComponent<Collider2D>();
+			collider.enabled = true;
+		}
+
 		gameObject.layer = LayerMask.NameToLayer("Ghost");
 		yield return new WaitForSeconds(0.1f);
         gameObject.layer = LayerMask.NameToLayer("Anchor");
-		if(m_State != AnchorState.Held)
-		{
-            var collider = GetComponent<Collider2D>();
-            collider.enabled = true;
-        }
 		
 
 	}

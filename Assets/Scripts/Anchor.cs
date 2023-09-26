@@ -26,6 +26,9 @@ public class Anchor : MonoBehaviour
 	private Vector3 m_ShakePos;
 
 	[SerializeField]
+	private LayerMask m_GroundMask;
+
+	[SerializeField]
 	private AudioClip m_AnchorLand;
 	[SerializeField]
 	private AudioClip m_AnchorLodge;
@@ -71,7 +74,7 @@ public class Anchor : MonoBehaviour
 		{
 			UpdateState(AnchorState.Lodged);
 		}
-		else if (!collision.gameObject.CompareTag("Player"))
+		else if (m_GroundMask == (m_GroundMask | (1 << collision.gameObject.layer)))
 		{
 			foreach (ContactPoint2D hitpos in collision.contacts)
 			{

@@ -29,7 +29,8 @@ public class Spike : MonoBehaviour
             S_Collided = true;
             if(m_HoleTransition != null)
             {
-                StartCoroutine(m_HoleTransition.ShrinkParentObject());
+                int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                StartCoroutine(m_HoleTransition.ShrinkParentObject(currentSceneIndex));
             }
             else
             {

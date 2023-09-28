@@ -60,7 +60,8 @@ public class CloseOrOpenCircle : MonoBehaviour
             // Trigger the shrinking effect when the specified key is pressed
             if (Input.GetKeyDown(m_ShrinkKey))
             {
-                StartCoroutine(ShrinkParentObject());
+                int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                StartCoroutine(ShrinkParentObject(currentSceneIndex));
             }
 
             // Trigger the growing effect when the specified key is pressed
@@ -79,7 +80,7 @@ public class CloseOrOpenCircle : MonoBehaviour
         StartCoroutine(GrowParentObject());
     }
 
-    public IEnumerator ShrinkParentObject(int m_SceneToOpen = 0)
+    public IEnumerator ShrinkParentObject(int m_SceneToOpen)
     {
         
 
@@ -110,13 +111,6 @@ public class CloseOrOpenCircle : MonoBehaviour
 
         // Keep child's world scale intact when parent is at zero
         m_ChildTransform.localScale = m_ChildInitialWorldScale / 0.001f;
-
-        //Tries to load the inputted scene. Otherwise loads the current scene.
-        //Debug.Log("Open New Scene");
-        if(m_SceneToOpen == 0)
-        {
-            m_SceneToOpen = SceneManager.GetActiveScene().buildIndex;
-        }
         SceneManager.LoadScene(m_SceneToOpen);
         
 

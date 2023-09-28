@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,11 +14,17 @@ public class LevelEnd : MonoBehaviour
     private bool m_levelEnded;
     private GrowAndShrinkLevelEndGlow m_GrowShrinkScript;
 
+    private bool m_isCountedInSpeedrun;
+
     private void Awake()
     {
         m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
-        m_GameTimer = GameObject.Find("Speedrun Timer").GetComponent<GameTimer>();
         m_GrowShrinkScript = GetComponentInChildren<GrowAndShrinkLevelEndGlow>();
+
+        // Determines whether the current level has a timer and therefore will be counted as part of the speedrun
+        GameObject gameTimerObject = GameObject.Find("Speedrun Timer");
+        m_isCountedInSpeedrun = gameTimerObject ?? false;
+        m_GameTimer = m_isCountedInSpeedrun ? gameTimerObject.GetComponent<GameTimer>() : null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,7 +45,10 @@ public class LevelEnd : MonoBehaviour
 
             // Call the TimerAction method after the specified delay
             StartCoroutine(EndDelayEnded());
-            SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
+            if (m_isCountedInSpeedrun)
+            {
+                SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
+            }
             PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
         }
     }

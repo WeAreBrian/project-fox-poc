@@ -34,7 +34,7 @@ public static class CsvUtils
     public static void WriteToFile(SpeedrunProfile profile)
     {
         using StreamWriter csv = new StreamWriter(m_FullSavePath, true);
-        csv.WriteLine($"{profile.PlayerName},{profile.Lv1Time},{profile.Lv2Time},{profile.Lv3Time},{profile.TotalTime},{profile.PlayerEmail}");
+        csv.WriteLine($"{profile.PlayerName},{profile.Lv1Time},{profile.Lv2Time},{profile.Lv3Time},{profile.TotalTime},{profile.PlayerContact}");
     }
 
     public static List<SpeedrunProfile> ReadFromFile()

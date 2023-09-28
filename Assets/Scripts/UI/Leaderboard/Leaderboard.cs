@@ -18,6 +18,8 @@ public class Leaderboard : MonoBehaviour
     [SerializeField]
     private InputDialog m_ProfileInputDialog;
 
+    public GameObject MainMenuText;
+
     private PlayerInputActions m_PlayerInputActions;
     private List<SpeedrunStatTexts> m_SpeedrunStats = new List<SpeedrunStatTexts>();
 
@@ -36,6 +38,7 @@ public class Leaderboard : MonoBehaviour
 
     private void Start()
     {
+        MainMenuText.SetActive(false);
         // Load player profiles
         m_PlayerProfile = SaveUtils.GetPlayerData();
         List<SpeedrunProfile> orderedProfiles = SaveUtils.LoadProfiles();

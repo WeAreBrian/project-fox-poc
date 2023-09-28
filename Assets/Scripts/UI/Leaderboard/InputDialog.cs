@@ -46,7 +46,10 @@ public class InputDialog : MonoBehaviour
         LeanTween.scale(gameObject, Vector3.zero, 0.5f)
             .setEase(LeanTweenType.easeInOutCubic)
             .setDelay(0.2f)
-            .setOnComplete(() => m_BlurVolume.SetActive(false));
+            .setOnComplete(() => {
+                m_BlurVolume.SetActive(false);
+                LeanTween.delayedCall(2f, () => m_Leaderboard.MainMenuText.SetActive(true));
+            });
     }
 
     private void OnSubmit(InputAction.CallbackContext context)

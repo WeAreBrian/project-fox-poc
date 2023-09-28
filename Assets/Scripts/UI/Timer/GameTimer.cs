@@ -15,9 +15,6 @@ public class GameTimer : MonoBehaviour
     {
         ResetTimer();
         StartTimer();
-
-        //SaveUtils.InitializeProfile(); // Only meant for testing, to be deleted
-        //CsvUtils.WriteToFile(SaveUtils.GetPlayerData());
     }
 
     private void Update()
@@ -43,7 +40,6 @@ public class GameTimer : MonoBehaviour
     }
 
     // Pause timer, can be assigned to the GameEnd event (when it's implemented), and game pause
-    // NOTE: Scoreboard related implementation should not be here (comment to be deleted after scoreboard implementation)
     public void PauseTimer()
     {
         m_TimerIsRunning = false;

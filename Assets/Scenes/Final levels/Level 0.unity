@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10439,7 +10439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &641758764
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29122,6 +29122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Speedrun Timer
+      objectReference: {fileID: 0}
+    - target: {fileID: 899666648612439573, guid: 62a04f33bea3d874688ef6887830d745,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1027479900984394065, guid: 62a04f33bea3d874688ef6887830d745,
         type: 3}

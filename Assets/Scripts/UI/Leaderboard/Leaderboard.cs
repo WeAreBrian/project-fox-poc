@@ -74,6 +74,7 @@ public class Leaderboard : MonoBehaviour
         LeanTween.delayedCall(3.0f, ActivateDialog);
     }
 
+    // This is here to convert the type to fit LeanTween's param requirement
     private void ActivateDialog()
     {
         m_ProfileInputDialog.ActivateDialog();

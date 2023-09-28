@@ -60,12 +60,16 @@ public class InputDialog : MonoBehaviour
         DeactivateDialog();
         m_Leaderboard.UpdateProfileName();
 
+        // Switch back to normal controls preparing for a new game
         m_PlayerInputActions.Player.Enable();
         m_PlayerInputActions.UI.Disable();
     }
 
+    // This is assgned to jump instead of submit because of the action map swap
+    // Also makes it easier to avoid accidental return to main screen before inputting details
     private void OnReturnToMain(InputAction.CallbackContext context)
     {
+        SaveUtils.InitializeProfile();
         StartCoroutine(m_HoleTransition.ShrinkParentObject(0));
     }
 }

@@ -18,7 +18,7 @@ public static class SaveUtils
         PlayerPrefs.SetFloat("Lv2Time", profile.Lv2Time);
         PlayerPrefs.SetFloat("Lv3Time", profile.Lv3Time);
         PlayerPrefs.SetFloat("TotalTime", profile.TotalTime);
-        PlayerPrefs.SetString("PlayerEmail", profile.PlayerEmail);
+        PlayerPrefs.SetString("PlayerContact", profile.PlayerContact);
     }
 
     /// <summary>
@@ -78,26 +78,26 @@ public static class SaveUtils
     }
 
     /// <summary>
-    /// Saves player email. Intended to be called after player inputs their email in the leaderboard
+    /// Saves player contact. Intended to be called after player inputs their contact in the leaderboard
     /// </summary>
-    /// <param name="email"></param>
-    public static void RecordPlayerEmail(string email)
+    /// <param name="contact"></param>
+    public static void RecordPlayerContact(string contact)
     {
-        string playerEmail = string.IsNullOrEmpty(email) ? "" : email;
-        PlayerPrefs.SetString("PlayerEmail", playerEmail);
+        string playerContact = string.IsNullOrEmpty(contact) ? "" : contact;
+        PlayerPrefs.SetString("PlayerContact", playerContact);
     }
 
     /// <summary>
     /// Gets all save data for the current player. Intended to be called before saving to file
     /// </summary>
-    /// <returns>a struct of name, email and all the times in ms</returns>
+    /// <returns>a struct of name, contact and all the times in ms</returns>
     public static SpeedrunProfile GetPlayerData()
     {
         string playerName = PlayerPrefs.GetString("PlayerName");
         var (lv1Time, lv2Time, lv3Time, totalTime) = GetPlayerTimes();
-        string playerEmail = PlayerPrefs.GetString("PlayerEmail");
+        string playerContact = PlayerPrefs.GetString("PlayerContact");
 
-        return new SpeedrunProfile(playerName, lv1Time, lv2Time, lv3Time, totalTime, playerEmail);
+        return new SpeedrunProfile(playerName, lv1Time, lv2Time, lv3Time, totalTime, playerContact);
     }
 
     public static void SaveProfile()

@@ -994,7 +994,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ad3d54d58e336b140a576d24618a297f, type: 3}
-  m_Color: {r: 0, g: 0.681818, b: 1, a: 0.54509807}
+  m_Color: {r: 0, g: 0.681818, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.01
+  m_relativeMove: 0.1
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 0
@@ -6012,7 +6012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.08
+  m_relativeMove: 0.05
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 1
@@ -11528,6 +11528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 937170870}
   - component: {fileID: 937170871}
+  - component: {fileID: 937170872}
   m_Layer: 0
   m_Name: BG5_7
   m_TagString: Untagged
@@ -11590,7 +11591,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1572386203
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: bb01b03bc50b9d04eae5b0f2efe8dd1d, type: 3}
   m_Color: {r: 0, g: 0.5, b: 1, a: 1}
   m_FlipX: 0
@@ -11602,6 +11603,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &937170872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937170869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_relativeMove: -0.04
+  m_distanceCheck: 0
+  m_distance: 0
+  m_lockY: 0
 --- !u!1 &947936149
 GameObject:
   m_ObjectHideFlags: 0
@@ -12942,7 +12959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.01
+  m_relativeMove: 0.15
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 0
@@ -13274,6 +13291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1071330766}
   - component: {fileID: 1071330767}
+  - component: {fileID: 1071330768}
   m_Layer: 0
   m_Name: BG5.3 (1)
   m_TagString: Untagged
@@ -13289,7 +13307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071330765}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 52.1, y: -12.4, z: -0.37814116}
+  m_LocalPosition: {x: 48.6, y: -10.3, z: -0.37814116}
   m_LocalScale: {x: 0.8093168, y: 0.6027, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13336,9 +13354,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1572386203
   m_SortingLayer: 1
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: c7f433b82fda572449e20eb3dafd5bdb, type: 3}
-  m_Color: {r: 1, g: 0.8792537, b: 0, a: 0.23529412}
+  m_Color: {r: 0.7973923, g: 0.8056143, b: 0.9339623, a: 0.83137256}
   m_FlipX: 1
   m_FlipY: 1
   m_DrawMode: 2
@@ -13348,6 +13366,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1071330768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071330765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_relativeMove: 0.2
+  m_distanceCheck: 0
+  m_distance: 0
+  m_lockY: 0
 --- !u!1 &1083273882
 GameObject:
   m_ObjectHideFlags: 0
@@ -13461,8 +13495,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 937170870}
   - {fileID: 1991935775}
+  - {fileID: 937170870}
   m_Father: {fileID: 1875124139}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13478,7 +13512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.06
+  m_relativeMove: 0.08
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 1
@@ -17883,7 +17917,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1428365223
 Transform:
   m_ObjectHideFlags: 0
@@ -17892,7 +17926,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428365222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 53.2, y: 34.8, z: -9.63}
+  m_LocalPosition: {x: 35.6, y: 29.7, z: -9.63}
   m_LocalScale: {x: 7.602474, y: 8.576234, z: 4.7645745}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17963,7 +17997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.04
+  m_relativeMove: 0
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 1
@@ -20916,7 +20950,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750139613}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.40252, y: -5.0938835, z: -9.63}
+  m_LocalPosition: {x: 64.7, y: -1.6, z: -9.63}
   m_LocalScale: {x: 230.01192, y: 117.23339, z: 117.23339}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20966,7 +21000,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 7e6b2ab1eca435346b6df09040dca9ce,
     type: 3}
-  m_Color: {r: 0, g: 0.5554957, b: 0.99215686, a: 0.21176471}
+  m_Color: {r: 0.2688679, g: 1, b: 0.44895533, a: 0.22745098}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -21137,8 +21171,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763754601}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 58.7587, y: -9.0561, z: 3.8218586}
-  m_LocalScale: {x: 8.565187, y: 8.372176, z: 8.39459}
+  m_LocalPosition: {x: 58.7587, y: -9.056099, z: 3.8218594}
+  m_LocalScale: {x: 8.565187, y: 8.372177, z: 8.394591}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1875124139}
@@ -22588,7 +22622,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1875124139}
-  - component: {fileID: 1875124140}
   - component: {fileID: 1875124141}
   m_Layer: 0
   m_Name: BACK3
@@ -22609,7 +22642,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1763754603}
   - {fileID: 1071330766}
   - {fileID: 1047779680}
   - {fileID: 43371273}
@@ -22617,26 +22649,11 @@ Transform:
   - {fileID: 1996747824}
   - {fileID: 424257088}
   - {fileID: 1114166154}
+  - {fileID: 1763754603}
   - {fileID: 1750139614}
   m_Father: {fileID: 546633259}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1875124140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875124138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_relativeMove: 0.04
-  m_distanceCheck: 0
-  m_distance: 0
-  m_lockY: 0
 --- !u!210 &1875124141
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -23847,9 +23864,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1572386203
   m_SortingLayer: 1
-  m_SortingOrder: 6
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: a3171c310c63dc04480d1c1f5f8cc061, type: 3}
-  m_Color: {r: 0, g: 0.681818, b: 1, a: 0.54509807}
+  m_Color: {r: 0.32894266, g: 0.7224677, b: 0.9056604, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -23934,7 +23951,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: dd1481c95dafc284fb0da9e8ae1356cf, type: 3}
-  m_Color: {r: 0, g: 0.681818, b: 1, a: 0.54509807}
+  m_Color: {r: 0, g: 0.681818, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -23956,7 +23973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.04
+  m_relativeMove: 0.06
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 1

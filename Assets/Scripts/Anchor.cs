@@ -254,7 +254,6 @@ public class Anchor : MonoBehaviour
 
 		//Set the debris rotation to be the angle the anchor came from
 		m_SpawnedAnchorImpactImage.transform.Find("RockDebris/VelocityBasedDebris").transform.rotation = m_RotationForDebris;
-        m_SpawnedAnchorImpactImage.transform.Find("HoneyDebris/VelocityBasedDebrisHoney").transform.rotation = m_RotationForDebris;
 
     }
 

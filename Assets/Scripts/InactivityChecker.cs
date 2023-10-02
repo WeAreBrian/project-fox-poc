@@ -35,6 +35,7 @@ public class InactivityChecker : MonoBehaviour
 
     void ResetGame()
     {
-        SceneManager.LoadScene(m_sceneToLoad);
+        SaveUtils.InitializeProfile();
+        SceneManager.LoadScene(m_sceneIndexToLoad);
 	}
 }

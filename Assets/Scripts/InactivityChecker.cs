@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InactivityChecker : MonoBehaviour
 {
     private float m_lastTime;
     [SerializeField]
     private float m_secondsUntilReset;
+    [SerializeField]
+    private int m_sceneIndexToLoad;
 
     // Start is called before the first frame update
     void Start()
@@ -17,25 +20,21 @@ public class InactivityChecker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //detect any key and reset timer
         if (Input.anyKey)
         {
-            Debug.Log("key pressed");
             m_lastTime = Time.fixedTime;
         }
 
+        //if timer is past x seconds, reset
         if(Time.fixedTime - m_lastTime > m_secondsUntilReset)
         {
-            Debug.Log("reset game");
+            ResetGame();
         }
-    }
-
-    void ResetInactiveTimer()
-    {
-
     }
 
     void ResetGame()
     {
-
-    }
+        SceneManager.LoadScene(m_sceneToLoad);
+	}
 }

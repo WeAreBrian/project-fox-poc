@@ -14,7 +14,7 @@ public class InactivityChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_lastTime = 0;
+        m_lastTime = Time.fixedTime;
     }
 
     // Update is called once per frame

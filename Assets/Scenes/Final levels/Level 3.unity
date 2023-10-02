@@ -3313,7 +3313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.01
+  m_relativeMove: 0.05
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 0
@@ -3377,7 +3377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.06
+  m_relativeMove: 0.3
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 1
@@ -7495,9 +7495,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1875124139}
-  - {fileID: 175859659}
-  - {fileID: 1950149622}
   - {fileID: 188312626}
+  - {fileID: 1950149622}
+  - {fileID: 175859659}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23249,7 +23249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.3
+  m_relativeMove: 0.6
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 0
@@ -23920,7 +23920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2621ca24e0e54a83eeb2ed57fdfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_relativeMove: 0.03
+  m_relativeMove: 0.1
   m_distanceCheck: 0
   m_distance: 0
   m_lockY: 0

@@ -14,7 +14,7 @@ public class FadeAndDestroy : MonoBehaviour
     [SerializeField]
     private float m_DestroyTimer = 5f;
     [SerializeField]
-    private bool m_ShouldShrink = true;
+    private bool m_ShouldShrink = false;
 
     [SerializeField]
     private bool m_ClockIsRunning = true;

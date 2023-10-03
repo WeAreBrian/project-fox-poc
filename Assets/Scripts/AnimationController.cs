@@ -36,13 +36,13 @@ public class AnimationController : MonoBehaviour
     private void Update()
     {
         var input = m_Move.ReadValue<float>();
-        if (input > 0.05 || input < -0.05)
+
+        m_Animator.SetFloat("InputVelocity", input);
+        m_Animator.SetBool("IsMoving", input != 0);
+
+        if (input != 0)
         {
-            m_Moving = true;
-        }
-        else
-        {
-            m_Moving = false;
+            m_Animator.SetFloat("Facing", input);
         }
 
         m_Animator.SetBool("Grounded", m_Grounded.OnGround);
@@ -61,16 +61,6 @@ public class AnimationController : MonoBehaviour
     private void TriggerWindUp()
     {
         m_Animator.SetTrigger("WindingUp");
-    }
-
-    void OnMove(InputValue value)
-    {
-        if (m_Moving)
-        {
-            m_Animator.SetFloat("Facing", value.Get<float>());
-        }
-        m_Animator.SetFloat("InputVelocity", value.Get<float>());
-        m_Animator.SetBool("IsMoving", m_Moving);
     }
 
     void OnClimb(InputValue value)

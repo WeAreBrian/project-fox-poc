@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 5822406008445146550}
   - component: {fileID: 7491427315496765127}
   - component: {fileID: 1230637646194914361}
+  - component: {fileID: 494685700498943261}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -195,7 +196,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: fdfb3bfd-1e4a-4f17-a74c-7f0a7df1265e
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &474916487
@@ -633,6 +634,20 @@ MonoBehaviour:
   m_FoxAnimator: {fileID: 2961726244308222665}
   m_Tail: {fileID: 4061467912626272285}
   m_FoxRigidbody: {fileID: 474916486}
+--- !u!114 &494685700498943261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ff971432d4540b3844d7a8993e21e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystem: {fileID: 0}
+  duration: 0.3
 --- !u!1 &2473372690667744105
 GameObject:
   m_ObjectHideFlags: 0

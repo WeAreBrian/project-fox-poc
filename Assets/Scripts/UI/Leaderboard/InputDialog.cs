@@ -69,7 +69,7 @@ public class InputDialog : MonoBehaviour
     {
         if (!m_DetailsAreSubmitted) return;
         SaveUtils.InitializeProfile();
-        StartCoroutine(m_HoleTransition.ShrinkParentObject(0));
+        StartCoroutine(m_HoleTransition.ShrinkParentObject(1));
 
         // Switch back to normal controls preparing for a new game
         m_PlayerInputActions.Player.Enable();

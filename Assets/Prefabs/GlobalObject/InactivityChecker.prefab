@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3111853c525ee84e9067749c90bd4b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_secondsUntilReset: 5
-  m_sceneIndexToLoad: 0
+  m_SecondsUntilReset: 0
+  m_InactiveTimeLimit: 60
+  m_SceneIndexToLoad: 1
+  m_Text: {fileID: 0}
+  m_InactivityTimerContainer: {fileID: 0}

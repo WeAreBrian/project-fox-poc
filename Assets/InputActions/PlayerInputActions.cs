@@ -700,6 +700,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""55980630-833b-49c7-b386-f4b08fcf81a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -926,7 +935,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""38ac0dd8-3a49-497d-ba80-7cac35fac0be"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -953,6 +962,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MuteControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1add1915-f46f-4e8f-a3ce-4446d6a49169"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1614,6 +1634,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Dev_TimeoutScreen = m_Dev.FindAction("TimeoutScreen", throwIfNotFound: true);
         m_Dev_Scoreboard = m_Dev.FindAction("Scoreboard", throwIfNotFound: true);
         m_Dev_MuteControl = m_Dev.FindAction("MuteControl", throwIfNotFound: true);
+        m_Dev_Skip = m_Dev.FindAction("Skip", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1840,6 +1861,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Dev_TimeoutScreen;
     private readonly InputAction m_Dev_Scoreboard;
     private readonly InputAction m_Dev_MuteControl;
+    private readonly InputAction m_Dev_Skip;
     public struct DevActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1862,6 +1884,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @TimeoutScreen => m_Wrapper.m_Dev_TimeoutScreen;
         public InputAction @Scoreboard => m_Wrapper.m_Dev_Scoreboard;
         public InputAction @MuteControl => m_Wrapper.m_Dev_MuteControl;
+        public InputAction @Skip => m_Wrapper.m_Dev_Skip;
         public InputActionMap Get() { return m_Wrapper.m_Dev; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1925,6 +1948,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MuteControl.started += instance.OnMuteControl;
             @MuteControl.performed += instance.OnMuteControl;
             @MuteControl.canceled += instance.OnMuteControl;
+            @Skip.started += instance.OnSkip;
+            @Skip.performed += instance.OnSkip;
+            @Skip.canceled += instance.OnSkip;
         }
 
         private void UnregisterCallbacks(IDevActions instance)
@@ -1983,6 +2009,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MuteControl.started -= instance.OnMuteControl;
             @MuteControl.performed -= instance.OnMuteControl;
             @MuteControl.canceled -= instance.OnMuteControl;
+            @Skip.started -= instance.OnSkip;
+            @Skip.performed -= instance.OnSkip;
+            @Skip.canceled -= instance.OnSkip;
         }
 
         public void RemoveCallbacks(IDevActions instance)
@@ -2206,6 +2235,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnTimeoutScreen(InputAction.CallbackContext context);
         void OnScoreboard(InputAction.CallbackContext context);
         void OnMuteControl(InputAction.CallbackContext context);
+        void OnSkip(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

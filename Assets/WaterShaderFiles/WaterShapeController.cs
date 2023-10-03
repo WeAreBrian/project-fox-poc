@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEditor;
 
-[ExecuteAlways]
 public class WaterShapeController : MonoBehaviour
 {
 
@@ -29,10 +29,12 @@ public class WaterShapeController : MonoBehaviour
     void Start() { 
        
     }
+
     void OnValidate() {
         // Clean waterpoints 
-        StartCoroutine(CreateWaves());
+        //StartCoroutine(CreateWaves());
     }
+
     IEnumerator CreateWaves() {
         foreach (Transform child in wavePoints.transform) {
             StartCoroutine(Destroy(child.gameObject));

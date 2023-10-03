@@ -678,6 +678,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Skip",
+                    "type": "Button",
+                    "id": "55980630-833b-49c7-b386-f4b08fcf81a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -904,7 +913,7 @@
                 {
                     "name": "",
                     "id": "38ac0dd8-3a49-497d-ba80-7cac35fac0be",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -931,6 +940,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "MuteControl",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1add1915-f46f-4e8f-a3ce-4446d6a49169",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

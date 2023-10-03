@@ -12,6 +12,7 @@ public class BangBangBang : MonoBehaviour
     {
         m_Animator = GetComponent<Animator>();
         GetComponent<PlayerInput>().actions["Jump"].started += Continue;
+        GetComponent<PlayerInput>().actions["Skip"].started += Skip;
     }
 
     private void Continue(InputAction.CallbackContext ctx)
@@ -21,5 +22,16 @@ public class BangBangBang : MonoBehaviour
         //{
         //    SceneManager.LoadScene(1);
         //}
+    }
+
+    private void Skip(InputAction.CallbackContext ctx)
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    private void OnDestroy()
+    {
+        GetComponent<PlayerInput>().actions["Jump"].started -= Continue;
+        GetComponent<PlayerInput>().actions["Skip"].started -= Skip;
     }
 }

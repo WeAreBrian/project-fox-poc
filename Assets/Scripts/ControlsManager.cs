@@ -23,6 +23,8 @@ public class ControlsManager : MonoBehaviour
 
     private float m_VolumeBeforeMute;
 
+    private bool doubleTapReady;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,12 +77,28 @@ public class ControlsManager : MonoBehaviour
             m_Mixer.SetFloat("MusicVolume", m_VolumeBeforeMute > volume ? m_VolumeBeforeMute : -80);
             m_VolumeBeforeMute = volume;
         }
+        if (m_TimeoutScreen.triggered)
+        {
+            if (!doubleTapReady)
+            {
+                StartCoroutine(WaitForDoubleTap());
+            }
+            else
+            {
+                SceneManager.LoadScene(1);
+            }
+        }
+    }
+
+    private IEnumerator WaitForDoubleTap()
+    {
+        doubleTapReady = true;
+        yield return new WaitForSeconds(1);
+        doubleTapReady = false;
     }
 
     private void UpdateVolume(string parameterName, float increment)
     {
-        Debug.Log("Changing " + parameterName + " by " + increment);
-
         float volume;
         m_Mixer.GetFloat(parameterName, out volume);
         m_Mixer.SetFloat(parameterName, Mathf.Clamp(volume+increment, -80, 20));

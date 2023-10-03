@@ -36,16 +36,22 @@ public class Mantle : MonoBehaviour
     {
         if (m_Grounded.OnGround) return;
 
-        if (Physics2D.OverlapCircle((Vector2)transform.position + m_LeftOffset - m_BoxCenterOffset / 2, m_CollisionRadius, m_GroundLayer))
+        Vector2 leftCheckPosition = (Vector2)transform.position + m_LeftOffset - m_BoxCenterOffset / 2;
+        Vector2 leftCheckPositionHeightOffset = leftCheckPosition + m_HeightOffset / 2;
+
+        Vector2 rightCheckPosition = (Vector2)transform.position + m_RightOffset - m_BoxCenterOffset / 2;
+        Vector2 rightCheckPositionHeightOffset = rightCheckPosition + m_HeightOffset / 2;
+
+        if (Physics2D.OverlapCircle(leftCheckPosition, m_CollisionRadius, m_GroundLayer))
         {
-            if (!Physics2D.OverlapCircle((Vector2)transform.position + m_LeftOffset - m_BoxCenterOffset + m_HeightOffset / 2, m_CollisionRadius, m_GroundLayer) && !m_Triggered)
+            if (!Physics2D.OverlapCircle(leftCheckPositionHeightOffset, m_CollisionRadius, m_GroundLayer) && !m_Triggered && !IsOverlappingWithSpringboard(leftCheckPosition, m_CollisionRadius))
             {
                 Activate();
             }
         }
-        else if (Physics2D.OverlapCircle((Vector2)transform.position + m_RightOffset - m_BoxCenterOffset / 2, m_CollisionRadius, m_GroundLayer))
+        else if (Physics2D.OverlapCircle(rightCheckPosition, m_CollisionRadius, m_GroundLayer))
         {
-            if (!Physics2D.OverlapCircle((Vector2)transform.position + m_RightOffset - m_BoxCenterOffset + m_HeightOffset / 2, m_CollisionRadius, m_GroundLayer) && !m_Triggered)
+            if (!Physics2D.OverlapCircle(rightCheckPositionHeightOffset, m_CollisionRadius, m_GroundLayer) && !m_Triggered && !IsOverlappingWithSpringboard(rightCheckPosition, m_CollisionRadius))
             {
                 Activate();
             }
@@ -55,6 +61,15 @@ public class Mantle : MonoBehaviour
             m_Triggered = false;
         }
     }
+
+    //This is to check if the springboard is the object overlapping. Because we don't want to mantle on the diagonal springboards, we want to BOUNCE on them!!!
+    private bool IsOverlappingWithSpringboard(Vector2 position, float radius)
+    {
+        Collider2D collider = Physics2D.OverlapCircle(position, radius, m_GroundLayer);
+        return collider != null && collider.gameObject.name.Contains("Springboard");
+    }
+
+
     private void Activate()
     {
         if (m_Grounded.OnGround) return;

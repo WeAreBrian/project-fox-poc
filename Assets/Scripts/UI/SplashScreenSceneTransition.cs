@@ -13,7 +13,7 @@ public class SplashScreenSceneTransition : MonoBehaviour
     {
         if (Input.anyKey)
         {
-            StartCoroutine(m_HoleTransition.ShrinkParentObject(1));
+            StartCoroutine(m_HoleTransition.ShrinkParentObject(2));
         }
     }
 }

@@ -544,7 +544,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""e4ab8fe5-aa82-4640-abcc-d895ca3efe24"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": true
                 },
@@ -691,6 +691,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MuteControl"",
+                    ""type"": ""Button"",
+                    ""id"": ""9778d030-df65-4d80-a090-daa4c5143584"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -828,11 +837,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a273a0ec-fcc6-4c25-9514-e0affcece0e4"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""id"": ""7741d4a1-e075-48a4-9142-fdac557e71ef"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": """",
                     ""action"": ""ControlHUD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -933,6 +942,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Scoreboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07c11b8f-fb3c-49a0-b836-9bf382eb6c38"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MuteControl"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1593,6 +1613,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Dev_SelectSFX = m_Dev.FindAction("SelectSFX", throwIfNotFound: true);
         m_Dev_TimeoutScreen = m_Dev.FindAction("TimeoutScreen", throwIfNotFound: true);
         m_Dev_Scoreboard = m_Dev.FindAction("Scoreboard", throwIfNotFound: true);
+        m_Dev_MuteControl = m_Dev.FindAction("MuteControl", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1818,6 +1839,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Dev_SelectSFX;
     private readonly InputAction m_Dev_TimeoutScreen;
     private readonly InputAction m_Dev_Scoreboard;
+    private readonly InputAction m_Dev_MuteControl;
     public struct DevActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1839,6 +1861,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @SelectSFX => m_Wrapper.m_Dev_SelectSFX;
         public InputAction @TimeoutScreen => m_Wrapper.m_Dev_TimeoutScreen;
         public InputAction @Scoreboard => m_Wrapper.m_Dev_Scoreboard;
+        public InputAction @MuteControl => m_Wrapper.m_Dev_MuteControl;
         public InputActionMap Get() { return m_Wrapper.m_Dev; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1899,6 +1922,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Scoreboard.started += instance.OnScoreboard;
             @Scoreboard.performed += instance.OnScoreboard;
             @Scoreboard.canceled += instance.OnScoreboard;
+            @MuteControl.started += instance.OnMuteControl;
+            @MuteControl.performed += instance.OnMuteControl;
+            @MuteControl.canceled += instance.OnMuteControl;
         }
 
         private void UnregisterCallbacks(IDevActions instance)
@@ -1954,6 +1980,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Scoreboard.started -= instance.OnScoreboard;
             @Scoreboard.performed -= instance.OnScoreboard;
             @Scoreboard.canceled -= instance.OnScoreboard;
+            @MuteControl.started -= instance.OnMuteControl;
+            @MuteControl.performed -= instance.OnMuteControl;
+            @MuteControl.canceled -= instance.OnMuteControl;
         }
 
         public void RemoveCallbacks(IDevActions instance)
@@ -2176,6 +2205,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSelectSFX(InputAction.CallbackContext context);
         void OnTimeoutScreen(InputAction.CallbackContext context);
         void OnScoreboard(InputAction.CallbackContext context);
+        void OnMuteControl(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

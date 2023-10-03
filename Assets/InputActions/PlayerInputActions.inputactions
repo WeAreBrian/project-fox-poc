@@ -522,7 +522,7 @@
                     "type": "Value",
                     "id": "e4ab8fe5-aa82-4640-abcc-d895ca3efe24",
                     "expectedControlType": "Axis",
-                    "processors": "",
+                    "processors": "AxisDeadzone",
                     "interactions": "Press(behavior=2)",
                     "initialStateCheck": true
                 },
@@ -669,6 +669,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MuteControl",
+                    "type": "Button",
+                    "id": "9778d030-df65-4d80-a090-daa4c5143584",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -806,11 +815,11 @@
                 },
                 {
                     "name": "",
-                    "id": "a273a0ec-fcc6-4c25-9514-e0affcece0e4",
-                    "path": "<Gamepad>/start",
+                    "id": "7741d4a1-e075-48a4-9142-fdac557e71ef",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "",
                     "action": "ControlHUD",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -911,6 +920,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Scoreboard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07c11b8f-fb3c-49a0-b836-9bf382eb6c38",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MuteControl",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

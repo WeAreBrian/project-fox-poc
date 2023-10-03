@@ -9,6 +9,8 @@ public class ControlsManager : MonoBehaviour
 {
     private bool m_DevMode;
 
+    private PlayerInput m_Input;
+
     private InputAction m_VolumeControl;
     private InputAction m_SelectMusic;
     private InputAction m_SelectSFX;
@@ -16,6 +18,7 @@ public class ControlsManager : MonoBehaviour
     private InputAction m_Scoreboard;
     private InputAction m_MuteControl;
 
+    [SerializeField]
     private AudioMixer m_Mixer;
 
     // Start is called before the first frame update
@@ -25,39 +28,52 @@ public class ControlsManager : MonoBehaviour
         
         if (SceneManager.GetActiveScene().name == "Preload") SceneManager.LoadScene(1);
 
-        PlayerInput input = FindAnyObjectByType<PlayerInput>();
 
-        m_VolumeControl = input.actions["VolumeControl"];
-        m_MuteControl = input.actions["MuteControl"];
-        m_SelectMusic = input.actions["SelectMusic"];
-        m_SelectSFX = input.actions["SelectSFX"];
-        m_TimeoutScreen = input.actions["TimeoutScreen"];
-        m_Scoreboard = input.actions["Scoreboard"];
 
+        SceneManager.sceneLoaded += UpdateInput;
+        UpdateInput(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+    }
+
+    private void UpdateInput(Scene scene, LoadSceneMode mode)
+    {
+        m_Input = FindAnyObjectByType<PlayerInput>();
+
+        Debug.Log("PlayerInput" + m_Input);
+
+        if (m_Input == null) return;
+
+        m_VolumeControl = m_Input.actions["VolumeControl"];
+        m_MuteControl = m_Input.actions["MuteControl"];
+        m_SelectMusic = m_Input.actions["SelectMusic"];
+        m_SelectSFX = m_Input.actions["SelectSFX"];
+        m_TimeoutScreen = m_Input.actions["TimeoutScreen"];
+        m_Scoreboard = m_Input.actions["Scoreboard"];
     }
 
     private void Update()
     {
+        if (m_Input == null) return; 
 
         var volumeModifier = m_VolumeControl.ReadValue<float>();
-        if (volumeModifier != 0)
+        if (m_VolumeControl.triggered)
         {
-        }
-        if (m_SelectMusic.ReadValue<float>() > 0.5f)
-        {
-            UpdateVolume("MusicVolume");
-        }
-        else if (m_SelectSFX.triggered)
-        {
-            UpdateVolume("SFXVolume");
+            if (m_SelectMusic.ReadValue<float>() > 0.5f)
+            {
+                UpdateVolume("MusicVolume", volumeModifier * 5);
+            }
+            if (m_SelectSFX.ReadValue<float>() > 0.5f)
+            {
+                UpdateVolume("SFXVolume", volumeModifier * 5);
+            }
         }
     }
 
-    private void UpdateVolume(string parameterName)
+    private void UpdateVolume(string parameterName, float increment)
     {
+        Debug.Log("Changing " + parameterName + " by " + increment);
 
         float volume;
         m_Mixer.GetFloat(parameterName, out volume);
-        m_Mixer.SetFloat(parameterName, Mathf.Clamp(volume, -80, 20));
+        m_Mixer.SetFloat(parameterName, Mathf.Clamp(volume+increment, -80, 20));
     }
 }

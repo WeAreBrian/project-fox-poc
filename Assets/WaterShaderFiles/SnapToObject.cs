@@ -9,6 +9,11 @@ public class SnapToObject : MonoBehaviour
     [SerializeField]
     private Vector3 m_Offset;
 
+    private void Awake()
+    {
+        transform.position = m_Target.transform.position + m_Offset;
+    }
+
     private void FixedUpdate()
     {
         transform.position = m_Target.transform.position + m_Offset;

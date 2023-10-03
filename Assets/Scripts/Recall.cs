@@ -45,7 +45,7 @@ public class Recall : MonoBehaviour
 
 
 
-	private void OnRecall()
+	public void OnRecall()
 	{
 		if (!OnCooldown && !m_Holder.HoldingAnchor)
 		{
@@ -75,4 +75,13 @@ public class Recall : MonoBehaviour
 	{
 		m_AnchorMaterial.color = Color.white;
 	}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the collision is with an object on the "Water" layer
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            ResetRecall();
+        }
+    }
 }

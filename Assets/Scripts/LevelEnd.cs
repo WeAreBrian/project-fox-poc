@@ -14,6 +14,9 @@ public class LevelEnd : MonoBehaviour
     private bool m_levelEnded;
     private GrowAndShrinkLevelEndGlow m_GrowShrinkScript;
 
+    [SerializeField]
+    private AudioClip m_LevelEndSound;
+
     private bool m_isCountedInSpeedrun;
 
     private void Awake()
@@ -42,6 +45,7 @@ public class LevelEnd : MonoBehaviour
 
             m_levelEnded = true;
 
+            AudioController.PlaySound(m_LevelEndSound, 0.5f, 1, MixerGroup.SFX);
 
             //Shrink the glowing circle
             //m_GrowShrinkScript.ShrinkToNothing(m_EndDelay);

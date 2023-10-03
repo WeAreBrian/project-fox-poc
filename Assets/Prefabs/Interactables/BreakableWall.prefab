@@ -179,7 +179,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WoodExplodeVFX: {fileID: 8563269651218614213}
   m_WoodVFX: {fileID: 6089576892986303319}
-  m_BreakSound: {fileID: 8300000, guid: e787296224c739d4cbd39d209cda318e, type: 3}
+  m_ImpactSound: {fileID: 8300000, guid: 5e452c111bc8cd44a8bcdba27b5541ef, type: 3}
+  m_ClatterSounds:
+  - {fileID: 8300000, guid: 28df0fc9e7fc7ce419b7811a559938a4, type: 3}
+  - {fileID: 8300000, guid: 1b1a81fe7aff0794d915055955d2d8fc, type: 3}
+  - {fileID: 8300000, guid: 62f90d69c7fad7f408f5d98dbc81fd02, type: 3}
+  - {fileID: 8300000, guid: 112cffb198adcf44989fe309776813e7, type: 3}
+  - {fileID: 8300000, guid: 85b6d01a13a0f154bb980dc2028cb62b, type: 3}
+  - {fileID: 8300000, guid: 65767b4cacb8f9c4ab5317cb2f797d9f, type: 3}
+  - {fileID: 8300000, guid: 25ea3bf243ec4f141942bc2c91949496, type: 3}
   m_Plank: {fileID: 4959531291454677171}
 --- !u!61 &2663591418967674297
 BoxCollider2D:

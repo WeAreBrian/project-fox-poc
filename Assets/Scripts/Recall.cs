@@ -71,7 +71,7 @@ public class Recall : MonoBehaviour
 		}
 	}
 
-	private void ResetRecall()
+	public void ResetRecall()
 	{
 		m_AnchorMaterial.color = Color.white;
 	}

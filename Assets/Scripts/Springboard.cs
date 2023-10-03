@@ -24,8 +24,9 @@ public class Springboard : MonoBehaviour, IToggle
 	private AnchorHolder m_AnchorHolder;
 	private VerticalMovement m_VerticalMovement;
 	private Grounded m_Grounded;
+	private Recall m_Recall;
 	private Anchor m_AnchorScript;
-	private Animator m_Animator;
+    private Animator m_Animator;
 
 	//private Rigidbody2D[] m_RigidbodiesInTriggerZone;
 	private List<Rigidbody2D> m_RigidbodiesInTriggerZone = new List<Rigidbody2D>();
@@ -39,7 +40,8 @@ public class Springboard : MonoBehaviour, IToggle
 		m_VerticalMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<VerticalMovement>();
 		m_Grounded = GameObject.FindGameObjectWithTag("Player").GetComponent<Grounded>();
 		m_AnchorScript = GameObject.FindGameObjectWithTag("Anchor").GetComponent<Anchor>();
-		m_Animator = GetComponentInChildren<Animator>();
+        m_Recall = GameObject.FindGameObjectWithTag("Player").GetComponent<Recall>();
+        m_Animator = GetComponentInChildren<Animator>();
 	}
 
 	private void OnTriggerEnter2D(Collider2D m_Collision)
@@ -111,6 +113,8 @@ public class Springboard : MonoBehaviour, IToggle
 		m_GottenChainLinks = true;
 	}
 
+
+	//This is unused exce
 	public float GetResetTime()
 	{
 		return m_ResetTime;
@@ -140,6 +144,8 @@ public class Springboard : MonoBehaviour, IToggle
 		//rotated direction, as well as reseting the "horizontal" velocity (from the POV of the springboard), we are essentially figuring
 		//out the "horizontal" (or paralell?) velocity of the object from the pov of the springboard, setting that to "0" (not really but essentially
 		//from the pov of the springboard), and then adding the bounce force in the direction of the springboard. This will prevent inconsistence bounce heights.
+
+		m_Recall.ResetRecall();
 
 		foreach(Rigidbody2D rb in m_RigidbodiesInTriggerZone)
 		{

@@ -35,6 +35,8 @@ public class Anchor : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_AnchorBump;
 
+	private AudioSource m_VineSlide;
+
 	[SerializeField]
 	private GameObject m_AnchorImpactImage;
 	private GameObject m_SpawnedAnchorImpactImage;
@@ -52,6 +54,8 @@ public class Anchor : MonoBehaviour
 		m_Rigidbody.useFullKinematicContacts = true;
 
 		m_FreeTimer = new Timer();
+
+		m_VineSlide = GetComponent<AudioSource>();
 
 		m_Leaves = GetComponentInChildren<ParticleSystem>();
 		m_Leaves.Stop();
@@ -77,6 +81,7 @@ public class Anchor : MonoBehaviour
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Forcefield"))
 		{
 			m_Leaves.Play();
+			m_VineSlide.Play();
 		}
 
 		m_Collision = collision;    //For spawning anchor impact image
@@ -107,6 +112,7 @@ public class Anchor : MonoBehaviour
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Forcefield"))
 		{
 			m_Leaves.Stop();
+			m_VineSlide.Stop();
 		}
 	}
 

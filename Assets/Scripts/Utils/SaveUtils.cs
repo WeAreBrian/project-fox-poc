@@ -29,8 +29,9 @@ public static class SaveUtils
     public static void RecordTime(float time)
     {
         // Remember to change this if we add more levels before level 1
-        int levelCountBeforeLevel1 = 0; // This is conveniently 0 for now because level indices start at 1 instead of 0
-        int index = SceneManager.GetActiveScene().buildIndex + levelCountBeforeLevel1;
+        int levelCountBeforeLevel1 = 3; // This is conveniently 0 for now because level indices start at 1 instead of 0
+        int index = SceneManager.GetActiveScene().buildIndex - levelCountBeforeLevel1;
+        Debug.Log($"Index: {index}, {SceneManager.GetActiveScene().buildIndex}");
 
         // If this is the first time saving, initialize profile
         if (!PlayerPrefs.HasKey($"Lv{index}Time"))
@@ -39,6 +40,7 @@ public static class SaveUtils
         }
 
         PlayerPrefs.SetFloat($"Lv{index}Time", time);
+        Debug.Log($"Lv{index}Time: {PlayerPrefs.GetFloat($"Lv{index}Time")}, {time}");
     }
 
     /// <summary>

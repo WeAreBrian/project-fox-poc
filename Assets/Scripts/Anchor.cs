@@ -41,7 +41,8 @@ public class Anchor : MonoBehaviour
 	private GameObject m_AnchorImpactImage;
 	private GameObject m_SpawnedAnchorImpactImage;
 
-	private Collision2D m_Collision;
+
+    private Collision2D m_Collision;
 
 	public Vector2 m_LastVelocity;
 
@@ -120,21 +121,27 @@ public class Anchor : MonoBehaviour
     private void CheckWhatSurfaceCollided(GameObject m_AnchorImpact)
 	{
 		//Get the transform of the sprites hierachy in the prefab
-		Transform m_AnchorImpactSpriteTransform = m_AnchorImpact.transform.Find("Sprites");
+		Transform m_AnchorImpactSpriteTransform = m_AnchorImpact.transform;
 		GameObject m_AnchorImpactSprite;
-		if(m_Collision.gameObject.name.Contains("HoneyGrappleSurface"))
+        GameObject m_AnchorImpactParticleSystem;
+
+        if (m_Collision.gameObject.name.Contains("HoneyGrappleSurface"))
         {
 			//Enable honey sprite
-			m_AnchorImpactSprite = m_AnchorImpactSpriteTransform.Find("HoneySprite").gameObject;
+			m_AnchorImpactSprite = m_AnchorImpactSpriteTransform.Find("Sprites/HoneySprite").gameObject;
+			m_AnchorImpactParticleSystem = m_AnchorImpactSpriteTransform.Find("HoneyDebris").gameObject;
         }
         else
 		{
             //Enable rock sprite
-            m_AnchorImpactSprite =  m_AnchorImpactSpriteTransform.Find("RockSprite").gameObject;
+            m_AnchorImpactSprite =  m_AnchorImpactSpriteTransform.Find("Sprites/RockSprite").gameObject;
+            m_AnchorImpactParticleSystem = m_AnchorImpactSpriteTransform.Find("RockDebris").gameObject;
+
         }
 
-		//Enable sprite then randomly flip it
+        //Enable sprite then randomly flip it
         m_AnchorImpactSprite.SetActive(true);
+        m_AnchorImpactParticleSystem.SetActive(true);
         m_AnchorImpactSprite.GetComponent<SpriteRenderer>().flipX = Random.Range(0, 2) == 1;
     }
 
@@ -267,8 +274,11 @@ public class Anchor : MonoBehaviour
         float m_ZRotationOfVelocity = Mathf.Atan2(m_LastVelocity.y, m_LastVelocity.x) * Mathf.Rad2Deg;
 		//angle to rotation
         Quaternion m_RotationForDebris = Quaternion.Euler(new Vector3(0, 0, m_ZRotationOfVelocity - 90));
+
+
 		//Set the debris rotation to be the angle the anchor came from
-		m_SpawnedAnchorImpactImage.transform.Find("VelocityBasedDebris").transform.rotation = m_RotationForDebris;
+		m_SpawnedAnchorImpactImage.transform.Find("RockDebris/VelocityBasedDebris").transform.rotation = m_RotationForDebris;
+
     }
 
     //Set destroy timer to the crater object

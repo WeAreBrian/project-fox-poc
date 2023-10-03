@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
@@ -9,7 +10,10 @@ public class BreakableObject : MonoBehaviour
     private GameObject m_WoodVFX;
 
     [SerializeField]
-    private AudioClip m_BreakSound;
+    private AudioClip m_ImpactSound;
+
+    [SerializeField]
+    private List<AudioClip> m_ClatterSounds;
 
     [SerializeField]
     private GameObject m_Plank;
@@ -50,12 +54,21 @@ public class BreakableObject : MonoBehaviour
 
             // Disable scripts and objects (avoid destroy to avoid having to clean up)
             m_Collider.enabled = false;
-            m_Plank.SetActive(false);
+            m_Plank?.SetActive(false);
 
 			HapticManager.instance.RumblePulse(0.25f, 1f, 0.1f);
             CameraShake.instance.Shake(2, 0.2f);
-            AudioController.PlaySound(m_BreakSound, 0.5f, 1, MixerGroup.SFX);
+            AudioController.PlaySound(m_ImpactSound, 0.5f, 1, MixerGroup.SFX);
+            PlayClatterSounds(Random.Range(2,5));
             m_WoodExplodeVFX.SetActive(true);
+        }
+    }
+
+    private void PlayClatterSounds(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            AudioController.PlaySound(m_ClatterSounds[Random.Range(0, m_ClatterSounds.Count)], 0.4f, Random.Range(0.95f, 1.05f), MixerGroup.SFX);
         }
     }
 }

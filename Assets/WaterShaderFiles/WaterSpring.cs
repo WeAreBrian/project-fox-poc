@@ -16,7 +16,7 @@ public class WaterSpring : MonoBehaviour
     private static SpriteShapeController spriteShapeController = null;
     private int waveIndex = 0;
     private List<WaterSpring> springs = new();
-    private float resistance = 200f;
+    private float resistance = 800f;
     public void Init(SpriteShapeController ssc) { 
 
         var index = transform.GetSiblingIndex();

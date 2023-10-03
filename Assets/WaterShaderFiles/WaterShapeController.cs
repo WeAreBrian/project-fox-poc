@@ -16,7 +16,7 @@ public class WaterShapeController : MonoBehaviour
     private GameObject wavePoints;
 
     [SerializeField]
-    [Range(1, 100)]
+    [Range(1, 200)]
     private int WavesCount;
     private List<WaterSpring> springs = new();
     // How stiff should our spring be constnat

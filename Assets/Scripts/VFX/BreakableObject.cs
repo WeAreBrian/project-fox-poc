@@ -50,7 +50,7 @@ public class BreakableObject : MonoBehaviour
 
             // Disable scripts and objects (avoid destroy to avoid having to clean up)
             m_Collider.enabled = false;
-            m_Plank.SetActive(false);
+            m_Plank?.SetActive(false);
 
 			HapticManager.instance.RumblePulse(0.25f, 1f, 0.1f);
             CameraShake.instance.Shake(2, 0.2f);

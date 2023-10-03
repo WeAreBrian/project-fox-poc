@@ -18,10 +18,13 @@ public class LevelSelect : MonoBehaviour
     {
         m_LevelSelectRoot = GetComponent<UIDocument>().rootVisualElement;
         GetComponent<UIDocument>().enabled = true;
-        m_LevelSelectRoot.style.display = DisplayStyle.None;
 
         GameObject m_PauseObject = GameObject.Find("PauseMenu");
-		m_PauseRoot = m_PauseObject.GetComponent<UIDocument>().rootVisualElement;
+        if (m_PauseObject != null)
+        {
+        m_LevelSelectRoot.style.display = DisplayStyle.None;
+		    m_PauseRoot = m_PauseObject.GetComponent<UIDocument>().rootVisualElement;
+        }
 
         //Get buttons
         Button m_Level0Button = m_LevelSelectRoot.Q<Button>("Level0");
@@ -35,7 +38,12 @@ public class LevelSelect : MonoBehaviour
         m_Level1Button.clicked += () => LoadScene(m_Level1);
         m_Level2Button.clicked += () => LoadScene(m_Level2);
         m_Level3Button.clicked += () => LoadScene(m_Level3);
-        m_BackButton.clicked += () => ReturnToPause();
+
+
+        if (m_PauseObject != null)
+        {
+            m_BackButton.clicked += () => ReturnToPause();
+        }
     }
 
     private void ReturnToPause()

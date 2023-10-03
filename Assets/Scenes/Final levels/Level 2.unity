@@ -23396,6 +23396,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaddyObject
       objectReference: {fileID: 0}
+    - target: {fileID: 4826892220963134568, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 264647403}
+    - target: {fileID: 4826892220963134568, guid: 11f0a0769822b438897e9017210b0063,
+        type: 3}
+      propertyPath: m_InactivityTimerContainer
+      value: 
+      objectReference: {fileID: 1363626582}
     - target: {fileID: 5837332355656021923, guid: 11f0a0769822b438897e9017210b0063,
         type: 3}
       propertyPath: m_Follow
@@ -31296,6 +31306,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1363626582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 834362955076419946, guid: b4cebd0d36f84e64884ba438582b0e9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1114276628}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1366570169
 GameObject:
   m_ObjectHideFlags: 0

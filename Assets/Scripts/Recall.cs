@@ -27,7 +27,11 @@ public class Recall : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_RecallSound;
 
-	private void Awake()
+    [SerializeField]
+    private LayerMask waterLayer;
+
+
+    private void Awake()
 	{
 		m_RecallSlingshot = GetComponent<RecallSlingshot>();
 
@@ -41,11 +45,12 @@ public class Recall : MonoBehaviour
 		m_Grounded.Landed.AddListener(ResetRecall);
 		m_AnchorMaterial = m_Anchor.GetComponentInChildren<SpriteRenderer>().material;
 		m_Anchor.StateChanged.AddListener(AnchorStateChange);
-	}
+
+    }
 
 
 
-	private void OnRecall()
+	public void OnRecall()
 	{
 		if (!OnCooldown && !m_Holder.HoldingAnchor)
 		{
@@ -61,7 +66,12 @@ public class Recall : MonoBehaviour
 				m_AnchorMaterial.color = m_CooldownColour;
 			}
 		}
-	}
+
+        if (IsPlayerInWater())
+        {
+			ResetRecall();
+        }
+    }
 
 	private void AnchorStateChange(AnchorState state)
 	{
@@ -71,7 +81,16 @@ public class Recall : MonoBehaviour
 		}
 	}
 
-	private void ResetRecall()
+    private bool IsPlayerInWater()
+    {
+        // Check if there are any overlapping objects in the Water layer.
+        Collider2D[] overlappedColliders = Physics2D.OverlapCircleAll(transform.position, 1f, waterLayer);
+        bool isOverlappingWater = overlappedColliders.Length > 0;
+
+        return isOverlappingWater;
+    }
+
+    private void ResetRecall()
 	{
 		m_AnchorMaterial.color = Color.white;
 	}

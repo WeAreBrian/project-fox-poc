@@ -90,7 +90,7 @@ public class Recall : MonoBehaviour
         return isOverlappingWater;
     }
 
-    private void ResetRecall()
+    public void ResetRecall()
 	{
 		m_AnchorMaterial.color = Color.white;
 	}

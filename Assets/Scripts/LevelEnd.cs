@@ -27,6 +27,8 @@ public class LevelEnd : MonoBehaviour
         // Determines whether the current level has a timer and therefore will be counted as part of the speedrun
         GameObject gameTimerObject = GameObject.Find("Speedrun Timer");
         m_isCountedInSpeedrun = gameTimerObject ?? false;
+        Debug.Log(gameTimerObject);
+        Debug.Log("Speedrun: " + m_isCountedInSpeedrun);
         m_GameTimer = m_isCountedInSpeedrun ? gameTimerObject.GetComponent<GameTimer>() : null;
     }
 
@@ -50,6 +52,7 @@ public class LevelEnd : MonoBehaviour
             StartCoroutine(EndDelayEnded());
             if (m_isCountedInSpeedrun)
             {
+                Debug.Log("Timer action executed!");
                 SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
             }
             PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);

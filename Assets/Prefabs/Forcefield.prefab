@@ -5092,7 +5092,7 @@ GameObject:
   - component: {fileID: 8972524248413476101}
   - component: {fileID: 8972524248413476100}
   - component: {fileID: 8972524248413476107}
-  - component: {fileID: 6663973423816298585}
+  - component: {fileID: 5714677830327538842}
   m_Layer: 12
   m_Name: Forcefield
   m_TagString: Untagged
@@ -5116,7 +5116,7 @@ Transform:
   - {fileID: 5066200985948673917}
   - {fileID: 3754421894374030316}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &8972524248413476100
 SpriteRenderer:
@@ -5215,15 +5215,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.16, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6663973423816298585
-MonoBehaviour:
+--- !u!251 &5714677830327538842
+PlatformEffector2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8972524248413476106}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35587740f38571949a4c6fd755038ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 261559
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

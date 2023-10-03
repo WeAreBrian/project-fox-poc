@@ -35,6 +35,8 @@ public class Anchor : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_AnchorBump;
 
+	private AudioSource m_VineSlide;
+
 	[SerializeField]
 	private GameObject m_AnchorImpactImage;
 	private GameObject m_SpawnedAnchorImpactImage;
@@ -44,6 +46,7 @@ public class Anchor : MonoBehaviour
 
 	public Vector2 m_LastVelocity;
 
+	public ParticleSystem m_Leaves;
 
     private void Awake()
 	{
@@ -52,6 +55,11 @@ public class Anchor : MonoBehaviour
 		m_Rigidbody.useFullKinematicContacts = true;
 
 		m_FreeTimer = new Timer();
+
+		m_VineSlide = GetComponent<AudioSource>();
+
+		m_Leaves = GetComponentInChildren<ParticleSystem>();
+		m_Leaves.Stop();
 	}
 
 	private void Update()
@@ -70,6 +78,13 @@ public class Anchor : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
 	{
+
+		if (collision.gameObject.layer == LayerMask.NameToLayer("Forcefield"))
+		{
+			m_Leaves.Play();
+			m_VineSlide.Play();
+		}
+
 		m_Collision = collision;    //For spawning anchor impact image
 		if (collision.gameObject.CompareTag("Grapplable"))
 		{
@@ -77,6 +92,7 @@ public class Anchor : MonoBehaviour
 		}
 		else if (m_GroundMask == (m_GroundMask | (1 << collision.gameObject.layer)))
 		{
+
 			foreach (ContactPoint2D hitpos in collision.contacts)
 			{
 				if (hitpos.normal != Vector2.up)
@@ -92,9 +108,17 @@ public class Anchor : MonoBehaviour
 			UpdateState(AnchorState.Grounded);
 		}
 	}
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+		if (collision.gameObject.layer == LayerMask.NameToLayer("Forcefield"))
+		{
+			m_Leaves.Stop();
+			m_VineSlide.Stop();
+		}
+	}
 
-	// Checks what surface the anchorimpact is hit with and enables the sprite for it
-	private void CheckWhatSurfaceCollided(GameObject m_AnchorImpact)
+    // Checks what surface the anchorimpact is hit with and enables the sprite for it
+    private void CheckWhatSurfaceCollided(GameObject m_AnchorImpact)
 	{
 		//Get the transform of the sprites hierachy in the prefab
 		Transform m_AnchorImpactSpriteTransform = m_AnchorImpact.transform;

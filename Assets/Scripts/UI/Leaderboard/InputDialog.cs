@@ -15,6 +15,7 @@ public class InputDialog : MonoBehaviour
 
     private PlayerInputActions m_PlayerInputActions;
     private CloseOrOpenCircle m_HoleTransition;
+    private bool m_DetailsAreSubmitted = false;
 
     private void Awake()
     {
@@ -23,7 +24,7 @@ public class InputDialog : MonoBehaviour
         m_PlayerInputActions.UI.Enable();
 
         m_PlayerInputActions.UI.Submit.performed += OnSubmit;
-        m_PlayerInputActions.Player.Jump.performed += OnReturnToMain;
+        m_PlayerInputActions.UI.ExitLeaderBoard.performed += OnReturnToMain;
     }
 
     private void Start()
@@ -49,6 +50,7 @@ public class InputDialog : MonoBehaviour
             .setOnComplete(() => {
                 m_BlurVolume.SetActive(false);
                 LeanTween.delayedCall(2f, () => m_Leaderboard.MainMenuText.SetActive(true));
+                m_DetailsAreSubmitted = true;
             });
     }
 
@@ -57,19 +59,20 @@ public class InputDialog : MonoBehaviour
         SaveUtils.RecordPlayerName(m_NameInputField.text);
         SaveUtils.RecordPlayerContact(m_ContactInputField.text);
         SaveUtils.SaveProfile();
-        DeactivateDialog();
         m_Leaderboard.UpdateProfileName();
-
-        // Switch back to normal controls preparing for a new game
-        m_PlayerInputActions.Player.Enable();
-        m_PlayerInputActions.UI.Disable();
+        DeactivateDialog();
     }
 
     // This is assgned to jump instead of submit because of the action map swap
     // Also makes it easier to avoid accidental return to main screen before inputting details
     private void OnReturnToMain(InputAction.CallbackContext context)
     {
+        if (!m_DetailsAreSubmitted) return;
         SaveUtils.InitializeProfile();
         StartCoroutine(m_HoleTransition.ShrinkParentObject(0));
+
+        // Switch back to normal controls preparing for a new game
+        m_PlayerInputActions.Player.Enable();
+        m_PlayerInputActions.UI.Disable();
     }
 }

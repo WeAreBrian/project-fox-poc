@@ -14,16 +14,24 @@ public class LevelEnd : MonoBehaviour
     private bool m_levelEnded;
     private GrowAndShrinkLevelEndGlow m_GrowShrinkScript;
 
+    [SerializeField]
+    private AudioClip m_LevelEndSound;
+
     private bool m_isCountedInSpeedrun;
 
     private void Awake()
     {
         m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
         m_GrowShrinkScript = GetComponentInChildren<GrowAndShrinkLevelEndGlow>();
+    }
 
+    private void Start()
+    {
         // Determines whether the current level has a timer and therefore will be counted as part of the speedrun
         GameObject gameTimerObject = GameObject.Find("Speedrun Timer");
         m_isCountedInSpeedrun = gameTimerObject ?? false;
+        Debug.Log(gameTimerObject);
+        Debug.Log("Speedrun: " + m_isCountedInSpeedrun);
         m_GameTimer = m_isCountedInSpeedrun ? gameTimerObject.GetComponent<GameTimer>() : null;
     }
 
@@ -37,6 +45,7 @@ public class LevelEnd : MonoBehaviour
 
             m_levelEnded = true;
 
+            AudioController.PlaySound(m_LevelEndSound, 0.5f, 1, MixerGroup.SFX);
 
             //Shrink the glowing circle
             //m_GrowShrinkScript.ShrinkToNothing(m_EndDelay);
@@ -47,6 +56,7 @@ public class LevelEnd : MonoBehaviour
             StartCoroutine(EndDelayEnded());
             if (m_isCountedInSpeedrun)
             {
+                Debug.Log("Timer action executed!");
                 SaveUtils.RecordTime(m_GameTimer.TimeElapsed);
             }
             PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);

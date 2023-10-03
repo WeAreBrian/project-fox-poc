@@ -66,15 +66,12 @@ public class Mantle : MonoBehaviour
     private bool IsOverlappingWithSpringboard(Vector2 position, float radius)
     {
         Collider2D collider = Physics2D.OverlapCircle(position, radius, m_GroundLayer);
-        Debug.Log(collider != null && collider.gameObject.name.Contains("Springboard"));
-
         return collider != null && collider.gameObject.name.Contains("Springboard");
     }
 
 
     private void Activate()
     {
-        Debug.Log("Mantle");
         if (m_Grounded.OnGround) return;
         
         m_ChainClimber.Dismount();

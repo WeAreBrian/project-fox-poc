@@ -5,7 +5,7 @@ using UnityEngine;
 public class BubbleSplash : MonoBehaviour
 {
     [SerializeField]
-    private ParticleSystem particleSystem; // Drag your Particle System here in the Inspector
+    private ParticleSystem particleSystem;
     [SerializeField]
     private float duration = 2.0f; // Duration for which the particle system should play. Set your desired time here.
 
@@ -14,7 +14,7 @@ public class BubbleSplash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "WaterVolumeForPlayer")
+        if (collision.gameObject.name == "WaterVolumeForPlayer" || collision.gameObject.name == "WaterVolume")
         {
             particleSystem.Play();
             elapsedTime = 0.0f; // Reset the timer
@@ -24,7 +24,7 @@ public class BubbleSplash : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "WaterVolumeForPlayer")
+        if (collision.gameObject.name == "WaterVolumeForPlayer" || collision.gameObject.name == "WaterVolume")
         {
             particleSystem.Stop();
             shouldPlay = false; // Set the flag to false

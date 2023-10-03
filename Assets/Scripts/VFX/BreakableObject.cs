@@ -9,6 +9,9 @@ public class BreakableObject : MonoBehaviour
     private GameObject m_WoodVFX;
 
     [SerializeField]
+    private AudioClip m_BreakSound;
+
+    [SerializeField]
     private GameObject m_Plank;
 
     private Collider2D m_Collider;
@@ -51,6 +54,7 @@ public class BreakableObject : MonoBehaviour
 
 			HapticManager.instance.RumblePulse(0.25f, 1f, 0.1f);
             CameraShake.instance.Shake(2, 0.2f);
+            AudioController.PlaySound(m_BreakSound, 0.5f, 1, MixerGroup.SFX);
             m_WoodExplodeVFX.SetActive(true);
         }
     }

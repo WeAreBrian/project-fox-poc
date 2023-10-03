@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Spike : MonoBehaviour
 {
     private CloseOrOpenCircle m_HoleTransition;
 
     private static bool S_Collided = false; //prevents multiple collision events spamming
+
+    private float m_SlowDownTime = 0.4f;
 
     private void Start()
     {
@@ -26,6 +29,17 @@ public class Spike : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && S_Collided == false)
         {
+            //Get all sprite renderers in the fox prefab
+            foreach(SpriteRenderer sprite in GameObject.FindGameObjectWithTag("Player").GetComponentsInChildren<SpriteRenderer>())
+            {
+                //"Make foxs red again-" - Trump
+                //"-on DEATH" - Jess
+                sprite.color = Color.red;
+            }
+
+            //slow down time
+            Time.timeScale = m_SlowDownTime;
+
             S_Collided = true;
             if(m_HoleTransition != null)
             {
@@ -37,5 +51,6 @@ public class Spike : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
+
     }
 }

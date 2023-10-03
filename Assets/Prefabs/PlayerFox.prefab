@@ -448,6 +448,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CooldownColour: {r: 0.8396226, g: 0.10865705, b: 0, a: 1}
   m_RecallSound: {fileID: 0}
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!114 &2794392424498695009
 MonoBehaviour:
   m_ObjectHideFlags: 0

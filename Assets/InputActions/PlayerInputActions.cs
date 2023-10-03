@@ -536,6 +536,409 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Dev"",
+            ""id"": ""fdfb3bfd-1e4a-4f17-a74c-7f0a7df1265e"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""e4ab8fe5-aa82-4640-abcc-d895ca3efe24"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""6d3c4ef5-e106-4224-9707-0ccecddeae48"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Climb"",
+                    ""type"": ""Value"",
+                    ""id"": ""91a0d8ff-86e8-42cd-b04d-1757fcb73ded"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""AxisDeadzone(min=0.5,max=1)"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Mount"",
+                    ""type"": ""Button"",
+                    ""id"": ""c5d5667c-488c-4346-8be7-059daa0fc051"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tug"",
+                    ""type"": ""Button"",
+                    ""id"": ""200f2a05-cdd5-43b0-b7b1-96d337209985"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Recall"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0e5e4c2-5320-4f38-a177-68f5baaf82f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnchorInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac499b4a-8bf0-4c12-905a-9a7b07a773d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Value"",
+                    ""id"": ""c1cb3867-830b-4fc3-9efa-c1e4039dc3d3"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1e26fd0-677d-494f-a39c-200a34a47d4a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControlHUD"",
+                    ""type"": ""Button"",
+                    ""id"": ""2cd89001-14cc-4fa5-838a-8f83dd79f69a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Surf"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d227a15-f9c6-461e-a575-85078d058762"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""a73927a6-3d8e-4fe7-955f-228b20f4fd66"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VolumeControl"",
+                    ""type"": ""Button"",
+                    ""id"": ""34e97f2f-74f6-4483-ac33-715664b9ecf3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectMusic"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b994e63-bd6d-42a8-a27e-3b78b6ce3a2f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectSFX"",
+                    ""type"": ""Button"",
+                    ""id"": ""e81e3389-3f9f-4856-ad9a-31fb52edbeb8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TimeoutScreen"",
+                    ""type"": ""Button"",
+                    ""id"": ""d8068dfe-306c-4037-9aa3-21f64238e17b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scoreboard"",
+                    ""type"": ""Button"",
+                    ""id"": ""10ee743d-f0f8-4b34-b461-4f03b4dcd009"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""cbd82fb7-b404-4f1e-92f8-fd10d70308fb"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61d60c3c-de96-45a2-b731-a5ecd5bd6d12"",
+                    ""path"": ""<Gamepad>/dpad/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1cef320-3031-425b-b5b0-2607062f2e1b"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fd291a1-b1de-457d-9c9f-b1b34b6b3dad"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mount"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3375deab-327a-4b84-9af0-7db4413bd49c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Tug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5fad607-7132-4d17-8a6f-dabaf85c8ee2"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Recall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f05b5633-5523-4c83-8501-224d0372beed"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": ""NormalizeVector2"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eea2166d-a093-40e4-b558-00ac51d8430c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AnchorInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b4df7b6-b30a-4194-b07d-abdde5726e8a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""959a24a3-c223-43fb-8ab0-06b5f38587e4"",
+                    ""path"": ""<Gamepad>/dpad/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4984014-40e4-4df8-9a67-75a204bc14b5"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4efb5bf3-0621-45e1-940b-43db024e438f"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ControlHUD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a273a0ec-fcc6-4c25-9514-e0affcece0e4"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ControlHUD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2655437e-1f0a-4344-a980-99a00c7db3af"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24f49782-4689-4903-b1b3-fbffcb3b62d2"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""e312e097-fb1e-47e3-8023-73142b61c35e"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VolumeControl"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""7d78f493-ae0d-45d5-8b9b-bc3558dc258f"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VolumeControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5def7fca-4eb8-4e58-82c3-363455c1250d"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VolumeControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d66d761a-7678-41e7-b893-9ae14cf7d666"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectMusic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4bf0e2a0-e2ef-4b10-a784-4af78959ab30"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSFX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38ac0dd8-3a49-497d-ba80-7cac35fac0be"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TimeoutScreen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f36e870-a708-4ea6-affa-d0a551883453"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scoreboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""UI"",
             ""id"": ""ace45614-fb09-4dee-9d52-5690f0957d83"",
             ""actions"": [
@@ -1171,6 +1574,25 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_ControlHUD = m_Player.FindAction("ControlHUD", throwIfNotFound: true);
         m_Player_Surf = m_Player.FindAction("Surf", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        // Dev
+        m_Dev = asset.FindActionMap("Dev", throwIfNotFound: true);
+        m_Dev_Move = m_Dev.FindAction("Move", throwIfNotFound: true);
+        m_Dev_Jump = m_Dev.FindAction("Jump", throwIfNotFound: true);
+        m_Dev_Climb = m_Dev.FindAction("Climb", throwIfNotFound: true);
+        m_Dev_Mount = m_Dev.FindAction("Mount", throwIfNotFound: true);
+        m_Dev_Tug = m_Dev.FindAction("Tug", throwIfNotFound: true);
+        m_Dev_Recall = m_Dev.FindAction("Recall", throwIfNotFound: true);
+        m_Dev_AnchorInteract = m_Dev.FindAction("AnchorInteract", throwIfNotFound: true);
+        m_Dev_Aim = m_Dev.FindAction("Aim", throwIfNotFound: true);
+        m_Dev_Reset = m_Dev.FindAction("Reset", throwIfNotFound: true);
+        m_Dev_ControlHUD = m_Dev.FindAction("ControlHUD", throwIfNotFound: true);
+        m_Dev_Surf = m_Dev.FindAction("Surf", throwIfNotFound: true);
+        m_Dev_Pause = m_Dev.FindAction("Pause", throwIfNotFound: true);
+        m_Dev_VolumeControl = m_Dev.FindAction("VolumeControl", throwIfNotFound: true);
+        m_Dev_SelectMusic = m_Dev.FindAction("SelectMusic", throwIfNotFound: true);
+        m_Dev_SelectSFX = m_Dev.FindAction("SelectSFX", throwIfNotFound: true);
+        m_Dev_TimeoutScreen = m_Dev.FindAction("TimeoutScreen", throwIfNotFound: true);
+        m_Dev_Scoreboard = m_Dev.FindAction("Scoreboard", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1376,6 +1798,180 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
+    // Dev
+    private readonly InputActionMap m_Dev;
+    private List<IDevActions> m_DevActionsCallbackInterfaces = new List<IDevActions>();
+    private readonly InputAction m_Dev_Move;
+    private readonly InputAction m_Dev_Jump;
+    private readonly InputAction m_Dev_Climb;
+    private readonly InputAction m_Dev_Mount;
+    private readonly InputAction m_Dev_Tug;
+    private readonly InputAction m_Dev_Recall;
+    private readonly InputAction m_Dev_AnchorInteract;
+    private readonly InputAction m_Dev_Aim;
+    private readonly InputAction m_Dev_Reset;
+    private readonly InputAction m_Dev_ControlHUD;
+    private readonly InputAction m_Dev_Surf;
+    private readonly InputAction m_Dev_Pause;
+    private readonly InputAction m_Dev_VolumeControl;
+    private readonly InputAction m_Dev_SelectMusic;
+    private readonly InputAction m_Dev_SelectSFX;
+    private readonly InputAction m_Dev_TimeoutScreen;
+    private readonly InputAction m_Dev_Scoreboard;
+    public struct DevActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DevActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Dev_Move;
+        public InputAction @Jump => m_Wrapper.m_Dev_Jump;
+        public InputAction @Climb => m_Wrapper.m_Dev_Climb;
+        public InputAction @Mount => m_Wrapper.m_Dev_Mount;
+        public InputAction @Tug => m_Wrapper.m_Dev_Tug;
+        public InputAction @Recall => m_Wrapper.m_Dev_Recall;
+        public InputAction @AnchorInteract => m_Wrapper.m_Dev_AnchorInteract;
+        public InputAction @Aim => m_Wrapper.m_Dev_Aim;
+        public InputAction @Reset => m_Wrapper.m_Dev_Reset;
+        public InputAction @ControlHUD => m_Wrapper.m_Dev_ControlHUD;
+        public InputAction @Surf => m_Wrapper.m_Dev_Surf;
+        public InputAction @Pause => m_Wrapper.m_Dev_Pause;
+        public InputAction @VolumeControl => m_Wrapper.m_Dev_VolumeControl;
+        public InputAction @SelectMusic => m_Wrapper.m_Dev_SelectMusic;
+        public InputAction @SelectSFX => m_Wrapper.m_Dev_SelectSFX;
+        public InputAction @TimeoutScreen => m_Wrapper.m_Dev_TimeoutScreen;
+        public InputAction @Scoreboard => m_Wrapper.m_Dev_Scoreboard;
+        public InputActionMap Get() { return m_Wrapper.m_Dev; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DevActions set) { return set.Get(); }
+        public void AddCallbacks(IDevActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DevActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DevActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Climb.started += instance.OnClimb;
+            @Climb.performed += instance.OnClimb;
+            @Climb.canceled += instance.OnClimb;
+            @Mount.started += instance.OnMount;
+            @Mount.performed += instance.OnMount;
+            @Mount.canceled += instance.OnMount;
+            @Tug.started += instance.OnTug;
+            @Tug.performed += instance.OnTug;
+            @Tug.canceled += instance.OnTug;
+            @Recall.started += instance.OnRecall;
+            @Recall.performed += instance.OnRecall;
+            @Recall.canceled += instance.OnRecall;
+            @AnchorInteract.started += instance.OnAnchorInteract;
+            @AnchorInteract.performed += instance.OnAnchorInteract;
+            @AnchorInteract.canceled += instance.OnAnchorInteract;
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
+            @ControlHUD.started += instance.OnControlHUD;
+            @ControlHUD.performed += instance.OnControlHUD;
+            @ControlHUD.canceled += instance.OnControlHUD;
+            @Surf.started += instance.OnSurf;
+            @Surf.performed += instance.OnSurf;
+            @Surf.canceled += instance.OnSurf;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @VolumeControl.started += instance.OnVolumeControl;
+            @VolumeControl.performed += instance.OnVolumeControl;
+            @VolumeControl.canceled += instance.OnVolumeControl;
+            @SelectMusic.started += instance.OnSelectMusic;
+            @SelectMusic.performed += instance.OnSelectMusic;
+            @SelectMusic.canceled += instance.OnSelectMusic;
+            @SelectSFX.started += instance.OnSelectSFX;
+            @SelectSFX.performed += instance.OnSelectSFX;
+            @SelectSFX.canceled += instance.OnSelectSFX;
+            @TimeoutScreen.started += instance.OnTimeoutScreen;
+            @TimeoutScreen.performed += instance.OnTimeoutScreen;
+            @TimeoutScreen.canceled += instance.OnTimeoutScreen;
+            @Scoreboard.started += instance.OnScoreboard;
+            @Scoreboard.performed += instance.OnScoreboard;
+            @Scoreboard.canceled += instance.OnScoreboard;
+        }
+
+        private void UnregisterCallbacks(IDevActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Climb.started -= instance.OnClimb;
+            @Climb.performed -= instance.OnClimb;
+            @Climb.canceled -= instance.OnClimb;
+            @Mount.started -= instance.OnMount;
+            @Mount.performed -= instance.OnMount;
+            @Mount.canceled -= instance.OnMount;
+            @Tug.started -= instance.OnTug;
+            @Tug.performed -= instance.OnTug;
+            @Tug.canceled -= instance.OnTug;
+            @Recall.started -= instance.OnRecall;
+            @Recall.performed -= instance.OnRecall;
+            @Recall.canceled -= instance.OnRecall;
+            @AnchorInteract.started -= instance.OnAnchorInteract;
+            @AnchorInteract.performed -= instance.OnAnchorInteract;
+            @AnchorInteract.canceled -= instance.OnAnchorInteract;
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
+            @ControlHUD.started -= instance.OnControlHUD;
+            @ControlHUD.performed -= instance.OnControlHUD;
+            @ControlHUD.canceled -= instance.OnControlHUD;
+            @Surf.started -= instance.OnSurf;
+            @Surf.performed -= instance.OnSurf;
+            @Surf.canceled -= instance.OnSurf;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @VolumeControl.started -= instance.OnVolumeControl;
+            @VolumeControl.performed -= instance.OnVolumeControl;
+            @VolumeControl.canceled -= instance.OnVolumeControl;
+            @SelectMusic.started -= instance.OnSelectMusic;
+            @SelectMusic.performed -= instance.OnSelectMusic;
+            @SelectMusic.canceled -= instance.OnSelectMusic;
+            @SelectSFX.started -= instance.OnSelectSFX;
+            @SelectSFX.performed -= instance.OnSelectSFX;
+            @SelectSFX.canceled -= instance.OnSelectSFX;
+            @TimeoutScreen.started -= instance.OnTimeoutScreen;
+            @TimeoutScreen.performed -= instance.OnTimeoutScreen;
+            @TimeoutScreen.canceled -= instance.OnTimeoutScreen;
+            @Scoreboard.started -= instance.OnScoreboard;
+            @Scoreboard.performed -= instance.OnScoreboard;
+            @Scoreboard.canceled -= instance.OnScoreboard;
+        }
+
+        public void RemoveCallbacks(IDevActions instance)
+        {
+            if (m_Wrapper.m_DevActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDevActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DevActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DevActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DevActions @Dev => new DevActions(this);
+
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
@@ -1560,6 +2156,26 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnControlHUD(InputAction.CallbackContext context);
         void OnSurf(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IDevActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnClimb(InputAction.CallbackContext context);
+        void OnMount(InputAction.CallbackContext context);
+        void OnTug(InputAction.CallbackContext context);
+        void OnRecall(InputAction.CallbackContext context);
+        void OnAnchorInteract(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
+        void OnControlHUD(InputAction.CallbackContext context);
+        void OnSurf(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnVolumeControl(InputAction.CallbackContext context);
+        void OnSelectMusic(InputAction.CallbackContext context);
+        void OnSelectSFX(InputAction.CallbackContext context);
+        void OnTimeoutScreen(InputAction.CallbackContext context);
+        void OnScoreboard(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

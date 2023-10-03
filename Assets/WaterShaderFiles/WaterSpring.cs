@@ -54,6 +54,7 @@ public class WaterSpring : MonoBehaviour
             Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
             var speed = rb.velocity;
             velocity += speed.y/resistance;
+            Debug.Log("ASDFADSF");
         }
     }
 }

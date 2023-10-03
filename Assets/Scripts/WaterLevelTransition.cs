@@ -16,10 +16,4 @@ public class WaterLevelTransition : MonoBehaviour
         LeanTween.moveLocalY(gameObject, m_WaterLevels[m_StageIndex], m_WaterRisingTime);
         m_StageIndex++;
     }
-
-    private void Update()
-    {
-        Debug.Log(transform.position.y);
-
-    }
 }

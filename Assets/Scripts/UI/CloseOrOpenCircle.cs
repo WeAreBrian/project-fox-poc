@@ -77,6 +77,7 @@ public class CloseOrOpenCircle : MonoBehaviour
     {
         SetScales();
         yield return null;  //This line makes Unity wait til the next frame to continue the execution. Basically this is to prevent a hitch when doing the transition. All the objects in the scene will do their Start() code, THEN this one can start it's transition instead of starting it, letting everything else go, then continuing.
+        yield return null;  //Ok needed ONE more frame to fix the stutter in the animation
         StartCoroutine(GrowParentObject());
     }
 

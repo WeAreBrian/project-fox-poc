@@ -20,7 +20,10 @@ public class LevelEnd : MonoBehaviour
     {
         m_HoleTransition = GameObject.Find("HoleTransition").GetComponent<CloseOrOpenCircle>();
         m_GrowShrinkScript = GetComponentInChildren<GrowAndShrinkLevelEndGlow>();
+    }
 
+    private void Start()
+    {
         // Determines whether the current level has a timer and therefore will be counted as part of the speedrun
         GameObject gameTimerObject = GameObject.Find("Speedrun Timer");
         m_isCountedInSpeedrun = gameTimerObject ?? false;

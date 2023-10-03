@@ -31,6 +31,7 @@ GameObject:
   - component: {fileID: 7491427315496765127}
   - component: {fileID: 1230637646194914361}
   - component: {fileID: 494685700498943261}
+  - component: {fileID: 5192911715869072636}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -648,6 +649,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 0}
   duration: 0.3
+--- !u!114 &5192911715869072636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6fefc5efa0c4a53adc706c6672614f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystemDown: {fileID: 0}
+  particleSystemRise: {fileID: 0}
+  downRaycastOffset: {x: 0, y: -0.04, z: 0}
+  upRaycastOffset: {x: 0, y: 0.83, z: 0}
+  raycastDistance: 0.5
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!1 &2473372690667744105
 GameObject:
   m_ObjectHideFlags: 0

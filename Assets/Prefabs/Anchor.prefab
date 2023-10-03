@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 6439212569294059226}
   - component: {fileID: 443756647559877108}
   - component: {fileID: 3509510162065970460}
+  - component: {fileID: 1084611240224450374}
   m_Layer: 7
   m_Name: Anchor
   m_TagString: Anchor
@@ -581,6 +582,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 0}
   duration: 0.15
+--- !u!114 &1084611240224450374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5066340218285788536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6fefc5efa0c4a53adc706c6672614f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystemDown: {fileID: 0}
+  particleSystemRise: {fileID: 0}
+  downRaycastOffset: {x: 0, y: 0, z: 0}
+  upRaycastOffset: {x: 0, y: 0, z: 0}
+  raycastDistance: 0.37
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!1 &8080290875098406907
 GameObject:
   m_ObjectHideFlags: 0

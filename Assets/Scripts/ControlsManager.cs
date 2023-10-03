@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.Audio;
 
 public class ControlsManager : MonoBehaviour
 {
@@ -13,8 +14,9 @@ public class ControlsManager : MonoBehaviour
     private InputAction m_SelectSFX;
     private InputAction m_TimeoutScreen;
     private InputAction m_Scoreboard;
+    private InputAction m_MuteControl;
 
-    private 
+    private AudioMixer m_Mixer;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,7 @@ public class ControlsManager : MonoBehaviour
         PlayerInput input = FindAnyObjectByType<PlayerInput>();
 
         m_VolumeControl = input.actions["VolumeControl"];
+        m_MuteControl = input.actions["MuteControl"];
         m_SelectMusic = input.actions["SelectMusic"];
         m_SelectSFX = input.actions["SelectSFX"];
         m_TimeoutScreen = input.actions["TimeoutScreen"];
@@ -35,10 +38,26 @@ public class ControlsManager : MonoBehaviour
 
     private void Update()
     {
+
         var volumeModifier = m_VolumeControl.ReadValue<float>();
         if (volumeModifier != 0)
         {
-            
         }
+        if (m_SelectMusic.ReadValue<float>() > 0.5f)
+        {
+            UpdateVolume("MusicVolume");
+        }
+        else if (m_SelectSFX.triggered)
+        {
+            UpdateVolume("SFXVolume");
+        }
+    }
+
+    private void UpdateVolume(string parameterName)
+    {
+
+        float volume;
+        m_Mixer.GetFloat(parameterName, out volume);
+        m_Mixer.SetFloat(parameterName, Mathf.Clamp(volume, -80, 20));
     }
 }

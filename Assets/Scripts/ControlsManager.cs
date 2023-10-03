@@ -21,6 +21,8 @@ public class ControlsManager : MonoBehaviour
     [SerializeField]
     private AudioMixer m_Mixer;
 
+    private float m_VolumeBeforeMute;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,13 @@ public class ControlsManager : MonoBehaviour
             {
                 UpdateVolume("SFXVolume", volumeModifier * 5);
             }
+        }
+        if (m_MuteControl.triggered)
+        {
+            float volume;
+            m_Mixer.GetFloat("MusicVolume", out volume);
+            m_Mixer.SetFloat("MusicVolume", m_VolumeBeforeMute > volume ? m_VolumeBeforeMute : -80);
+            m_VolumeBeforeMute = volume;
         }
     }
 

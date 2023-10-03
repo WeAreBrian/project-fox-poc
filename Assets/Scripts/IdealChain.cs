@@ -7,6 +7,8 @@ using UnityEngine.Events;
 
 public class IdealChain : MonoBehaviour
 {
+	public UnityEvent<float> PulledTaut;
+
 	public UnityEvent<ChainPoint> PointAdded;
 	public UnityEvent<ChainPoint> PointRemoved;
 	public LayerMask Collision;
@@ -26,6 +28,8 @@ public class IdealChain : MonoBehaviour
 	public float AnchorTension => m_AnchorDistanceJoint.reactionForce.magnitude;
 	public float PlayerTension => m_PlayerDistanceJoint.reactionForce.magnitude;
 	public float Length => GetLength();
+
+	private bool m_Taut;
 
 	private const int k_SweepSteps = 16;
 	private const float k_MinPointDistance = 0.01f;
@@ -81,10 +85,25 @@ public class IdealChain : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		CheckTaut();
 		UpdatePoints();
 		UpdateDistanceJoints();
 		ApplyTensionForces();
 		UpdateLineRenderer();
+	}
+
+	private void CheckTaut()
+	{
+		var approximateDistance = m_MaxDistanceJoint.distance - 0.1f;
+		if (Vector2.Distance(Anchor.position, Player.position) >=  approximateDistance && m_Taut == false)
+		{
+			PulledTaut.Invoke((Player.velocity-Anchor.velocity).magnitude);
+			m_Taut = true;
+		}
+		if (Vector2.Distance(Anchor.position, Player.position) < approximateDistance)
+		{
+			m_Taut = false;
+		}
 	}
 
 	private bool Sweep(Vector2 origin, Vector2 from, Vector2 to, out ChainPoint point)

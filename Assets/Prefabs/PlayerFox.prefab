@@ -239,11 +239,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_FootstepInterval: 0.5
-  m_FootStepSounds:
-  - {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
-  - {fileID: 8300000, guid: 79187dec16a7ab84bbd87fb5b23a60f2, type: 3}
-  - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +280,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   HitHazard:
+    m_PersistentCalls:
+      m_Calls: []
+  LeftGround:
     m_PersistentCalls:
       m_Calls: []
   m_GroundMask:
@@ -6039,6 +6037,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c1fd9988d29cf43bfff25ce0a77c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Footstep:
+    m_PersistentCalls:
+      m_Calls: []
   m_FootstepSounds:
   - {fileID: 8300000, guid: f06a0f32000e6734093991c487021f9a, type: 3}
   - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}

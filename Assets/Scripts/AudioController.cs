@@ -16,9 +16,6 @@ public class AudioController : MonoBehaviour
 {
     public static AudioController instance;
 
-    [SerializeField]
-    private AudioSource music;
-
     private AudioSource sound;
 
     private static AudioMixer mixer;
@@ -37,6 +34,7 @@ public class AudioController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     private void Update()

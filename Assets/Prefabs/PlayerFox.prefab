@@ -30,6 +30,8 @@ GameObject:
   - component: {fileID: 5822406008445146550}
   - component: {fileID: 7491427315496765127}
   - component: {fileID: 1230637646194914361}
+  - component: {fileID: 494685700498943261}
+  - component: {fileID: 5192911715869072636}
   m_Layer: 6
   m_Name: PlayerFox
   m_TagString: Player
@@ -239,11 +241,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_FootstepInterval: 0.5
-  m_FootStepSounds:
-  - {fileID: 8300000, guid: f5f2ec53146f5e84f9aabbdb7518b523, type: 3}
-  - {fileID: 8300000, guid: 79187dec16a7ab84bbd87fb5b23a60f2, type: 3}
-  - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}
 --- !u!114 &1208819179330828543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +282,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   HitHazard:
+    m_PersistentCalls:
+      m_Calls: []
+  LeftGround:
     m_PersistentCalls:
       m_Calls: []
   m_GroundMask:
@@ -561,7 +561,7 @@ SortingGroup:
   m_GameObject: {fileID: 107137074636933804}
   m_Enabled: 1
   m_SortingLayerID: -1529567835
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_SortAtRoot: 0
 --- !u!114 &4379814004752795122
@@ -635,6 +635,40 @@ MonoBehaviour:
   m_FoxAnimator: {fileID: 2961726244308222665}
   m_Tail: {fileID: 4061467912626272285}
   m_FoxRigidbody: {fileID: 474916486}
+--- !u!114 &494685700498943261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ff971432d4540b3844d7a8993e21e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystem: {fileID: 0}
+  duration: 0.3
+--- !u!114 &5192911715869072636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107137074636933804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6fefc5efa0c4a53adc706c6672614f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystemDown: {fileID: 0}
+  particleSystemRise: {fileID: 0}
+  downRaycastOffset: {x: 0, y: -0.04, z: 0}
+  upRaycastOffset: {x: 0, y: 0.83, z: 0}
+  raycastDistance: 0.5
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!1 &2473372690667744105
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BreathUI: {fileID: 8284198129528662458}
   m_BreathMax: 3
+  m_SuffocateSound: {fileID: 8300000, guid: c164fee308fef954092905af9f79bff7, type: 3}
 --- !u!1 &6063310992840300421
 GameObject:
   m_ObjectHideFlags: 0
@@ -6023,7 +6058,7 @@ SortingGroup:
   m_GameObject: {fileID: 7459306747764765158}
   m_Enabled: 1
   m_SortingLayerID: -1529567835
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_SortAtRoot: 0
 --- !u!114 &6918581502735060861
@@ -6038,6 +6073,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c1fd9988d29cf43bfff25ce0a77c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Footstep:
+    m_PersistentCalls:
+      m_Calls: []
   m_FootstepSounds:
   - {fileID: 8300000, guid: f06a0f32000e6734093991c487021f9a, type: 3}
   - {fileID: 8300000, guid: 8506275a25a5b8646beae5a2e8257549, type: 3}

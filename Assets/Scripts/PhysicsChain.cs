@@ -21,6 +21,19 @@ public class PhysicsChain : MonoBehaviour
 	//private TargetJoint2D m_PlayerTargetJoint;
 
 
+	public float AveragedChainSpeed
+	{
+		get
+		{
+			var velocity = 0f;
+			foreach (Rigidbody2D rb in m_Links)
+			{
+				velocity += rb.velocity.magnitude;
+			}
+			return velocity / m_Links.Length;
+		}
+	}
+
 	public Rigidbody2D GetLink(int index)
 	{
 		return m_Links[Mathf.Clamp(index, 0, m_Links.Length - 1)];

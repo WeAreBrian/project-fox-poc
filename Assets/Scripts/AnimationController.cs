@@ -13,6 +13,8 @@ public class AnimationController : MonoBehaviour
     private Rigidbody2D m_RigidBody;
     private bool m_Moving;
 
+    private InputAction m_Move;
+
     private Camera m_cam;
 
     // Start is called before the first frame update
@@ -27,10 +29,22 @@ public class AnimationController : MonoBehaviour
         m_Holder = GetComponent<AnchorHolder>();
         m_Thrower.Throw.AddListener(TriggerThrow);
         m_Thrower.WindUp.AddListener(TriggerWindUp);
+
+        m_Move = GetComponent<PlayerInput>().actions["Move"];
     }
 
     private void Update()
     {
+        var input = m_Move.ReadValue<float>();
+
+        m_Animator.SetFloat("InputVelocity", input);
+        m_Animator.SetBool("IsMoving", input != 0);
+
+        if (input != 0)
+        {
+            m_Animator.SetFloat("Facing", input);
+        }
+
         m_Animator.SetBool("Grounded", m_Grounded.OnGround);
         m_Animator.SetBool("Climbing", m_ChainClimber.Mounted);
         m_Animator.SetFloat("VerticalVelocity", m_RigidBody.velocity.y);
@@ -47,17 +61,6 @@ public class AnimationController : MonoBehaviour
     private void TriggerWindUp()
     {
         m_Animator.SetTrigger("WindingUp");
-    }
-
-    void OnMove(InputValue value)
-    {
-        m_Moving = value.Get<float>() != 0;
-        if (m_Moving)
-        {
-            m_Animator.SetFloat("Facing", value.Get<float>());
-        }
-        m_Animator.SetFloat("InputVelocity", value.Get<float>());
-        m_Animator.SetBool("IsMoving", m_Moving);
     }
 
     void OnClimb(InputValue value)

@@ -12,6 +12,9 @@ public class Breath : MonoBehaviour
     private float m_BreathMax;
     private float m_BreathAmount;
 
+    [SerializeField]
+    private AudioClip m_SuffocateSound;
+
     private bool m_Submerged;
 
 
@@ -43,6 +46,8 @@ public class Breath : MonoBehaviour
         {
             if (m_BreathAmount > 0 && m_BreathAmount - Time.deltaTime <= 0)
             {
+                AudioController.PlaySound(m_SuffocateSound, 0.6f, 1, MixerGroup.SFX)
+                    ;
                 if (m_HoleTransition != null)
                 {
                     StartCoroutine(m_HoleTransition.ShrinkParentObject(SceneManager.GetActiveScene().buildIndex));

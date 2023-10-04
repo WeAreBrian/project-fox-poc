@@ -8,6 +8,9 @@ public class Spike : MonoBehaviour
 {
     private CloseOrOpenCircle m_HoleTransition;
 
+    [SerializeField]
+    private AudioClip m_SpikeDeathSound;
+
     private static bool S_Collided = false; //prevents multiple collision events spamming
 
     private float m_SlowDownTime = 0.4f;
@@ -29,6 +32,8 @@ public class Spike : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && S_Collided == false)
         {
+            AudioController.PlaySound(m_SpikeDeathSound, 0.6f, 1, MixerGroup.SFX);
+
             //Get all sprite renderers in the fox prefab
             foreach(SpriteRenderer sprite in GameObject.FindGameObjectWithTag("Player").GetComponentsInChildren<SpriteRenderer>())
             {

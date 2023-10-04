@@ -45,39 +45,39 @@ jobs:
   #   Build WebGL and PCs   #
   ###########################
 
-  buildWebGL:
-    needs: buildPrep
-    name: Build WebGL 🌐
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          lfs: true
+  # buildWebGL:
+  #   needs: buildPrep
+  #   name: Build WebGL 🌐
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #         lfs: true
 
-      - name: Restore Library cache
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-WebGL
-          restore-keys: Library-
+  #     - name: Restore Library cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: Library
+  #         key: Library-WebGL
+  #         restore-keys: Library-
             
-      - name: Build into WebGL
-        uses: game-ci/unity-builder@v2.2.0
-        env:
-          UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          unityVersion: auto
-          targetPlatform: WebGL
+  #     - name: Build into WebGL
+  #       uses: game-ci/unity-builder@v2.2.0
+  #       env:
+  #         UNITY_LICENSE: ${{ env.UNITY_LICENSE }}
+  #         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+  #         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+  #       with:
+  #         unityVersion: auto
+  #         targetPlatform: WebGL
 
-      - name: Upload Build
-        uses: actions/upload-artifact@v3
-        with:
-          name: Build-WebGL-${{ github.run_number }}
-          path: build/WebGL
+  #     - name: Upload Build
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Build-WebGL-${{ github.run_number }}
+  #         path: build/WebGL
 
   buildDownloadables:
     needs: buildPrep
@@ -123,56 +123,56 @@ jobs:
   #  Deploy to GitHub Pages #
   ###########################
 
-  deployWebGL:
-    needs: buildWebGL
-    name: Deploy WebGL to GitHub Pages 🚢
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+  # deployWebGL:
+  #   needs: buildWebGL
+  #   name: Deploy WebGL to GitHub Pages 🚢
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   steps:
+  #     - name: Checkout Repo
+  #       uses: actions/checkout@v3
 
-      - name: Download Build
-        uses: actions/download-artifact@v3
-        with:
-          name: Build-WebGL-${{ github.run_number }}
-          path: build
+  #     - name: Download Build
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: Build-WebGL-${{ github.run_number }}
+  #         path: build
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.5
-        with:
-          branch: build-webgl
-          folder: build/WebGL
+  #     - name: Deploy to GitHub Pages
+  #       uses: JamesIves/github-pages-deploy-action@4.1.5
+  #       with:
+  #         branch: build-webgl
+  #         folder: build/WebGL
 
-      - name: Checkout WebGL Branch
-        uses: actions/checkout@v3
-        with:
-          ref: build-webgl
+  #     - name: Checkout WebGL Branch
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: build-webgl
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v3
+  #     - name: Setup GitHub Pages
+  #       uses: actions/configure-pages@v3
 
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: .
-          destination: ./_site
+  #     - name: Build with Jekyll
+  #       uses: actions/jekyll-build-pages@v1
+  #       with:
+  #         source: .
+  #         destination: ./_site
 
-      - name: Upload artifact for GitHub Pages Deploy
-        uses: actions/upload-pages-artifact@v1
+  #     - name: Upload artifact for GitHub Pages Deploy
+  #       uses: actions/upload-pages-artifact@v1
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v2
 
   ###########################
   #  Notify Workflow Result #
   ###########################
 
   notifyStatus:
-    needs: [deployWebGL, buildDownloadables]
+    needs: [buildDownloadables]
     name: Notify Status to Discord 📢
     runs-on: ubuntu-latest
     if: always()

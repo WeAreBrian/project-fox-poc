@@ -12,6 +12,11 @@ public class BubbleSplash : MonoBehaviour
     private float elapsedTime = 0.0f; // Timer to track the elapsed time since the particle system started
     private bool shouldPlay = false; // Flag to determine if particle system should be playing
 
+    private void Awake()
+    {
+        particleSystem.Stop();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "WaterVolumeForPlayer" || collision.gameObject.name == "WaterVolume")

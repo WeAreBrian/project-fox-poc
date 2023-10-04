@@ -661,8 +661,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6fefc5efa0c4a53adc706c6672614f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystemDown: {fileID: 0}
-  particleSystemRise: {fileID: 0}
+  particleSystemsDown: []
+  particleSystemsRise: []
   downRaycastOffset: {x: 0, y: -0.04, z: 0}
   upRaycastOffset: {x: 0, y: 0.83, z: 0}
   raycastDistance: 0.5

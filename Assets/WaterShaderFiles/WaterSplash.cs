@@ -1,11 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class WaterSplash : MonoBehaviour
 {
+    [Header("Particle Systems")]
     [SerializeField]
-    private ParticleSystem particleSystemDown;
+    private List<ParticleSystem> particleSystemsDown;
     [SerializeField]
-    private ParticleSystem particleSystemRise;
+    private List<ParticleSystem> particleSystemsRise;
 
     [Header("Raycast Settings")]
     [SerializeField]
@@ -20,6 +22,14 @@ public class WaterSplash : MonoBehaviour
     private bool wasDownRaycastHit = false;
     private bool wasUpRaycastHit = false;
 
+    private void Awake()
+    {
+        foreach (var ps in particleSystemsDown)
+        {
+            ps.Stop();
+        }
+    }
+
     private void Update()
     {
         // Calculate start positions based on the offsets
@@ -32,7 +42,10 @@ public class WaterSplash : MonoBehaviour
         if (downHit.collider != null && !wasDownRaycastHit)
         {
             Debug.Log("Down raycast hit successful!");
-            particleSystemDown.Play();
+            foreach (var ps in particleSystemsDown)
+            {
+                ps.Play();
+            }
             wasDownRaycastHit = true;
         }
         else if (downHit.collider == null)
@@ -50,9 +63,11 @@ public class WaterSplash : MonoBehaviour
         else if (wasUpRaycastHit) // Checks if the raycast was previously hitting but now it's not.
         {
             Debug.Log("Up raycast hit no longer detected!");
-            particleSystemRise.Play();
+            foreach (var ps in particleSystemsRise)
+            {
+                ps.Play();
+            }
             wasUpRaycastHit = false;
         }
     }
 }
-

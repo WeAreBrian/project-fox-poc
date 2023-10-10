@@ -217,7 +217,7 @@ public class AnchorHolder : MonoBehaviour
 		m_Rigidbody.AddForce(boostVector*50, ForceMode2D.Impulse);
 	}
 
-	private void FixedUpdate()
+	private void LateUpdate()
 	{
 		m_SparkEmitter.Stop();
 		if (m_Anchor != null)

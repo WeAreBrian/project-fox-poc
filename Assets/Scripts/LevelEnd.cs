@@ -39,7 +39,7 @@ public class LevelEnd : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log(collision.gameObject.GetComponent<Rigidbody2D>().velocity);
+            Debug.LogError("Speed at level end" + collision.gameObject.GetComponent<Rigidbody2D>().velocity);
 
             // A bandaid fix for a bug that causes OnTriggerEnter2D to be called twice
             if (m_levelEnded)

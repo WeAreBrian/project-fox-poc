@@ -53516,9 +53516,9 @@ MonoBehaviour:
     type: 3}
   wavePoints: {fileID: 8230853919615107117}
   WavesCount: 40
-  springStiffness: 0.1
-  dampening: 0.03
-  spread: 0.006
+  springStiffness: 0.02
+  dampening: 0.11
+  spread: 0.025
 --- !u!253 &5895642318637459013
 BuoyancyEffector2D:
   m_ObjectHideFlags: 0
